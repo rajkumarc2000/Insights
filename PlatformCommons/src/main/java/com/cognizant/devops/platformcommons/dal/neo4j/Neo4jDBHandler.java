@@ -42,8 +42,8 @@ public class Neo4jDBHandler {
 	/*
 	 * Create Nodes using neo4j rest api with transaction support. Following are
 	 * request details: POST http://localhost:7474/db/data/transaction/commit
-	 * Accept: application/json; charset=UTF-8 Content-Type: application/json Here,
-	 * we are committing the entire transaction at once.
+	 * Accept: application/json; charset=UTF-8 Content-Type: application/json
+	 * Here, we are committing the entire transaction at once.
 	 */
 
 	public JsonObject createNodesWithLabel(List<JsonObject> dataList, List<String> labels, String uniqueAttribute)
@@ -59,7 +59,8 @@ public class Neo4jDBHandler {
 		if (uniqueAttribute.trim().length() > 0) {
 			cypherQuery = "MERGE (n" + queryLabel + " {" + uniqueAttribute + ":{props}." + uniqueAttribute
 					+ "}) ON CREATE SET n={props} RETURN n";
-			// MERGE (n:SCM:GIT {ScmRevisionNumber:{props}.ScmRevisionNumber} ) ON CREATE
+			// MERGE (n:SCM:GIT {ScmRevisionNumber:{props}.ScmRevisionNumber} )
+			// ON CREATE
 			// SET n={props} RETURN n
 		} else {
 			cypherQuery = "CREATE (n" + queryLabel + " {props}) return n";
@@ -215,9 +216,16 @@ public class Neo4jDBHandler {
 			statementArray.add(statement);
 		}
 		requestJson.add("statements", statementArray);
-		ClientResponse response = doCommitCall(requestJson);
-		if (response.getStatus() != 200) {
-			throw new GraphDBException(response);
+		ClientResponse response = null;
+		try {
+			response = doCommitCall(requestJson);
+			if (response.getStatus() != 200) {
+				throw new GraphDBException(response);
+			}
+		} finally {
+			if (response != null) {
+				response.close();
+			}
 		}
 		return parser.processGraphDBNode(response.getEntity(String.class));
 	}
@@ -294,7 +302,8 @@ public class Neo4jDBHandler {
 						+ "/db/data/transaction/commit");
 		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
 				.header("Authorization", ApplicationConfigProvider.getInstance().getGraph().getAuthToken())
-				// ClientResponse response = resource.accept( MediaType.APPLICATION_JSON
+				// ClientResponse response = resource.accept(
+				// MediaType.APPLICATION_JSON
 				// ).header("Authorization", "Basic bmVvNGo6YWRtaW4=")
 				.type(MediaType.APPLICATION_JSON).entity(requestJson.toString()).post(ClientResponse.class);
 		return response;
