@@ -216,12 +216,21 @@ public class Neo4jDBHandler {
 			statementArray.add(statement);
 		}
 		requestJson.add("statements", statementArray);
+		GraphResponse responseData = null;
+		ClientResponse response = null;
 
-		ClientResponse response = doCommitCall(requestJson);
-		if (response.getStatus() != 200) {
-			throw new GraphDBException(response);
+		try {
+			response = doCommitCall(requestJson);
+			responseData = parser.processGraphDBNode(response.getEntity(String.class));
+			if (response.getStatus() != 200) {
+				throw new GraphDBException(response);
+			}
+		} finally {
+			if (response != null) {
+				response.close();
+			}
 		}
-		return parser.processGraphDBNode(response.getEntity(String.class));
+		return responseData;
 	}
 
 	/**
