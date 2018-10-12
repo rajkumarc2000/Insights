@@ -1,7 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { DomSanitizer,BrowserModule, SafeUrl } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from  '@angular/common';
+import { MatIconRegistry } from '@angular/material/icon'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {
   MatButtonModule,
@@ -30,7 +33,7 @@ const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'InSights/Home', component: HomeComponent },
-  { path: '**'   , component: PageNotFoundComponent }
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -43,7 +46,10 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    CommonModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,

@@ -4,6 +4,7 @@ import { RestEndpointService } from '../services/rest-endpoint.service'
 @Injectable()
 export class RestAPIurlService {
   urlMapping = {};
+  apiMap = new Map<String, String>();
   constructor(private restEndpointService:RestEndpointService) {
         this.initializeEndpoints();
    }
@@ -104,20 +105,18 @@ export class RestAPIurlService {
         }
 
        public addEndPoint(name: string, url: string) {
-           //console.log(this.urlMapping[name] +'  ' +url)
-            if (this.urlMapping[name] === undefined) {
-                this.urlMapping[name] = url;
+           if (!this.apiMap.has(name)) {
+                this.apiMap.set(name,url);
             } else {
                 throw new Error('Url with same name already exists');
             }
-            //console.log(this.urlMapping[name] +'  ' +url)
-        }
+       }
 
 
        public getRestCallUrl(moduleUrlKey: string) {
-            if (!this.urlMapping[moduleUrlKey]) {
+           if (!this.apiMap.has(moduleUrlKey)) {
                 throw new Error("Url Mapping doesnt exist");
             }
-            return 'http://localhost:8080' + this.urlMapping[moduleUrlKey];//this.restEndpointService.getServiceHost()
+           return  'http://localhost:8080' + this.apiMap.get(moduleUrlKey);//this.restEndpointService.getServiceHost(); 
         }
 }

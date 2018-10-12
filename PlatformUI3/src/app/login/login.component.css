@@ -25,7 +25,7 @@
 .blueStripCss {
     background-color: #0033A0;
     width: 985px;
-    height: 1px;
+    height: 2px;
 }
 
 .greenStripCss {
@@ -65,7 +65,7 @@
 }
 
 .copyRightCss {
-  color: #000000;
+  color: #0033A0;
   font-size: 10px;
   font-family: Tahoma;
   margin-top:30px
@@ -188,4 +188,15 @@ md-icon {
       -o-linear-gradient(bottom, #bdbdbd, rgba(0, 0, 0, 0)) 1 100%;
     border-image:
       linear-gradient(to top, #bdbdbd, rgba(0, 0, 0, 0)) 1 100%;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }

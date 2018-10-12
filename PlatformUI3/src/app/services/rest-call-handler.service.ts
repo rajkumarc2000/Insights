@@ -39,6 +39,7 @@ export class RestCallHandlerService {
   public post(url: string, requestParams?: Object, additionalheaders?: Object): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
+    console.log(restCallUrl);
     var dataresponse;
     var headers;
     var authToken = this.cookieService.get('Authorization');
@@ -68,9 +69,15 @@ export class RestCallHandlerService {
         return;
       }
     }
-    this.http.post(restCallUrl, {}, allData).subscribe(dataresponse => {
-      console.log(dataresponse.toString)
-    });
+    dataresponse=this.http.post(restCallUrl, {}, allData);
+    /*subscribe((response: HttpResponse<any>) => { 
+      
+     });*/
+    
+    /*.subscribe(dataobjresponse => {
+      console.log(dataobjresponse.toString)
+      dataresponse=dataobjresponse;
+    });*/
 
     return dataresponse;
 
@@ -84,14 +91,14 @@ export class RestCallHandlerService {
   }
 
   checkValidObject(obj: Object) {
-    if (typeof (obj) != 'undefined' && obj != null && obj.constructor == Object && Object.keys(obj).length !== 0) {
+    if (obj != null && obj.constructor == Object && Object.keys(obj).length !== 0) {
       return true;
     }
     return false;
   }
 
   constructGetUrl(url: string, requestParams: Object) {
-    var selectedUrl = this.restAPIUrlService.getRestCallUrl(url);
+    var selectedUrl = url; //this.restAPIUrlService.getRestCallUrl(url)
     /*if (this.checkValidObject(requestParams)) {
       selectedUrl = selectedUrl.concat('?');
       for (var key in requestParams) {
@@ -102,5 +109,9 @@ export class RestCallHandlerService {
       selectedUrl = selectedUrl.slice(0, -1);
     } */
     return selectedUrl;
+  }
+
+  public getJSON(url): Promise<any> {
+    return this.http.get(url).toPromise()
   }
 }
