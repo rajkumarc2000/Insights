@@ -14,22 +14,29 @@
  * the License.
  ******************************************************************************/
 
-.gradBackground{
-  background: -webkit-linear-gradient(#51b2ce, #66b25a);
-  background: -o-linear-gradient(#51b2ce, #66b25a);
-  background: -moz-linear-gradient(#51b2ce, #66b25a);
-  background: linear-gradient(#51b2ce, #66b25a);
+
+.whiteBackground{
+   background-color: white;
 }
+  
 .whiteframeCss {
     background-color: white;
-    width: 985px;
-    height: 480px;
+    width:100% !important;
+    height: 100% !important;
 }
 .blueStripCss {
-    background-color: #00728f;
+    background-color: #0033A0;
     width: 985px;
-    height: 4px;
+    height: 1px;
 }
+
+.greenStripCss {
+  background-color: #00B140;
+  width: 985px;
+  height: 4px;
+  margin-top: 20px;
+}  
+
 .verticalBorder {
   border-left: solid 1px #cfcfcf;
   margin-top: 60px;
@@ -40,44 +47,52 @@
   height: 8px;
   background-color: #a5a5a5;
   border-radius: 50%;
-  margin-top: 8px;
-  margin-right: 14px;
+  margin-top: -8px;
+  margin-right: 30px;
 }
 .textCss{
-  color: #5f5f5f;
+  color: #0033A0;
   font-size: 22px;
   width: 400px;
-  font-family: proxima_novalight;
+  font-family: Tahoma;
   margin-top:-22px
 }
 .middleTextColr{
-  color: #11a44e;
+  color: #00B140;
   font-size: 22px;
-  font-family: proxima_novaregular;
+  font-family: Tahoma;
 }
 .inputGreyTextCss{
   font-size: 17px;
-  font-family: proxima_novaregular;
+  font-family: Tahoma;
 }
 .validCredTextCss{
-  font-family: proxima_novalight;
-  font-size: 16px;
-  color: #afafaf;
+  font-family: Tahoma;
+  font-size: 17px;
+  color: #0033A0;
   margin-bottom: 20px;
   margin-left: 5px;
 }
+
+.copyRightCss {
+   color: #000000;
+   font-size: 10px;
+   font-family: Tahoma;
+   margin-top:30px
+}
+  
 .containerMargin {
     margin: 0px 0 !important;
 }
 .sigBtnCss{
   min-height: 38px !important;
   min-width: 138px !important;
-  font-size: 18px !important;
-  font-family: proxima_novaregular !important;
+  font-size: 17px !important;
+  font-family: Tahoma !important;
   border-radius: 0px !important;
   text-transform: initial !important;
   color: white !important;
-  background-color: #00728f !important;
+  background-color: #00B140 !important;
 }
 .pipeCss{
   border-right: 1px solid #c7c7c7;
@@ -88,8 +103,8 @@
       margin-bottom: 25px;
 }
 .activeCss {
-    color: #00728f !important;
-    border-color: #51b2ce !important;
+    color: #0033A0 !important;
+    border-color: #0033A0 !important;
     border-width: 0px 0px 1px 0px !important;
 }
 .inactiveCss {
@@ -105,12 +120,12 @@
 }
 .textPad{
   padding-left:50px;
-  padding-top:70px;
+  padding-top:73px;
   padding-right: 30px;
 }
 .topTxtCss{
   margin-bottom:24px;
-  margin-top:25px
+  margin-top:50px
 }
 .md-button.md-raised:not([disabled]) {
     box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);
@@ -119,6 +134,7 @@
   width:482px;
   padding-left: 25px;
   padding-right: 40px;
+  margin-top: 50px;
 }
 .tckCss{
   margin-top: 2px;
@@ -152,14 +168,14 @@ md-icon {
     min-width: 0px;
 }
 .wrnTxt{
-  color: #df7a1c !important;
-  font-size: 12px !important;
-  font-family: proxima_novaregular !important
+  color: #ff8f1c !important;
+  font-size: 13px !important;
+  font-family: Tahoma !important
 }
 .errTxt{
     color: #df7a1c !important;
-    font-size: 16px !important;
-    font-family: proxima_novaregular !important;
+    font-size: 13px !important;
+    font-family: Tahoma !important;
     padding-left: 36px;
     padding-bottom: 16px;
     margin-top: -20px;
