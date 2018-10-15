@@ -6,15 +6,23 @@ import { RestCallHandlerService } from '../services/rest-call-handler.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer, BrowserModule, SafeUrl } from '@angular/platform-browser'; 
-import { MatIconRegistry } from '@angular/material/icon'; 
+import { DomSanitizer, BrowserModule, SafeUrl } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+
+
+
+export interface ILoginComponent {
+  createAndValidateForm(): void;
+  userAuthentication(): void;
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, ILoginComponent {
 
   self;
   logMsg: string;
@@ -25,14 +33,14 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   imageSrc: string = "";
-  showDefaultImg: boolean = false;
-  resourceImage$: any;
+  resourceImage: any;
   loginForm: FormGroup;
+  imageAlt:String="";
 
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
     private restEndpointService: RestEndpointService, private restCallHandlerService: RestCallHandlerService,
-    private cookieService: CookieService, private router: Router, 
-    private iconRegistry: MatIconRegistry,private sanitizer: DomSanitizer ) {
+    private cookieService: CookieService, private router: Router,
+    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
 
     iconRegistry.addSvgIcon(
       'defaultLogo',
@@ -41,34 +49,36 @@ export class LoginComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'verticleLine',
       sanitizer.bypassSecurityTrustResourceUrl("/icons/svg/login/vertical_separator_bar.svg"));
-
-    var self = this;
-    self.imageSrc = 'data:image/jpg;base64,';
-
-    var restCallUrl = this.restAPIUrlService.getRestCallUrl("GET_LOGO_IMAGE");
-    console.log(restCallUrl);
-    this.resourceImage$ = this.restCallHandlerService.getJSON(restCallUrl).then((data) => {
-      console.log(data)
-      console.log(data.data.encodedString.length)
-      if (data.data.encodedString.length > 0) {
-        self.imageSrc = 'data:image/jpg;base64,' + data.data.encodedString;
-      } else {
-        self.showDefaultImg = true;
-      }
-      console.log(self.showDefaultImg);
-    });
-    console.log(self.showDefaultImg);
+    this.getAsyncData();
   }
 
   ngOnInit() {
-    this.createForm();
+    this.createAndValidateForm();
   }
 
-  private createForm() {
+  private createAndValidateForm() {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
+  }
+
+  async getAsyncData() {
+    try {
+      var restCallUrl = this.restAPIUrlService.getRestCallUrl("GET_LOGO_IMAGE");
+      console.log(restCallUrl);
+      this.resourceImage = await this.restCallHandlerService.getJSON(restCallUrl);
+      //console.log(this.resourceImage)
+      //console.log(this.resourceImage.data.encodedString.length)
+      if (this.resourceImage.data.encodedString.length > 0) {
+        this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
+      } else {
+        this.imageSrc = '/icons/svg/landingPage/CognizantLogo.svg';
+        this.imageAlt='Cognizant log';
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   public userAuthentication(): void {

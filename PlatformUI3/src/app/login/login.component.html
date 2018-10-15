@@ -27,9 +27,8 @@
       <div class="blueStripCss"></div>
       <br>
       <div class="column">
-        <!-- <img ng-if="loginController.showDefaultImg" src="{{imageSrc}}" width="100px" height="100px" style="margin:auto;display:block"/> -->
-        <img mat-card-image height="40px" width="380px" src="/icons/svg/landingPage/CognizantLogo.svg" alt="Cognizant log">
-        <div class="topTxtCss" layout>
+        <img mat-card-image height="40px" width="380px" [src]="imageSrc" [alt]="imageAlt" style="margin:auto;display:block"/>
+          <div class="topTxtCss" layout>
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
             Leverage real-time <span class="middleTextColr">Dashboards</span> for the DevOps Journey
