@@ -21,13 +21,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
  
-import { LoginService } from './services/login.service';
-import { RestEndpointService } from './services/rest-endpoint.service'
-import { RestAPIurlService } from './services/rest-apiurl.service'
-import { RestCallHandlerService } from './services/rest-call-handler.service'
-import { AppConfig } from './services/app.config';
+import { LoginService } from './login/login.service';
+import { RestAPIurlService } from './common.services/rest-apiurl.service'
+import { RestCallHandlerService } from './common.services/rest-call-handler.service'
+import { AppConfig } from './common.services/app.config';
 import { CookieService } from 'ngx-cookie-service';
 import { HomeComponent } from './home/home.component';
+import { ImageHandlerService  } from './common.services/imageHandler.service';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -63,9 +63,10 @@ const appRoutes: Routes = [
   ],
   providers: [
     LoginService,
-    RestEndpointService,
+    AppConfig,
     RestAPIurlService,
     RestCallHandlerService,
+    ImageHandlerService,
     AppConfig,
     CookieService
   

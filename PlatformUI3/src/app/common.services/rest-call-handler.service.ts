@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable'
-import { RestAPIurlService } from '../services/rest-apiurl.service'
+import { RestAPIurlService } from '../common.services/rest-apiurl.service'
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class RestCallHandlerService {
 
-  constructor(private http: HttpClient, private restAPIUrlService: RestAPIurlService, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private restAPIUrlService: RestAPIurlService, 
+  private cookieService: CookieService) {
 
   }
 
@@ -83,21 +84,21 @@ export class RestCallHandlerService {
 
   }
 
-  extend(obj: Object, src: Object) {
+ private extend(obj: Object, src: Object) {
     for (var key in src) {
       if (src.hasOwnProperty(key)) obj[key] = src[key];
     }
     return obj;
   }
 
-  checkValidObject(obj: Object) {
+ private checkValidObject(obj: Object) {
     if (obj != null && obj.constructor == Object && Object.keys(obj).length !== 0) {
       return true;
     }
     return false;
   }
 
-  constructGetUrl(url: string, requestParams: Object) {
+ private constructGetUrl(url: string, requestParams: Object) {
     var selectedUrl = url; //this.restAPIUrlService.getRestCallUrl(url)
     /*if (this.checkValidObject(requestParams)) {
       selectedUrl = selectedUrl.concat('?');
@@ -114,4 +115,8 @@ export class RestCallHandlerService {
   public getJSON(url): Promise<any> {
     return this.http.get(url).toPromise()
   }
+
+  public getJSONUsingObservable(url): Observable<any> {
+		return this.http.get(url)
+	}
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestCallHandlerService } from '../services/rest-call-handler.service';
+import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 export class LoginService {
     response: any;
     constructor(private restCallHandlerService: RestCallHandlerService, ) {
-        //this.loginUserAuthentication('admin', 'admin');
     }
 
     public loginUserAuthentication(username: string, password: string): Promise<any> {
@@ -18,11 +17,6 @@ export class LoginService {
         this.response = restHandler.post("USER_AUTHNTICATE", {}, { 'Authorization': token })
         console.log(this.response);
         console.log(this.response.toPromise());
-       /* if (this.response) {
-            return;
-        } else {
-            return restHandler.post("USER_AUTHNTICATE", {}, { 'Authorization': token }).toPromise();
-        }*/
         return this.response.toPromise();
     }
 }

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { RestEndpointService } from '../services/rest-endpoint.service'
+
+
+export interface IRestAPIUrlService {
+        getRestCallUrl(moduleUrlKey: string): string;
+}
 
 @Injectable()
-export class RestAPIurlService {
+export class RestAPIurlService implements IRestAPIUrlService {
   urlMapping = {};
   apiMap = new Map<String, String>();
-  constructor(private restEndpointService:RestEndpointService) {
+  constructor() {
         this.initializeEndpoints();
    }
    public initializeEndpoints() {

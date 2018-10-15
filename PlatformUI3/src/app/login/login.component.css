@@ -192,7 +192,12 @@ md-icon {
 
 .column {
     float: left;
-    width: 50%;
+    width: 49%;
+}
+
+.column-image {
+    float: left;
+    width: 1%;
 }
 
 .row:after {

@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service'
-import { RestEndpointService } from '../services/rest-endpoint.service'
-import { RestAPIurlService } from '../services/rest-apiurl.service'
-import { RestCallHandlerService } from '../services/rest-call-handler.service';
+import { LoginService } from './login.service'
+import { AppConfig } from '../common.services/app.config'
+import { RestAPIurlService } from '../common.services/rest-apiurl.service'
+import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer, BrowserModule, SafeUrl } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-
 
 
 export interface ILoginComponent {
@@ -35,28 +32,20 @@ export class LoginComponent implements OnInit, ILoginComponent {
   imageSrc: string = "";
   resourceImage: any;
   loginForm: FormGroup;
-  imageAlt:String="";
+  imageAlt: String = "";
 
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
-    private restEndpointService: RestEndpointService, private restCallHandlerService: RestCallHandlerService,
-    private cookieService: CookieService, private router: Router,
-    private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
-
-    iconRegistry.addSvgIcon(
-      'defaultLogo',
-      sanitizer.bypassSecurityTrustResourceUrl("/icons/svg/landingPage/CognizantLogo.svg"));
-
-    iconRegistry.addSvgIcon(
-      'verticleLine',
-      sanitizer.bypassSecurityTrustResourceUrl("/icons/svg/login/vertical_separator_bar.svg"));
+    private config: AppConfig, private restCallHandlerService: RestCallHandlerService,
+    private cookieService: CookieService, private router: Router) {
     this.getAsyncData();
+
   }
 
   ngOnInit() {
     this.createAndValidateForm();
   }
 
-  private createAndValidateForm() {
+  public createAndValidateForm() {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -74,7 +63,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
       } else {
         this.imageSrc = '/icons/svg/landingPage/CognizantLogo.svg';
-        this.imageAlt='Cognizant log';
+        this.imageAlt = 'Cognizant log';
       }
     } catch (error) {
       console.log(error);

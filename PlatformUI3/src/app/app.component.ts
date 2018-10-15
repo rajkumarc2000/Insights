@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-//import { DomSanitizationService } from '@angular/platform-browser'
+import { AppConfig } from './common.services/app.config';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'PlatformUI3';
-  /*constructor(private sanitizer: DomSanitizationService){
+  constructor(private config: AppConfig){
 
-  }*/
+  }
 }
