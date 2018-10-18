@@ -45,38 +45,36 @@
         <img mat-card-image height="422px" width="1px" src="/icons/svg/login/vertical_separator_bar.svg" alt="Cognizant log">
       </div>
 
-      
+
       <div class="column">
         <form [formGroup]="loginForm">
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
           <div layout="column" style="width: 360px;">
 
-            <mat-input-container layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}"
-              dividerColor="{{loginForm.controls['username'].errors && !loginForm.controls['username'].pristine ? 'warn' : 'primary'}}">
+            <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
               <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss" [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"
                 formControlName="username">
                 <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" class="wrnTxt">
                   <div [hidden]="!loginForm.controls['username'].errors.required">Username is required.</div>
                 </div>
-                </mat-input-container>
+            </mat-form-field>
+             <br> 
+            <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
+              <input matInput placeholder="Password" type="password" name="password" required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
+                class="inputGreyTextCss" formControlName="password">
+                <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine " class="wrnTxt">
+                  <div [hidden]="!loginForm.controls['password'].errors.required">Password is required.</div>
+                </div>
+            </mat-form-field>
 
-                <mat-input-container [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}"
-                  dividerColor="{{loginForm.controls['password'].errors && !loginForm.controls['password'].pristine ? 'warn' : 'primary'}}">
-                  <input matInput placeholder="Password" type="password" name="password" required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
-                    class="inputGreyTextCss" formControlName="password">
-                    <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine " class="wrnTxt">
-                      <div [hidden]="!loginForm.controls['password'].errors.required">Password is required.</div>
-                    </div>
-                    </mat-input-container>
-
-                    <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">
-                      {{logMsg}}
-                    </div>
+            <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">
+              {{logMsg}}
+            </div>
           </div>
           <div flex="60" flex-offset="15">
             <mat-card-actions align="end">
-              <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" (click)="userAuthentication(username , password)">LOG ON</button>
+              <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" (click)="userAuthentication()">LOG ON</button>
               <!--  <span ng-show="loginController.showThrobber" style="vertical-align: super;">  
                 <mat-progress-spinner style="display: inline;" diameter="30" mode="indeterminate"></mat-progress-spinner></span> -->
             </mat-card-actions>

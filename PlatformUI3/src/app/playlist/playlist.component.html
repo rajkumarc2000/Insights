@@ -1,0 +1,16 @@
+<p>
+  playlist works!
+</p>
+
+<!--<mat-card [style]="mainContentMinHeightWoSbTab">-->
+  <!--<iframe [src]="playListUrl" [style]="iframeStyle" frameBorder="0" scrolling="no"></iframe>-->
+<!--</mat-card>-->
+
+ <mat-card style="width: 500px">
+   <mat-card-header style="border-bottom: 1px solid grey">
+     <span class="md-title">Playlist </span>
+   </mat-card-header>
+   <mat-card-content style="height: 1000px; overflow-y: auto" >
+     <iframe [src]="playListUrl" fscrolling="no"></iframe>
+    </mat-card-content>
+ </mat-card>

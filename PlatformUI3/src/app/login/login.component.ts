@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
       var restCallUrl = this.restAPIUrlService.getRestCallUrl("GET_LOGO_IMAGE");
       console.log(restCallUrl);
       this.resourceImage = await this.restCallHandlerService.getJSON(restCallUrl);
-      //console.log(this.resourceImage)
+      console.log(this.resourceImage)
       //console.log(this.resourceImage.data.encodedString.length)
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
             var minutes = 30;
             date.setTime(date.getTime() + (minutes * 60 * 1000));
             this.cookieService.set('Authorization', token, date);
-            this.cookieService.set('DashboardSessionExpiration', '', dateDashboardSessionExpiration);
+            this.cookieService.set('DashboardSessionExpiration', dateDashboardSessionExpiration.toString());
             this.cookies = "";
             for (var key in grafcookies) {
               //this.cookies += key+ '=' +grafcookies[key];

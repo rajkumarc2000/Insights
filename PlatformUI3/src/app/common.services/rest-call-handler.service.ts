@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs'
 import { RestAPIurlService } from '../common.services/rest-apiurl.service'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { CommonModule } from '@angular/common';
 
 @Injectable()
 export class RestCallHandlerService {
-
+  asyncResult:any;
   constructor(private http: HttpClient, private restAPIUrlService: RestAPIurlService, 
   private cookieService: CookieService) {
 
   }
 
-  public get(url: string, requestParams?: Object, additionalheaders?: Object): Observable<any> {
-    var headers;
+  public async get(url: string, requestParams?: Object, additionalheaders?: Object): Promise<any> {
+    
     var dataresponse;
     var authToken = this.cookieService.get('Authorization');
+    /* var headers;
     var defaultHeader = {
       'Authorization': authToken
     };
@@ -28,12 +30,14 @@ export class RestCallHandlerService {
     var allData = {
       method: 'GET',
       headers: headers
-    }
+    }*/
+    const headers = new HttpHeaders()
+            .set("Authorization", authToken);
+    console.log(headers);
     var restCallUrl = this.constructGetUrl(url, requestParams);
-    this.http.get(restCallUrl).subscribe(dataresponse => {
-      console.log(dataresponse.toString)
-    });
-    return dataresponse;
+    this.asyncResult = await this.http.get(restCallUrl,{headers}).toPromise(); 
+    console.log(this.asyncResult.toString)
+    return this.asyncResult;
   }
 
 
@@ -99,8 +103,8 @@ export class RestCallHandlerService {
   }
 
  private constructGetUrl(url: string, requestParams: Object) {
-    var selectedUrl = url; //this.restAPIUrlService.getRestCallUrl(url)
-    /*if (this.checkValidObject(requestParams)) {
+    var selectedUrl = this.restAPIUrlService.getRestCallUrl(url); //url
+    if (this.checkValidObject(requestParams)) {
       selectedUrl = selectedUrl.concat('?');
       for (var key in requestParams) {
         if (requestParams.hasOwnProperty(key)) {
@@ -108,7 +112,7 @@ export class RestCallHandlerService {
         }
       }
       selectedUrl = selectedUrl.slice(0, -1);
-    } */
+    } 
     return selectedUrl;
   }
 

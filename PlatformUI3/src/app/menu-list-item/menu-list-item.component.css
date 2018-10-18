@@ -1,0 +1,34 @@
+.mat-list-item{
+  color: white;
+  opacity: 0.8;
+  padding: 1px 0;
+}
+
+.mat-nav-list{
+  color: white;
+  opacity: 0.8;
+}
+
+.matLine{
+  color: white;
+  opacity: 0.8;
+}
+
+.mat-drawer{
+  opacity: 0.9;
+  background:#52545c;
+}
+
+.mat-toolbar {
+  opacity: 0.9;
+  background: #52545c;
+  color: white;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 25px;
+}
+
+.routeIcon {
+    margin-right: 4px;
+}

@@ -1,7 +1,7 @@
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
 import { ImageHandlerService  } from '../common.services/imageHandler.service';
@@ -77,18 +77,18 @@ export class AppConfig {
     };
 
 
-    public getGrafanaHost1(): Observable<any> {
+    public getGrafanaHost1(): Promise<any> {
         var self = this;
         var resource;
         var authToken = this.cookieService.get('Authorization');
         var defaultHeader = { 'Authorization': authToken };
-        var restcallUrl = location.protocol + "://" + location.host + "/PlatformService/configure/grafanaEndPoint";
+        var restcallUrl = location.protocol + "://" + "localhost:3000" + "/PlatformService/configure/grafanaEndPoint"; location.host
 
-        this.http.get(restcallUrl).subscribe(data => {
+       /* this.http.get(restcallUrl).subscribe(data => {
             console.log(data);
             resource = data;
-        });;
-        return resource;
+        });;*/
+        return this.http.get(restcallUrl).toPromise();
 
     }
 }

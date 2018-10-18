@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #52545c;
+}
+
+ .sidenav-container {
+  flex: 1;
+  color: #52545c;
+}
+
+.sidenav{
+  color: white;
+}
+
+.mat-list-item{
+  color: white;
+  opacity: 0.8;
+  padding: 1px 0;
+}
+
+.mat-nav-list{
+  color: white;
+  opacity: 0.8;
+}
+
+.mat-line{
+  color: white;
+  opacity: 0.8;
+  padding: 10px;
+  font-weight:bold;
+}
+
+.mat-drawer{
+  opacity: 0.9;
+  background:#52545c;
+}
+
+.mat-toolbar {
+  opacity: 0.9;
+  background: #52545c;
+  color: white;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 40px;
+}
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #52545c;
+  opacity: 0.9;
+}
+
+.toolbar {
+    z-index: 1;
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+  text-align: right;
+}
+
+.routeIcon {
+    margin-right: 4px;
+}

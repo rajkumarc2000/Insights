@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -10,7 +10,6 @@ export class LoginService {
     }
 
     public loginUserAuthentication(username: string, password: string): Promise<any> {
-
         var token = 'Basic ' + btoa(username + ":" + password);
         console.log(token)
         var restHandler = this.restCallHandlerService;
