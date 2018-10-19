@@ -152,13 +152,13 @@ class GitAgent(BaseAgent):
         trackingDetails = self.tracking.get(repoName,None)
         data_branch_delete=[]
         branch_delete = {}
-        branch_delete['BranchName'] = branchName
-        branch_delete['RepoName'] = repoName
-        branch_delete['Event'] = "Branch Deletion"
-        branch_delete['lastCommitDate'] = lastCommitDate
-        branch_delete['lastCommitId'] = lastCommitId
+        branch_delete['branchName'] = branchName
+        branch_delete['repoName'] = repoName
+        branch_delete['event'] = "Branch Deletion"
+        #branch_delete['lastCommitDate'] = lastCommitDate
+        #branch_delete['lastCommitId'] = lastCommitId
         data_branch_delete.append(branch_delete)
-        branchMetadata = {"labels" : ["METADATA"],"dataUpdateSupported" : True,"uniqueKey":["RepoName","BranchName"]}
+        branchMetadata = {"labels" : ["METADATA"],"dataUpdateSupported" : True,"uniqueKey":["repoName","branchName"]}
         self.publishToolsData(data_branch_delete, branchMetadata)        
 if __name__ == "__main__":
     GitAgent()       
