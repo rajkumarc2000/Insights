@@ -154,7 +154,7 @@ class GitAgent(BaseAgent):
         branch_delete = {}
         branch_delete['branchName'] = branchName
         branch_delete['repoName'] = repoName
-        branch_delete['event'] = "Branch Deletion"
+        branch_delete['event'] = "branchDeletion"
         #branch_delete['lastCommitDate'] = lastCommitDate
         #branch_delete['lastCommitId'] = lastCommitId
         data_branch_delete.append(branch_delete)
