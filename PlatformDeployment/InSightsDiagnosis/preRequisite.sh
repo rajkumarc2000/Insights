@@ -27,7 +27,7 @@ echo "TimeStamp -> " $(date '+%F %T')""   >> check.log
 echo "Checking current user group." >> check.log
 echo "	Group is: ${userPermission}" >> check.log
 #-----------------------------------Docroot Connection Check
-HTTP_STATUS="$(curl -IL --silent http://platform.cogdevops.com/insights_install/release/ | grep HTTP )"
+HTTP_STATUS="$(curl -IL --silent https://platform.cogdevops.com/insights_install/release/ | grep HTTP )"
 RESPONSE=${HTTP_STATUS}
 echo "TimeStamp -> " $(date '+%F %T')""   >> check.log
 echo "Checking internet connectivity with cog-docroot server to proceed with online/offline installation method." >> check.log
@@ -40,7 +40,7 @@ else
 fi
 
 #-----------------------------------OS Check
-wget http://platform.cogdevops.com/insights_install/release/latest/InSightsUI.zip
+wget https://platform.cogdevops.com/insights_install/release/latest/InSightsUI.zip
 unzip InSightsUI.zip
 #In case of offline install please give the path for zip
 sleep 5
