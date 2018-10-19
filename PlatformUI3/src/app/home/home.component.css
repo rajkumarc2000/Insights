@@ -74,3 +74,9 @@
 .routeIcon {
     margin-right: 4px;
 }
+
+
+#bottomnavg {
+    position: absolute;
+    bottom: 0;
+}

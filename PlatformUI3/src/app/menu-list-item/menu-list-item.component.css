@@ -2,6 +2,7 @@
   color: white;
   opacity: 0.8;
   padding: 1px 0;
+  height: 28px;
 }
 
 .mat-nav-list{
@@ -9,9 +10,11 @@
   opacity: 0.8;
 }
 
-.matLine{
+.mat-line{
   color: white;
   opacity: 0.8;
+  padding: 10px;
+  font-weight:bold;
 }
 
 .mat-drawer{
@@ -26,9 +29,9 @@
 }
 
 .mat-toolbar-row, .mat-toolbar-single-row {
-    height: 25px;
+    height: 40px;
 }
-
 .routeIcon {
     margin-right: 4px;
 }
+

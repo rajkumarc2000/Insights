@@ -4,4 +4,5 @@ export interface NavItem {
   iconName: string;
   route?: string;
   children?: NavItem[];
+  isToolbarDisplay?:boolean;
 }

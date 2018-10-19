@@ -36,7 +36,7 @@ import { RestCallHandlerService } from './common.services/rest-call-handler.serv
 import { AppConfig } from './common.services/app.config';
 import { ImageHandlerService } from './common.services/imageHandler.service';
 import { GrafanaAuthenticationService } from './common.services/grafana-authentication-service';
-import { NavService } from './common.services/nav.service';
+
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -96,8 +96,7 @@ const appRoutes: Routes = [
     ImageHandlerService,
     GrafanaAuthenticationService,
     AppConfig,
-    CookieService,
-    NavService
+    CookieService
 
   ],
   bootstrap: [AppComponent]

@@ -1,6 +1,5 @@
 import { Component, ViewChild, HostBinding, Input, ElementRef, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { GrafanaAuthenticationService } from '../common.services/grafana-authentication-service';
-import { NavService } from '../common.services/nav.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AppConfig } from '../common.services/app.config'
 import { Router } from '@angular/router';
@@ -29,6 +28,7 @@ export class HomeComponent implements OnInit {
   userCurrentOrg: string = '';
   userCurrentOrgName: string = '';
   showAdminTab: boolean = false;
+  isToolbarDisplay: boolean = true;
   showBusinessMapping: boolean = false;
   isValidUser: boolean = false;
   iframeStyle = 'width:100%; height:500px;';
@@ -39,60 +39,93 @@ export class HomeComponent implements OnInit {
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item: NavItem;
   @Input() depth: number;
-  navItems: NavItem[] = []
+  navItems: NavItem[] = [];
+  navItems2: NavItem[] = [];
 
   ngOnInit() {
     this.navItems = [
       {
         displayName: 'Dashboard',
         iconName: '',
+        route: 'InSights/Home/admin',
         children: [
           {
             displayName: 'Grafana',
             iconName: 'grafana',
-            route: 'InSights/Home/admin'
-          },
-          {
-            displayName: 'Other Feature',
-            iconName: 'feature',
             route: 'InSights/Home/admin',
             children: [
               {
-                displayName: 'Switch Org',
-                iconName: 'Swithc_org',
-                route: 'InSights/Home/admin'
-              },
-              {
-                displayName: 'Devops Matuarity',
-                iconName: 'devops_matuarity',
-                route: 'InSights/Home/admin'
+                displayName: 'Swithch Org',
+                iconName: 'feature',
+                route: 'InSights/Home/admin',
+                isToolbarDisplay: false
               }
             ]
+          },
+          {
+            displayName: 'ML Capability',
+            iconName: 'feature',
+            route: 'InSights/Home/admin',
+          },
+          {
+            displayName: 'InSights',
+            iconName: 'feature',
+            route: 'InSights/Home/admin',
+          },
+          {
+            displayName: 'Devops Matuarity',
+            iconName: 'feature',
+            route: 'InSights/Home/admin'
+          },
+          {
+            displayName: 'BlockChain Development',
+            iconName: 'feature',
+            route: 'InSights/Home/admin'
           }
         ]
       },
       {
         displayName: 'Playlist',
         iconName: 'playlist',
-        route: 'InSights/Home/playlist'
+        route: 'InSights/Home/playlist',
+        isToolbarDisplay: true
       },
       {
-        displayName: 'About',
-        iconName: 'about',
-        route: 'InSights/Home/admin'
+        displayName: 'Data Dictionary',
+        iconName: 'playlist',
+        route: 'InSights/Home/playlist',
+        isToolbarDisplay: true
+      },
+      {
+        displayName: 'Health Check',
+        iconName: 'playlist',
+        route: 'InSights/Home/playlist',
+        isToolbarDisplay: true
       },
       {
         displayName: 'Admin',
         iconName: 'admin',
-        route: 'InSights/Home/admin'
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
       },
+    ];
+    this.navItems2 = [
       {
+        displayName: 'Help',
+        iconName: 'help',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
+      }, {
         displayName: 'Logout',
         iconName: 'logout',
-        route: 'login'
+        route: 'login',
+        isToolbarDisplay: true
       }
     ];
   }
+
+
+
 
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: AppConfig,
@@ -115,6 +148,12 @@ export class HomeComponent implements OnInit {
 
   onItemSelected(item: NavItem) {
     console.log(item);
+    if (item.isToolbarDisplay != undefined) {
+      this.isToolbarDisplay = item.isToolbarDisplay
+    } else {
+      this.isToolbarDisplay = true;
+    }
+    console.log(item.isToolbarDisplay + "" + this.isToolbarDisplay)
     if (!item.children || !item.children.length) {
       this.router.navigate([item.route]);
     }
