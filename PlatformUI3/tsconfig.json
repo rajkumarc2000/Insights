@@ -16,6 +16,9 @@
       "dom"
     ],
     "module": "es2015",
-    "baseUrl": "./"
+    "baseUrl": "src",
+    "paths": {
+      "@insights/common/*": ["app/common.services/*"] 
+    }
   }
 }

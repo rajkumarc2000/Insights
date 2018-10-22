@@ -31,11 +31,11 @@ import { AdminComponent } from './admin/admin.component';
 import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
 
 import { LoginService } from './login/login.service';
-import { RestAPIurlService } from './common.services/rest-apiurl.service'
-import { RestCallHandlerService } from './common.services/rest-call-handler.service'
-import { AppConfig } from './common.services/app.config';
-import { ImageHandlerService } from './common.services/imageHandler.service';
-import { GrafanaAuthenticationService } from './common.services/grafana-authentication-service';
+import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
+import { RestCallHandlerService } from '@insights/common/rest-call-handler.service'
+import { AppConfig } from '@insights/common/app.config';
+import { ImageHandlerService } from '@insights/common/imageHandler.service';
+import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 
 
 import { CookieService } from 'ngx-cookie-service';
