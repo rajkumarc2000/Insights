@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
+import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { Observable } from 'rxjs';
 
 

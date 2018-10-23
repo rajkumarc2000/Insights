@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
-import { ImageHandlerService  } from '../common.services/imageHandler.service';
+import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
+import { ImageHandlerService  } from '@insights/common/imageHandler.service';
 
 @Injectable()
 export class AppConfig {

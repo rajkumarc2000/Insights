@@ -22,21 +22,20 @@ import {
   MatSelectModule
 } from '@angular/material';
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HomeComponent } from './home/home.component';
-import { PlaylistComponent } from './playlist/playlist.component';
-import { AdminComponent } from './admin/admin.component';
-import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
+import { InsightsAppComponent } from '@insights/app/insights.component';
+import { LoginComponent } from '@insights/app/login/login.component';
+import { PageNotFoundComponent } from '@insights/app/page-not-found/page-not-found.component';
+import { HomeComponent } from '@insights/app/home/home.component';
+import { PlaylistComponent } from '@insights/app/playlist/playlist.component';
+import { AdminComponent } from '@insights/app/admin/admin.component';
+import { MenuListItemComponent } from '@insights/app/menu-list-item/menu-list-item.component';
 
-import { LoginService } from './login/login.service';
+import { LoginService } from '@insights/app/login/login.service';
 import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service'
 import { AppConfig } from '@insights/common/app.config';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
-
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -57,7 +56,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
+    InsightsAppComponent,
     LoginComponent,
     PageNotFoundComponent,
     HomeComponent,
@@ -99,6 +98,6 @@ const appRoutes: Routes = [
     CookieService
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [InsightsAppComponent]
 })
-export class AppModule { }
+export class InsightsAppModule { }

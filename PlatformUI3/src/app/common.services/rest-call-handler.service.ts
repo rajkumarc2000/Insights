@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
-import { RestAPIurlService } from '../common.services/rest-apiurl.service'
+import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { CommonModule } from '@angular/common';

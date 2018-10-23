@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service'
-import { AppConfig } from '../common.services/app.config'
-import { RestAPIurlService } from '../common.services/rest-apiurl.service'
-import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
+import { LoginService } from '@insights/app/login/login.service'
+import { AppConfig } from '@insights/common/app.config'
+import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
+import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

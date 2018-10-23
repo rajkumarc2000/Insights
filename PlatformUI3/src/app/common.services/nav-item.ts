@@ -1,4 +1,4 @@
-export interface NavItem {
+export class NavItem {
   displayName: string;
   disabled?: boolean;
   iconName: string;

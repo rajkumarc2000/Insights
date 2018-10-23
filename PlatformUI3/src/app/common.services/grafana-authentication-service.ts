@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
-import { RestCallHandlerService } from '../common.services/rest-call-handler.service';
+import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-/*export interface IAuthenticationService {
+export interface IAuthenticationService {
     getAuthentication(authToken: string, msg: string): void;
     validateSession(): void;
     logout(): Promise<any>;
     getGrafanaCurrentOrgAndRole(): Promise<any>;
-    getCurrentUserOrgs(): Promise<any>
+    getCurrentUserOrgs(): Promise<any>;
+    getUsers(): Promise<any> ;
 }
- implements IAuthenticationService
-*/
+ 
+
 @Injectable()
-export class GrafanaAuthenticationService {
+export class GrafanaAuthenticationService implements IAuthenticationService {
     response: any;
     location: Location;
     constructor(location: Location, private router: Router,
@@ -68,5 +69,10 @@ export class GrafanaAuthenticationService {
     public getCurrentUserOrgs(): Promise<any> {
         var restHandler = this.restCallHandlerService;
         return restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_CURRENT_USER_ORGS");
+    }
+
+   public getUsers(): Promise<any> {
+            var restHandler = this.restCallHandlerService;
+             return restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_USERS");
     }
 }

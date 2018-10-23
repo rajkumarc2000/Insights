@@ -1,9 +1,9 @@
 import { Component, ViewChild, HostBinding, Input, ElementRef, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
-import { GrafanaAuthenticationService } from '../common.services/grafana-authentication-service';
+import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 import { CookieService } from 'ngx-cookie-service';
-import { AppConfig } from '../common.services/app.config'
+import { AppConfig } from '@insights/common/app.config'
 import { Router } from '@angular/router';
-import { NavItem } from '../common.services/nav-item';
+import { NavItem } from '@insights/common/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -40,88 +40,14 @@ export class HomeComponent implements OnInit {
   @Input() item: NavItem;
   @Input() depth: number;
   navItems: NavItem[] = [];
-  navItems2: NavItem[] = [];
+  navItemsBottom: NavItem[] = [];
+  navOrgList: NavItem[] = [];
+  orgList = [];
+  selectedApp: string;
+  defaultOrg: number;
+  sidenavWidth: number = 14;
 
   ngOnInit() {
-    this.navItems = [
-      {
-        displayName: 'Dashboard',
-        iconName: '',
-        route: 'InSights/Home/admin',
-        children: [
-          {
-            displayName: 'Grafana',
-            iconName: 'grafana',
-            route: 'InSights/Home/admin',
-            children: [
-              {
-                displayName: 'Swithch Org',
-                iconName: 'feature',
-                route: 'InSights/Home/admin',
-                isToolbarDisplay: false
-              }
-            ]
-          },
-          {
-            displayName: 'ML Capability',
-            iconName: 'feature',
-            route: 'InSights/Home/admin',
-          },
-          {
-            displayName: 'InSights',
-            iconName: 'feature',
-            route: 'InSights/Home/admin',
-          },
-          {
-            displayName: 'Devops Matuarity',
-            iconName: 'feature',
-            route: 'InSights/Home/admin'
-          },
-          {
-            displayName: 'BlockChain Development',
-            iconName: 'feature',
-            route: 'InSights/Home/admin'
-          }
-        ]
-      },
-      {
-        displayName: 'Playlist',
-        iconName: 'playlist',
-        route: 'InSights/Home/playlist',
-        isToolbarDisplay: true
-      },
-      {
-        displayName: 'Data Dictionary',
-        iconName: 'playlist',
-        route: 'InSights/Home/playlist',
-        isToolbarDisplay: true
-      },
-      {
-        displayName: 'Health Check',
-        iconName: 'playlist',
-        route: 'InSights/Home/playlist',
-        isToolbarDisplay: true
-      },
-      {
-        displayName: 'Admin',
-        iconName: 'admin',
-        route: 'InSights/Home/admin',
-        isToolbarDisplay: true
-      },
-    ];
-    this.navItems2 = [
-      {
-        displayName: 'Help',
-        iconName: 'help',
-        route: 'InSights/Home/admin',
-        isToolbarDisplay: true
-      }, {
-        displayName: 'Logout',
-        iconName: 'logout',
-        route: 'login',
-        isToolbarDisplay: true
-      }
-    ];
   }
 
 
@@ -144,6 +70,7 @@ export class HomeComponent implements OnInit {
     }
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
+    this.loadorganizations();
   }
 
   onItemSelected(item: NavItem) {
@@ -193,6 +120,145 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+
+  public async loadorganizations() {
+    var self = this;
+    let orgResponse = await this.grafanaService.getCurrentUserOrgs();
+    let userResponse = await this.grafanaService.getUsers()
+    console.log(orgResponse.data);
+    console.log(userResponse.data);
+    // .then(function (orgData) 
+    if (orgResponse.data != undefined) {
+      var orgDataArray = orgResponse.data;
+      this.orgList = orgDataArray;
+      if (userResponse.data != undefined) {
+        var grafanaOrgId = userResponse.data.orgId;
+        console.log(grafanaOrgId);
+        /* this.defaultOrg = grafanaOrgId;
+         for (var key in this.orgList) {
+           var orgDtl = this.orgList[key];
+           if (orgDtl.id === grafanaOrgId) {
+             this.selectedApp = orgDtl.name;
+           }
+         }*/
+        // self.getDashboards();
+
+      }
+      for (var key in this.orgList) {
+        var orgDtl = this.orgList[key];
+        var navItemobj = new NavItem();
+        navItemobj.displayName = orgDtl.name;
+        navItemobj.iconName = orgDtl.orgId;
+        navItemobj.route = orgDtl.orgId;
+        this.navOrgList.push(navItemobj);
+      }
+      console.log(this.navOrgList);
+      //.then(function (userData) 
+
+      // );
+    }
+    console.log(this.selectedApp);
+    console.log(this.orgList);
+    this.loadMenuItem();
+  }
+
+  public loadMenuItem() {
+
+    this.navItems = [
+      {
+        displayName: 'Dashboard',
+        iconName: '',
+        route: 'InSights/Home/admin',
+        children: [
+          {
+            displayName: 'Grafana',
+            iconName: 'grafana',
+            route: 'InSights/Home/admin',
+            children: [
+              {
+                displayName: 'Swithch Org',
+                iconName: 'switch_org',
+                route: 'InSights/Home/admin',
+                isToolbarDisplay: false,
+                children: this.navOrgList,
+              }
+            ]
+          },
+          {
+            displayName: 'ML Capability',
+            iconName: 'feature',
+            route: 'InSights/Home/admin',
+          },
+          {
+            displayName: 'InSights',
+            iconName: 'feature',
+            route: 'InSights/Home/admin',
+          },
+          {
+            displayName: 'Devops Matuarity',
+            iconName: 'feature',
+            route: 'InSights/Home/admin'
+          },
+          {
+            displayName: 'BlockChain Development',
+            iconName: 'feature',
+            route: 'InSights/Home/admin'
+          }
+        ]
+      },
+      {
+        displayName: 'Playlist',
+        iconName: 'feature',
+        route: 'InSights/Home/playlist',
+        isToolbarDisplay: true
+      },
+      {
+        displayName: 'Data Dictionary',
+        iconName: 'feature',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
+      },
+      {
+        displayName: 'Health Check',
+        iconName: 'feature',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
+      },
+      {
+        displayName: 'Admin',
+        iconName: 'admin',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
+      },
+      {
+        displayName: 'Help',
+        iconName: 'help',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
+      },
+      {
+        displayName: 'Logout',
+        iconName: 'logout',
+        route: 'login',
+        isToolbarDisplay: true
+      }
+    ];
+    /*this.navItemsBottom = [
+      {
+        displayName: 'Help',
+        iconName: 'help',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true
+      }, {
+        displayName: 'Logout',
+        iconName: 'logout',
+        route: 'login',
+        isToolbarDisplay: true
+      }
+    ];*/
+
+  }
+
   public logout(): void {
     var self = this;
     var uniqueString = "grfanaLoginIframe";

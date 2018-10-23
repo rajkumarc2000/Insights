@@ -21,7 +21,6 @@
 .mat-list-item{
   color: white;
   opacity: 0.8;
-  padding: 1px 0;
 }
 
 .mat-nav-list{
@@ -50,6 +49,9 @@
 .mat-toolbar-row, .mat-toolbar-single-row {
     height: 40px;
 }
+.mat-card-image{
+ width:100%
+}
 
 .sidenav-content {
   display: flex;
@@ -75,8 +77,14 @@
     margin-right: 4px;
 }
 
+.mat-sidenav-content{
+  width:100%;
+}
+
 
 #bottomnavg {
+   display: flex;
+   flex-direction: column;
     position: absolute;
     bottom: 0;
 }

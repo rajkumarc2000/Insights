@@ -1,8 +1,8 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { NavItem } from '../common.services/nav-item';
+import { NavItem } from '@insights/common/nav-item';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { HomeComponent } from '../home/home.component';
+import { HomeComponent } from '@insights/app/home/home.component';
 
 @Component({
   selector: 'app-menu-list-item',
