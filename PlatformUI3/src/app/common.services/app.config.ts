@@ -3,21 +3,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
-import { ImageHandlerService  } from '@insights/common/imageHandler.service';
 
 @Injectable()
 export class AppConfig {
 
     location: Location;
-    serviceHost: String;
-    elasticSearchServiceHost: String;
-    neo4jServiceHost: String;
-    grafanaHost: String;
+    static serviceHost: String;
+    static elasticSearchServiceHost: String;
+    static neo4jServiceHost: String;
+    static grafanaHost: String;
     configDesc = {};
 
-    constructor(location: Location, private http: HttpClient, private cookieService: CookieService, 
-    private restHandler: RestCallHandlerService,private imageIconRegistory : ImageHandlerService) {
+    constructor(location: Location, private http: HttpClient, private cookieService: CookieService) {
         this.loadUiServiceLocation();
         this.loadAgentConfigDesc();
     }
@@ -25,7 +22,7 @@ export class AppConfig {
     public loadAgentConfigDesc(): void {
         var self = this;
         var agentConfigJsonUrl = "config/configDesc.json"
-        this.restHandler.getJSONUsingObservable(agentConfigJsonUrl).subscribe(data => {
+        this.getJSONUsingObservable(agentConfigJsonUrl).subscribe(data => {
             //console.log(data)
             self.configDesc = data.desriptions;
         });
@@ -34,21 +31,21 @@ export class AppConfig {
     public loadUiServiceLocation(): void {
         var self = this;
         var uiConfigJsonUrl = "config/uiConfig.json"
-        this.restHandler.getJSONUsingObservable(uiConfigJsonUrl).subscribe(data => {
+        this.getJSONUsingObservable(uiConfigJsonUrl).subscribe(data => {
             //console.log(data)
-            self.serviceHost = data.serviceHost;
-            self.elasticSearchServiceHost = data.elasticSearchServiceHost;
-            self.neo4jServiceHost = data.neo4jServiceHost;
-            self.grafanaHost = data.grafanaHost;
+            AppConfig.serviceHost = data.serviceHost;
+            AppConfig.elasticSearchServiceHost = data.elasticSearchServiceHost;
+            AppConfig.neo4jServiceHost = data.neo4jServiceHost;
+            AppConfig.grafanaHost = data.grafanaHost;
         });
         console.log(location.host)
     }
 
     public getServiceHost(): String {
-        if (!this.serviceHost) {
-            this.serviceHost = location.protocol + "://" + location.host
+        if (!AppConfig.serviceHost) {
+            AppConfig.serviceHost = location.protocol + "://" + location.host
         }
-        return this.serviceHost;
+        return AppConfig.serviceHost;
     }
 
     public getConfigDesc() {
@@ -56,24 +53,24 @@ export class AppConfig {
     }
 
     public getelasticSearchServiceHost(): String {
-        if (!this.elasticSearchServiceHost) {
-            this.elasticSearchServiceHost = location.protocol + "://" + location.host + ":9200";
+        if (!AppConfig.elasticSearchServiceHost) {
+            AppConfig.elasticSearchServiceHost = location.protocol + "://" + location.host + ":9200";
         }
-        return this.elasticSearchServiceHost;
+        return AppConfig.elasticSearchServiceHost;
     }
 
     public getNeo4jServiceHost(): String {
-        if (!this.neo4jServiceHost) {
-            this.neo4jServiceHost = location.protocol + "://" + location.host + ":7474";
+        if (!AppConfig.neo4jServiceHost) {
+            AppConfig.neo4jServiceHost = location.protocol + "://" + location.host + ":7474";
         }
-        return this.neo4jServiceHost;
+        return AppConfig.neo4jServiceHost;
     }
 
     public getGrafanaHost(): String {
-        if (!this.grafanaHost) {
-            this.grafanaHost = location.protocol + "://" + location.host + ":3000";
+        if (!AppConfig.grafanaHost) {
+            AppConfig.grafanaHost = location.protocol + "://" + location.host + ":3000";
         }
-        return this.grafanaHost;
+        return AppConfig.grafanaHost;
     };
 
 
@@ -84,11 +81,15 @@ export class AppConfig {
         var defaultHeader = { 'Authorization': authToken };
         var restcallUrl = location.protocol + "://" + "localhost:3000" + "/PlatformService/configure/grafanaEndPoint"; location.host
 
-       /* this.http.get(restcallUrl).subscribe(data => {
-            console.log(data);
-            resource = data;
-        });;*/
+        /* this.http.get(restcallUrl).subscribe(data => {
+             console.log(data);
+             resource = data;
+         });;*/
         return this.http.get(restcallUrl).toPromise();
 
     }
+
+    public getJSONUsingObservable(url): Observable<any> {
+		return this.http.get(url)
+	}
 }

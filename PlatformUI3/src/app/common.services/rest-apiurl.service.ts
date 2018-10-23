@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import { AppConfig } from '@insights/common/app.config';
 
 export interface IRestAPIUrlService {
-        getRestCallUrl(moduleUrlKey: string): string;
+        getRestCallUrl(moduleUrlKey: String): String;
 }
 
 @Injectable()
@@ -108,7 +108,7 @@ export class RestAPIurlService implements IRestAPIUrlService {
             this.addEndPoint("DATA_DICTIONARY_TOOLS_RELATIONSHIPS", '/PlatformService/datadictionary/getToolsRelationshipAndProperties');
         }
 
-       public addEndPoint(name: string, url: string) {
+       public addEndPoint(name: String, url: String) {
            if (!this.apiMap.has(name)) {
                 this.apiMap.set(name,url);
             } else {
@@ -117,10 +117,11 @@ export class RestAPIurlService implements IRestAPIUrlService {
        }
 
 
-       public getRestCallUrl(moduleUrlKey: string) {
+       public getRestCallUrl(moduleUrlKey: String) {
            if (!this.apiMap.has(moduleUrlKey)) {
                 throw new Error("Url Mapping doesnt exist");
             }
-           return  'http://localhost:8080' + this.apiMap.get(moduleUrlKey);//this.restEndpointService.getServiceHost(); 
+            console.log(AppConfig.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString()));
+           return  AppConfig.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString()); 
         }
 }
