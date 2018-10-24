@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit, ILoginComponent {
   loginForm: FormGroup;
   imageAlt: String = "";
 
-  constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
-    private config: AppConfig, private restCallHandlerService: RestCallHandlerService,
+  constructor(private loginService: LoginService, private config: AppConfig,
+    private restAPIUrlService: RestAPIurlService,private restCallHandlerService: RestCallHandlerService,
     private cookieService: CookieService, private router: Router) {
     this.getAsyncData();
 
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
       } else {
-        this.imageSrc = '/icons/svg/landingPage/CognizantLogo.svg';
+        this.imageSrc = 'icons/svg/landingPage/CognizantLogo.svg';
         this.imageAlt = 'Cognizant log';
       }
     } catch (error) {
@@ -100,6 +100,8 @@ export class LoginComponent implements OnInit, ILoginComponent {
             }
             //self.$cookies.put('grafanaCookies',{'grafanaOrg':grafcookies.grafanaOrg,'grafanaRole':grafcookies.grafanaRole,'grafana_remember':grafcookies.grafana_remember, 'grafana_sess':grafcookies.grafana_sess, 'grafana_user':grafcookies.grafana_user});
             //self.$cookies.put('cookies', this.cookies);
+            //var grafanaResponse =this.loginService.loginGrafanaFromApp(this.username, this.password);
+            //console.log(grafanaResponse);
             self.router.navigate(['/InSights/Home']);
             var uniqueString = "grfanaLoginIframe";
             var iframe = document.createElement("iframe");
@@ -110,7 +112,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
             // construct a form with hidden inputs, targeting the iframe
             var form = document.createElement("form");
             form.target = uniqueString;
-            form.action = "http://localhost:3000/login";
+            form.action = "http://localhost:3000/login"; //AppConfig.grafanaHost+"/login";
             //form.action = self.restEndpointService.getGrafanaHost() + '/login';
             //console.log(form.action);
             form.method = "POST";
@@ -135,7 +137,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
             form.appendChild(input2);
 
             document.body.appendChild(form);
-            form.submit();
+            //form.submit();
           } else if (data.error.message) {
             self.showThrobber = false;
             self.isLoginError = true;

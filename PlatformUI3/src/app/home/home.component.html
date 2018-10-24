@@ -2,14 +2,14 @@
   <mat-sidenav-container class="sidenav-container" autosize>
     <mat-toolbar *ngIf="isToolbarDisplay" class="toolbar">
       <span class="fill-remaining-space"></span>
-      <img height="20px" width="380px" align="right" src='/icons/svg/homePage/icon_insights_branding_powered_by.svg' alt="Powered By Cognizant OneDevOps | Insights"
+      <img height="20px" width="380px" align="right" src='icons/svg/homePage/icon_insights_branding_powered_by.svg' alt="Powered By Cognizant OneDevOps | Insights"
         style="margin:auto;display:block" />
     </mat-toolbar>
-    <mat-sidenav #sidenav class="sidenav" mode="side" [ngStyle]="{ 'width': isExpanded ? '20%':'5%' }" opened="true">  
+    <mat-sidenav #sidenav class="sidenav" mode="side" [ngStyle]="{ 'width': isExpanded ? '15%':'5%' }" opened="true">  
       <table>
         <tr>
           <td>
-            <img mat-card-image *ngIf="isExpanded" height="40px" width="100px" src='/icons/svg/homePage/Cognizant_Logo_Reversed.svg'
+            <img mat-card-image *ngIf="isExpanded" height="25px" width="81px" src='icons/svg/homePage/Cognizant_Logo_Reversed.svg'
               alt="Cognizant log" style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
           </td>
           <td>
@@ -19,7 +19,7 @@
       </table>
       <mat-divider></mat-divider>
       <mat-list-item>
-        <img mat-card-image *ngIf="!isExpanded" height="40px" width="38px" align="center" src='/icons/svg/homePage/Insights_Fevicon.svg' 
+        <img mat-card-image *ngIf="!isExpanded" height="40px" width="38px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg' 
         style="margin:auto;display:block;margin-right:auto;margin-left:auto;"/>
       </mat-list-item>
       <mat-divider></mat-divider>
@@ -30,7 +30,7 @@
         </div>
         <mat-divider></mat-divider>
         <div *ngFor="let item of navItems">
-          <a mat-list-item [ngStyle]="{'padding-left': (depth * 10) + 'px'}" (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
+          <a mat-list-item [ngStyle]="{'padding-left': (depth * 4) + 'px'}" (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
             <mat-icon class="routeIcon">{{item.iconName}}</mat-icon>
             <p matLine *ngIf="isExpanded">{{item.displayName}}</p>
             <span fxFlex *ngIf="item.children && item.children.length">
@@ -70,8 +70,8 @@
       </div>-->
 
     </mat-sidenav>
-    <mat-sidenav-content [ngStyle]="{ 'width': isExpanded ? '80%':'95%' }">
-    <P>Welcome to Home page</P>
+    <mat-sidenav-content [ngStyle]="{ 'width': isExpanded ? '85%':'95%' }">
+    <!--<P>Welcome to Home page</P>-->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
       

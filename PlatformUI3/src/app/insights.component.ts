@@ -9,7 +9,6 @@ import { AppConfig } from '@insights/common/app.config';
 
 export class InsightsAppComponent {
   title = 'PlatformUI3';
-  constructor(private config: AppConfig){
-
+  constructor(){
   }
 }

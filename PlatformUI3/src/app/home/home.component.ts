@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
   sidenavWidth: number = 14;
 
   ngOnInit() {
+    console.log("In Home Component A Init");
   }
 
 
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: AppConfig,
     private router: Router) {
+      console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -82,7 +84,12 @@ export class HomeComponent implements OnInit {
     }
     console.log(item.isToolbarDisplay + "" + this.isToolbarDisplay)
     if (!item.children || !item.children.length) {
-      this.router.navigate([item.route]);
+      if(item.iconName=='grafanaOrg'){
+        console.log(item.route);
+        this.router.navigate([item.route]);
+      }else{
+        this.router.navigate([item.route]);
+      }
     }
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
@@ -148,8 +155,8 @@ export class HomeComponent implements OnInit {
         var orgDtl = this.orgList[key];
         var navItemobj = new NavItem();
         navItemobj.displayName = orgDtl.name;
-        navItemobj.iconName = orgDtl.orgId;
-        navItemobj.route = orgDtl.orgId;
+        navItemobj.iconName ='grafanaOrg' ;
+        navItemobj.route = 'InSights/Home/grafanadashboard/'+orgDtl.orgId;
         this.navOrgList.push(navItemobj);
       }
       console.log(this.navOrgList);
@@ -178,7 +185,7 @@ export class HomeComponent implements OnInit {
               {
                 displayName: 'Swithch Org',
                 iconName: 'switch_org',
-                route: 'InSights/Home/admin',
+                route: 'InSights/Home/grafanadashboard',
                 isToolbarDisplay: false,
                 children: this.navOrgList,
               }

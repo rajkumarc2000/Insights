@@ -7,7 +7,7 @@ import { HomeComponent } from '@insights/app/home/home.component';
 @Component({
   selector: 'app-menu-list-item',
   templateUrl: './menu-list-item.component.html',
-  styleUrls: ['./menu-list-item.component.css'],
+  styleUrls: ['../home/home.component.css'],
   animations: [
     trigger('indicatorRotate', [
       state('collapsed', style({ transform: 'rotate(0deg)' })),
@@ -25,7 +25,7 @@ export class MenuListItemComponent {
   @Input() depth: number;
   @Input() isExpanded: boolean = false;
 
-  constructor(private router: Router, private homeController: HomeComponent) {
+  constructor(public router: Router, private homeController: HomeComponent) {
     if (this.depth === undefined) {
       this.depth = 0;
     }

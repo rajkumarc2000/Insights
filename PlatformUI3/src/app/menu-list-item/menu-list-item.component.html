@@ -1,4 +1,4 @@
-<a mat-list-item [ngStyle]="{'padding-left': (depth * 10) + 'px','width.em': 20 + 'px' }" (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
+<a mat-list-item [ngStyle]="{'padding-left': (depth * 4) + 'px','width.em': 20 + 'px' }" (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
   <mat-icon class="routeIcon">{{item.iconName}}</mat-icon>
   <p matLine *ngIf="isExpanded">{{item.displayName}}</p>
   <span fxFlex *ngIf="item.children && item.children.length">

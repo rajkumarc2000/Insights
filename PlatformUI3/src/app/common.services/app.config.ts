@@ -28,16 +28,18 @@ export class AppConfig {
         });
     }
 
-    public loadUiServiceLocation(): void {
+    public async loadUiServiceLocation() {
         var self = this;
         var uiConfigJsonUrl = "config/uiConfig.json"
-        this.getJSONUsingObservable(uiConfigJsonUrl).subscribe(data => {
-            //console.log(data)
-            AppConfig.serviceHost = data.serviceHost;
-            AppConfig.elasticSearchServiceHost = data.elasticSearchServiceHost;
-            AppConfig.neo4jServiceHost = data.neo4jServiceHost;
-            AppConfig.grafanaHost = data.grafanaHost;
-        });
+        let UIConfigResponse = await this.getJSONUsingObservable(uiConfigJsonUrl).toPromise();
+        //subscribe(data => {
+            console.log(UIConfigResponse)
+            AppConfig.serviceHost = UIConfigResponse.serviceHost;
+            AppConfig.elasticSearchServiceHost = UIConfigResponse.elasticSearchServiceHost;
+            AppConfig.neo4jServiceHost = UIConfigResponse.neo4jServiceHost;
+            AppConfig.grafanaHost = UIConfigResponse.grafanaHost;
+       // });
+        console.log(AppConfig.serviceHost);
         console.log(location.host)
     }
 

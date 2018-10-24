@@ -1,12 +1,13 @@
 import { DomSanitizer, BrowserModule, SafeUrl } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule,HttpHeaders} from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
+import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
@@ -38,21 +39,27 @@ import { ImageHandlerService } from '@insights/common/imageHandler.service';
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 
 import { CookieService } from 'ngx-cookie-service';
+import { GrafanaDashboardComponent } from '@insights/app/grafana-dashboard/grafana-dashboard.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-
   { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent },
   {
     path: 'InSights/Home', component: HomeComponent,
     children: [
       { path: 'playlist', component: PlaylistComponent },
       { path: 'admin', component: AdminComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'grafanadashboard/:id', component: GrafanaDashboardComponent }
     ]
   },
   { path: '**', component: PageNotFoundComponent },
 ];
+
+export function initializeApp(appConfig: AppConfig) {
+  return () => appConfig.loadUiServiceLocation();
+}
 
 @NgModule({
   declarations: [
@@ -62,7 +69,8 @@ const appRoutes: Routes = [
     HomeComponent,
     PlaylistComponent,
     AdminComponent,
-    MenuListItemComponent
+    MenuListItemComponent,
+    GrafanaDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +92,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatSidenavModule,
     MatSelectModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes/*,
+      { enableTracing: true }*/)
 
   ],
   providers: [
@@ -95,9 +104,17 @@ const appRoutes: Routes = [
     ImageHandlerService,
     GrafanaAuthenticationService,
     AppConfig,
-    CookieService
+    CookieService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppConfig], multi: true
+    }
 
   ],
   bootstrap: [InsightsAppComponent]
 })
+
+
+
 export class InsightsAppModule { }
