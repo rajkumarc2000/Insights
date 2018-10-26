@@ -28,6 +28,7 @@
       <br>
       <div class="column">
         <img mat-card-image height="40px" width="380px" [src]="imageSrc" [alt]="imageAlt" style="margin:auto;display:block" />
+
         <div class="topTxtCss" layout>
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
@@ -42,16 +43,21 @@
         </div>
       </div>
       <div class="column-image">
-        <img mat-card-image height="100%" width="1px" src="icons/svg/login/vertical_separator_bar.svg" alt="Vertical Image">
+        <!-- <mat-divider [vertical]="true"></mat-divider>
+        <mat-icon svgIcon="verticleLine"></mat-icon> -->
+        <img mat-card-image height="100%" width="1px" src="icons/svg/login/vertical_separator_bar.svg" alt="Vertical Image" />
       </div>
 
 
+
       <div class="column">
+
         <form [formGroup]="loginForm">
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
           <div layout="column" style="width: 360px;">
-
+            <mat-icon svgIcon="user-icon"></mat-icon>
+            &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
               <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss" [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"
                 formControlName="username">
@@ -59,7 +65,9 @@
                   <div [hidden]="!loginForm.controls['username'].errors.required">Username is required.</div>
                 </div>
             </mat-form-field>
-             <br> 
+            <br>
+            <mat-icon svgIcon="password-icon"></mat-icon>
+            &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
               <input matInput placeholder="Password" type="password" name="password" required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
                 class="inputGreyTextCss" formControlName="password">

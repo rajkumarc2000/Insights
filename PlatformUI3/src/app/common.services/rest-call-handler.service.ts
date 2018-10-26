@@ -33,10 +33,10 @@ export class RestCallHandlerService {
     }*/
     const headers = new HttpHeaders()
             .set("Authorization", authToken);
-    console.log(headers);
+    //console.log(headers);
     var restCallUrl = this.constructGetUrl(url, requestParams);
     this.asyncResult = await this.http.get(restCallUrl,{headers}).toPromise(); 
-    console.log(this.asyncResult.toString)
+    //console.log(this.asyncResult.toString)
     return this.asyncResult;
   }
 
@@ -44,7 +44,7 @@ export class RestCallHandlerService {
   public post(url: string, requestParams?: Object, additionalheaders?: Object): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
-    console.log(restCallUrl);
+    //console.log(restCallUrl);
     var dataresponse;
     var headers;
     var authToken = this.cookieService.get('Authorization');

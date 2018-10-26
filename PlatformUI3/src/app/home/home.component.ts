@@ -5,6 +5,7 @@ import { AppConfig } from '@insights/common/app.config'
 import { Router } from '@angular/router';
 import { NavItem } from '@insights/common/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,6 @@ export class HomeComponent implements OnInit {
   userName: String = '';
   userRole: String = '';
   userCurrentOrg: string = '';
-  userCurrentOrgName: string = '';
   showAdminTab: boolean = false;
   isToolbarDisplay: boolean = true;
   showBusinessMapping: boolean = false;
@@ -42,22 +42,21 @@ export class HomeComponent implements OnInit {
   navItems: NavItem[] = [];
   navItemsBottom: NavItem[] = [];
   navOrgList: NavItem[] = [];
+  selectedItem:NavItem;
   orgList = [];
   selectedApp: string;
   defaultOrg: number;
+  selectedOrg : String;
   sidenavWidth: number = 14;
 
   ngOnInit() {
     console.log("In Home Component A Init");
+    console.log(this.selectedOrg);
   }
-
-
-
-
-  constructor(private grafanaService: GrafanaAuthenticationService,
+ constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: AppConfig,
     private router: Router) {
-      console.log("In Home Component");
+      //console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -73,19 +72,24 @@ export class HomeComponent implements OnInit {
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
     this.loadorganizations();
+    console.log(this.selectedOrg);
+    //this.selectedOrg = "";
   }
 
   onItemSelected(item: NavItem) {
     console.log(item);
-    if (item.isToolbarDisplay != undefined) {
+    this.selectedItem=item;
+    this.isToolbarDisplay = item.isToolbarDisplay
+    /*if (item.isToolbarDisplay != undefined) {
       this.isToolbarDisplay = item.isToolbarDisplay
     } else {
       this.isToolbarDisplay = true;
-    }
+    }*/
     console.log(item.isToolbarDisplay + "" + this.isToolbarDisplay)
     if (!item.children || !item.children.length) {
       if(item.iconName=='grafanaOrg'){
         console.log(item.route);
+        this.selectedOrg=(this.selectedItem == undefined ? '' : this.selectedItem.displayName) ;
         this.router.navigate([item.route]);
       }else{
         this.router.navigate([item.route]);
@@ -100,7 +104,7 @@ export class HomeComponent implements OnInit {
     let currentUserResponce: any;
     this.grafanaResponse = await this.grafanaService.getGrafanaCurrentOrgAndRole();
     let self = this;
-    console.log(this.grafanaResponse);
+    //console.log(this.grafanaResponse);
     if (this.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
       this.showAdminTab = true;
     } else {
@@ -119,12 +123,12 @@ export class HomeComponent implements OnInit {
         let filterOrgName = currentUserResponce.data.filter(function (i) {
           return i.orgId == self.userCurrentOrg;
         });
-        console.log(filterOrgName.length > 0);
-        this.userCurrentOrgName = (filterOrgName.length > 0) ? filterOrgName[0].name : null;
-        console.log(this.userCurrentOrgName);
+        //console.log(filterOrgName.length > 0);
+        this.selectedOrg = (filterOrgName.length > 0) ? filterOrgName[0].name : null;
       } else {
         this.router.navigate(['/login']);
       }
+      console.log(this.selectedOrg);
     }
   }
 
@@ -132,8 +136,8 @@ export class HomeComponent implements OnInit {
     var self = this;
     let orgResponse = await this.grafanaService.getCurrentUserOrgs();
     let userResponse = await this.grafanaService.getUsers()
-    console.log(orgResponse.data);
-    console.log(userResponse.data);
+    //console.log(orgResponse.data);
+    //console.log(userResponse.data);
     // .then(function (orgData) 
     if (orgResponse.data != undefined) {
       var orgDataArray = orgResponse.data;
@@ -157,59 +161,62 @@ export class HomeComponent implements OnInit {
         navItemobj.displayName = orgDtl.name;
         navItemobj.iconName ='grafanaOrg' ;
         navItemobj.route = 'InSights/Home/grafanadashboard/'+orgDtl.orgId;
+        navItemobj.isToolbarDisplay=false;
+        navItemobj.showIcon=false;
         this.navOrgList.push(navItemobj);
       }
-      console.log(this.navOrgList);
+      //console.log(this.navOrgList);
       //.then(function (userData) 
 
       // );
     }
     console.log(this.selectedApp);
-    console.log(this.orgList);
+    //console.log(this.orgList);
     this.loadMenuItem();
   }
 
   public loadMenuItem() {
-
+    console.log(" In load menu "+this.selectedOrg);
     this.navItems = [
       {
-        displayName: 'Dashboard',
-        iconName: '',
-        route: 'InSights/Home/admin',
+        displayName: 'Dashboards',
+        iconName: 'feature',
         children: [
           {
-            displayName: 'Grafana',
+            displayName: 'Grafana : ',
             iconName: 'grafana',
-            route: 'InSights/Home/admin',
             children: [
               {
                 displayName: 'Swithch Org',
                 iconName: 'switch_org',
-                route: 'InSights/Home/grafanadashboard',
                 isToolbarDisplay: false,
                 children: this.navOrgList,
               }
             ]
           },
           {
-            displayName: 'ML Capability',
+            displayName: 'ML Capabilities',
             iconName: 'feature',
-            route: 'InSights/Home/admin',
+            route: 'InSights/Home/grafanadashboard/100',
+            isToolbarDisplay: true
           },
           {
             displayName: 'InSights',
             iconName: 'feature',
-            route: 'InSights/Home/admin',
+            route: 'InSights/Home/grafanadashboard/200',
+            isToolbarDisplay: true
           },
           {
-            displayName: 'Devops Matuarity',
+            displayName: 'DevOps Maturity',
             iconName: 'feature',
-            route: 'InSights/Home/admin'
+            route: 'InSights/Home/grafanadashboard/300',
+            isToolbarDisplay: true
           },
           {
             displayName: 'BlockChain Development',
             iconName: 'feature',
-            route: 'InSights/Home/admin'
+            route: 'InSights/Home/grafanadashboard/400',
+            isToolbarDisplay: true
           }
         ]
       },
@@ -217,18 +224,18 @@ export class HomeComponent implements OnInit {
         displayName: 'Playlist',
         iconName: 'feature',
         route: 'InSights/Home/playlist',
-        isToolbarDisplay: true
+        isToolbarDisplay: false
       },
       {
         displayName: 'Data Dictionary',
         iconName: 'feature',
-        route: 'InSights/Home/admin',
+        route: 'InSights/Home/grafanadashboard/500',
         isToolbarDisplay: true
       },
       {
         displayName: 'Health Check',
         iconName: 'feature',
-        route: 'InSights/Home/admin',
+        route: 'InSights/Home/grafanadashboard/600',
         isToolbarDisplay: true
       },
       {
@@ -240,29 +247,33 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'Help',
         iconName: 'help',
-        route: 'InSights/Home/admin',
-        isToolbarDisplay: true
+        route: 'InSights/Home/grafanadashboard/700',
+        isToolbarDisplay: true,
+        showIcon:true
       },
       {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login',
-        isToolbarDisplay: true
+        isToolbarDisplay: true,
+        showIcon:true
       }
     ];
-    /*this.navItemsBottom = [
+    this.navItemsBottom = [
       {
         displayName: 'Help',
         iconName: 'help',
         route: 'InSights/Home/admin',
-        isToolbarDisplay: true
+        isToolbarDisplay: true,
+        showIcon:true
       }, {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login',
-        isToolbarDisplay: true
+        isToolbarDisplay: true,
+        showIcon:true
       }
-    ];*/
+    ];
 
   }
 

@@ -24,6 +24,7 @@ export class MenuListItemComponent {
   @Input() item: NavItem;
   @Input() depth: number;
   @Input() isExpanded: boolean = false;
+  @Input() selectedOrg:String;
 
   constructor(public router: Router, private homeController: HomeComponent) {
     if (this.depth === undefined) {

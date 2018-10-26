@@ -5,22 +5,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatInputModule } from '@angular/material/input';
 import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatMenuModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatCardModule,
-  MatDialogModule,
-  MatProgressSpinnerModule,
-  MatCheckboxModule,
-  MatNativeDateModule,
-  MatSidenavModule,
-  MatSelectModule
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatSelectModule
 } from '@angular/material';
 
 import { InsightsAppComponent } from '@insights/app/insights.component';
@@ -83,6 +84,7 @@ export function initializeApp(appConfig: AppConfig) {
     MatMenuModule,
     MatToolbarModule,
     MatNativeDateModule,
+    MatTableModule,
     MatIconModule,
     MatListModule,
     MatCardModule,

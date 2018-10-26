@@ -4,5 +4,6 @@ export class NavItem {
   iconName: string;
   route?: string;
   children?: NavItem[];
-  isToolbarDisplay?:boolean;
+  isToolbarDisplay?:boolean=true;
+  showIcon?:boolean=false;
 }

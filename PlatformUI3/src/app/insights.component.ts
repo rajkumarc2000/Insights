@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppConfig } from '@insights/common/app.config';
+import { ImageHandlerService } from '@insights/common/imageHandler.service';
 
 @Component({
   selector: 'insights-root',
@@ -9,6 +10,6 @@ import { AppConfig } from '@insights/common/app.config';
 
 export class InsightsAppComponent {
   title = 'PlatformUI3';
-  constructor(){
+  constructor(private imageHandler :ImageHandlerService){
   }
 }

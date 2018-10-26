@@ -1,3 +1,10 @@
+:host ::ng-deep {
+  display: block;
+  font-size: 15px;
+  font-family: Tahoma;
+  font-weight:400;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -9,7 +16,7 @@
   color: #404040;
 }
 
- .sidenav-container {
+.sidenav-container {
   flex: 1;
   color: #404040;
 }
@@ -21,35 +28,80 @@
 .mat-list-item{
   color: white;
   opacity: 0.8;
-  font-size: 16px;
-  
+  font-size: 15px;
+  font-family: Tahoma;
 }
 
 .mat-nav-list{
   color: white;
   opacity: 0.8;
-  font-size: 16px;
+  font-size: 15px;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  font-family: Tahoma;
+  height: 25px
+}
+
+.mat-divider{
+  border-top-color: white
+}
+
+.mat-list-item-ripple{
+  height: 30px
+}
+
+.mat-list-item.active {
+  background-color: lightgray;
+}
+
+.mat-line.active{
+  color: black;
+  font-weight:bold;
+  text-underline-position: below;
 }
 
 .mat-line{
   color: white;
   opacity: 0.8;
-  padding: 10px;
+  padding: 2px !important;
   font-weight:bold; 
-  font-size: 16px;
+  font-size: 15px;
+  font-family: Tahoma;
+}
+
+.mat-line-heading{
+  color: white;
+  opacity: 0.8;
+  padding: 10px !important;
+  font-weight:bold; 
+  font-size: 15px;
   font-family: Tahoma;
 }
 
 .mat-list-text{
-  font-weight:bold; 
-  font-size: 16px;
+  font-weight:500; 
+  font-size: 15px;
   font-family: Tahoma;
 }
 
+.mat-list-item-content{
+ height: 30px !important; 
+}
+.mat-line-child{
+  color: white;
+  opacity: 0.8;
+  padding: 2px !important;
+  font-weight:bold; 
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
 
 .mat-drawer{
   opacity: 0.9;
   background:#404040;
+  overflow: scroll;
+  max-width: 20%;
+  min-width: 5%;
 }
 
 .mat-toolbar {
@@ -61,8 +113,11 @@
 .mat-toolbar-row, .mat-toolbar-single-row {
     height: 40px;
 }
-.mat-card-image{
- width:100%
+
+.mat-card-image,.mat-card-image:first-child{
+ margin:0px !important;
+ align-items: center;
+ width:auto;
 }
 
 .sidenav-content {
@@ -78,6 +133,9 @@
     z-index: 1;
 }
 
+.mat-icon{
+  align-items: flex-end;
+}
 .fill-remaining-space {
   /* This fills the remaining space, by using flexbox. 
      Every toolbar row uses a flexbox row layout. */
@@ -86,17 +144,15 @@
 }
 
 .routeIcon {
-    margin-right: 4px;
+  margin-right: 4px;
 }
 
-.mat-sidenav-content{
-  width:100%;
-}
-
+.active-class { color: red; }
 
 #bottomnavg {
    display: flex;
    flex-direction: column;
-    position: absolute;
-    bottom: 0;
+   position: absolute;
+   bottom: 0;
 }
+

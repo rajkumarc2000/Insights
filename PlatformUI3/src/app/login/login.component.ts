@@ -55,9 +55,9 @@ export class LoginComponent implements OnInit, ILoginComponent {
   async getAsyncData() {
     try {
       var restCallUrl = this.restAPIUrlService.getRestCallUrl("GET_LOGO_IMAGE");
-      console.log(restCallUrl);
+      //console.log(restCallUrl);
       this.resourceImage = await this.restCallHandlerService.getJSON(restCallUrl);
-      console.log(this.resourceImage)
+      //console.log(this.resourceImage)
       //console.log(this.resourceImage.data.encodedString.length)
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
   }
 
   public userAuthentication(): void {
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
     console.log(this.loginForm.value.username + ' ' + this.loginForm.value.password);
     this.username = this.loginForm.value.username;
     this.password = this.loginForm.value.password;

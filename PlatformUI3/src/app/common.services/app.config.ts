@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
+
 @Injectable()
 export class AppConfig {
 
@@ -14,7 +15,8 @@ export class AppConfig {
     static grafanaHost: String;
     configDesc = {};
 
-    constructor(location: Location, private http: HttpClient, private cookieService: CookieService) {
+    constructor(location: Location, private http: HttpClient, 
+    private cookieService: CookieService) {
         this.loadUiServiceLocation();
         this.loadAgentConfigDesc();
     }

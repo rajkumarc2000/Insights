@@ -14,13 +14,11 @@ export class PlaylistComponent implements OnInit {
   mainContentMinHeightWoSbTab: string = 'min-height:' + (window.innerHeight - 146 - 48) + 'px';
   iframeStyle = 'width:100%; height:1500px;';
   playListUrl: SafeResourceUrl;
-  constructor(private restAPIUrlService: RestAPIurlService,
-    private config: AppConfig, private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
+  constructor(private restAPIUrlService: RestAPIurlService,private config: AppConfig, 
+  private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
 
     var self = this;
-    //let response =self.config.getGrafanaHost1();
-      var grafanaEndPoint = "http://localhost:3000"; //response.grafanaEndPoint
-      self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(grafanaEndPoint + '/dashboard/script/iSight.js?url=' + grafanaEndPoint + '/playlists');
+      self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(AppConfig.grafanaHost + '/dashboard/script/iSight.js?url=' + AppConfig.grafanaHost + '/playlists');
       console.log(this.playListUrl)
       console.log(this.playListUrl);
       self.setScrollBarPosition();
