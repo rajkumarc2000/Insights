@@ -1,2 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+body { 
+  font-family: Tahoma;
+  margin: 0;
+}
+
+.basic-container {
+  padding: 5px;
+}
+
+
+
