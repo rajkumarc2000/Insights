@@ -20,25 +20,35 @@
  -->
 
 <div class="whiteBackground">
-  <div class="wfTopAlign">
+  <div layout="column" layout-align="center center" class="wfTopAlign">
 
     <div class="row" flex>
       <!-- <mat-whiteframe class="whiteframeCss" layout> -->
       <div class="blueStripCss"></div>
-      <br>
+      
       <div class="column">
-        <img mat-card-image height="40px" width="380px" [src]="imageSrc" [alt]="imageAlt" style="margin:auto;display:block" />
+        <img mat-card-image height="120px" width="300px" [src]="imageSrc" [alt]="imageAlt" style="margin:0 auto;display:block" />
 
-        <div class="topTxtCss" layout>
+        <div class="topTxtCss">
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
-            <p>Leverage real-time <span class="middleTextColr">Dashboards</span> for the DevOps Journey</p>
+              <p>
+                Leverage real-time
+                <span class="middleTextColr">Dashboards</span>
+                for the
+                <span class="middleTextColr">DevOps Journey</span>
+              </p> 
           </div>
         </div>
-        <div layout>
+        <div class="secondLineTxt">
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
-            <p>Achieve end-to-end <span class="middleTextColr">Traceability</span> across the DevOps Lifecycle</p>
+              <p>
+                  Achieve end-to-end
+                  <span class="middleTextColr">Traceability</span>
+                  across the
+                  <span class="middleTextColr">DevOps Lifecycle</span>
+              </p>
           </div>
         </div>
       </div>
@@ -50,7 +60,7 @@
 
 
 
-      <div class="column">
+      <div class="column-user">
 
         <form [formGroup]="loginForm">
 
