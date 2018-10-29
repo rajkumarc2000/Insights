@@ -83,7 +83,7 @@ export class AppConfig {
         var resource;
         var authToken = this.cookieService.get('Authorization');
         var defaultHeader = { 'Authorization': authToken };
-        var restcallUrl = location.protocol + "://" + "localhost:3000" + "/PlatformService/configure/grafanaEndPoint"; location.host
+        var restcallUrl =  self.getServiceHost() + "/PlatformService/configure/grafanaEndPoint"; 
 
         /* this.http.get(restcallUrl).subscribe(data => {
              console.log(data);

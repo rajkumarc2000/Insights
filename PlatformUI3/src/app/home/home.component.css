@@ -104,6 +104,11 @@
   min-width: 5%;
 }
 
+.webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
 .mat-toolbar {
   opacity: 0.9;
   background: #18191b;

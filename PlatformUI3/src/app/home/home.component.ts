@@ -42,21 +42,21 @@ export class HomeComponent implements OnInit {
   navItems: NavItem[] = [];
   navItemsBottom: NavItem[] = [];
   navOrgList: NavItem[] = [];
-  selectedItem:NavItem;
+  selectedItem: NavItem;
   orgList = [];
   selectedApp: string;
   defaultOrg: number;
-  selectedOrg : String;
+  selectedOrg: String;
   sidenavWidth: number = 14;
 
   ngOnInit() {
     console.log("In Home Component A Init");
     console.log(this.selectedOrg);
   }
- constructor(private grafanaService: GrafanaAuthenticationService,
+  constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: AppConfig,
     private router: Router) {
-      //console.log("In Home Component");
+    //console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -78,21 +78,19 @@ export class HomeComponent implements OnInit {
 
   onItemSelected(item: NavItem) {
     console.log(item);
-    this.selectedItem=item;
+    this.selectedItem = item;
     this.isToolbarDisplay = item.isToolbarDisplay
-    /*if (item.isToolbarDisplay != undefined) {
-      this.isToolbarDisplay = item.isToolbarDisplay
-    } else {
-      this.isToolbarDisplay = true;
-    }*/
     console.log(item.isToolbarDisplay + "" + this.isToolbarDisplay)
     if (!item.children || !item.children.length) {
-      if(item.iconName=='grafanaOrg'){
+      if (item.iconName == 'grafanaOrg') {
         console.log(item.route);
-        this.selectedOrg=(this.selectedItem == undefined ? '' : this.selectedItem.displayName) ;
-        this.router.navigate([item.route]);
-      }else{
-        this.router.navigate([item.route]);
+        this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
+        this.router.navigateByUrl(item.route, { skipLocationChange: true });
+      } else if (item.iconName == 'logout') {
+        this.logout();
+        this.router.navigateByUrl(item.route, { skipLocationChange: true });
+      } else {
+        this.router.navigateByUrl(item.route, { skipLocationChange: true });
       }
     }
     if (item.children && item.children.length) {
@@ -159,10 +157,10 @@ export class HomeComponent implements OnInit {
         var orgDtl = this.orgList[key];
         var navItemobj = new NavItem();
         navItemobj.displayName = orgDtl.name;
-        navItemobj.iconName ='grafanaOrg' ;
-        navItemobj.route = 'InSights/Home/grafanadashboard/'+orgDtl.orgId;
-        navItemobj.isToolbarDisplay=false;
-        navItemobj.showIcon=false;
+        navItemobj.iconName = 'grafanaOrg';
+        navItemobj.route = 'InSights/Home/grafanadashboard/' + orgDtl.orgId;
+        navItemobj.isToolbarDisplay = false;
+        navItemobj.showIcon = false;
         this.navOrgList.push(navItemobj);
       }
       //console.log(this.navOrgList);
@@ -176,7 +174,7 @@ export class HomeComponent implements OnInit {
   }
 
   public loadMenuItem() {
-    console.log(" In load menu "+this.selectedOrg);
+    console.log(" In load menu " + this.selectedOrg);
     this.navItems = [
       {
         displayName: 'Dashboards',
@@ -249,14 +247,14 @@ export class HomeComponent implements OnInit {
         iconName: 'help',
         route: 'InSights/Home/grafanadashboard/700',
         isToolbarDisplay: true,
-        showIcon:true
+        showIcon: true
       },
       {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login',
         isToolbarDisplay: true,
-        showIcon:true
+        showIcon: true
       }
     ];
     this.navItemsBottom = [
@@ -265,13 +263,13 @@ export class HomeComponent implements OnInit {
         iconName: 'help',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
-        showIcon:true
+        showIcon: true
       }, {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login',
         isToolbarDisplay: true,
-        showIcon:true
+        showIcon: true
       }
     ];
 
@@ -289,8 +287,8 @@ export class HomeComponent implements OnInit {
     var form = document.createElement("form");
     form.target = uniqueString;
     this.config.getGrafanaHost1().then(function (response) {
-      form.action = response.grafanaEndPoint + "/logout";
-      // console.log("form action "+form.action);
+      form.action = AppConfig.grafanaHost + "/logout";
+      // console.log("form action "+form.action); //response.grafanaEndPoint
       form.method = "GET";
       document.body.appendChild(form);
       form.submit();
@@ -300,6 +298,7 @@ export class HomeComponent implements OnInit {
         //console.log(data);
       });
     var cookieVal = this.cookieService.getAll();
+    console.log(cookieVal);
     for (var key in cookieVal) {
       cookieVal[key] = '';
       this.cookieService.set(key, cookieVal[key]);
