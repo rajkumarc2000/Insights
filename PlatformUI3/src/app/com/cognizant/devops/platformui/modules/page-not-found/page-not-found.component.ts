@@ -14,18 +14,18 @@
  * the License.
  ******************************************************************************/
 
-import { Component } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'insights-root',
-  templateUrl: './insights.component.html',
-  styleUrls: ['./insights.component.css']
+  selector: 'app-page-not-found',
+  templateUrl: './page-not-found.component.html',
+  styleUrls: ['./page-not-found.component.css']
 })
+export class PageNotFoundComponent implements OnInit {
 
-export class InsightsAppComponent {
-  title = 'PlatformUI3';
-  constructor(){
+  constructor() { }
+
+  ngOnInit() {
   }
+
 }

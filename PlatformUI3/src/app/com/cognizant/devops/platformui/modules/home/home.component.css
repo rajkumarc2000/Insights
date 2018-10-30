@@ -1,0 +1,172 @@
+:host ::ng-deep {
+  display: block;
+  font-size: 18px;
+  font-family: Open Sans,Tahoma;
+  font-weight:400;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #404040;
+}
+
+.sidenav-container {
+  flex: 1;
+  color: #404040;
+}
+
+.sidenav{
+  color: white;
+}
+
+.mat-list-item{
+  color: white;
+  opacity: 0.8;
+  font-size: 18px;
+  font-family: Open Sans,Tahoma;
+  height: 25px !important
+}
+
+.mat-nav-list{
+  color: white;
+  opacity: 0.8;
+  font-size: 18px;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+  font-family: Open Sans,Tahoma;
+  height: 25px !important
+}
+
+.mat-divider{
+  border-top-color: white
+}
+
+.mat-list-item-ripple{
+  height: 30px
+}
+
+.mat-list-item.active {
+  background-color: lightgray;
+}
+
+.mat-line.active{
+  color: black;
+  font-weight:bold;
+  text-underline-position: below;
+}
+
+.mat-line{
+  color: white;
+  opacity: 0.8;
+  padding: 2px !important;
+  font-weight:bold; 
+  font-size: 18px !important;
+  font-family: Open Sans,Tahoma !important;
+}
+
+.mat-line-heading{
+  color: white;
+  opacity: 0.8;
+  padding: 10px !important;
+  font-weight:bold; 
+  font-size: 18px;
+  font-family: Open Sans,Tahoma;
+}
+
+.mat-list-text{
+  font-weight:500; 
+  font-size: 18px;
+  font-family: Open Sans,Tahoma !important;
+}
+
+.mat-list-item-content{
+ height: 30px !important; 
+}
+
+.mat-line-child{
+  color: white;
+  opacity: 0.8;
+  padding: 2px !important;
+  font-weight:bold !important; 
+  font-size: 18px !important;
+  font-family: Open Sans,Tahoma !important;
+}
+
+.mat-drawer{
+  opacity: 0.9;
+  background:#404040;
+  overflow: auto !important;
+  max-width: 20%;
+  min-width: 3%;
+}
+
+.app-menu-list-item{
+  overflow: auto !important;
+}
+
+.webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.mat-toolbar {
+  opacity: 0.9;
+  background: #18191b;
+  color: white;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 40px;
+}
+
+.mat-card-image,.mat-card-image:first-child{
+ margin:0px !important;
+ align-items: center;
+ width:auto;
+}
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #404040;
+  opacity: 0.9;
+}
+
+.toolbar {
+    z-index: 1;
+}
+
+.mat-icon{
+  align-items: flex-end;
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+  text-align: right;
+}
+
+.routeIcon {
+  margin-right: 4px;
+}
+
+.active-class { 
+  color: red; 
+}
+
+#bottomnavg {
+   display: flex;
+   flex-direction: column;
+   position: absolute;
+   bottom: 0;
+}
+

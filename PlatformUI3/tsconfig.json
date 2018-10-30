@@ -18,8 +18,10 @@
     "module": "es2015",
     "baseUrl": "src",
     "paths": {
-      "@insights/common/*": ["app/common.services/*"],
-	  "@insights/app/*": ["app/*"]	  
-    }
+      "@insights/common/*": ["app/com/cognizant/devops/platformui/common.services/*"],
+	  "@insights/app/modules/*": ["app/com/cognizant/devops/platformui/modules/*"],
+	  "@insights/app/login/*": ["app/com/cognizant/devops/platformui/login/*"],
+	  "@insights/app/*": ["app/*"]
+	}
   }
 }

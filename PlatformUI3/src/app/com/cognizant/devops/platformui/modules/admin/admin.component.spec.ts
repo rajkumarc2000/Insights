@@ -14,18 +14,28 @@
  * the License.
  ******************************************************************************/
 
-import { Component } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { AdminComponent } from './admin.component';
 
-@Component({
-  selector: 'insights-root',
-  templateUrl: './insights.component.html',
-  styleUrls: ['./insights.component.css']
-})
+describe('AdminComponent', () => {
+  let component: AdminComponent;
+  let fixture: ComponentFixture<AdminComponent>;
 
-export class InsightsAppComponent {
-  title = 'PlatformUI3';
-  constructor(){
-  }
-}
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ AdminComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AdminComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

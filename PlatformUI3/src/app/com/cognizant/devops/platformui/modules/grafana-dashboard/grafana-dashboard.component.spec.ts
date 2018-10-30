@@ -14,18 +14,28 @@
  * the License.
  ******************************************************************************/
 
-import { Component } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { GrafanaDashboardComponent } from './grafana-dashboard.component';
 
-@Component({
-  selector: 'insights-root',
-  templateUrl: './insights.component.html',
-  styleUrls: ['./insights.component.css']
-})
+describe('GrafanaDashboardComponent', () => {
+  let component: GrafanaDashboardComponent;
+  let fixture: ComponentFixture<GrafanaDashboardComponent>;
 
-export class InsightsAppComponent {
-  title = 'PlatformUI3';
-  constructor(){
-  }
-}
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ GrafanaDashboardComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(GrafanaDashboardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
