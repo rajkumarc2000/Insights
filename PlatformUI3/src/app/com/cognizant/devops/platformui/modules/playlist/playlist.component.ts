@@ -28,16 +28,26 @@ import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/
 })
 export class PlaylistComponent implements OnInit {
   mainContentMinHeightWoSbTab: string = 'min-height:' + (window.innerHeight - 146 - 48) + 'px';
-  iframeStyle = 'width:100%; height:1500px;';
+  iframeStyleAdd = 'width:100%; height:1500px; overflow-x: hidden !important;';
   playListUrl: SafeResourceUrl;
-  constructor(private restAPIUrlService: RestAPIurlService,private config: InsightsInitService, 
-  private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
+  constructor(private restAPIUrlService: RestAPIurlService, private config: AppConfig,
+    private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
 
     var self = this;
-      self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight.js?url=' + InsightsInitService.grafanaHost + '/playlists');
-      console.log(this.playListUrl)
-      console.log(this.playListUrl);
-      self.setScrollBarPosition();
+    var receiveMessage = function (evt) {
+      var height = parseInt(evt.data);
+      if (!isNaN(height)) {
+        self.iframeStyleAdd = 'width:100%; height:' + (evt.data + 20) + 'px !important; overflow-x: hidden !important;';
+        console.log(self.iframeStyleAdd);
+        window.setTimeout(0);
+      }
+    }
+    window.addEventListener('message', receiveMessage, false);
+
+    self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight.js?url=' + InsightsInitService.grafanaHost + '/playlists');
+    // console.log(this.playListUrl)
+    //console.log(this.playListUrl);
+    self.setScrollBarPosition();
   }
   setScrollBarPosition() {
     setTimeout(function () {
