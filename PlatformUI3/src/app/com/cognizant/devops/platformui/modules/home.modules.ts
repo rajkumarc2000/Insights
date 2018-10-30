@@ -16,51 +16,51 @@
 
 import { DomSanitizer, BrowserModule, SafeUrl } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatIconRegistry } from '@angular/material/icon';
 import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InsightsModuleRouting } from '@insights/app/insights.routing';
 import { MaterialModule } from '@insights/app/material.module';
-import { HomeModules } from '@insights/app/modules/home.modules';
+
+
+import { HomeRouting } from '@insights/app/modules/home.routing';
 import { SharedServices } from '@insights/app/shared.services';
-import { InsightsInitService } from '@insights/common/insights-initservice';
 
-import { InsightsAppComponent } from '@insights/app/insights.component';
-import { LoginComponent } from '@insights/app/login/login.component';
+import { HomeComponent } from '@insights/app/modules/home/home.component';
+import { PlaylistComponent } from '@insights/app/modules/playlist/playlist.component';
+import { AdminComponent } from '@insights/app/modules/admin/admin.component';
+import { MenuListItemComponent } from '@insights/app/modules/menu-list-item/menu-list-item.component';
+import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboard/grafana-dashboard.component';
+import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 
-
-
-export function initializeApp(initConfig: InsightsInitService) {
-  return () => initConfig.initMethods();
-}
+import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 
 @NgModule({
   declarations: [
-    InsightsAppComponent,
-    LoginComponent
+    HomeComponent,
+    PlaylistComponent,
+    AdminComponent,
+    MenuListItemComponent,
+    GrafanaDashboardComponent,
+    PageNotFoundComponent
   ],
   imports: [
-    InsightsModuleRouting,
+    HomeRouting,
     BrowserModule,
-    HttpClientModule,
     CommonModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    HomeModules,
     MaterialModule,
-    SharedServices.forRoot()
+    SharedServices
   ],
+
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [InsightsInitService], multi: true
-    }
-  ],
-  bootstrap: [InsightsAppComponent]
+   GrafanaAuthenticationService,
+  ]
 })
 
-export class InsightsAppModule { }
+
+
+export class HomeModules { }

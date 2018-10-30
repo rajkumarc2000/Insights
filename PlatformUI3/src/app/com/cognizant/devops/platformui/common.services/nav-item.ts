@@ -14,18 +14,12 @@
  * the License.
  ******************************************************************************/
 
-import { Component } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
-
-
-@Component({
-  selector: 'insights-root',
-  templateUrl: './insights.component.html',
-  styleUrls: ['./insights.component.css']
-})
-
-export class InsightsAppComponent {
-  title = 'PlatformUI3';
-  constructor(){
-  }
+export class NavItem {
+  displayName: string;
+  disabled?: boolean;
+  iconName: string;
+  route?: string;
+  children?: NavItem[];
+  isToolbarDisplay?:boolean=true;
+  showIcon?:boolean=false;
 }

@@ -14,18 +14,17 @@
  * the License.
  ******************************************************************************/
 
-import { Component } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
+import { Routes, RouterModule } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { LoginComponent } from '@insights/app/login/login.component';
+import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 
 
-@Component({
-  selector: 'insights-root',
-  templateUrl: './insights.component.html',
-  styleUrls: ['./insights.component.css']
-})
+const appRoutes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: PageNotFoundComponent },
+  { path: 'Insights/Home', loadChildren: '@insights/app/modules/home.modules#HomeModules' }
+];
 
-export class InsightsAppComponent {
-  title = 'PlatformUI3';
-  constructor(){
-  }
-}
+export const InsightsModuleRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes);
