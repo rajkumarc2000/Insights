@@ -19,8 +19,8 @@ export class ImageHandlerService implements IImageHandlerService {
     }
 
     public initializeImageIcons() {
-        this.addImage('defaultLogo', "icons/svg/landingPage/CognizantLogo.svg");
-        this.addImage('verticleLine', "icons/svg/login/vertical_separator_bar.svg");
+        this.addImage('defaultLogo', "icons/svg/landingPage/OneDevOps_InsightsLOGO.svg");
+        this.addImage('verticleLine', "icons/svg/login/Vertical_Line.svg");
         /*this.addImage('AdminIconSelected', "icons/svg/landingPage/Admin_icon_selected.svg");
         this.addImage('DashboardIconNormal', "icons/svg/landingPage/Dashboard_icon_normal.svg");
         this.addImage('HealthcheckIconNormal', "icons/svg/landingPage/Healthcheck_icon_normal.svg");
@@ -29,14 +29,16 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('logoutNormal', "icons/svg/landingPage/logout_normal.svg");
         this.addImage('magnifying_glass', "icons/svg/landingPage/magnifying_glass.svg");
         this.addImage('aboutNormal', "icons/svg/landingPage/about_normal.svg");*/
-        this.addImage('user-icon', "icons/svg/login/user_icon_active.svg");
-        this.addImage('password-icon', "icons/svg/login/password_icon_active.svg");
+        this.addImage('user-icon', "icons/svg/login/user_icon.svg");
+        this.addImage('user-icon-active', "icons/svg/login/user_icon_active.svg");
+        this.addImage('password-icon', "icons/svg/login/password_icon.svg");
+        this.addImage('password-icon-active', "icons/svg/login/password_icon_active.svg");
     }
 
 
     public addPathIconRegistry() {
         this.imageMap.forEach((value: string, key: string) => {
-            //console.log(key, value);
+            console.log(key, value);
             this.iconRegistry.addSvgIcon(key, this.sanitizer.bypassSecurityTrustResourceUrl(value));
         });
     }
