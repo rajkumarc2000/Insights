@@ -54,28 +54,28 @@
   color: #0033A0;
   font-size: 22px;
   width: 400px;
-  font-family: Open Sans,Tahoma;
+  font-family: Open Sans;
   margin-top:-22px
 }
 .middleTextColr{
   color: #00B140;
   font-size: 22px;
-  font-family: Open Sans,Tahoma;
+  font-family: Open Sans;
 }
 .inputGreyTextCss{
   font-size: 17px;
-  font-family: Open Sans,Tahoma; 
+  font-family: Open Sans; 
 }
 
 .copyRightCss {
   color: #000000;
    font-size: 10px;
-   font-family: Open Sans,Tahoma;
+   font-family: Open Sans;
    margin-top:30px;
    text-align:center;
 }
 .validCredTextCss{
-  font-family: Open Sans,Tahoma;
+  font-family: Open Sans;
   font-size: 17px;
   color: #0033A0;
   margin-bottom: 20px;
@@ -88,7 +88,7 @@
   min-height: 38px !important;
   min-width: 138px !important;
   font-size: 17px !important;
-  font-family: Open Sans,Tahoma !important;
+  font-family: Open Sans !important;
   border-radius: 0px !important;
   text-transform: initial !important;
   color: white !important;
@@ -99,7 +99,7 @@
   height: 14px;
   margin: -2px;
 }
-.buttomMar{
+.buttonMar{
       margin-bottom: 25px;
 }
 .activeCss {
@@ -140,7 +140,7 @@
 }
 .rgtPnlCss{
   width:482px;
-  padding-left: 25px;  
+  padding-left: 60px;  
   margin-top: 50px;
 }
 .tckCss{
@@ -177,12 +177,12 @@ md-icon {
 .wrnTxt{
   color: #ff8f1c !important;
   font-size: 13px !important;
-  font-family: Open Sans,Tahoma !important
+  font-family: Open Sans !important
 }
 .errTxt{
     color: #df7a1c !important;
     font-size: 16px !important;
-    font-family: Open Sans,Tahoma !important;
+    font-family: Open Sans !important;
     padding-left: 36px;
     padding-bottom: 16px;
     margin-top: -20px;
@@ -206,26 +206,24 @@ md-icon {
     float: left !important;
     width:50%;     
 }
-
 .column-image {
     float:left;
     margin-top: 50px;
 }
-
 .column-user {
   float: left;
-  /*width:30%;*/
-  
 }
-
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
-
 .row {
   margin:0 auto;
   width: 100%;
   height: 100%;
+}
+.logOnBtnAlign {
+  padding-top:50px;
+  padding-left:80px;
 }

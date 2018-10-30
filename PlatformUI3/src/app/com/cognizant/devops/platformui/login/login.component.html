@@ -22,8 +22,7 @@
 <div class="whiteBackground">
   <div layout="column" layout-align="center center" class="wfTopAlign">
 
-    <div class="row" flex>
-      <!-- <mat-whiteframe class="whiteframeCss" layout> -->
+    <div class="row" flex>      
       <div class="blueStripCss"></div>
       
       <div class="column textPad">
@@ -56,16 +55,9 @@
         </div>
       </div>
      
-      <div class="column-image">
-          <!-- <mat-divider [vertical]="true"></mat-divider> -->
-        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '300px', width: '1px'}" ></mat-icon>
-         <!--
-          <img mat-card-image height="300px" width="1px" src="icons/svg/login/Vertical_Line.svg" alt="Vertical Image" />
-         -->
+      <div class="column-image">          
+        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '300px', width: '1px'}" ></mat-icon>       
       </div>
-     
-      
-
 
       <div class="column-user rgtPnlCss" layout-align="center center" layout="column">
 
@@ -73,25 +65,30 @@
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
           <div layout="column" style="width: 360px;">
-            <mat-icon svgIcon="user-icon" class="actvIcoCss disableIcon" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
-            <mat-icon svgIcon="user-icon-active" class="actvIcoCss" *ngIf="username" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
+            <!-- 
+                <mat-icon svgIcon="user-icon" class="actvIcoCss disableIcon" [ngStyle]="{height: '17px', width: '17px'}">
+                </mat-icon> -->
+            <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
              &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" value="username" required placeholder="User Name" class="inputGreyTextCss"
-                     [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}">
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss"
+                      type="text"
+                      formControlName="username"
+                     [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"/>
 
-                <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" class="wrnTxt">
-                  <div [hidden]="!loginForm.controls['username'].errors.required">Username is required.</div>
+                <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" >
+                  <div class="wrnTxt">Please enter a valid username.</div>
                 </div>
             </mat-form-field>
             <br>
-            <mat-icon svgIcon="password-icon"></mat-icon>
+            <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-              <input matInput placeholder="Password" type="password" name="password" required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
-                class="inputGreyTextCss" formControlName="password">
-                <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine " class="wrnTxt">
-                  <div [hidden]="!loginForm.controls['password'].errors.required">Password is required.</div>
+              <input matInput placeholder="Password" type="password" name="password" 
+                    required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
+                    class="inputGreyTextCss" formControlName="password" />
+                <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine ">
+                  <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
                 </div>
             </mat-form-field>
 
@@ -99,20 +96,17 @@
               {{logMsg}}
             </div>
           </div>
-          <mat-card-actions layout="row" class="buttomMar" layout-align="center center">
-            <div flex="60" flex-offset="15">
+          <mat-card-actions layout="row" class="buttonMar" layout-align="center center">
+            <div flex="60" flex-offset="15" class="logOnBtnAlign">
               <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" 
                       (click)="userAuthentication()">LOG ON</button>
               <!--  <span ng-show="loginController.showThrobber" style="vertical-align: super;">  
                 <mat-progress-spinner style="display: inline;" diameter="30" mode="indeterminate"></mat-progress-spinner></span> -->
             </div>
           </mat-card-actions>
-        
-
-
         </form>
       </div>
-      <!-- </md-whiteframe> -->
+      
     </div>
     <div class="greenStripCss"></div>
     <div class="copyRightCss">© 2018 Cognizant Technologies Solutions Limited. All rights reserved.</div>
