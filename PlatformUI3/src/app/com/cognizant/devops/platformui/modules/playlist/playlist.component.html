@@ -4,11 +4,15 @@
   <!--<iframe [src]="playListUrl" [style]="iframeStyle" frameBorder="0" scrolling="no"></iframe>-->
 <!--</mat-card>-->
 
- <mat-card>
+<!-- <mat-card>-->
    <!--<mat-card-header style="border-bottom: 1px solid grey">
      <span class="md-title">Playlist </span>
-   </mat-card-header>-->
-   <mat-card-content>
-     <iframe [src]="playListUrl" [style]="iframeStyle" fscrolling="no"></iframe>
-    </mat-card-content>
- </mat-card>
+   </mat-card-header>
+   [ngStyle]="{ 'width' : '100%' ,  height :'+ frameHeight +'px, overflow-x: hidden' + '!important' }"
+   [ngStyle]="{ 'width':'100%','overflow-x':'hidden' + '!important'}"
+   [ngStyle]="{'padding-left': (depth * 15) + 'px ' + '!important' }"
+   -->
+   <!--<mat-card-content>-->
+     <iframe class="iframe" [style.height.px]="windowHeight"  [style.width.px]="windowWidth" [src]="playListUrl"  fscrolling="no"></iframe>
+  <!--  </mat-card-content>-->
+<!-- </mat-card>-->
