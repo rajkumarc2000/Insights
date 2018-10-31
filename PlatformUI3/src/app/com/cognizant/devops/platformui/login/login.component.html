@@ -1,7 +1,4 @@
-<!--
-  <p>
-  login works!
-</p>
+<!-- 
  *******************************************************************************
  * Copyright 2017 Cognizant Technology Solutions
  * 
@@ -71,10 +68,15 @@
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
              &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss"
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss"
                       type="text"
                       formControlName="username"
-                     [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"/>
+                     />
+                     <!-- 
+                        [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"
+                        [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
+                    
+                      -->
             </mat-form-field>
             <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine"
                   [ngStyle]="{'width':'190px','padding-left':'35px'}" >
@@ -85,8 +87,8 @@
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
               <input matInput placeholder="Password" type="password" name="password" 
-                    required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
-                    class="inputGreyTextCss" formControlName="password" />
+                    required 
+                    class="inputGreyTextCss activeCss" formControlName="password" />
             </mat-form-field>                    
             <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine"
                   [ngStyle]="{'width':'190px','padding-left':'35px'}"> 
