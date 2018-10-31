@@ -39,6 +39,7 @@ export class PlaylistComponent implements OnInit {
     this.windowHeight = (window.screen.height);
     this.windowWidth = (window.screen.width);
     var framesize=window.frames.innerHeight;
+    console.log(window);
     console.log(framesize);
     console.log(this.windowHeight);
     console.log(this.windowWidth)

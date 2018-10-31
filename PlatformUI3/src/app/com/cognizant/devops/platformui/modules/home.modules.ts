@@ -35,6 +35,7 @@ import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboa
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
+import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { GrafanaAuthenticationService } from '@insights/common/grafana-authentic
     AdminComponent,
     MenuListItemComponent,
     GrafanaDashboardComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HealthcheckComponent
   ],
   imports: [
     HomeRouting,

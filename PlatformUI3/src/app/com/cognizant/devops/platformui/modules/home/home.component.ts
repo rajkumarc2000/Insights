@@ -243,13 +243,13 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'Data Dictionary',
         iconName: 'feature',
-        route: 'InSights/Home/grafanadashboard/500',
+        route: 'InSights/Home/grafanadashboard/600',
         isToolbarDisplay: true
       },
       {
         displayName: 'Health Check',
         iconName: 'feature',
-        route: 'InSights/Home/grafanadashboard/600',
+        route: 'InSights/Home/healthcheck',
         isToolbarDisplay: true
       },
       {
