@@ -15,11 +15,14 @@
  ******************************************************************************/
 
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap,UrlSegmentGroup,UrlSegment,UrlTree } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, UrlSegmentGroup, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { InsightsInitService } from '@insights/common/insights-initservice';
+import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
+import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
+
 
 @Component({
   selector: 'app-grafana-dashboard',
@@ -35,26 +38,44 @@ export class GrafanaDashboardComponent implements OnInit {
   selectedOrgUrl: string;
   defaultOrg: number;
   selectedApp: string;
+  framesize: any;
   constructor(private route: ActivatedRoute, private router: Router,
-  private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,private grafanadashboardservice :GrafanaDashboardService,
+    private grafanaService: GrafanaAuthenticationService) {
     var self = this;
-      self.dashboardUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight.js?url=' + InsightsInitService.grafanaHost + '/d/DrPYuKJmz/dynatrace-data?orgId=1');
-      console.log(this.dashboardUrl)
-      console.log(this.dashboardUrl);
-      self.setScrollBarPosition();
-  }
-
-  ngOnInit() {
-    
-    var urlSanpshot=this.route.snapshot['_routerState'].url;
+    var urlSanpshot = this.route.snapshot['_routerState'].url;
     console.log(urlSanpshot);
     const tree: UrlTree = this.router.parseUrl(urlSanpshot);
     const g: UrlSegmentGroup = tree.root.children["primary"];
     const s: UrlSegment[] = g.segments;
     console.log(s);
-    if(s[s.length-1]!=undefined){
-      this.orgId=s[s.length-1].path;
+    if (s[s.length - 1] != undefined) {
+      this.orgId = s[s.length - 1].path;
     }
+    console.log(this.orgId);
+    //this.switchOrganizations(this.orgId)
+    self.dashboardUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/d/DrPYuKJmz/dynatrace-data?orgId=1');//+this.orgId
+    
+    console.log(this.dashboardUrl);
+
+    this.framesize = window.frames.innerHeight;
+
+    var receiveMessage = function (evt) {
+      var height = parseInt(evt.data);
+      if (!isNaN(height)) {
+        self.framesize = (evt.data + 20);
+      }
+    }
+    console.log(this.framesize);
+    window.addEventListener('message', receiveMessage, false);
+
+    console.log(this.framesize);
+    
+    //self.setScrollBarPosition();
+  }
+
+  ngOnInit() {
+
   }
 
   setScrollBarPosition() {
@@ -64,48 +85,50 @@ export class GrafanaDashboardComponent implements OnInit {
   }
 
   /*switchOrganizations(orgId): void {
+      console.log(orgId);
             var self = this;
             self.defaultOrg = orgId;
             self.checkStyle(orgId);
-            self.dashboardService
+            self.grafanadashboardservice
                 .switchUserOrg(orgId)
                 .then(function (selOrgStatus) {
-                    self.$rootScope.refreshDashboard = new Date();
+                    console.log(selOrgStatus);
+                    //self.$rootScope.refreshDashboard = new Date();
                     if (selOrgStatus.status === 'success') {
                         self.getDashboards();
                     }
-                    self.authenticationService.getGrafanaCurrentOrgAndRole()
+                    self.grafanaService.getGrafanaCurrentOrgAndRole()
                         .then(function (data) {
                             if (data.grafanaCurrentOrgRole === 'Admin') {
-                                self.homeController.showAdminTab = true;
+                               /* self.homeController.showAdminTab = true;
                                 if (self.homeController.showInsightsTab) {
                                     self.homeController.selectedIndex = 2;
                                 } else {
                                     self.homeController.selectedIndex = 1;
-                                }
+                                }*
 
                             } else {
-                                self.homeController.showAdminTab = false;
+                                /*self.homeController.showAdminTab = false;
                                 if (self.homeController.showInsightsTab) {
                                     self.homeController.selectedIndex = 1;
                                 } else {
                                     self.homeController.selectedIndex = 0;
-                                }
+                                }*
                             }
 
-                            self.$cookies.put('grafanaRole', data.grafanaCurrentOrgRole);
-                            self.$cookies.put('grafanaOrg', data.grafanaCurrentOrg);
+                            //self.$cookies.put('grafanaRole', data.grafanaCurrentOrgRole);
+                            //self.$cookies.put('grafanaOrg', data.grafanaCurrentOrg);
                             if (data.userName != undefined) {
-                                self.homeController.userName = data.userName.replace(/['"]+/g, '');
+                                //self.homeController.userName = data.userName.replace(/['"]+/g, '');
                             }
-                            self.homeController.userRole = data.grafanaCurrentOrgRole;
+                            /*self.homeController.userRole = data.grafanaCurrentOrgRole;
                             self.homeController.userCurrentOrg = data.grafanaCurrentOrg;
-                            self.authenticationService.getCurrentUserOrgs()
+                            self.grafanaService.getCurrentUserOrgs()
                                 .then(function (orgdata) {
-                                    self.homeController.userCurrentOrgName = orgdata.data.filter(function (i) {
-                                        return i.orgId == self.homeController.userCurrentOrg;
+                                    self.grafanaService.userCurrentOrgName = orgdata.data.filter(function (i) {
+                                        return i.orgId == self.grafanaService.userCurrentOrg;
                                     });
-                                });
+                                });*
                         });
 
 
@@ -124,15 +147,15 @@ export class GrafanaDashboardComponent implements OnInit {
 
         getDashboards() {
             var self = this;
-            this.elasticSearchService
-                .loadKibanaIndex()
+            this.grafanadashboardservice
+                .searchDashboard()
                 .then(function (dashboardData) {
                     var dataArray = dashboardData.dashboards;
                     var model = [];
                     dataArray.forEach(element => {
-                        model.push(new DashboardModel(element.title, element.id, element.url, null, element.title, false));
+                        //model.push(new DashboardModel(element.title, element.id, element.url, null, element.title, false));
                     });
-                    self.dashboards = model;
+                    *self.dashboards = model;
                     self.setSelectedDashboard(model[0]);
                     if (self.homeController.selectedDashboardUrl && self.homeController.selectedDashboardUrl.trim().length != 0) {
                         var dashbmodel = new DashboardModel(null, null, self.homeController.selectedDashboardUrl, null, null, false);
@@ -140,9 +163,9 @@ export class GrafanaDashboardComponent implements OnInit {
                     }
                     if (self.selectedDashboard) {
                         self.dashboardTitle = self.selectedDashboard.title;
-                    }
+                    }*
                 });
-            this.homeController.templateName = 'dashboards';
+            //this.homeController.templateName = 'dashboards';
         }*/
 
 }

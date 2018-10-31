@@ -33,9 +33,11 @@ import { AdminComponent } from '@insights/app/modules/admin/admin.component';
 import { MenuListItemComponent } from '@insights/app/modules/menu-list-item/menu-list-item.component';
 import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboard/grafana-dashboard.component';
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
+import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
-import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
+import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
+
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthch
 
   providers: [
    GrafanaAuthenticationService,
+   GrafanaDashboardService
   ]
 })
 

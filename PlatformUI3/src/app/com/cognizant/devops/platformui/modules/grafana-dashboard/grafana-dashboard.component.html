@@ -1,8 +1,7 @@
 <mat-card>
-   <!--<mat-card-header style="border-bottom: 1px solid grey">
-     <span class="md-title">Playlist </span>
-   </mat-card-header>-->
-   <mat-card-content>
-     <iframe [src]="dashboardUrl" fscrolling="no"></iframe>
-    </mat-card-content>
- </mat-card>
+  <mat-card-content>
+    <div >
+      <iframe class="iframe" [style.height.px]="framesize" [style.width.%]="100" [src]="dashboardUrl" fscrolling="no"></iframe>
+    </div>
+  </mat-card-content>
+</mat-card>

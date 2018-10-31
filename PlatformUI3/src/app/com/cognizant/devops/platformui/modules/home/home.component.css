@@ -101,9 +101,19 @@
 .mat-drawer{
   opacity: 0.9;
   background:#404040;
-  overflow: auto !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
   max-width: 20%;
-  min-width: 3%;
+  min-width: 4%;
+}
+
+.mat-drawer-content,mat-sidenav-content {
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
 .app-menu-list-item{
@@ -119,6 +129,7 @@
   opacity: 0.9;
   background: #18191b;
   color: white;
+  padding-right: 10px;
 }
 
 .mat-toolbar-row, .mat-toolbar-single-row {

@@ -23,7 +23,7 @@ import { Observable } from 'rxjs';
 export class LoginService {
     response: any;
     grafanaresponse: any;
-    constructor(private restCallHandlerService: RestCallHandlerService, ) {
+    constructor(private restCallHandlerService: RestCallHandlerService ) {
     }
 
     public loginUserAuthentication(username: string, password: string): Promise<any> {

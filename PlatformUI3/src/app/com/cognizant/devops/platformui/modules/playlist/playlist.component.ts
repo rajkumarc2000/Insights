@@ -19,6 +19,7 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { MatSidenav } from "@angular/material";
 
 
 @Component({
@@ -30,21 +31,25 @@ export class PlaylistComponent implements OnInit {
   mainContentMinHeightWoSbTab: string = 'min-height:' + (window.innerHeight - 146 - 48) + 'px';
   iframeStyleAdd = "{'height': 1500 +'px '+ '!important' }";
   playListUrl: SafeResourceUrl;
-  windowHeight: any;
-  windowWidth: any;
+  framesize: any;
   constructor(private restAPIUrlService: RestAPIurlService, private config: InsightsInitService,
     private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
     var self = this;
 
-    this.windowHeight = (window.screen.height);
-    this.windowWidth = (window.screen.width);
-    var framesize=window.frames.innerHeight;
-    console.log(window);
-    console.log(framesize);
-    console.log(this.windowHeight);
-    console.log(this.windowWidth)
-
-    self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight.js?url=' + InsightsInitService.grafanaHost + '/playlists');
+    this.framesize = window.frames.innerHeight;
+        
+    var receiveMessage = function (evt) {
+                var height = parseInt(evt.data);
+                if (!isNaN(height)) {
+                    self.framesize =  (evt.data + 20) ;
+                }
+            }
+            console.log(this.framesize);
+    window.addEventListener('message', receiveMessage, false);
+  
+    console.log(this.framesize);
+    
+    self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
     //self.setScrollBarPosition();
   }
 
