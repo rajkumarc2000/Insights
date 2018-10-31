@@ -75,11 +75,11 @@
                       type="text"
                       formControlName="username"
                      [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"/>
-
-                <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" >
-                  <div class="wrnTxt">Please enter a valid username.</div>
-                </div>
             </mat-form-field>
+            <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine"
+                  [ngStyle]="{'width':'190px','padding-left':'35px'}" >
+                <div class="wrnTxt">Please enter a valid username.</div>
+            </div>
             <br>
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
             &nbsp;
@@ -87,11 +87,11 @@
               <input matInput placeholder="Password" type="password" name="password" 
                     required [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
                     class="inputGreyTextCss" formControlName="password" />
-                <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine ">
-                  <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
-                </div>
-            </mat-form-field>
-
+            </mat-form-field>                    
+            <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine"
+                  [ngStyle]="{'width':'190px','padding-left':'35px'}"> 
+              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
+            </div>
             <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">
               {{logMsg}}
             </div>

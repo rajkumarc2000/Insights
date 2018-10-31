@@ -55,7 +55,7 @@
   font-size: 22px;
   width: 400px;
   font-family: Open Sans;
-  margin-top:-22px
+  margin-top:-25px
 }
 .middleTextColr{
   color: #00B140;
@@ -185,7 +185,7 @@ md-icon {
     font-family: Open Sans !important;
     padding-left: 36px;
     padding-bottom: 16px;
-    margin-top: -20px;
+    
 }
 .bottom-to-top {
     border-width: 1px;
