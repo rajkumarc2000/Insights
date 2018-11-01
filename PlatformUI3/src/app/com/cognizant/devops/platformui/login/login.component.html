@@ -19,41 +19,39 @@
 <div class="whiteBackground">
   <div layout="column" layout-align="center center" class="wfTopAlign">
 
-    <div class="row" flex>      
+    <div class="row" flex>
       <div class="blueStripCss"></div>
-      
-      <div class="column textPad">
-        <!-- <img mat-card-image height="120px" width="300px" [src]="imageSrc" [alt]="imageAlt" style="margin:0 auto;display:block" />-->        
-        <mat-icon svgIcon="defaultLogo"  layout layout-align="center center" 
-                  [ngStyle]="{'height':'120px', 'width':'300px', 'margin':'0 auto', 'display':'flex', 'justify-align':'center'}" >
+
+      <div class="column textPad">        
+        <mat-icon svgIcon="defaultLogo" layout layout-align="center center" [ngStyle]="{'height':'120px', 'width':'300px', 'margin':'0 auto', 'display':'flex', 'justify-align':'center'}">
         </mat-icon>
 
         <div class="topTxtCss">
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
-              <p>
-                Leverage real-time
-                <span class="middleTextColr">Dashboards</span>
-                for the
-                <span class="middleTextColr">DevOps Journey</span>
-              </p> 
+            <p>
+              Leverage real-time
+              <span class="middleTextColr">Dashboards</span>
+              for the
+              <span class="middleTextColr">DevOps Journey</span>
+            </p>
           </div>
         </div>
         <div class="secondLineTxt">
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
-              <p>
-                  Achieve end-to-end
-                  <span class="middleTextColr">Traceability</span>
-                  across the
-                  <span class="middleTextColr">DevOps Lifecycle</span>
-              </p>
+            <p>
+              Achieve end-to-end
+              <span class="middleTextColr">Traceability</span>
+              across the
+              <span class="middleTextColr">DevOps Lifecycle</span>
+            </p>
           </div>
         </div>
       </div>
-     
-      <div class="column-image">          
-        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '300px', width: '1px'}" ></mat-icon>       
+
+      <div class="column-image">
+        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '300px', width: '1px'}"></mat-icon>
       </div>
 
       <div class="column-user rgtPnlCss" layout-align="center center" layout="column">
@@ -61,37 +59,23 @@
         <form [formGroup]="loginForm">
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
-          <div layout="column" style="width: 360px;">
-            <!-- 
-                <mat-icon svgIcon="user-icon" class="actvIcoCss disableIcon" [ngStyle]="{height: '17px', width: '17px'}">
-                </mat-icon> -->
+          <div layout="column" style="width: 360px;">          
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
-             &nbsp;
+            &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss"
-                      type="text"
-                      formControlName="username"
-                     />
-                     <!-- 
-                        [ngClass]="{'activeCss': username != '', 'inactiveCss': username == null}"
-                        [ngClass]="{'activeCss': password != '', 'inactiveCss': password == null}"
-                    
-                      -->
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text" formControlName="username"/>            
             </mat-form-field>
-            <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine"
-                  [ngStyle]="{'width':'190px','padding-left':'35px'}" >
-                <div class="wrnTxt">Please enter a valid username.</div>
+            <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
+              <div class="wrnTxt">Please enter a valid username.</div>
             </div>
             <br>
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-              <input matInput placeholder="Password" type="password" name="password" 
-                    required 
-                    class="inputGreyTextCss activeCss" formControlName="password" />
-            </mat-form-field>                    
-            <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine"
-                  [ngStyle]="{'width':'190px','padding-left':'35px'}"> 
+              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss" formControlName="password"
+              />
+            </mat-form-field>
+            <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
             </div>
             <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">
@@ -100,15 +84,14 @@
           </div>
           <mat-card-actions layout="row" class="buttonMar" layout-align="center center">
             <div flex="60" flex-offset="15" class="logOnBtnAlign">
-              <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" 
-                      (click)="userAuthentication()">LOG ON</button>
+              <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" (click)="userAuthentication()">LOG ON</button>
               <!--  <span ng-show="loginController.showThrobber" style="vertical-align: super;">  
                 <mat-progress-spinner style="display: inline;" diameter="30" mode="indeterminate"></mat-progress-spinner></span> -->
             </div>
           </mat-card-actions>
         </form>
       </div>
-      
+
     </div>
     <div class="greenStripCss"></div>
     <div class="copyRightCss">© 2018 Cognizant Technologies Solutions Limited. All rights reserved.</div>
