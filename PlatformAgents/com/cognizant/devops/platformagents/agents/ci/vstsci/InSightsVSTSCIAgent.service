@@ -1,0 +1,10 @@
+[Unit]
+Description=Ubuntu VSTSCIAgent Service
+
+[Service]
+Type=forking
+ExecStart=/bin/bash /opt/insightsagents/PlatformAgents/vstsci/InSightsVSTSCIAgent.sh start
+ExecStop=/bin/bash /opt/insightsagents/PlatformAgents/vstsci/InSightsVSTSCIAgent.sh stop
+
+[Install]
+WantedBy=multi-user.target
