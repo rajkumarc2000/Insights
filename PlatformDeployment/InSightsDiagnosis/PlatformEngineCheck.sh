@@ -25,8 +25,8 @@ else
       else
          echo "PlatformEngine.jar not found" >> PlatformEngine.log
      fi
-     error=$(grep 'ERROR' $INSIGHTSENGINE_HOME/log4j.log|tail -10)
-     if [[ -z "$err" ]]; then
+     error=$(grep 'ERROR' /usr/INSIGHTS_HOME/logs/PlatformEngine/PlatformEngine.log |tail -10)
+     if [[ -z "$error" ]]; then
         echo "No error found" >> PlatformEngine.log
      else
         echo -e "Error found:\n$error" >> PlatformEngine.log
