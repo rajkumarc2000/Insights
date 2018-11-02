@@ -72,8 +72,9 @@
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss" formControlName="password"
-              />
+                <input matInput placeholder="Password" type="password" name="password" required 
+                      class="inputGreyTextCss activeCss" formControlName="password"
+                      autocomplete="new-password"/>
             </mat-form-field>
             <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
