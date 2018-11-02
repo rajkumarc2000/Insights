@@ -17,7 +17,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
 import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { CommonModule } from '@angular/common';
 
@@ -80,6 +80,7 @@ export class RestCallHandlerService {
         if (data && Object.keys(data).length !== 0 && data.constructor == Object) {
           var postParameter = '';
           for (var key in data) {
+            console.log(key+""+ requestParams[key]);
             if (data.hasOwnProperty(key)) {
               postParameter = postParameter.concat(key + '=' + requestParams[key] + '&');
             }
@@ -90,16 +91,8 @@ export class RestCallHandlerService {
         return;
       }
     }
+    console.log(allData)
     dataresponse = this.http.post(restCallUrl, {}, allData);
-    /*subscribe((response: HttpResponse<any>) => { 
-      
-     });*/
-
-    /*.subscribe(dataobjresponse => {
-      console.log(dataobjresponse.toString)
-      dataresponse=dataobjresponse;
-    });*/
-
     return dataresponse;
 
   }
@@ -109,37 +102,35 @@ export class RestCallHandlerService {
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
     //console.log(restCallUrl);
     var dataresponse;
-    var headers;
+    let headers;
     var authToken = this.cookieService.get('Authorization');
-    /*var defaultHeader = {
-      'Authorization': authToken
-    };
-    if (this.checkValidObject(additionalheaders)) {
-      headers = this.extend(defaultHeader, additionalheaders);
-    } else {
-      headers = defaultHeader;
+
+    let params = new HttpParams();
+
+    for (var key in requestParams) {
+      // console.log(key + " " + requestParams[key]);
+      if (requestParams.hasOwnProperty(key)) {
+        params = params.set(key, requestParams[key]);
+      }
     }
-    headers = defaultHeader;*/
+
+    headers = new HttpHeaders();
+    headers = headers.set('Authorization', authToken);
+
+    for (var key in additionalheaders) {
+      //console.log(key + " " + additionalheaders[key]);
+      if (headers.hasOwnProperty(key)) {
+        headers = headers.set(key, additionalheaders[key]);
+      }
+    }
     var httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': authToken,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      })
+      headers: headers,
+      params: params
     }
-    
-      dataresponse=this.http.post(restCallUrl, requestParams, httpOptions);
-      /*subscribe((response: HttpResponse<any>) => { 
-        
-       });*/
+    dataresponse = this.http.post(restCallUrl, {}, httpOptions);
+    return dataresponse;
 
-      /*.subscribe(dataobjresponse => {
-        console.log(dataobjresponse.toString)
-        dataresponse=dataobjresponse;
-      });*/
-
-      return dataresponse;
-
-    }
+  }
 
   private extend(obj: Object, src: Object) {
     for (var key in src) {

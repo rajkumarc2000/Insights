@@ -22,150 +22,176 @@ import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
+import { GrafanaDashboardMode } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-model';
+import { CookieService } from 'ngx-cookie-service';
+import { HomeComponent } from '@insights/app/modules/home/home.component';
 
 
 @Component({
-  selector: 'app-grafana-dashboard',
-  templateUrl: './grafana-dashboard.component.html',
-  styleUrls: ['./grafana-dashboard.component.css']
+    selector: 'app-grafana-dashboard',
+    templateUrl: './grafana-dashboard.component.html',
+    styleUrls: ['./grafana-dashboard.component.css']
 })
 export class GrafanaDashboardComponent implements OnInit {
-  orgId: string;
-  routeParameter: Observable<any>;
-  dashboardUrl: SafeResourceUrl;
-  iSightDashboards = [];
-  dashboardTitle: string;
-  selectedOrgUrl: string;
-  defaultOrg: number;
-  selectedApp: string;
-  framesize: any;
-  constructor(private route: ActivatedRoute, private router: Router,
-    private sanitizer: DomSanitizer,private grafanadashboardservice :GrafanaDashboardService,
-    private grafanaService: GrafanaAuthenticationService) {
-    var self = this;
-    var urlSanpshot = this.route.snapshot['_routerState'].url;
-    console.log(urlSanpshot);
-    const tree: UrlTree = this.router.parseUrl(urlSanpshot);
-    const g: UrlSegmentGroup = tree.root.children["primary"];
-    const s: UrlSegment[] = g.segments;
-    console.log(s);
-    if (s[s.length - 1] != undefined) {
-      this.orgId = s[s.length - 1].path;
-    }
-    console.log(this.orgId);
-    //this.switchOrganizations(this.orgId)
-    self.dashboardUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/d/DrPYuKJmz/dynatrace-data?orgId=1');//+this.orgId
-    
-    console.log(this.dashboardUrl);
+    orgId: string;
+    routeParameter: Observable<any>;
+    dashboardUrl: SafeResourceUrl;
+    iSightDashboards = [];
+    dashboardTitle: string;
+    selectedOrgUrl: string;
+    defaultOrg: number;
+    selectedApp: string;
+    framesize: any;
+    selectedDashboardUrl: string = '';
+    selectedDashboard: GrafanaDashboardMode;
+    dashboards = [];
+    constructor(private route: ActivatedRoute, private router: Router,
+        private sanitizer: DomSanitizer, private grafanadashboardservice: GrafanaDashboardService,
+        private grafanaService: GrafanaAuthenticationService, private cookieService: CookieService, 
+        private homeController: HomeComponent) {
+        var self = this;
+        this.framesize = window.frames.innerHeight;
 
-    this.framesize = window.frames.innerHeight;
-
-    var receiveMessage = function (evt) {
-      var height = parseInt(evt.data);
-      if (!isNaN(height)) {
-        self.framesize = (evt.data + 20);
-      }
-    }
-    console.log(this.framesize);
-    window.addEventListener('message', receiveMessage, false);
-
-    console.log(this.framesize);
-    
-    //self.setScrollBarPosition();
-  }
-
-  ngOnInit() {
-
-  }
-
-  setScrollBarPosition() {
-    setTimeout(function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1000);
-  }
-
-  /*switchOrganizations(orgId): void {
-      console.log(orgId);
-            var self = this;
-            self.defaultOrg = orgId;
-            self.checkStyle(orgId);
-            self.grafanadashboardservice
-                .switchUserOrg(orgId)
-                .then(function (selOrgStatus) {
-                    console.log(selOrgStatus);
-                    //self.$rootScope.refreshDashboard = new Date();
-                    if (selOrgStatus.status === 'success') {
-                        self.getDashboards();
-                    }
-                    self.grafanaService.getGrafanaCurrentOrgAndRole()
-                        .then(function (data) {
-                            if (data.grafanaCurrentOrgRole === 'Admin') {
-                               /* self.homeController.showAdminTab = true;
-                                if (self.homeController.showInsightsTab) {
-                                    self.homeController.selectedIndex = 2;
-                                } else {
-                                    self.homeController.selectedIndex = 1;
-                                }*
-
-                            } else {
-                                /*self.homeController.showAdminTab = false;
-                                if (self.homeController.showInsightsTab) {
-                                    self.homeController.selectedIndex = 1;
-                                } else {
-                                    self.homeController.selectedIndex = 0;
-                                }*
-                            }
-
-                            //self.$cookies.put('grafanaRole', data.grafanaCurrentOrgRole);
-                            //self.$cookies.put('grafanaOrg', data.grafanaCurrentOrg);
-                            if (data.userName != undefined) {
-                                //self.homeController.userName = data.userName.replace(/['"]+/g, '');
-                            }
-                            /*self.homeController.userRole = data.grafanaCurrentOrgRole;
-                            self.homeController.userCurrentOrg = data.grafanaCurrentOrg;
-                            self.grafanaService.getCurrentUserOrgs()
-                                .then(function (orgdata) {
-                                    self.grafanaService.userCurrentOrgName = orgdata.data.filter(function (i) {
-                                        return i.orgId == self.grafanaService.userCurrentOrg;
-                                    });
-                                });*
-                        });
-
-
-
-                });
-
-        }
-
-        checkStyle(orgId: number): string {
-            if (orgId == this.defaultOrg) {
-                return "background-color: #f1f1f1";
-            } else {
-                return "";
+        var receiveMessage = function (evt) {
+            var height = parseInt(evt.data);
+            if (!isNaN(height)) {
+                self.framesize = (evt.data + 20);
             }
         }
+        console.log(this.framesize);
+        window.addEventListener('message', receiveMessage, false);
 
-        getDashboards() {
-            var self = this;
-            this.grafanadashboardservice
-                .searchDashboard()
-                .then(function (dashboardData) {
-                    var dataArray = dashboardData.dashboards;
-                    var model = [];
-                    dataArray.forEach(element => {
-                        //model.push(new DashboardModel(element.title, element.id, element.url, null, element.title, false));
-                    });
-                    *self.dashboards = model;
-                    self.setSelectedDashboard(model[0]);
-                    if (self.homeController.selectedDashboardUrl && self.homeController.selectedDashboardUrl.trim().length != 0) {
-                        var dashbmodel = new DashboardModel(null, null, self.homeController.selectedDashboardUrl, null, null, false);
-                        self.setSelectedDashboard(dashbmodel);
-                    }
-                    if (self.selectedDashboard) {
-                        self.dashboardTitle = self.selectedDashboard.title;
-                    }*
-                });
-            //this.homeController.templateName = 'dashboards';
-        }*/
+        console.log(this.framesize);
+    }
+
+    ngOnInit() {
+        console.log(" In Init for grafana dashboard")
+        this.route.paramMap.subscribe(async (params: ParamMap) => {
+            this.orgId = params.get('id');
+            console.log("orgid works " + this.orgId);
+            this.selectedDashboard=undefined;
+            this.dashboardUrl=undefined;
+            this.dashboards=undefined;
+            this.dashboardTitle=undefined;
+            await this.switchOrganizations(parseInt(this.orgId));
+            if (this.selectedDashboard != undefined) {
+                console.log(this.selectedDashboard);
+                this.selectedDashboard.iframeUrl = this.selectedDashboard.iframeUrl.replace("iSight.js", "iSight_ui3.js");
+                this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
+            } else {
+                this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
+                console.log("No dashboard found,set default dashboardUrl");
+            }
+            console.log(this.dashboardUrl);
+            this.setScrollBarPosition();
+        });
+    }
+
+    setScrollBarPosition() {
+        var self = this;
+        console.log("In scroll function ");
+        this.framesize = window.frames.innerHeight;
+        var receiveMessage = function (evt) {
+            var height = parseInt(evt.data);
+            if (!isNaN(height)) {
+                self.framesize = (evt.data + 20);
+            }
+        }
+        console.log(this.framesize);
+        window.addEventListener('message', receiveMessage, false);
+        console.log(this.framesize);
+        setTimeout(function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 1000);
+    }
+
+    async switchOrganizations(orgId) {
+        var self = this;
+        self.defaultOrg = orgId;
+        var switchorgResponse = await self.grafanadashboardservice.switchUserOrg(orgId);
+        if (switchorgResponse != null) {
+            var currentroleandorg = await self.grafanaService.getGrafanaCurrentOrgAndRole();
+            if (currentroleandorg != null) {
+                if (switchorgResponse.status === 'success') {
+                    var dashboardslist = await this.grafanadashboardservice.searchDashboard();
+                    self.parseDashboards(dashboardslist);
+                }
+                console.log("Role "+currentroleandorg.grafanaCurrentOrgRole);
+                if (currentroleandorg.grafanaCurrentOrgRole === 'Admin') {
+                    /* self.homeController.showAdminTab = true;
+                     if (self.homeController.showInsightsTab) {
+                         self.homeController.selectedIndex = 2;
+                     } else {
+                         self.homeController.selectedIndex = 1;
+                     }*/
+
+                } else {
+                    /*self.homeController.showAdminTab = false;
+                    if (self.homeController.showInsightsTab) {
+                        self.homeController.selectedIndex = 1;
+                    } else {
+                        self.homeController.selectedIndex = 0;
+                    }*/
+                }
+
+                self.cookieService.set('grafanaRole', currentroleandorg.grafanaCurrentOrgRole);
+                self.cookieService.set('grafanaOrg', currentroleandorg.grafanaCurrentOrg);
+                this.homeController.userRole=currentroleandorg.grafanaCurrentOrgRole;
+                
+                if (currentroleandorg.userName != undefined) {
+                    this.homeController.userName=currentroleandorg.userName.replace(/['"]+/g, '');
+                    //self.homeController.userName = data.userName.replace(/['"]+/g, '');
+                }
+                /*self.homeController.userRole = data.grafanaCurrentOrgRole;
+                self.homeController.userCurrentOrg = data.grafanaCurrentOrg;
+                self.grafanaService.getCurrentUserOrgs()
+                    .then(function (orgdata) {
+                        self.grafanaService.userCurrentOrgName = orgdata.data.filter(function (i) {
+                            return i.orgId == self.grafanaService.userCurrentOrg;
+                        });
+                    });*/
+            }
+            // );
+
+
+        }
+        // );
+
+    }
+
+    async parseDashboards(dashboardslist) {
+        var self = this;
+
+        var dataArray = dashboardslist.dashboards;
+        var model = [];
+        if (dataArray.length > 0) {
+            dataArray.forEach(element => {
+                model.push(new GrafanaDashboardMode(element.title, element.id, element.url, null, element.title, false));
+            });
+            self.dashboards = model;
+            self.setSelectedDashboard(model[0]);
+            if (self.selectedDashboardUrl && self.selectedDashboardUrl.trim().length != 0) {
+                var dashbmodel = new GrafanaDashboardMode(null, null, self.selectedDashboardUrl, null, null, false);
+                self.setSelectedDashboard(dashbmodel);
+            }
+            if (self.selectedDashboard) {
+                self.dashboardTitle = self.selectedDashboard.title;
+            }
+        } else {
+            console.log("No dashboard found");
+        }
+    }
+
+    private setSelectedDashboard(dashboard) {
+        var self = this;
+        self.selectedDashboard = dashboard;
+        console.log(self.selectedDashboard);
+        self.dashboardTitle = dashboard.title;
+        if (dashboard.dashboardUrl) {
+            console.log(dashboard.iframeUrl);
+            self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
+            self.setScrollBarPosition();
+        }
+    };
 
 }

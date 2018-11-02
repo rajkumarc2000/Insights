@@ -1,6 +1,6 @@
 :host ::ng-deep {
   display: block;
-  font-size: 16px;
+  font-size: 15px;
   font-family: Open Sans,Tahoma;
   font-weight:400;
 }
@@ -28,19 +28,19 @@
 .mat-list-item{
   color: white;
   opacity: 0.8;
-  font-size: 16px;
+  font-size: 15px;
   font-family: Open Sans,Tahoma;
-  height: 25px !important
+  height: 30px !important
 }
 
 .mat-nav-list{
   color: white;
   opacity: 0.8;
-  font-size: 16px;
+  font-size: 15px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
   font-family: Open Sans,Tahoma;
-  height: 25px !important
+  height: 30px !important;
 }
 
 .mat-divider{
@@ -52,36 +52,40 @@
 }
 
 .mat-list-item.active {
-  background-color: lightgray;
+  font-size: 16px !important;
+  font-weight:bolder !important;
+  color:white !important;
 }
 
 .mat-line.active{
-  color: black;
-  font-weight:bold;
-  text-underline-position: below;
+  color: white !important;
+  font-weight:900 !important;
+  font-size: 18px !important;
+  opacity: 1.0 !important;
+  filter: brightness(100%),contrast(100%) !important;
+  
 }
 
 .mat-line{
-  color: white;
+  color: #f7f3f3 !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-weight:bold; 
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-family: Open Sans,Tahoma !important;
 }
 
 .mat-line-heading{
-  color: white;
+  color: #f7f3f3 !important;
   opacity: 0.8;
   padding: 10px !important;
-  font-weight:bold; 
-  font-size: 16px;
+  font-size: 15px;
   font-family: Open Sans,Tahoma;
+  height: 30px !important
 }
 
 .mat-list-text{
   font-weight:500; 
-  font-size: 16px;
+  font-size: 15px;
   font-family: Open Sans,Tahoma !important;
 }
 
@@ -90,11 +94,9 @@
 }
 
 .mat-line-child{
-  color: white;
+  color: #f7f3f3 !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-weight:bold !important; 
-  font-size: 16px !important;
   font-family: Open Sans,Tahoma !important;
 }
 

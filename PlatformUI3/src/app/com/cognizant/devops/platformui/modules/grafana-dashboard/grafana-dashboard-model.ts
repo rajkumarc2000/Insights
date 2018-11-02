@@ -13,18 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
+import { SafeResourceUrl } from '@angular/platform-browser';
+    export class GrafanaDashboardMode {
+        constructor(
+            public title: string,
+            public id: string,
+            public iframeUrl: string,
+            public templatePath: string,
+            public buttonLabel : string,
+            public trustedUrl : boolean
+        ) { }
+    }
 
-import { Routes, RouterModule } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
-import { LoginComponent } from '@insights/app/login/login.component';
-import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
-
-
-const appRoutes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
-  { path: '**', component: PageNotFoundComponent },
-  { path: 'Insights/Home', loadChildren: '@insights/app/modules/home.modules#HomeModules' }
-];
-
-export const InsightsModuleRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes);//,{ enableTracing: true }

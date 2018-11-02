@@ -71,7 +71,8 @@ export class HomeComponent implements OnInit {
   }
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
-    private router: Router) {
+    public router: Router) {
+    router.onSameUrlNavigation='reload';
     //console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
@@ -283,7 +284,7 @@ export class HomeComponent implements OnInit {
       }, {
         displayName: 'Logout',
         iconName: 'logout',
-        route: 'login',
+        route: 'loggedout',
         isToolbarDisplay: true,
         showIcon: true
       }

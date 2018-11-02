@@ -31,6 +31,7 @@ const homeRoutes: Routes = [
       { path: 'admin', component: AdminComponent },
       { path: 'grafanadashboard/:id', component: GrafanaDashboardComponent },
       { path: 'healthcheck', component: HealthcheckComponent },
+      { path: 'loggedout',redirectTo:'login'}
     ]
   }
 ];
