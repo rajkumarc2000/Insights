@@ -20,7 +20,7 @@
           <span mat-line class="mat-line-heading" *ngIf="isExpanded">
             Welcome : {{userName}}
             </span>
-          <br *ngIf="isExpanded"> 
+          <br *ngIf="isExpanded">
           <span mat-line class="mat-line-heading" *ngIf="isExpanded">
             Role : {{userRole}}
             </span>
@@ -31,21 +31,23 @@
       </div>
       <div>
         <mat-nav-list>
-          <div routerLinkActive="active-class" *ngFor="let item of navItems">
-            <a mat-list-item (click)="onItemSelected(item)" [ngStyle]="{'padding-left': (depth * 15) + 'px ' + '!important' }" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
-              <mat-icon *ngIf="item.showIcon && !isExpanded" class="routeIcon">{{item.iconName}}</mat-icon>
-              <p matLine [ngClass]="{'active': item.route ? router.isActive(item.route, true): false}" *ngIf="isExpanded">{{item.displayName}}
-              </p>
-              <span fxFlex *ngIf="item.children && item.children.length">
+          <div routerLinkActive="active" *ngFor="let item of navItems">
+            <div *ngIf=" item.isAdminMenu ? showAdminTab : true"> <!-- --> 
+              <a mat-list-item (click)="onItemSelected(item)" [ngStyle]="{'padding-left': (depth * 15) + 'px ' + '!important' }" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
+                <mat-icon *ngIf="item.showIcon && !isExpanded" class="routeIcon">{{item.iconName}}</mat-icon>
+                <p matLine [ngClass]="{'active': item.route ? router.isActive(item.route, true): false}" *ngIf="isExpanded">{{item.displayName}}
+                </p>
+                <span fxFlex *ngIf="item.children && item.children.length">
               <span fxFlex></span>
-              <mat-icon *ngIf="isExpanded" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
-                expand_more
-              </mat-icon>
-              </span>
-            </a>
-            <div *ngIf="expanded && isExpanded">
-              <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg">
-              </app-menu-list-item>
+                <mat-icon *ngIf="isExpanded" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+                  expand_more
+                </mat-icon>
+                </span>
+              </a>
+              <div *ngIf="expanded && isExpanded">
+                <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab">
+                </app-menu-list-item>
+              </div>
             </div>
           </div>
         </mat-nav-list>

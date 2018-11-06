@@ -19,7 +19,6 @@ import { Observable } from 'rxjs';
 
 
 export interface IGrafanaDashboardService {
-    switchUserOrg(orgId: number): Promise<any>;
     loadOrganizations(): Promise<any>;
     getCurrentUserOrgs(): Promise<any>;
     getUsers(): Promise<any>;
@@ -40,10 +39,7 @@ export class GrafanaDashboardService implements IGrafanaDashboardService {
         return restHandler.get("ORGS_GET");
     }
 
-    switchUserOrg(orgId: number): Promise<any> {
-        var restHandler = this.restCallHandlerService;
-        return restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_SWITCH_ORGS", { "orgId": orgId }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
-    }
+    
 
     getCurrentUserOrgs(): Promise<any> {
         var restHandler = this.restCallHandlerService;

@@ -46,7 +46,7 @@ export class InsightsInitService {
         var self = this;
         var agentConfigJsonUrl = "config/configDesc.json"
         let gentConfigResponse =await this.getJSONUsingObservable(agentConfigJsonUrl).toPromise();
-            console.log(gentConfigResponse);
+            //console.log(gentConfigResponse);
             self.configDesc = gentConfigResponse.desriptions;
         
     }
@@ -55,7 +55,7 @@ export class InsightsInitService {
         var self = this;
         var uiConfigJsonUrl = "config/uiConfig.json"
         let UIConfigResponse = await this.getJSONUsingObservable(uiConfigJsonUrl).toPromise();
-        console.log(UIConfigResponse)
+        //console.log(UIConfigResponse)
         InsightsInitService.serviceHost = UIConfigResponse.serviceHost;
         InsightsInitService.elasticSearchServiceHost = UIConfigResponse.elasticSearchServiceHost;
         InsightsInitService.neo4jServiceHost = UIConfigResponse.neo4jServiceHost;

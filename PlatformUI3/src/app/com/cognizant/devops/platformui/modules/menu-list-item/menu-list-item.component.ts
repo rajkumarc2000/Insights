@@ -41,7 +41,8 @@ export class MenuListItemComponent {
   @Input() depth: number;
   @Input() isExpanded: boolean = false;
   @Input() selectedOrg:String;
-
+  @Input() showAdminTab:boolean=true;
+  
   constructor(public router: Router, private homeController: HomeComponent) {
     if (this.depth === undefined) {
       this.depth = 0;

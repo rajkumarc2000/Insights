@@ -87,6 +87,11 @@ export class GrafanaAuthenticationService implements IAuthenticationService {
         return restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_CURRENT_USER_ORGS");
     }
 
+    public switchUserOrg(orgId: number): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_SWITCH_ORGS", { "orgId": orgId }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+    }
+
    public getUsers(): Promise<any> {
             var restHandler = this.restCallHandlerService;
              return restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_USERS");

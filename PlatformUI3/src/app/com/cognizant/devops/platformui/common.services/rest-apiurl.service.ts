@@ -137,7 +137,7 @@ export class RestAPIurlService implements IRestAPIUrlService {
            if (!this.apiMap.has(moduleUrlKey)) {
                 throw new Error("Url Mapping doesnt exist");
             }
-            console.log(InsightsInitService.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString()));
+            //console.log(InsightsInitService.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString()));
            return  InsightsInitService.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString()); 
         }
 }

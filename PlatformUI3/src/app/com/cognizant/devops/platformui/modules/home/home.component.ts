@@ -60,7 +60,6 @@ export class HomeComponent implements OnInit {
   navOrgList: NavItem[] = [];
   selectedItem: NavItem;
   orgList = [];
-  selectedApp: string;
   defaultOrg: number;
   selectedOrg: String;
   sidenavWidth: number = 14;
@@ -72,7 +71,7 @@ export class HomeComponent implements OnInit {
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router) {
-    router.onSameUrlNavigation='reload';
+    router.onSameUrlNavigation = 'reload';
     //console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
@@ -89,20 +88,16 @@ export class HomeComponent implements OnInit {
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
     this.loadorganizations();
-    console.log(this.selectedOrg);
-    //this.selectedOrg = "";
   }
 
   onItemSelected(item: NavItem) {
-    console.log(item);
     this.selectedItem = item;
     this.isToolbarDisplay = item.isToolbarDisplay
-    console.log(item.isToolbarDisplay + "" + this.isToolbarDisplay)
     if (!item.children || !item.children.length) {
       if (item.iconName == 'grafanaOrg') {
-        console.log(item.route);
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
-        this.router.navigateByUrl(item.route, { skipLocationChange: true });
+        this.switchOrganizations(item.orgId);
+        this.router.navigateByUrl(item.route + item.orgId, { skipLocationChange: true });
       } else if (item.iconName == 'logout') {
         this.logout();
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
@@ -153,58 +148,50 @@ export class HomeComponent implements OnInit {
     let userResponse = await this.grafanaService.getUsers()
     //console.log(orgResponse.data);
     //console.log(userResponse.data);
-    // .then(function (orgData) 
+
     if (orgResponse.data != undefined) {
       var orgDataArray = orgResponse.data;
       this.orgList = orgDataArray;
       if (userResponse.data != undefined) {
         var grafanaOrgId = userResponse.data.orgId;
-        console.log(grafanaOrgId);
-        /* this.defaultOrg = grafanaOrgId;
-         for (var key in this.orgList) {
-           var orgDtl = this.orgList[key];
-           if (orgDtl.id === grafanaOrgId) {
-             this.selectedApp = orgDtl.name;
-           }
-         }*/
-        // self.getDashboards();
-
+        //console.log(grafanaOrgId);
       }
       for (var key in this.orgList) {
         var orgDtl = this.orgList[key];
         var navItemobj = new NavItem();
         navItemobj.displayName = orgDtl.name;
         navItemobj.iconName = 'grafanaOrg';
-        navItemobj.route = 'InSights/Home/grafanadashboard/' + orgDtl.orgId;
+        navItemobj.route = 'InSights/Home/grafanadashboard/';
         navItemobj.isToolbarDisplay = false;
         navItemobj.showIcon = false;
+        navItemobj.isAdminMenu = false;
+        navItemobj.orgId = orgDtl.orgId;
         this.navOrgList.push(navItemobj);
       }
-      //console.log(this.navOrgList);
-      //.then(function (userData) 
 
-      // );
     }
-    console.log(this.selectedApp);
     //console.log(this.orgList);
     this.loadMenuItem();
   }
 
   public loadMenuItem() {
-    console.log(" In load menu " + this.selectedOrg);
+    //console.log(" In load menu " + this.selectedOrg);
     this.navItems = [
       {
         displayName: 'Dashboards',
         iconName: 'feature',
+        isAdminMenu: false,
         children: [
           {
             displayName: 'Grafana : ',
             iconName: 'grafana',
+            isAdminMenu: false,
             children: [
               {
                 displayName: 'Swithch Org',
                 iconName: 'switch_org',
                 isToolbarDisplay: false,
+                isAdminMenu: false,
                 children: this.navOrgList,
               }
             ]
@@ -213,25 +200,29 @@ export class HomeComponent implements OnInit {
             displayName: 'ML Capabilities',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/100',
-            isToolbarDisplay: true
+            isToolbarDisplay: true,
+            isAdminMenu: true
           },
           {
             displayName: 'InSights',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/200',
-            isToolbarDisplay: true
+            isToolbarDisplay: true,
+            isAdminMenu: true
           },
           {
             displayName: 'DevOps Maturity',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/300',
-            isToolbarDisplay: true
+            isToolbarDisplay: true,
+            isAdminMenu: true
           },
           {
             displayName: 'BlockChain Development',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/400',
-            isToolbarDisplay: true
+            isToolbarDisplay: true,
+            isAdminMenu: true
           }
         ]
       },
@@ -239,39 +230,45 @@ export class HomeComponent implements OnInit {
         displayName: 'Playlist',
         iconName: 'feature',
         route: 'InSights/Home/playlist',
-        isToolbarDisplay: false
+        isToolbarDisplay: false,
+        isAdminMenu: false
       },
       {
         displayName: 'Data Dictionary',
         iconName: 'feature',
         route: 'InSights/Home/grafanadashboard/600',
-        isToolbarDisplay: true
+        isToolbarDisplay: true,
+        isAdminMenu: false
       },
       {
         displayName: 'Health Check',
         iconName: 'feature',
         route: 'InSights/Home/healthcheck',
-        isToolbarDisplay: true
+        isToolbarDisplay: true,
+        isAdminMenu: true
       },
       {
         displayName: 'Admin',
         iconName: 'admin',
         route: 'InSights/Home/admin',
-        isToolbarDisplay: true
+        isToolbarDisplay: true,
+        isAdminMenu: true
       },
       {
         displayName: 'Help',
         iconName: 'help',
         route: 'InSights/Home/grafanadashboard/700',
         isToolbarDisplay: true,
-        showIcon: true
+        showIcon: true,
+        isAdminMenu: false
       },
       {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login',
         isToolbarDisplay: true,
-        showIcon: true
+        showIcon: true,
+        isAdminMenu: false
       }
     ];
     this.navItemsBottom = [
@@ -280,16 +277,18 @@ export class HomeComponent implements OnInit {
         iconName: 'help',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
-        showIcon: true
+        showIcon: true,
+        isAdminMenu: true
       }, {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'loggedout',
         isToolbarDisplay: true,
-        showIcon: true
+        showIcon: true,
+        isAdminMenu: true
       }
     ];
-
+    //console.log(this.navItems);
   }
 
   public logout(): void {
@@ -315,13 +314,40 @@ export class HomeComponent implements OnInit {
         //console.log(data);
       });
     var cookieVal = this.cookieService.getAll();
-    console.log(cookieVal);
+    //console.log(cookieVal);
     for (var key in cookieVal) {
       cookieVal[key] = '';
       this.cookieService.set(key, cookieVal[key]);
       this.cookieService.delete(key);
     }
     this.router.navigate(['/login']);
+  }
+
+  async switchOrganizations(orgId) {
+    var self = this;
+    self.defaultOrg = orgId;
+    var switchorgResponse = await self.grafanaService.switchUserOrg(orgId);
+    if (switchorgResponse != null && switchorgResponse.status === 'success') {
+      var currentroleandorg = await self.grafanaService.getGrafanaCurrentOrgAndRole();
+      if (currentroleandorg != null) {
+        
+        //console.log("Role " + currentroleandorg.grafanaCurrentOrgRole);
+        if (currentroleandorg.grafanaCurrentOrgRole === 'Admin') {
+          this.showAdminTab = true;
+        } else {
+          this.showAdminTab = false;
+        }
+
+        self.cookieService.set('grafanaRole', currentroleandorg.grafanaCurrentOrgRole);
+        self.cookieService.set('grafanaOrg', currentroleandorg.grafanaCurrentOrg);
+        this.userRole = currentroleandorg.grafanaCurrentOrgRole;
+
+        if (currentroleandorg.userName != undefined) {
+          this.userName = currentroleandorg.userName.replace(/['"]+/g, '');
+        }
+       
+      }
+    }
   }
 
 }
