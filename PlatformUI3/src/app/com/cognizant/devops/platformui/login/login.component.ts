@@ -23,7 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { LogService } from '@insights/common/log-service';
 
 export interface ILoginComponent {
   createAndValidateForm(): void;
@@ -33,7 +33,8 @@ export interface ILoginComponent {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [LogService]
 })
 export class LoginComponent implements OnInit, ILoginComponent {
 
@@ -52,7 +53,8 @@ export class LoginComponent implements OnInit, ILoginComponent {
 
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
     private restCallHandlerService: RestCallHandlerService,private cookieService: CookieService, 
-    private router: Router) {
+    private router: Router,private logger: LogService) {
+    this.logger.log(" logging in login ");
     this.getAsyncData();
 
   }

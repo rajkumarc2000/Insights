@@ -40,6 +40,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('user-icon-active', "icons/svg/login/user_icon_active.svg");
         this.addImage('password-icon', "icons/svg/login/password_icon.svg");
         this.addImage('password-icon-active', "icons/svg/login/password_icon_active.svg");
+        this.addImage('favicon_icon',"icons/svg/IS.svg");
     }
 
 

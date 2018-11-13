@@ -110,19 +110,23 @@ export class GrafanaDashboardComponent implements OnInit {
         var self = this;
         var dataArray = dashboardslist.dashboards;
         //console.log(dataArray);
-        if (dashboardslist != undefined && dataArray.length > 0) {
-            var model = [];
-            dataArray.forEach(element => {
-                model.push(new GrafanaDashboardMode(element.title, element.id, element.url, null, element.title, false));
-            });
-            self.dashboards = model;
-            self.setSelectedDashboard(model[0]);
-            if (self.selectedDashboardUrl && self.selectedDashboardUrl.trim().length != 0) {
-                var dashbmodel = new GrafanaDashboardMode(null, null, self.selectedDashboardUrl, null, null, false);
-                self.setSelectedDashboard(dashbmodel);
-            }
-            if (self.selectedDashboard) {
-                self.dashboardTitle = self.selectedDashboard.title;
+        if (dashboardslist != undefined && dataArray != undefined) {
+            if (dataArray.length > 0){
+                var model = [];
+                dataArray.forEach(element => {
+                    model.push(new GrafanaDashboardMode(element.title, element.id, element.url, null, element.title, false));
+                });
+                self.dashboards = model;
+                self.setSelectedDashboard(model[0]);
+                if (self.selectedDashboardUrl && self.selectedDashboardUrl.trim().length != 0) {
+                    var dashbmodel = new GrafanaDashboardMode(null, null, self.selectedDashboardUrl, null, null, false);
+                    self.setSelectedDashboard(dashbmodel);
+                }
+                if (self.selectedDashboard) {
+                    self.dashboardTitle = self.selectedDashboard.title;
+                }
+            }else {
+                console.log("No dashboard  Array found");
             }
         } else {
             console.log("No dashboard found");

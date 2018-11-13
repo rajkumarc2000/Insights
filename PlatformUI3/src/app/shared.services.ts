@@ -22,6 +22,7 @@ import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service'
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
+import { LogService } from '@insights/common/log-service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ export class SharedServices {
         RestCallHandlerService,
         ImageHandlerService,
         InsightsInitService,
-        CookieService 
+        CookieService,
+        LogService
       ]
     };
   }

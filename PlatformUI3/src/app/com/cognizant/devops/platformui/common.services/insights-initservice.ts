@@ -20,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
-
+import { LogService } from '@insights/common/log-service';
 
 @Injectable()
 export class InsightsInitService {
@@ -33,7 +33,8 @@ export class InsightsInitService {
     configDesc = {};
 
     constructor(location: Location, private http: HttpClient,
-        private cookieService: CookieService,private imageHandler: ImageHandlerService) {
+        private cookieService: CookieService,private imageHandler: ImageHandlerService,
+        private logger: LogService) {
     }
 
     public async initMethods(){
@@ -46,7 +47,7 @@ export class InsightsInitService {
         var self = this;
         var agentConfigJsonUrl = "config/configDesc.json"
         let gentConfigResponse =await this.getJSONUsingObservable(agentConfigJsonUrl).toPromise();
-            //console.log(gentConfigResponse);
+             this.logger.log(gentConfigResponse);
             self.configDesc = gentConfigResponse.desriptions;
         
     }
@@ -55,7 +56,7 @@ export class InsightsInitService {
         var self = this;
         var uiConfigJsonUrl = "config/uiConfig.json"
         let UIConfigResponse = await this.getJSONUsingObservable(uiConfigJsonUrl).toPromise();
-        //console.log(UIConfigResponse)
+         this.logger.log(UIConfigResponse)
         InsightsInitService.serviceHost = UIConfigResponse.serviceHost;
         InsightsInitService.elasticSearchServiceHost = UIConfigResponse.elasticSearchServiceHost;
         InsightsInitService.neo4jServiceHost = UIConfigResponse.neo4jServiceHost;

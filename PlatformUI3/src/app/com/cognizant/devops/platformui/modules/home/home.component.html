@@ -5,8 +5,8 @@
         <table style="border-spacing:2px; height:100%; width: 100%">
           <tr>
             <td style="height:28px">
-              <img mat-card-image *ngIf="isExpanded" align="left" height="25px" width="80px" src='icons/svg/homePage/Cognizant_Logo_Reversed.svg'
-                alt="Cognizant log" style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
+              <img mat-card-image *ngIf="isExpanded" align="left" height="25px" src='icons/svg/homePage/Cognizant_Logo_Reversed.svg' alt="Cognizant log"
+                style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
             </td>
             <td style="height:28px">
               <mat-icon (click)="isExpanded = !isExpanded" class="mat-icon material-icons">menu</mat-icon>
@@ -24,59 +24,25 @@
           <span mat-line class="mat-line-heading" *ngIf="isExpanded">
             Role : {{userRole}}
             </span>
-          <img mat-card-image *ngIf="!isExpanded" height="40px" width="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg'
-            style="margin:auto;display:block" />
+          <img mat-card-image *ngIf="!isExpanded" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg' style="margin:auto;display:block"
+          />
         </div>
         <mat-divider></mat-divider>
       </div>
       <div>
         <mat-nav-list>
-          <div routerLinkActive="active" *ngFor="let item of navItems">
-            <div *ngIf=" item.isAdminMenu ? showAdminTab : true"> <!-- --> 
-              <a mat-list-item (click)="onItemSelected(item)" [ngStyle]="{'padding-left': (depth * 15) + 'px ' + '!important' }" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
-                <mat-icon *ngIf="item.showIcon && !isExpanded" class="routeIcon">{{item.iconName}}</mat-icon>
-                <p matLine [ngClass]="{'active': item.route ? router.isActive(item.route, true): false}" *ngIf="isExpanded">{{item.displayName}}
-                </p>
-                <span fxFlex *ngIf="item.children && item.children.length">
-              <span fxFlex></span>
-                <mat-icon *ngIf="isExpanded" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
-                  expand_more
-                </mat-icon>
-                </span>
-              </a>
-              <div *ngIf="expanded && isExpanded">
-                <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab">
-                </app-menu-list-item>
-              </div>
-            </div>
-          </div>
+          <app-menu-list-item *ngFor="let item of navItems" [item]="item" [depth]="depth" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg"
+            [showAdminTab]="showAdminTab"></app-menu-list-item>
         </mat-nav-list>
       </div>
-      <!--<mat-divider></mat-divider>
-      <div id="bottomnavg">
-        <mat-divider></mat-divider>
+      <!--<div id="bottomnavg">
         <mat-nav-list>
-          <div *ngFor="let item2 of navItemsBottom">
-            <a mat-list-item [ngStyle]="{'padding-left': (depth * 2) + 'px'}" (click)="onItemSelected(item2)" [ngClass]="{'active': item2.route ? router.isActive(item2.route, true): false, 'expanded': expanded}">
-              <mat-icon  *ngIf="item.showIcon" class="routeIcon">{{item2.iconName}}</mat-icon>
-              <p matLine *ngIf="isExpanded">{{item2.displayName}}</p>
-              <span fxFlex *ngIf="item2.children && item2.children.length">
-              <span fxFlex></span>
-              <mat-icon *ngIf="isExpanded" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
-                expand_more
-              </mat-icon>
-              </span>
-            </a>
-            <div *ngIf="expanded && isExpanded">
-              <app-menu-list-item *ngFor="let child2 of item2.children" [item]="child2" [depth]="depth+1" [isExpanded]="isExpanded">
-              </app-menu-list-item>
-            </div>
-          </div>
+          <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
+            [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
         </mat-nav-list>
       </div>-->
-
     </mat-sidenav>
-    <!-- [ngStyle]="{ 'width': isExpanded ? '80%':'96%' }"-->
+
     <mat-sidenav-content class="mat-drawer-content">
       <mat-toolbar *ngIf="isToolbarDisplay" style="height:30px">
         <span class="fill-remaining-space"></span>

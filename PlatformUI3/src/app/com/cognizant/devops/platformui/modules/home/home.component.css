@@ -77,7 +77,7 @@
 .mat-line-heading{
   color: #f7f3f3 !important;
   opacity: 0.8;
-  padding: 10px !important;
+  padding: 5px !important;
   font-size: 15px;
   font-family: Open Sans,Tahoma;
   height: 30px !important
@@ -131,7 +131,7 @@
   opacity: 0.9;
   background: #18191b;
   color: white;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 .mat-toolbar-row, .mat-toolbar-single-row {
@@ -139,7 +139,6 @@
 }
 
 .mat-card-image,.mat-card-image:first-child{
- margin:0px !important;
  align-items: center;
  width:auto;
 }
@@ -177,9 +176,13 @@
 }
 
 #bottomnavg {
-   display: flex;
-   flex-direction: column;
-   position: absolute;
-   bottom: 0;
+  flex-direction: column !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: auto  !important;
+  transform: translate3d(0,100%,0);
 }
 

@@ -91,23 +91,24 @@ export class HomeComponent implements OnInit {
   }
 
   onItemSelected(item: NavItem) {
+    console.log(item + '  A==== '+this.expanded);
     this.selectedItem = item;
     this.isToolbarDisplay = item.isToolbarDisplay
     if (!item.children || !item.children.length) {
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.switchOrganizations(item.orgId);
-        this.router.navigateByUrl(item.route + item.orgId, { skipLocationChange: true });
+        this.router.navigateByUrl(item.route, { skipLocationChange: true });//+ item.orgId
       } else if (item.iconName == 'logout') {
         this.logout();
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
       }
-    }
-    if (item.children && item.children.length) {
+    }/*else if (item.children && item.children.length) {
       this.expanded = !this.expanded;
-    }
+      console.log(item + '  AB==== '+this.expanded);
+    }*/
   }
 
   public async getInformationFromGrafana() {
@@ -161,7 +162,7 @@ export class HomeComponent implements OnInit {
         var navItemobj = new NavItem();
         navItemobj.displayName = orgDtl.name;
         navItemobj.iconName = 'grafanaOrg';
-        navItemobj.route = 'InSights/Home/grafanadashboard/';
+        navItemobj.route = 'InSights/Home/grafanadashboard/' + orgDtl.orgId;
         navItemobj.isToolbarDisplay = false;
         navItemobj.showIcon = false;
         navItemobj.isAdminMenu = false;
@@ -252,12 +253,42 @@ export class HomeComponent implements OnInit {
         iconName: 'admin',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
-        isAdminMenu: true
+        isAdminMenu: true,
+        children: [
+          {
+            displayName: 'Agent Management',
+            iconName: 'feature',
+            route: 'InSights/Home/grafanadashboard/700',
+            isToolbarDisplay: true,
+            isAdminMenu: true
+          },
+          {
+            displayName: 'Business Mapping',
+            iconName: 'feature',
+            route: 'InSights/Home/grafanadashboard/800',
+            isToolbarDisplay: true,
+            isAdminMenu: true
+          },
+          {
+            displayName: 'Access Group Management',
+            iconName: 'feature',
+            route: 'InSights/Home/grafanadashboard/900',
+            isToolbarDisplay: true,
+            isAdminMenu: true
+          },
+          {
+            displayName: 'Settings',
+            iconName: 'feature',
+            route: 'InSights/Home/grafanadashboard/1000',
+            isToolbarDisplay: true,
+            isAdminMenu: true
+          }
+        ]
       },
       {
         displayName: 'Help',
         iconName: 'help',
-        route: 'InSights/Home/grafanadashboard/700',
+        route: 'InSights/Home/grafanadashboard/750',
         isToolbarDisplay: true,
         showIcon: true,
         isAdminMenu: false
@@ -274,7 +305,7 @@ export class HomeComponent implements OnInit {
     this.navItemsBottom = [
       {
         displayName: 'Help',
-        iconName: 'help',
+        iconName: 'feature',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,
@@ -330,7 +361,6 @@ export class HomeComponent implements OnInit {
     if (switchorgResponse != null && switchorgResponse.status === 'success') {
       var currentroleandorg = await self.grafanaService.getGrafanaCurrentOrgAndRole();
       if (currentroleandorg != null) {
-        
         //console.log("Role " + currentroleandorg.grafanaCurrentOrgRole);
         if (currentroleandorg.grafanaCurrentOrgRole === 'Admin') {
           this.showAdminTab = true;
@@ -345,7 +375,7 @@ export class HomeComponent implements OnInit {
         if (currentroleandorg.userName != undefined) {
           this.userName = currentroleandorg.userName.replace(/['"]+/g, '');
         }
-       
+
       }
     }
   }

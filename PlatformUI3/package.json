@@ -25,6 +25,7 @@
     "@angular/router": "6.1.10",
     "core-js": "^2.4.1",
     "ngx-cookie-service": "^1.0.10",
+    "ngx-logger": "^3.3.6",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "zone.js": "^0.8.26"

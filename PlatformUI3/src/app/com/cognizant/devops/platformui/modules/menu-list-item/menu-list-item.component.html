@@ -1,8 +1,8 @@
 <div routerLinkActive=active *ngIf=" item.isAdminMenu ? showAdminTab : true" > 
-  <a  mat-list-item [ngStyle]="{'padding-left': (depth * 15) + 'px '}" (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
-    <mat-icon *ngIf="item.showIcon" class="routeIcon">{{item.iconName}}</mat-icon>
-    <p matLine class="mat-line-child" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false}" *ngIf="isExpanded">{{item.displayName}}
-      <span *ngIf="item.iconName =='grafana'"> {{selectedOrg}} </span>
+  <a  mat-list-item [ngStyle]="{'padding-left': (depth * 15) + 'px '}" (click)="onItemSelected(item)">
+    <mat-icon *ngIf="item.showIcon && !isExpanded" class="routeIcon">{{item.iconName}}</mat-icon>
+    <p matLine class="mat-line-child" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}" *ngIf="isExpanded">{{item.displayName}}
+      <span *ngIf="item.iconName =='grafana'"> {{selectedOrg}}  </span>
     </p>
     <span fxFlex *ngIf="item.children && item.children.length">
               <span fxFlex></span>
@@ -12,7 +12,8 @@
     </span>
   </a>
   <div *ngIf="expanded && isExpanded">
-    <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab">
+    <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded" 
+        [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab" >
     </app-menu-list-item>
   </div>
 </div>
