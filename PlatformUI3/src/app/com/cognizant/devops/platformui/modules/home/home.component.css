@@ -23,9 +23,10 @@
 
 .sidenav{
   color: white;
+  /*height:100%;*/
 }
 
-.mat-list-item{
+.mat-list-item {
   color: white;
   opacity: 0.8;
   font-size: 15px;
@@ -41,6 +42,7 @@
   padding-bottom: 1px !important;
   font-family: Open Sans,Tahoma;
   height: 30px !important;
+
 }
 
 .mat-divider{
@@ -80,13 +82,14 @@
   padding: 5px !important;
   font-size: 15px;
   font-family: Open Sans,Tahoma;
-  height: 30px !important
+  height: 30px !important;
 }
 
 .mat-list-text{
   font-weight:500; 
   font-size: 15px;
   font-family: Open Sans,Tahoma !important;
+  
 }
 
 .mat-list-item-content{
@@ -110,7 +113,6 @@
 }
 
 .mat-drawer-content,mat-sidenav-content {
-    position: relative;
     z-index: 1;
     display: block;
     height: 100%;
@@ -118,9 +120,9 @@
     overflow-x: hidden !important;
 }
 
-.app-menu-list-item{
+/*.app-menu-list-item{
   overflow: auto !important;
-}
+}*/
 
 .webkit-scrollbar {
     width: 8px;
@@ -175,14 +177,22 @@
   color: red; 
 }
 
-#bottomnavg {
+.bottomnavg {
   flex-direction: column !important;
-  position: absolute !important;
   bottom: 0 !important;
   display: flex;
-  left: 0;
-  right: 0;
-  top: auto  !important;
-  transform: translate3d(0,100%,0);
 }
 
+.navtable{
+  table-layout: auto;
+  width: 100%;
+  /*overflow-x: auto !important;
+  overflow-y: auto !important;*/
+}
+
+.menu{
+    /*overflow-x: auto !important;
+    overflow-y: auto !important;*/
+    height: auto;
+    width: 100%
+}

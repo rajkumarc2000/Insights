@@ -91,7 +91,6 @@ export class HomeComponent implements OnInit {
   }
 
   onItemSelected(item: NavItem) {
-    console.log(item + '  A==== '+this.expanded);
     this.selectedItem = item;
     this.isToolbarDisplay = item.isToolbarDisplay
     if (!item.children || !item.children.length) {
@@ -258,7 +257,7 @@ export class HomeComponent implements OnInit {
           {
             displayName: 'Agent Management',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/700',
+            route: 'InSights/Home/agentmanagement',
             isToolbarDisplay: true,
             isAdminMenu: true
           },
@@ -309,14 +308,14 @@ export class HomeComponent implements OnInit {
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,
-        isAdminMenu: true
+        isAdminMenu: false
       }, {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'loggedout',
         isToolbarDisplay: true,
         showIcon: true,
-        isAdminMenu: true
+        isAdminMenu: false
       }
     ];
     //console.log(this.navItems);

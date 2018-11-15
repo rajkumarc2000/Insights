@@ -37,6 +37,8 @@ import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthch
 
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
+import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
+import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 
 
 @NgModule({
@@ -47,7 +49,8 @@ import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard
     MenuListItemComponent,
     GrafanaDashboardComponent,
     PageNotFoundComponent,
-    HealthcheckComponent
+    HealthcheckComponent,
+    AgentManagementComponent
   ],
   imports: [
     HomeRouting,
@@ -61,8 +64,9 @@ import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard
   ],
 
   providers: [
-   GrafanaAuthenticationService,
-   GrafanaDashboardService
+    GrafanaAuthenticationService,
+    GrafanaDashboardService,
+    AgentService
   ]
 })
 

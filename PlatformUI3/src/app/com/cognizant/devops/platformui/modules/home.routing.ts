@@ -22,6 +22,8 @@ import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthch
 import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboard/grafana-dashboard.component';
 import { HomeComponent } from '@insights/app/modules/home/home.component';
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
+import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
+
 
 const homeRoutes: Routes = [
   {
@@ -31,7 +33,8 @@ const homeRoutes: Routes = [
       { path: 'admin', component: AdminComponent },
       { path: 'grafanadashboard/:id', component: GrafanaDashboardComponent },
       { path: 'healthcheck', component: HealthcheckComponent },
-      { path: 'loggedout',redirectTo:'login'}
+      { path: 'loggedout',redirectTo:'login'},
+      { path: 'agentmanagement', component : AgentManagementComponent }
     ]
   }
 ];

@@ -29,7 +29,6 @@ export interface IGrafanaDashboardService {
 
 @Injectable()
 export class GrafanaDashboardService implements IGrafanaDashboardService {
-    static $inject = ['$resource', '$cookies', 'restCallHandlerService'];
 
     constructor(private restCallHandlerService: RestCallHandlerService) {
     }
@@ -39,7 +38,7 @@ export class GrafanaDashboardService implements IGrafanaDashboardService {
         return restHandler.get("ORGS_GET");
     }
 
-    
+
 
     getCurrentUserOrgs(): Promise<any> {
         var restHandler = this.restCallHandlerService;
@@ -52,9 +51,9 @@ export class GrafanaDashboardService implements IGrafanaDashboardService {
     }
 
     searchDashboard(): Promise<any> {
-			var restHandler = this.restCallHandlerService;
-            return restHandler.get("SEARCH_DASHBOARD");
-	}
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("SEARCH_DASHBOARD");
+    }
 
 }
 
