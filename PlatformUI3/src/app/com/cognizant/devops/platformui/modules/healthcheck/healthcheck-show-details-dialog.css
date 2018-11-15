@@ -4,7 +4,6 @@ table {
     border-radius: 10px 10px 10px 10px;
     font-family: Open Sans;
 }
-
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
@@ -32,36 +31,5 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 }
 
 tr.mat-footer-row, tr.mat-row {
-    height: 30px !important;
-    text-align: left !important;
-}
-.tableContainerStyle {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-.sectionHeadingStyle {
-    background-color: #0033A0;   
-    color: white;
-    font-family: Open Sans !important;
-    font-size: 15px;
-    margin-left:20px;
-    margin-right:20px;
-    margin-top:20px;    
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border: 1px solid #0033A0;
-    border-radius: 10px 10px 10px 10px;   
-}
-
-.titleStyle {
-    margin-left:20px;
-    padding-left: 20px;
-    color: #0033A0;
-    font-family: Open Sans !important;
-    font-size: 17px;
+    height: 30px;
 }

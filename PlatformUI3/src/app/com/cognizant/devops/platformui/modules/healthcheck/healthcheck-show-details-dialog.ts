@@ -23,6 +23,7 @@ import { HealthCheckService } from './healthcheck.service';
 @Component({
     selector: 'healthcheck-show-details-dialog',
     templateUrl: './healthcheck-show-details-dialog.html',
+    styleUrls: ['./healthcheck-show-details-dialog.css']
   })
   export class ShowDetailsDialog implements OnInit  {
     showContent: boolean;  
@@ -56,7 +57,7 @@ import { HealthCheckService } from './healthcheck.service';
           if (dataArray.length === 0) {
             this.checkResponseData = false;
           }
-          this.showFieldVal = ['type', 'uuid', 'status', 'execId', 'inSightsTimeX'];
+          this.showFieldVal = ['type', 'uuid', 'status', 'execId', 'message','inSightsTimeX'];
           for (var key in dataArray) {
             var dataNodes = dataArray[key];
             for (var node in dataNodes) {

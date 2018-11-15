@@ -124,8 +124,8 @@ export class HealthCheckComponent implements OnInit {
   // Displays Show Details dialog box when Details column is clicked
   showDetailsDialog(toolName: string, categoryName: string) {
     let showDetailsDialog = this.dialog.open(ShowDetailsDialog, {
-      height: '350px',
-      width: '800px',
+      height: '100%',
+      width: '100%',
       data: { toolName: toolName, categoryName: categoryName }
     });
   }

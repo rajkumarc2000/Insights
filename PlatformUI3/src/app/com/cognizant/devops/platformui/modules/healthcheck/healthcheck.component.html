@@ -33,22 +33,22 @@
     <!-- Category Column -->
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Category </th>
-      <td mat-cell *matCellDef="let element"> {{element.propertyMap.category}} </td>
+      <td mat-cell *matCellDef="let element" style="width:200px !important"> {{element.propertyMap.category}} </td>
     </ng-container>
     <!-- Tool Column -->
     <ng-container matColumnDef="toolName">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Tool </th>
-      <td mat-cell *matCellDef="let element"> {{element.propertyMap.toolName}} </td>
+      <td mat-cell *matCellDef="let element" > {{element.propertyMap.toolName}} </td>
     </ng-container>
     <!-- Time Column -->
     <ng-container matColumnDef="inSightsTimeX">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Time </th>
-      <td mat-cell *matCellDef="let element"> {{element.propertyMap.inSightsTimeX}} </td>
+      <td mat-cell *matCellDef="let element" > {{element.propertyMap.inSightsTimeX}} </td>
     </ng-container>
     <!-- Status Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Status </th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" >
         <mat-icon svgIcon="healthcheck_success_status" *ngIf="element.propertyMap.status =='success'" [ngStyle]="{color: '#00B140', height: '25px', width: '25px'}">
         </mat-icon>
         <mat-icon svgIcon="healthcheck_failure_status" *ngIf="element.propertyMap.status =='failure'" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
@@ -58,7 +58,7 @@
     <!-- Details Column -->
     <ng-container matColumnDef="details">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Details </th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" >
         <button (click)="showDetailsDialog(element.propertyMap.toolName,element.propertyMap.category)">
           <mat-icon svgIcon="healthcheck_show_details" [ngStyle]="{height: '25px', width: '25px'}">
           </mat-icon>
@@ -80,25 +80,25 @@
     <!-- Server Column -->
     <ng-container matColumnDef="serverName">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Server</th>
-      <td mat-cell *matCellDef="let key"> {{key.serverName}} </td>
+      <td mat-cell *matCellDef="let key" style="width:200px !important"> {{key.serverName}} </td>
     </ng-container>
 
     <!-- IP Address:Port Column -->
     <ng-container matColumnDef="ipAddress">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">IP Address:Port</th>
-      <td mat-cell *matCellDef="let key"> {{key.endPoint}} </td>
+      <td mat-cell *matCellDef="let key" > {{key.endPoint}} </td>
     </ng-container>
 
     <!-- Version Column -->
     <ng-container matColumnDef="version">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
-      <td mat-cell *matCellDef="let key"> {{key.version}} </td>
+      <td mat-cell *matCellDef="let key" > {{key.version}} </td>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
-      <td mat-cell *matCellDef="let key">
+      <td mat-cell *matCellDef="let key" >
         <mat-icon svgIcon="healthcheck_success_status" *ngIf="key.status =='success'" [ngStyle]="{color: '#00B140', height: '25px', width: '25px'}">
         </mat-icon>
         <mat-icon svgIcon="healthcheck_failure_status" *ngIf="key.status =='failure'" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
@@ -120,7 +120,7 @@
     <!-- Server Column -->
     <ng-container matColumnDef="serverName">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Server</th>
-      <td mat-cell *matCellDef="let key"> {{key.serverName}} </td>
+      <td mat-cell *matCellDef="let key" style="width:200px !important"> {{key.serverName}} </td>
     </ng-container>
     <!-- IP Address:Port Column -->
     <ng-container matColumnDef="ipAddress">
@@ -146,7 +146,7 @@
     <ng-container matColumnDef="details">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Details</th>
       <td mat-cell *matCellDef="let key">
-        <button (click)="showDetailsDialog()">
+        <button (click)="showDetailsDialog('-',key.serverName)">
           <mat-icon svgIcon="healthcheck_show_details" [ngStyle]="{height: '25px', width: '25px'}">
           </mat-icon>
         </button>
@@ -158,7 +158,8 @@
   <div *ngIf="showThrobber">   
       <mat-progress-spinner
                   [color]="primary"
-                  [mode]="determinate"
+                  [mode]="indeterminate"
+                  style="display:inline;"
                   [value]="30">
       </mat-progress-spinner>
   </div>
