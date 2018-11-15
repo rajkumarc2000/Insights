@@ -18,7 +18,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { PlaylistComponent } from '@insights/app/modules/playlist/playlist.component';
 import { AdminComponent } from '@insights/app/modules/admin/admin.component';
-import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
+import { HealthCheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboard/grafana-dashboard.component';
 import { HomeComponent } from '@insights/app/modules/home/home.component';
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
@@ -32,7 +32,7 @@ const homeRoutes: Routes = [
       { path: 'playlist', component: PlaylistComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'grafanadashboard/:id', component: GrafanaDashboardComponent },
-      { path: 'healthcheck', component: HealthcheckComponent },
+      { path: 'healthcheck', component: HealthCheckComponent },
       { path: 'loggedout',redirectTo:'login'},
       { path: 'agentmanagement', component : AgentManagementComponent }
     ]

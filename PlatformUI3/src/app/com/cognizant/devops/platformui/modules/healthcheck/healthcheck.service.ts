@@ -28,8 +28,7 @@ export interface IHealthCheckService {
 
 @Injectable()
 export class HealthCheckService implements IHealthCheckService {
-    //static $inject = ['$resource', '$cookies', 'restCallHandlerService'];
-
+    
     constructor(private restCallHandlerService: RestCallHandlerService) {
     }
 

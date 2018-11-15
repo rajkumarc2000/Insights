@@ -22,6 +22,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@insights/app/material.module';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material';
 
 
 import { HomeRouting } from '@insights/app/modules/home.routing';
@@ -33,12 +34,14 @@ import { AdminComponent } from '@insights/app/modules/admin/admin.component';
 import { MenuListItemComponent } from '@insights/app/modules/menu-list-item/menu-list-item.component';
 import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboard/grafana-dashboard.component';
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
-import { HealthcheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
+import { HealthCheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
+import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
 
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
+import { HealthCheckService } from './healthcheck/healthcheck.service';
 
 
 @NgModule({
@@ -49,7 +52,8 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
     MenuListItemComponent,
     GrafanaDashboardComponent,
     PageNotFoundComponent,
-    HealthcheckComponent,
+    HealthCheckComponent,
+    ShowDetailsDialog,
     AgentManagementComponent
   ],
   imports: [
@@ -62,11 +66,15 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
     MaterialModule,
     SharedServices
   ],
+  entryComponents: [
+    ShowDetailsDialog
+  ],
 
   providers: [
     GrafanaAuthenticationService,
     GrafanaDashboardService,
-    AgentService
+    AgentService, 
+    HealthCheckService
   ]
 })
 
