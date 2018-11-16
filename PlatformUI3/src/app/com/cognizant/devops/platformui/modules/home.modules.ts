@@ -41,7 +41,7 @@ import { GrafanaAuthenticationService } from '@insights/common/grafana-authentic
 import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
-import { HealthCheckService } from './healthcheck/healthcheck.service';
+import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 
 
 @NgModule({

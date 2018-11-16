@@ -15,13 +15,9 @@
  *******************************************************************************/
 import { Component, OnInit, Inject } from '@angular/core';
 import { InsightsInitService } from '@insights/common/insights-initservice';
-import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
-import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
-import { CookieService } from 'ngx-cookie-service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { HealthCheckService } from './healthcheck.service';
+import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ShowDetailsDialog } from './healthcheck-show-details-dialog';
+import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
 
 
 @Component({
@@ -32,28 +28,21 @@ import { ShowDetailsDialog } from './healthcheck-show-details-dialog';
 export class HealthCheckComponent implements OnInit {
 
   agentsStatusResposne: any;
-  dataSource = [];
-  displayedColumns: string[];
-  checkResponseData: boolean = true;
-  showTemplateAfterLoad: boolean = false;
   agentNodes = [];
   agentToolsIcon = {};
   showContent: boolean = false;;
   showThrobber: boolean = false;
   serverStatus = [];
-  dataComponentDataSource = [];
+  displayedAgentColumns: string[];
   dataComponentColumns: string[];
-  serverColumns: string[];
-  servicesDataSource = []
-  list: string[];
+  servicesColumns: string[];
+  agentDataSource = [];
+  dataComponentDataSource = [];
+  servicesDataSource = [];
+  healthResponse: any;
 
 
-  constructor(private restAPIUrlService: RestAPIurlService,
-    private restCallHandlerService: RestCallHandlerService,
-    private cookieService: CookieService,
-    private healthCheckService: HealthCheckService,
-    private router: Router,
-    private dialog: MatDialog) {
+  constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
     this.loadAllAgentsHealth();
   }
 
@@ -62,63 +51,41 @@ export class HealthCheckComponent implements OnInit {
 
   async loadAllAgentsHealth() {
     try {
-      this.agentsStatusResposne = await this.restCallHandlerService.get("HEALTH_GLOBAL");
-      console.log(this.agentsStatusResposne.status);
-      var status: string = this.agentsStatusResposne.status;
-      if (this.agentsStatusResposne.status === 'success') {
-        var dataArray = this.agentsStatusResposne.data.nodes;
-        if (dataArray.length === 0) {
-          this.checkResponseData = false;
-        }
-        this.agentNodes = dataArray;
-        this.showTemplateAfterLoad = true;
-        for (var key in dataArray) {
-          var nodesArray = dataArray[key];
-          var toolIconSrc = '';
-          for (var attr in nodesArray) {
-            var attrValue = nodesArray['propertyMap'];
-            if (attrValue.toolName != undefined) {
-              // toolIconSrc = self.iconService.getIcon(attrValue.toolName);
-              //this.agentToolsIcon[attrValue.toolName] = toolIconSrc;
-              break;
-            }
-          }
-        }
-      } else {
-        this.showContent = false;
-      }
-      this.displayedColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
-      this.dataSource = this.agentNodes;
-
-    } catch (error) {
-      console.log(error);
-    }
-
-    // Loads Data Component and Services
-    this.showThrobber = true;
-    this.showContent = true;
-    this.healthCheckService.loadServerHealthConfiguration()
-      .then((serverData) => {
+      // Loads Agent , Data Component and Services
+      this.showThrobber = true;
+      this.showContent = true;
+      this.healthResponse = await this.healthCheckService.loadServerHealthConfiguration();
+      if (this.healthResponse != null) {
+        console.log(this.healthResponse);
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
-        for (var key in serverData) {
-          var element = serverData[key];
+        for (var key in this.healthResponse) {
+          var element = this.healthResponse[key];
           element.serverName = key;
           if (element.type == 'Service') {
             this.servicesDataSource.push(element);
-          }
-          if (element.type == 'Database') {
+          } else if (element.type == 'Database') {
             this.dataComponentDataSource.push(element);
+          } else if (element.type == 'Agents') {
+            this.agentNodes = element.agentNodes;
+            this.agentDataSource = this.agentNodes;
           }
         }
-
+        setTimeout(function () {
+          this.showContent = false;
+        }, 5000);
+        this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
         this.dataComponentColumns = ['serverName', 'ipAddress', 'version', 'status'];
-        this.serverColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
-      })
-      .catch(function (data) {
-        this.showThrobber = false;
-        this.showContent = false;
-      });
+        this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
+
+      }
+      console.log(this.agentDataSource);
+      console.log(this.dataComponentDataSource);
+      console.log(this.servicesDataSource);
+    } catch (error) {
+      this.showContent = false;
+      console.log(error);
+    }
   }
 
   // Displays Show Details dialog box when Details column is clicked
@@ -130,8 +97,8 @@ export class HealthCheckComponent implements OnInit {
     });
   }
 
-  goToSection(sectionName:string) {
-    let element = document.querySelector("#"+ sectionName);
+  goToSection(sectionName: string) {
+    let element = document.querySelector("#" + sectionName);
     if (element) {
       element.scrollIntoView();
     }
