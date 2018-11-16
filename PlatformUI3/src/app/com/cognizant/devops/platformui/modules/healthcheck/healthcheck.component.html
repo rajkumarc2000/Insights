@@ -16,12 +16,14 @@
  ****************************************************************************** -->
 
 <div layout layout-align="left" class="titleStyle">
-  <div layout>Health Check | 
+  <div  id="healthCheckTitle">Health Check | 
       <a  (click)="goToSection('agentsTable')"> Agents</a> |
       <a  (click)="goToSection('dataComponentTable')"> Data Components</a> |
-      <a  (click)="goToSection('servicesTable')"> Services</a> |
+      <a  (click)="goToSection('servicesTable')"> Services</a>
   </div>
 </div>
+
+<div class="orangeStripCss"></div>
 
 <div layout layout-align="left" class="sectionHeadingStyle">
   <div layout>Insights Agents</div>
@@ -69,7 +71,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-
+<div layout layout-align="right" class="rightAlignStyle">
+  <button class="backToTopButtonStyle" (click)="goToHealthCheckTitle()">Back to Top</button>
+</div>
 
 <div layout layout-align="left" class="sectionHeadingStyle">
   <div layout>Data Components</div>
@@ -109,6 +113,10 @@
     <tr mat-header-row *matHeaderRowDef="dataComponentColumns" class="tableHeaderCss"></tr>
     <tr mat-row *matRowDef="let row; columns: dataComponentColumns;"></tr>
   </table>
+</div>
+
+<div layout layout-align="right" class="rightAlignStyle">
+  <button class="backToTopButtonStyle" (click)="goToHealthCheckTitle()">Back to Top</button>
 </div>
 
 <div layout layout-align="left" class="sectionHeadingStyle">
@@ -167,5 +175,8 @@
       <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
       </mat-icon>
          Service Failure. Please try again.
-  </div>
+  </div>  
+</div>
+<div layout layout-align="right" class="rightAlignStyle">
+  <button class="backToTopButtonStyle" (click)="goToHealthCheckTitle()">Back to Top</button>
 </div>

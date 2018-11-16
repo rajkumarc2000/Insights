@@ -124,8 +124,8 @@ export class HealthCheckComponent implements OnInit {
   // Displays Show Details dialog box when Details column is clicked
   showDetailsDialog(toolName: string, categoryName: string) {
     let showDetailsDialog = this.dialog.open(ShowDetailsDialog, {
-      height: '100%',
-      width: '100%',
+      height: '350px',
+      width: '1000px',
       data: { toolName: toolName, categoryName: categoryName }
     });
   }
@@ -136,6 +136,14 @@ export class HealthCheckComponent implements OnInit {
       element.scrollIntoView();
     }
   }
+
+  goToHealthCheckTitle() {
+    let element = document.querySelector("#healthCheckTitle");
+    if (element) {
+      element.scrollIntoView();
+    }
+  }
+
 }
 
 

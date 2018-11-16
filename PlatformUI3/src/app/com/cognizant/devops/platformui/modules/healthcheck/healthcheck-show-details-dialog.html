@@ -14,15 +14,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *******************************************************************************-->
-<div layout layout-align="center center" style="background-color: lightgrey;padding:'0px'">    
+ <!--
+<div layout layout-align="right" style="background-color: lightgrey;padding:'0px';text-align: right">    
     <h2 layout-align="center center" style="margin-left: 310px;display:inline">Additional Details</h2>
     <span style="width:200px"></span>
-    <button mat-button (click)="closeShowDetailsDialog()" style="width:'20px';height:'20px'">
-        <mat-icon svgIcon="close_dialog" align="right"
-                    [ngStyle]="{'width': '20px', 'height': '20px', 'margin':'auto', 'display':'block'}">
-        </mat-icon>
-    </button>
+    
 </div>  
+-->
+<div layout layout-align="right" style="text-align: right;background-color: #0033A0; color:white">
+    <a (click)="closeShowDetailsDialog()" style="text-align: right;">
+        <mat-icon svgIcon="close_dialog" 
+                    [ngStyle]="{'width': '20px', 'height': '20px'}">
+        </mat-icon>
+    </a>
+</div>
+
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="showThrobber">   
     <mat-progress-spinner
                 [color]="primmary"
@@ -33,14 +39,14 @@
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="!checkResponseData" >
     No data found
 </div>
-<mat-dialog-content *ngIf="showContent" class="tableContainerStyle" style="width:100%;height:100%">
+<mat-dialog-content *ngIf="showContent" style="margin:0;padding: 0">
     <table mat-table [dataSource]="agentDetailedNode"  >  
         <ng-container *ngFor="let header of headerArrayDisplay" matColumnDef="{{header}}">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">{{header}}</th>
             <td mat-cell *matCellDef="let element"> {{element[header]}}</td>
         </ng-container>
         
-        <tr mat-header-row *matHeaderRowDef="headerArrayDisplay"></tr>    
+        <tr mat-header-row *matHeaderRowDef="headerArrayDisplay" class="tableHeaderCss"></tr>    
         <tr mat-row *matRowDef="let row; columns: headerArrayDisplay;" ></tr>        
     </table>
 </mat-dialog-content>
