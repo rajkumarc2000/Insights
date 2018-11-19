@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Configuration status="WARN">
- 
+
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p:: %m%n" />
 		</Console>
  
-		<RollingFile name="RollingFile" filename="${env:INSIGHTS_HOME}/logs/PlatformService/PlatformService.log"
-			filepattern="${env:INSIGHTS_HOME}/logs/PlatformService/log4j_PlatformService.log">
+		<RollingFile name="RollingFile" filename="${env:INSIGHTS_HOME}/logs/PlatformInsights/platforminsights.log"
+			filepattern="${env:INSIGHTS_HOME}/logs/PlatformInsights/platforminsights.log">
 			<PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss,SSS} %p [%t]:%c{3}.%M()%L - %m%n" />
 			<Policies>
 				<SizeBasedTriggeringPolicy size="10 MB" />
@@ -21,7 +21,7 @@
 		<Logger name="com.cognizant" level="debug">
 				<AppenderRef ref="RollingFile" />
 		</Logger>
-		<Logger name="org" level="error">
+		<Logger name="org.apache.spark" level="error">
 				<AppenderRef ref="RollingFile" />
 		</Logger>
 	</Loggers>

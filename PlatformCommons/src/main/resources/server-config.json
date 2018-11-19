@@ -102,6 +102,11 @@
 		"agentExchange": "iAgent",
 		"agentPkgQueue": "INSIGHTS.AGENTS.PACKAGE"
 	},
+	"correlations" : {
+        	"correlationWindow" : 48,
+        	"correlationFrequency" : 3,
+        	"batchSize" : 2000
+  	},
 
 	"insightsServiceURL": "http://localhost:8080",
 	"disableAuth": false,
