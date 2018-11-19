@@ -236,7 +236,7 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'Data Dictionary',
         iconName: 'feature',
-        route: 'InSights/Home/grafanadashboard/600',
+        route: 'InSights/Home/datadictionary',
         isToolbarDisplay: true,
         isAdminMenu: false
       },
@@ -264,7 +264,7 @@ export class HomeComponent implements OnInit {
           {
             displayName: 'Business Mapping',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/800',
+            route: 'InSights/Home/businessmapping',
             isToolbarDisplay: true,
             isAdminMenu: true
           },

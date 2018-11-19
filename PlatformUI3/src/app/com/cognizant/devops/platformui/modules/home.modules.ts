@@ -22,7 +22,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@insights/app/material.module';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
 
 
 import { HomeRouting } from '@insights/app/modules/home.routing';
@@ -43,6 +43,8 @@ import { AgentManagementComponent } from '@insights/app/modules/admin/agent-mana
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
+import { BusinessmappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
+
 
 
 @NgModule({
@@ -56,7 +58,9 @@ import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/da
     HealthCheckComponent,
     ShowDetailsDialog,
     AgentManagementComponent,
-    DatadictionaryComponent
+    DatadictionaryComponent,
+    BusinessmappingComponent
+
   ],
   imports: [
     HomeRouting,
@@ -75,7 +79,7 @@ import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/da
   providers: [
     GrafanaAuthenticationService,
     GrafanaDashboardService,
-    AgentService, 
+    AgentService,
     HealthCheckService
   ]
 })

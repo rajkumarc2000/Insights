@@ -24,6 +24,7 @@ import { HomeComponent } from '@insights/app/modules/home/home.component';
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
+import { BusinessmappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
 
 
 const homeRoutes: Routes = [
@@ -36,7 +37,8 @@ const homeRoutes: Routes = [
       { path: 'healthcheck', component: HealthCheckComponent },
       { path: 'loggedout', redirectTo: 'login' },
       { path: 'agentmanagement', component: AgentManagementComponent },
-      { path: 'datadictionary', component: DatadictionaryComponent }
+      { path: 'datadictionary', component: DatadictionaryComponent },
+      { path: 'businessmapping', component: BusinessmappingComponent }
     ]
   }
 ];
