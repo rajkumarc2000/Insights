@@ -23,25 +23,32 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
 import { LogService } from '@insights/common/log-service';
+/*import { LogEntry } from '@insights/common/log-service';
+import { LogPublisher, LogConsole } from '@insights/common/log-publishers';
+import { LogPublishersService } from '@insights/common/log-publishers-service';*/
+
 
 @NgModule({
   declarations: [
-    ],
+  ],
   exports: [
-   ]
+  ]
 })
 export class SharedServices {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedServices,
-      providers: [ 
+      providers: [
         LoginService,
         RestAPIurlService,
         RestCallHandlerService,
         ImageHandlerService,
         InsightsInitService,
         CookieService,
-        LogService
+        LogService/*,
+        LogEntry,
+        LogConsole,
+        LogPublishersService*/
       ]
     };
   }

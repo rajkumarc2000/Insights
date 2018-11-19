@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LogPublishersService } from "@insights/common/log-publishers-service";
-import { LogPublisher, LogConsole } from '@insights/common/log-publishers';
+/*import { LogPublishersService } from "@insights/common/log-publishers-service";
+import { LogPublisher, LogConsole } from '@insights/common/log-publishers';*/
 
 export enum LogLevel {
   All = 0,
@@ -14,18 +14,20 @@ export enum LogLevel {
 
 @Injectable()
 export class LogService {
-  publishers: LogPublisher[];
-  constructor(private logPublishersService: LogPublishersService) {
-    this.publishers = this.logPublishersService.publishers;
+  //publishers: LogPublisher[];
+  constructor() {
+    //this.publishers = this.logPublishersService.publishers; private logPublishersService: LogPublishersService
   }
-
-  level: LogLevel = LogLevel.All;
+  log(msg: any) {
+    console.log(new Date() + ": "
+      + JSON.stringify(msg));
+  }
+  /*level: LogLevel = LogLevel.All;
   logWithDate: boolean = true;
   log(msg: any, ...optionalParams: any[]) {
     console.log(new Date() + ": "
       + JSON.stringify(msg));
-    this.writeToLog(msg, LogLevel.All,
-      optionalParams);
+    // this.writeToLog(msg, LogLevel.All,optionalParams);
   }
   debug(msg: string, ...optionalParams: any[]) {
     this.writeToLog(msg, LogLevel.Debug,
@@ -64,7 +66,7 @@ export class LogService {
       for (let logger of this.publishers) {
         logger.log(entry)
         /*.subscribe(response =>
-          console.log(response));*/
+          console.log(response));*\
       }
     }
   }
@@ -118,5 +120,5 @@ export class LogEntry {
       }
     }
     return ret;
-  }
+  }*/
 }

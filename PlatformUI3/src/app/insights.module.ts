@@ -31,7 +31,6 @@ import { InsightsAppComponent } from '@insights/app/insights.component';
 import { LoginComponent } from '@insights/app/login/login.component';
 
 
-
 export function initializeApp(initConfig: InsightsInitService) {
   return () => initConfig.initMethods();
 }
