@@ -60,8 +60,32 @@ tr.mat-footer-row, tr.mat-row {
 
 .titleStyle {
     margin-left:20px;
-    padding-left: 20px;
     color: #0033A0;
     font-family: Open Sans !important;
     font-size: 17px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.backToTopButtonStyle {    
+    color: #FF8F1C;
+    background-color: white !important;
+    font-family: Open Sans !important;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #FF8F1C;
+    border-radius: 10px 10px 10px 10px; 
+}
+.rightAlignStyle {
+    text-align: right;
+    padding-right: 20px;   
+}
+
+.orangeStripCss {
+    background-color: #FF8F1C;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100% !important;
+    height: 1px;
+    margin: 0 auto;
 }
