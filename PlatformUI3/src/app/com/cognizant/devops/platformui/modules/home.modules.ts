@@ -42,6 +42,7 @@ import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
+import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { HealthCheckService } from '@insights/app/modules/healthcheck/healthchec
     PageNotFoundComponent,
     HealthCheckComponent,
     ShowDetailsDialog,
-    AgentManagementComponent
+    AgentManagementComponent,
+    DatadictionaryComponent
   ],
   imports: [
     HomeRouting,
