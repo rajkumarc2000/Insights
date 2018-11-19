@@ -11,5 +11,9 @@ body {
   padding: 5px;
 }
 
+.healthcheck-show-details-dialog-container .mat-dialog-container {
+  padding: 0px !important;
+  margin: 0px !important;
+}
 
 

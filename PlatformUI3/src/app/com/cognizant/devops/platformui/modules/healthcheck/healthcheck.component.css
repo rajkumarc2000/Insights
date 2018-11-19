@@ -1,5 +1,5 @@
 table {
-    width: 100%;    
+    width: 100%;  
     border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;
     font-family: Open Sans;
@@ -88,4 +88,14 @@ tr.mat-footer-row, tr.mat-row {
     width: 100% !important;
     height: 1px;
     margin: 0 auto;
+}
+
+.mat-dialog-container, .mat-dialog {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.linkTxt {
+    /* text-decoration: underline; */
+    cursor: pointer;
 }

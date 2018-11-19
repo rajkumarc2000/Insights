@@ -14,20 +14,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *******************************************************************************-->
-<!--
-<div layout layout-align="right" style="background-color: lightgrey;padding:'0px';text-align: right">    
-    <h2 layout-align="center center" style="margin-left: 310px;display:inline">Additional Details</h2>
-    <span style="width:200px"></span>
-    
-</div>  
--->
-<div layout layout-align="right" style="text-align: right;background-color: #0033A0; color:white">
-    <span style="text-align: center;"> Additional Detail </span>
+
+<div layout layout-align="right" style="height:20px;text-align: right;background-color: #0033A0; color:white;margin:0px;padding:0px;">
     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
-        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px'}">
+        <mat-icon svgIcon="close_dialog" 
+                    [ngStyle]="{'width': '20px', 'height': '20px'}">
         </mat-icon>
     </a>
 </div>
+<div layout-align="center center" class="titleStyle">Additional Details</div>
 
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="showThrobber">
     <mat-progress-spinner [color]="primmary" [mode]="indeterminate" [value]="50">

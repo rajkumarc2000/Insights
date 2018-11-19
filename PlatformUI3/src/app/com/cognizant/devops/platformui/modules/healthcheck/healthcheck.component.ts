@@ -91,19 +91,42 @@ export class HealthCheckComponent implements OnInit {
   // Displays Show Details dialog box when Details column is clicked
   showDetailsDialog(toolName: string, categoryName: string) {
     let showDetailsDialog = this.dialog.open(ShowDetailsDialog, {
-      height: '350px',
-      width: '1000px',
+      panelClass: 'healthcheck-show-details-dialog-container',
+      height: '500px',
+      width: '900px',
       data: { toolName: toolName, categoryName: categoryName }
     });
   }
 
-  goToSection(sectionName: string) {
-    let element = document.querySelector("#" + sectionName);
+  //Transfers focus of Heath Check page as per User's selection
+  goToSection(source:string,target:string) {
+    // Changes the selected section color in the title
+    this.changeSelectedSectionColor(source);
+    let element = document.querySelector("#"+ target);
     if (element) {
       element.scrollIntoView();
     }
   }
 
+  // Changes the selected section color in the title
+  changeSelectedSectionColor(source:string) {    
+    if (source=='agentTxt') {
+      document.getElementById(source).style.color = "#00B140";
+      document.getElementById('dataCompTxt').style.color = "#0033A0";
+      document.getElementById('servicesTxt').style.color = "#0033A0";
+    } else if (source=='dataCompTxt') {
+      document.getElementById(source).style.color = "#00B140";
+      document.getElementById('agentTxt').style.color = "#0033A0";
+      document.getElementById('servicesTxt').style.color = "#0033A0";
+    } else if(source=='servicesTxt') {
+      document.getElementById(source).style.color = "#00B140";
+      document.getElementById('dataCompTxt').style.color = "#0033A0";
+      document.getElementById('agentTxt').style.color = "#0033A0";
+    }   
+
+  }
+
+  //When user clicks on Back to Top button, it scrolls to Health Check page
   goToHealthCheckTitle() {
     let element = document.querySelector("#healthCheckTitle");
     if (element) {
