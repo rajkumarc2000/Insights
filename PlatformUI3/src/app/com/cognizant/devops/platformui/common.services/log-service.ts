@@ -19,8 +19,7 @@ export class LogService {
     //this.publishers = this.logPublishersService.publishers; private logPublishersService: LogPublishersService
   }
   log(msg: any) {
-    console.log(new Date() + ": "
-      + JSON.stringify(msg));
+    console.log(new Date() + ": "+ JSON.stringify(msg));
   }
   /*level: LogLevel = LogLevel.All;
   logWithDate: boolean = true;

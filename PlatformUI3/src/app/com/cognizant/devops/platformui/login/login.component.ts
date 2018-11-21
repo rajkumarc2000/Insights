@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
   }
 
   public userAuthentication(): void {
-    console.log(this.loginForm.value.username);
+    //console.log(this.loginForm.value.username);
     this.username = this.loginForm.value.username;
     this.password = this.loginForm.value.password;
     if (this.username === '' || this.password === '') {

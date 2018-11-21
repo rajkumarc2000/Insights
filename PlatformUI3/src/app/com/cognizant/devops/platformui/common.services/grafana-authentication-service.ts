@@ -52,17 +52,17 @@ export class GrafanaAuthenticationService implements IAuthenticationService {
 
     public validateSession(): void {
         var authToken = this.cookieService.get('Authorization');
-        console.log(authToken)
+        //console.log(authToken)
         if (authToken === undefined) {
             this.cookieService.delete('Authorization');
             this.router.navigate(['/login']);
         } else {
             var dashboardSessionExpirationTime = this.cookieService.get('DashboardSessionExpiration');
             var date = new Date();
-            console.log(dashboardSessionExpirationTime)
+            //console.log(dashboardSessionExpirationTime)
             if (new Date(dashboardSessionExpirationTime) > date) {
                 var minutes = 30;
-                console.log("Inside validateSession");
+                //console.log("Inside validateSession");
                 date.setTime(date.getTime() + (minutes * 60 * 1000));
                 this.cookieService.set('Authorization', authToken, date);
             } else {

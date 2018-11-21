@@ -49,10 +49,10 @@ export class ShowDetailsDialog implements OnInit {
     this.showThrobber = true;
     this.showContent = !this.showThrobber;
     this.checkResponseData = true;
-    console.log(this.data);
+    //console.log(this.data);
     this.healthCheckService.loadHealthConfigurations(this.data.toolName, this.data.categoryName)
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
         var dataArray = data.data.nodes;

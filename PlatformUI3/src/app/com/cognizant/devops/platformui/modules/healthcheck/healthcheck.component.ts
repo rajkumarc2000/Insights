@@ -57,7 +57,7 @@ export class HealthCheckComponent implements OnInit {
       this.showContent = !this.showThrobber;
       this.healthResponse = await this.healthCheckService.loadServerHealthConfiguration();
       if (this.healthResponse != null) {
-        console.log(this.healthResponse);
+        //console.log(this.healthResponse);
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
         for (var key in this.healthResponse) {
@@ -82,9 +82,9 @@ export class HealthCheckComponent implements OnInit {
         this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
 
       }
-      console.log(this.agentDataSource);
-      console.log(this.dataComponentDataSource);
-      console.log(this.servicesDataSource);
+      //console.log(this.agentDataSource);
+      //console.log(this.dataComponentDataSource);
+      //console.log(this.servicesDataSource);
     } catch (error) {
       this.showContent = false;
       console.log(error);

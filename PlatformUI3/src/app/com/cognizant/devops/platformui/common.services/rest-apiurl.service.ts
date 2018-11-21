@@ -121,6 +121,7 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("DATA_DICTIONARY_TOOLS_AND_CATEGORY", '/PlatformService/datadictionary/getToolsAndCategories');
         this.addEndPoint("DATA_DICTIONARY_TOOL_PROPERTIES", '/PlatformService/datadictionary/getToolProperties');
         this.addEndPoint("DATA_DICTIONARY_TOOLS_RELATIONSHIPS", '/PlatformService/datadictionary/getToolsRelationshipAndProperties');
+        this.addEndPoint("INSIGHTS_LOG", '/PlatformService/insights/log');
     }
 
     public addEndPoint(name: String, url: String) {

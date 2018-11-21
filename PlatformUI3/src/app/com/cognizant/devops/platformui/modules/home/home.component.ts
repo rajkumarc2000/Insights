@@ -65,8 +65,6 @@ export class HomeComponent implements OnInit {
   sidenavWidth: number = 14;
 
   ngOnInit() {
-    console.log("In Home Component A Init");
-    console.log(this.selectedOrg);
   }
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
@@ -106,7 +104,6 @@ export class HomeComponent implements OnInit {
       }
     }/*else if (item.children && item.children.length) {
       this.expanded = !this.expanded;
-      console.log(item + '  AB==== '+this.expanded);
     }*/
   }
 
@@ -138,7 +135,7 @@ export class HomeComponent implements OnInit {
       } else {
         this.router.navigate(['/login']);
       }
-      console.log(this.selectedOrg);
+      //console.log(this.selectedOrg);
     }
   }
 
@@ -280,7 +277,24 @@ export class HomeComponent implements OnInit {
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/1000',
             isToolbarDisplay: true,
-            isAdminMenu: true
+            isAdminMenu: true,
+            children: [
+              {
+                displayName: 'Logo Setting',
+                iconName: 'feature',
+                route: 'InSights/Home/grafanadashboard/1000',
+                isToolbarDisplay: true,
+                isAdminMenu: true
+              },
+              {
+                displayName: 'Data Archiving',
+                iconName: 'feature',
+                route: 'InSights/Home/dataarchiving',
+                isToolbarDisplay: true,
+                isAdminMenu: true
+              }
+
+            ]
           }
         ]
       },

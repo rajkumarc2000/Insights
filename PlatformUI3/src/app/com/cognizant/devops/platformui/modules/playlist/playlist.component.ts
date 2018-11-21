@@ -37,18 +37,18 @@ export class PlaylistComponent implements OnInit {
     var self = this;
 
     this.framesize = window.frames.innerHeight;
-        
+
     var receiveMessage = function (evt) {
-                var height = parseInt(evt.data);
-                if (!isNaN(height)) {
-                    self.framesize =  (evt.data + 20) ;
-                }
-            }
-            console.log(this.framesize);
+      var height = parseInt(evt.data);
+      if (!isNaN(height)) {
+        self.framesize = (evt.data + 20);
+      }
+    }
+    //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
-  
-    console.log(this.framesize);
-    
+
+    //console.log(this.framesize);
+
     self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
     //self.setScrollBarPosition();
   }

@@ -66,7 +66,7 @@ export class GrafanaDashboardComponent implements OnInit {
     ngOnInit() {
         this.route.paramMap.subscribe(async (params: ParamMap) => {
             this.orgId = params.get('id');
-            console.log("orgid works " + this.orgId);
+            //console.log("orgid works " + this.orgId);
             this.selectedDashboard = undefined;
             this.dashboardUrl = undefined;
             this.dashboards = undefined;

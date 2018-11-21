@@ -80,7 +80,7 @@ export class RestCallHandlerService {
         if (data && Object.keys(data).length !== 0 && data.constructor == Object) {
           var postParameter = '';
           for (var key in data) {
-            console.log(key+""+ requestParams[key]);
+            //console.log(key+""+ requestParams[key]);
             if (data.hasOwnProperty(key)) {
               postParameter = postParameter.concat(key + '=' + requestParams[key] + '&');
             }
@@ -91,7 +91,7 @@ export class RestCallHandlerService {
         return;
       }
     }
-    console.log(allData)
+    //console.log(allData)
     dataresponse = this.http.post(restCallUrl, {}, allData);
     return dataresponse;
 

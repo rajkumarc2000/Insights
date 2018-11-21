@@ -36,6 +36,7 @@ export class AgentManagementComponent implements OnInit {
   runDisableStatus: string;
   agentListDatasource = [];
   displayedColumns: string[];
+  selectedAgent: any;
   editIconSrc: string = "dist/icons/svg/actionIcons/Edit_icon_disabled.svg";
   startIconSrc: string = "dist/icons/svg/actionIcons/Start_icon_Disabled.svg";
   stopIconSrc: string = "dist/icons/svg/actionIcons/Stop_icon_Disabled.svg";
@@ -46,7 +47,7 @@ export class AgentManagementComponent implements OnInit {
   constructor(public agentService: AgentService) {
 
     this.getRegisteredAgents();
-
+    //console.log(this.selectedAgent);
   }
 
   ngOnInit() {
@@ -66,8 +67,8 @@ export class AgentManagementComponent implements OnInit {
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
       this.agentListDatasource = agentList.data;
-      console.log(agentList);
-      console.log(this.agentListDatasource);
+      //console.log(agentList);
+      //console.log(this.agentListDatasource);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
 
       setTimeout(function () {
