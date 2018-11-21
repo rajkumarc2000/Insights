@@ -31,6 +31,7 @@ import {
     MatCheckboxModule,
     MatSidenavModule,
     MatSelectModule,
+    MatRadioModule
 } from '@angular/material';
 
 @NgModule({
@@ -49,7 +50,8 @@ import {
         MatProgressSpinnerModule,
         MatCheckboxModule,
         MatSidenavModule,
-        MatSelectModule
+        MatSelectModule,
+        MatRadioModule
     ],
     declarations: []
 })

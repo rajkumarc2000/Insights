@@ -23,9 +23,7 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
 import { LogService } from '@insights/common/log-service';
-/*import { LogEntry } from '@insights/common/log-service';
-import { LogPublisher, LogConsole } from '@insights/common/log-publishers';
-import { LogPublishersService } from '@insights/common/log-publishers-service';*/
+
 
 
 @NgModule({
@@ -45,10 +43,7 @@ export class SharedServices {
         ImageHandlerService,
         InsightsInitService,
         CookieService,
-        LogService/*,
-        LogEntry,
-        LogConsole,
-        LogPublishersService*/
+        LogService
       ]
     };
   }

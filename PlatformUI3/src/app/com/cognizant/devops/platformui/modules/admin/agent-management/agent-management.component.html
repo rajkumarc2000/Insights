@@ -1,3 +1,99 @@
-<p>
-  agent-management works!
-</p>
+<!--
+*******************************************************************************
+ * Copyright 2017 Cognizant Technology Solutions
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ****************************************************************************** -->
+
+<div class="confirmationMessage" layout="row" layout-align="end start" style="margin-right: 7px; float: right;" ng-if="agentListController.showList">
+
+  <button mat-button>
+    <mat-icon matTooltip="Start" class="mat-icon material-icons">
+      play_arrow
+    </mat-icon>
+  </button>
+  <button mat-button>
+    <mat-icon matTooltip="Start" class="mat-icon material-icons">
+      stop
+    </mat-icon>
+  </button>
+  <button mat-button>
+    <mat-icon matTooltip="Edit" class="mat-icon material-icons">
+      edit
+    </mat-icon>
+  </button>
+  <button mat-button>
+    <mat-icon  matTooltip="Delete" class="mat-icon material-icons">
+      delete
+    </mat-icon>
+  </button>
+  <!--<mat-icon class="ForActionsIcons" ng-style="{height: '20px', width: '20px'}" md-svg-src="{{agentListController.stopIconSrc}}"
+      ng-click="agentListController.runDisableStatus == 'START' && agentListController.agentStartStopAction(agentListController.SelectedToolDetails, 'STOP')">
+      <md-tooltip md-direction="Bottom">
+        Stop
+      </md-tooltip>
+      </mat-icon>
+      <mat-icon class="ForActionsIcons" ng-style="{height: '20px', width: '20px'}" md-svg-src="{{agentListController.editIconSrc}}"
+        ng-click="agentListController.buttonDisableStatus && agentListController.editAgentConfig(agentListController.SelectedToolDetails)">
+        <md-tooltip md-direction="Bottom">
+          Edit
+        </md-tooltip>
+        </mat-icon>
+        <mat-icon class="ForActionsIcons" ng-style="{height: '20px', width: '20px'}" md-svg-src="{{agentListController.deleteIconSrc}}"
+          ng-click="agentListController.buttonDisableStatus && agentListController.uninstallAgent(agentListController.SelectedToolDetails)">
+          <md-tooltip md-direction="Bottom">
+            Uninstall
+          </md-tooltip>
+          </mat-icon>-->
+</div>
+
+<mat-radio-group [(ngModel)]="selectedPerson">
+  <table mat-table [dataSource]="agentListDatasource" class="mat-elevation-z8">
+    <!-- Radio Button Column -->
+    <ng-container matColumnDef="radio">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeaderCss"></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-radio-button [value]="row"></mat-radio-button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- OS Column -->
+    <ng-container matColumnDef="OS">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">OS</th>
+      <td mat-cell *matCellDef="let element"> {{element.osVersion}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ToolName">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.toolName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ToolCategory">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Category</th>
+      <td mat-cell *matCellDef="let element"> {{element.toolCategory}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Version">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
+      <td mat-cell *matCellDef="let element"> {{element.agentVersion}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
+      <td mat-cell *matCellDef="let element"> {{element.agentStatus}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+  </table>
+</mat-radio-group>

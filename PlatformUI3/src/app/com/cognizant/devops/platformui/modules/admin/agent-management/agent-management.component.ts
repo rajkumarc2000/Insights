@@ -15,7 +15,8 @@
  ******************************************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
-
+import { MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-agent-management',
@@ -33,6 +34,8 @@ export class AgentManagementComponent implements OnInit {
   tableParams = [];
   buttonDisableStatus: boolean = false;
   runDisableStatus: string;
+  agentListDatasource = [];
+  displayedColumns: string[];
   editIconSrc: string = "dist/icons/svg/actionIcons/Edit_icon_disabled.svg";
   startIconSrc: string = "dist/icons/svg/actionIcons/Start_icon_Disabled.svg";
   stopIconSrc: string = "dist/icons/svg/actionIcons/Stop_icon_Disabled.svg";
@@ -61,38 +64,18 @@ export class AgentManagementComponent implements OnInit {
     self.stopIconSrc = "dist/icons/svg/actionIcons/Stop_icon_Disabled.svg";
     self.deleteIconSrc = "dist/icons/svg/actionIcons/Delete_icon_disabled.svg";
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
-    console.log(agentList);
+    if (agentList != null && agentList.status == 'success') {
+      this.agentListDatasource = agentList.data;
+      console.log(agentList);
+      console.log(this.agentListDatasource);
+      this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
 
-    /*.then(function (response) {
-      self.showThrobber = false;
-      self.data = response.data;
-      self.consolidatedArr(self.data);
-      if (self.data.length == 0) {
-        self.showMessage = "No Records found";
-      } else {
-        self.showList = true;
-        /*self.tableParams = new self.NgTableParams({
-          page: 1,
-          count: 10
-        },
-          {
-            counts: [], // hide page counts control
-            total: 1,  // value less than count hide pagination				
-            dataset: self.data
-          });*\
-      }
-
-    })
-    .catch(function (response) {
-      self.showThrobber = false;
-      self.showList = false;
+      setTimeout(function () {
+        self.showConfirmMessage = "";
+      }, 5000);
+    } else {
       self.showMessage = "Something wrong with Service, Please try again.";
-    });*/
-
-    setTimeout(function () {
-      self.showConfirmMessage = "";
-    }, 5000);
-
+    }
   }
   private consolidatedArr(detailArr): void {
     var self = this;
@@ -101,5 +84,7 @@ export class AgentManagementComponent implements OnInit {
       this.validationArr[i] = { "os": detailArr[i].osVersion, "version": detailArr[i].agentVersion, "tool": detailArr[i].toolName }
     }
   }
+
+
 
 }
