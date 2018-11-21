@@ -43,17 +43,18 @@ export class HealthCheckComponent implements OnInit {
 
 
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
-    this.loadAllAgentsHealth();
+    this.loadAllHealthCheckInfo();
   }
 
   ngOnInit() {
+    //this.loadAllHealthCheckInfo();
   }
 
-  async loadAllAgentsHealth() {
+ async loadAllHealthCheckInfo() {
     try {
       // Loads Agent , Data Component and Services
       this.showThrobber = true;
-      this.showContent = true;
+      this.showContent = !this.showThrobber;
       this.healthResponse = await this.healthCheckService.loadServerHealthConfiguration();
       if (this.healthResponse != null) {
         console.log(this.healthResponse);
@@ -71,9 +72,11 @@ export class HealthCheckComponent implements OnInit {
             this.agentDataSource = this.agentNodes;
           }
         }
+        /*
         setTimeout(function () {
           this.showContent = false;
         }, 5000);
+        */
         this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
         this.dataComponentColumns = ['serverName', 'ipAddress', 'version', 'status'];
         this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];

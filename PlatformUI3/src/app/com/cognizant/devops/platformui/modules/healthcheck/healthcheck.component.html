@@ -29,7 +29,7 @@
   <div layout>Insights Agents</div>
 </div>
 
-<div id="agentsTable" layout-align="center center" class="tableContainerStyle">
+<div id="agentsTable" layout-align="center center" class="tableContainerStyle" *ngIf="showContent">
   <!-- Insights Agents Table -->
   <table mat-table [dataSource]="agentDataSource">
     <!-- Category Column -->
@@ -71,16 +71,29 @@
     <tr mat-row *matRowDef="let row; columns: displayedAgentColumns;"></tr>
   </table>
 </div>
+
+<!-- Displays Progress spinner and Error message for service failure-->
+<div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+<div *ngIf="!(showContent || showThrobber)" layout-align="center center" style="text-align: center;">
+  <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
+  </mat-icon>
+  Service Failure. Please try again.
+</div>
+
 <div layout layout-align="right" class="rightAlignStyle">
   <button class="backToTopButtonStyle" (click)="goToHealthCheckTitle()">Back to Top</button>
 </div>
+
 
 <div layout layout-align="left" class="sectionHeadingStyle">
   <div layout>Data Components</div>
 </div>
 
-<div id="dataComponentTable" layout-align="center center" class="tableContainerStyle">
-  <table mat-table [dataSource]="dataComponentDataSource">
+<div id="dataComponentTable" layout-align="center center" class="tableContainerStyle" *ngIf="showContent">
+  <table mat-table [dataSource]="dataComponentDataSource"> 
     <!-- Server Column -->
     <ng-container matColumnDef="serverName">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Server</th>
@@ -114,6 +127,16 @@
     <tr mat-row *matRowDef="let row; columns: dataComponentColumns;"></tr>
   </table>
 </div>
+<!-- Displays Progress spinner and Error message for service failure-->
+<div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+<div *ngIf="!(showContent || showThrobber)" layout-align="center center" style="text-align: center;">
+  <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
+  </mat-icon>
+  Service Failure. Please try again.
+</div>
 
 <div layout layout-align="right" class="rightAlignStyle">
   <button class="backToTopButtonStyle" (click)="goToHealthCheckTitle()">Back to Top</button>
@@ -123,8 +146,8 @@
   <div layout>Services</div>
 </div>
 
-<div id="servicesTable" layout-align="center center" class="tableContainerStyle">
-  <table mat-table [dataSource]="servicesDataSource">
+<div id="servicesTable" layout-align="center center" class="tableContainerStyle" *ngIf="showContent">
+  <table mat-table [dataSource]="servicesDataSource" >
     <!-- Server Column -->
     <ng-container matColumnDef="serverName">
       <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Server</th>
@@ -162,16 +185,17 @@
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="servicesColumns" class="tableHeaderCss"></tr>
     <tr mat-row *matRowDef="let row; columns: servicesColumns;"></tr>
-  </table>
-  <div *ngIf="showThrobber">
-    <mat-progress-spinner [color]="primary" [mode]="indeterminate" style="display:inline;" [value]="30">
-    </mat-progress-spinner>
-  </div>
-  <div *ngIf="!showContent">
-    <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
-    </mat-icon>
-    Service Failure. Please try again.
-  </div>
+  </table>  
+</div>
+<!-- Displays Progress spinner and Error message for service failure-->
+<div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+<div *ngIf="!(showContent || showThrobber)" layout-align="center center" style="text-align: center;">
+  <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
+  </mat-icon>
+  Service Failure. Please try again.
 </div>
 <div layout layout-align="right" class="rightAlignStyle">
   <button class="backToTopButtonStyle" (click)="goToHealthCheckTitle()">Back to Top</button>
