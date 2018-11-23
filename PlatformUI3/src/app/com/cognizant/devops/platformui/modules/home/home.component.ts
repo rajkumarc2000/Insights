@@ -94,6 +94,7 @@ export class HomeComponent implements OnInit {
         this.framesize = (evt.data + 20);
       }
     }
+    this.framesize = this.framesize - 80;
     console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
