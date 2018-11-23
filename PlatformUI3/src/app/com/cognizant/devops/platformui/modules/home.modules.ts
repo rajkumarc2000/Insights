@@ -37,14 +37,18 @@ import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page
 import { HealthCheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
 
-import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
-import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
+
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
-import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
-import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
 import { BusinessmappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
-import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
+import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
+
+import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
+import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard/grafana-dashboard-service';
+import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
+import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
+import { DataArchivingService } from '@insights/app/modules/settings/dataarchiving/dataarchiving-service';
+
 
 
 
@@ -61,7 +65,7 @@ import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchi
     AgentManagementComponent,
     DatadictionaryComponent,
     BusinessmappingComponent,
-    DataarchivingComponent
+    DataArchivingComponent
 
   ],
   imports: [
@@ -82,7 +86,8 @@ import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchi
     GrafanaAuthenticationService,
     GrafanaDashboardService,
     AgentService,
-    HealthCheckService
+    HealthCheckService,
+    DataArchivingService
   ]
 })
 

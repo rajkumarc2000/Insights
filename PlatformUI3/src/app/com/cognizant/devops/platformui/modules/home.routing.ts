@@ -25,7 +25,7 @@ import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
 import { BusinessmappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
-import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
+import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 
 
 const homeRoutes: Routes = [
@@ -40,7 +40,7 @@ const homeRoutes: Routes = [
       { path: 'agentmanagement', component: AgentManagementComponent },
       { path: 'datadictionary', component: DatadictionaryComponent },
       { path: 'businessmapping', component: BusinessmappingComponent },
-      { path: 'dataarchiving', component: DataarchivingComponent }
+      { path: 'dataarchiving', component: DataArchivingComponent }
     ]
   }
 ];

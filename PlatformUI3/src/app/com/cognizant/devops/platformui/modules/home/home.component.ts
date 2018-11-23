@@ -22,6 +22,8 @@ import { Router } from '@angular/router';
 import { NavItem } from '@insights/common/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
+import { DataSharedService } from '@insights/common/data-shared-service';
+
 
 @Component({
   selector: 'app-home',
@@ -63,12 +65,12 @@ export class HomeComponent implements OnInit {
   defaultOrg: number;
   selectedOrg: String;
   sidenavWidth: number = 14;
-
+  framesize: any;
   ngOnInit() {
   }
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
-    public router: Router) {
+    public router: Router, private dataShare: DataSharedService) {
     router.onSameUrlNavigation = 'reload';
     //console.log("In Home Component");
     if (this.depth === undefined) {
@@ -76,13 +78,23 @@ export class HomeComponent implements OnInit {
     }
     this.grafanaService.validateSession();
     this.isValidUser = true;
-    this.iframeStyle = 'width:100%; height:400px;';
+    /*this.iframeStyle = 'width:100%; height:400px;';
     var receiveMessage = function (evt) {
       var height = parseInt(evt.data);
       if (!isNaN(height)) {
         this.iframeStyle = 'width:100%; height:' + (evt.data + 20) + 'px';
       }
     }
+    console.log(this.iframeStyle);
+    window.addEventListener('message', receiveMessage, false);*/
+    this.framesize = window.frames.innerHeight;
+    var receiveMessage = function (evt) {
+      var height = parseInt(evt.data);
+      if (!isNaN(height)) {
+        this.framesize = (evt.data + 20);
+      }
+    }
+    console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
     this.loadorganizations();
@@ -122,6 +134,7 @@ export class HomeComponent implements OnInit {
     if (this.grafanaResponse != undefined) {
       if (this.grafanaResponse.userName != undefined) {
         this.userName = this.grafanaResponse.userName.replace(/['"]+/g, '');
+        this.dataShare.changeUser(this.userName);
       }
       this.userRole = this.grafanaResponse.grafanaCurrentOrgRole;
       this.userCurrentOrg = this.grafanaResponse.grafanaCurrentOrg;
@@ -387,6 +400,7 @@ export class HomeComponent implements OnInit {
 
         if (currentroleandorg.userName != undefined) {
           this.userName = currentroleandorg.userName.replace(/['"]+/g, '');
+          this.dataShare.changeUser(this.userName);
         }
 
       }
