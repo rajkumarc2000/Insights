@@ -22,22 +22,20 @@
   </div>
 </div>
 
-
-<div flex="60" flex-offset="15" class="btnAlign">
-  <button mat-button (click)="addData()" [disabled]="showadd">
+<div class="tableDiv" *ngIf="listView">
+  <div flex="60" flex-offset="15" class="btnAlign">
+    <button mat-button (click)="addData()" [disabled]="showadd">
     <mat-icon matTooltip="Add" class="mat-icon material-icons">
       add
     </mat-icon>
   </button>
 
-  <button mat-button (click)="editData()" [disabled]="!showadd">
+    <button mat-button (click)="editData()" [disabled]="!showadd">
     <mat-icon matTooltip="Edit" class="mat-icon material-icons"> <!--usingBtnCss usingBtnCss-->
       edit
     </mat-icon>
   </button>
-</div>
-
-<div class="tableDiv">
+  </div>
   <mat-radio-group [(ngModel)]="selectedRecordg">
     <table mat-table [dataSource]="datalist" class="mat-elevation-z8">
 
