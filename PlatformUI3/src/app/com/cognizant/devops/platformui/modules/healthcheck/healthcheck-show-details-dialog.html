@@ -35,7 +35,7 @@
     <table mat-table [dataSource]="agentDetailedNode">
         <ng-container *ngFor="let header of headerArrayDisplay" matColumnDef="{{header}}">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">{{header}}</th>
-            <td mat-cell *matCellDef="let element"> {{element[header]}}</td>
+            <td mat-cell *matCellDef="let element">{{ header=='inSightsTimeX' ? (element[header] | date:'yyyy-MM-dd HH:mm:ss') : element[header]}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headerArrayDisplay" class="tableHeaderCss"></tr>

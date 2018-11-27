@@ -13,10 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.cognizant.devops.platformservice.rest.datatagging.constants;
+package com.cognizant.devops.platformservice.businessmapping.constants;
 
-@Deprecated
-public final class DatataggingConstants {
+public final class BusinessMappingConstants {
 
 	public static final String VALUE = "value";
 	public static final String EXCEL_FILE="data/data.csv";

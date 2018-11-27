@@ -40,15 +40,16 @@ export class HealthCheckComponent implements OnInit {
   dataComponentDataSource = [];
   servicesDataSource = [];
   healthResponse: any;
+  agentBacktoTopFlag:boolean =false;
+  dataBacktoTopFlag:boolean =false;
+  servicesBacktoTopFlag:boolean =false;
 
 
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
     this.loadAllHealthCheckInfo();
   }
 
-  ngOnInit() {
-    //this.loadAllHealthCheckInfo();
-  }
+  ngOnInit() {}
 
  async loadAllHealthCheckInfo() {
     try {
@@ -72,19 +73,25 @@ export class HealthCheckComponent implements OnInit {
             this.agentDataSource = this.agentNodes;
           }
         }
-        /*
-        setTimeout(function () {
-          this.showContent = false;
-        }, 5000);
-        */
+        //Displays Back to Top button when Agent table contains more than 20 rows
+        if (this.agentDataSource.length > 20) {
+          this.agentBacktoTopFlag = true;
+        }
+        //Displays Back to Top button when Data Component table contains more than 20 rows
+        if (this.dataComponentDataSource.length > 20) {
+          this.dataBacktoTopFlag = true;
+        }
+        //Displays Back to Top button when Services table contains more than 20 rows
+        if (this.servicesDataSource.length > 20) {
+          this.servicesBacktoTopFlag = true;
+        }
+
         this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
         this.dataComponentColumns = ['serverName', 'ipAddress', 'version', 'status'];
         this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
 
       }
-      //console.log(this.agentDataSource);
-      //console.log(this.dataComponentDataSource);
-      //console.log(this.servicesDataSource);
+      
     } catch (error) {
       this.showContent = false;
       console.log(error);

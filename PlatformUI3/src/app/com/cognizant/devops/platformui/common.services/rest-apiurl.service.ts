@@ -30,8 +30,10 @@ export class RestAPIurlService implements IRestAPIUrlService {
     }
     public initializeEndpoints() {
         this.addEndPoint("ABOUT_READ", '/PlatformService/about/read');
+        //For Health Check Page
         this.addEndPoint("HEALTH_TOOL", '/PlatformService/admin/health/detailHealth');
         this.addEndPoint("INSIGHTS_COMP_STATUS", '/PlatformService/admin/health/globalHealth');
+
         this.addEndPoint("LOGOUT", '/PlatformService/user/logout');
         this.addEndPoint("GRAPANA_CURRENT_ROLE_ORG", '/PlatformService/user/getCurrentOrgAndRole');
         this.addEndPoint("ORGS_GET", '/PlatformService/admin/userMgmt/getOrgs');
@@ -96,10 +98,13 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_GET_USERS", '/PlatformService/accessGrpMgmt/getUser');
         this.addEndPoint("GET_GRAFANA_VERSION", "/PlatformService/accessGrpMgmt/getGrafanaVersion");
 
-        this.addEndPoint("HIERARCHY_ALL_DETAILS_GET", '/PlatformService/admin/hierarchyDetails/getAllHierarchyDetails');
+        //Business Mapping module under Admin section
+        this.addEndPoint("GET_ALL_HIERARCHY_DETAILS", '/PlatformService/admin/businessmapping/getAllHierarchyDetails');
+        this.addEndPoint("GET_HIERARCHY_PROPERTIES", '/PlatformService/admin/businessmapping/getHierarchyProperties');
+        
         this.addEndPoint("UPLOAD_HIERARCHY_DETAILS", '/PlatformService/admin/hierarchyDetails/uploadHierarchyDetails');
         this.addEndPoint("GET_METADATA", '/PlatformService/admin/hierarchyDetails/getMetaData');
-        this.addEndPoint("GET_HIERARCHY_PROPERTIES", '/PlatformService/admin/hierarchyDetails/getHierarchyProperties');
+        
 
         this.addEndPoint("INSIGHTS_GET", '/PlatformService/insights/inferences');
 

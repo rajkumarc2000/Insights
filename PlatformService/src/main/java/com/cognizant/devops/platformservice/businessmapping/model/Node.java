@@ -13,12 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.cognizant.devops.platformservice.rest.datatagging.model;
+package com.cognizant.devops.platformservice.businessmapping.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
 public class Node implements Comparable<Node> {
 
     private Node parent = null;

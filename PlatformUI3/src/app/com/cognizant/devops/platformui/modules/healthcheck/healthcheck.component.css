@@ -99,3 +99,12 @@ tr.mat-footer-row, tr.mat-row {
     /* text-decoration: underline; */
     cursor: pointer;
 }
+/* 
+.mat-ink-bar{
+    background-color:#00B140; 
+} */
+.mat-tab-label, .mat-tab-label-content {
+     /* color: #00B140 !important; */
+     font-family: Open Sans !important;
+     font-size: 17px;
+ } 

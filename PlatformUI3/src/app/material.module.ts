@@ -16,6 +16,7 @@
 
 import { NgModule } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import {MatTabsModule} from '@angular/material/tabs';
 import {
     MatButtonModule,
     MatMenuModule,
@@ -51,7 +52,8 @@ import {
         MatCheckboxModule,
         MatSidenavModule,
         MatSelectModule,
-        MatRadioModule
+        MatRadioModule,
+        MatTabsModule
     ],
     declarations: []
 })

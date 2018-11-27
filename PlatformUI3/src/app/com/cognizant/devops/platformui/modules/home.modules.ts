@@ -42,8 +42,9 @@ import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
+import { BusinessMappingService } from '@insights/app/modules/businessmapping/businessmapping.service';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
-import { BusinessmappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
+import { BusinessMappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
 import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 
 
@@ -60,7 +61,7 @@ import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchi
     ShowDetailsDialog,
     AgentManagementComponent,
     DatadictionaryComponent,
-    BusinessmappingComponent,
+    BusinessMappingComponent,
     DataarchivingComponent
 
   ],
@@ -82,7 +83,8 @@ import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchi
     GrafanaAuthenticationService,
     GrafanaDashboardService,
     AgentService,
-    HealthCheckService
+    HealthCheckService,
+    BusinessMappingService
   ]
 })
 
