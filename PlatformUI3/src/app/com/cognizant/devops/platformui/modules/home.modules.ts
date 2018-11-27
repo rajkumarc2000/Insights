@@ -47,7 +47,6 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { BusinessMappingService } from '@insights/app/modules/businessmapping/businessmapping.service';
 import { BusinessMappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
-import { DataarchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 import { DataArchivingService } from '@insights/app/modules/settings/dataarchiving/dataarchiving-service';
 
 
