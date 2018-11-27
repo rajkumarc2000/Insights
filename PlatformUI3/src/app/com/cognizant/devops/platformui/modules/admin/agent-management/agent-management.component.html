@@ -14,44 +14,73 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
+<h3 class="heading">Agent List</h3>
 
-<div class="confirmationMessage" layout="row" layout-align="end start" style="margin-right: 7px; float: right;" ng-if="agentListController.showList">
-
-  <button mat-button>
-    <mat-icon matTooltip="Start" class="mat-icon material-icons">
+<div flex="70" layout layout-align="center center" class="selectToolTxt">
+  <div *ngIf="showConfirmMessage != ''" id="confrmMsg">
+    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'registered' || showConfirmMessage === 'updated' || showConfirmMessage === 'started' || showConfirmMessage === 'stopped'">
+      <mat-icon svgIcon="successIconSrc" [ngStyle]="{color: '#4ca64c', height: '15px', width: '15px'}"></mat-icon>
+      <span>Agent {{showConfirmMessage}} successfully</span>
+    </div>
+    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'uninstall'">
+      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+      <span class="confirmation-message">Please stop the Agent before uninstalling!</span>
+    </div>
+    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'register' || showConfirmMessage === 'update' || showConfirmMessage === 'start' || showConfirmMessage === 'stop'">
+      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+      <span class="confirmation-message">Agent {{showConfirmMessage}} failed.</span>
+    </div>
+    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'service_error'">
+      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+      <span class="confirmation-message">Something wrong with service, Please try again</span>
+    </div>
+    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'other'">
+      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+      <span class="confirmation-message">{{showMessage}}</span>
+    </div>
+  </div>
+</div>
+<div class="btnAlign">
+  <button mat-button (click)="addAgentData()">
+    <mat-icon title="Add" class="mat-icon material-icons">
+      add
+    </mat-icon>
+  </button>
+  <button mat-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
+    <mat-icon title=" Start " class="mat-icon material-icons ">
       play_arrow
     </mat-icon>
   </button>
-  <button mat-button>
-    <mat-icon matTooltip="Stop" class="mat-icon material-icons">
+  <button mat-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
+    <mat-icon title="Stop " class="mat-icon material-icons ">
       stop
     </mat-icon>
   </button>
-  <button mat-button>
-    <mat-icon matTooltip="Edit" class="mat-icon material-icons">
+  <button mat-button [disabled]="buttonDisableStatus">
+    <mat-icon title="Edit " class="mat-icon material-icons" >
       edit
     </mat-icon>
   </button>
-  <button mat-button>
-    <mat-icon  matTooltip="Delete" class="mat-icon material-icons">
+  <button mat-button [disabled]="buttonDisableStatus">
+    <mat-icon title="Delete " class="mat-icon material-icons" >
       delete
     </mat-icon>
   </button>
-  <!--<mat-icon class="ForActionsIcons" ng-style="{height: '20px', width: '20px'}" md-svg-src="{{agentListController.stopIconSrc}}"
-      ng-click="agentListController.runDisableStatus == 'START' && agentListController.agentStartStopAction(agentListController.SelectedToolDetails, 'STOP')">
-      <md-tooltip md-direction="Bottom">
+  <!--<mat-icon class="ForActionsIcons " [ngStyle]="{height: '20px', width: '20px'} " md-svg-src="{{stopIconSrc}} "
+      ng-click="runDisableStatus=='START' && agentStartStopAction(SelectedToolDetails, 'STOP') ">
+      <md-tooltip md-direction="Bottom ">
         Stop
       </md-tooltip>
       </mat-icon>
-      <mat-icon class="ForActionsIcons" ng-style="{height: '20px', width: '20px'}" md-svg-src="{{agentListController.editIconSrc}}"
-        ng-click="agentListController.buttonDisableStatus && agentListController.editAgentConfig(agentListController.SelectedToolDetails)">
-        <md-tooltip md-direction="Bottom">
+      <mat-icon class="ForActionsIcons " [ngStyle]="{height: '20px', width: '20px'} " md-svg-src="{{editIconSrc}} "
+        ng-click="buttonDisableStatus && editAgentConfig(SelectedToolDetails) ">
+        <md-tooltip md-direction="Bottom ">
           Edit
         </md-tooltip>
         </mat-icon>
-        <mat-icon class="ForActionsIcons" ng-style="{height: '20px', width: '20px'}" md-svg-src="{{agentListController.deleteIconSrc}}"
-          ng-click="agentListController.buttonDisableStatus && agentListController.uninstallAgent(agentListController.SelectedToolDetails)">
-          <md-tooltip md-direction="Bottom">
+        <mat-icon class="ForActionsIcons " [ngStyle]="{height: '20px', width: '20px'} " md-svg-src="{{deleteIconSrc}} "
+          ng-click="buttonDisableStatus && uninstallAgent(SelectedToolDetails) ">
+          <md-tooltip md-direction="Bottom ">
             Uninstall
           </md-tooltip>
           </mat-icon>-->
@@ -62,9 +91,9 @@
     <table mat-table [dataSource]="agentListDatasource" class="mat-elevation-z8">
       <!-- Radio Button Column -->
       <ng-container matColumnDef="radio">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"></th>
-        <td mat-cell *matCellDef="let element">
-          <mat-radio-button [value]="element"></mat-radio-button>
+        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss "></th>
+        <td mat-cell *matCellDef="let element ">
+          <mat-radio-button [value]="element" (click)="statusEdit(element)"></mat-radio-button>
         </td>
       </ng-container>
 

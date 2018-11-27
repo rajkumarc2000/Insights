@@ -32,7 +32,7 @@ export class AgentManagementComponent implements OnInit {
   showMessage: string;
   data = [];
   tableParams = [];
-  buttonDisableStatus: boolean = false;
+  buttonDisableStatus: boolean = true;
   runDisableStatus: string;
   agentListDatasource = [];
   displayedColumns: string[];
@@ -58,7 +58,7 @@ export class AgentManagementComponent implements OnInit {
     var self = this;
     self.showList = false;
     self.showThrobber = true;
-    self.buttonDisableStatus = false;
+    self.buttonDisableStatus = true;
     self.runDisableStatus = "";
     self.editIconSrc = "dist/icons/svg/actionIcons/Edit_icon_disabled.svg";
     self.startIconSrc = "dist/icons/svg/actionIcons/Start_icon_Disabled.svg";
@@ -67,8 +67,8 @@ export class AgentManagementComponent implements OnInit {
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
       this.agentListDatasource = agentList.data;
-      //console.log(agentList);
-      //console.log(this.agentListDatasource);
+      console.log(agentList);
+      console.log(this.agentListDatasource);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
 
       setTimeout(function () {
@@ -86,6 +86,50 @@ export class AgentManagementComponent implements OnInit {
     }
   }
 
+  statusEdit(element) {
+    console.log(element)
+    this.runDisableStatus = element.agentStatus;
+    console.log("Status Edit " + this.runDisableStatus);
+    this.buttonDisableStatus = false;
+  }
+
+  agentStartStopAction(actType): void {
+    var self = this;
+    console.log(this.selectedAgent);
+    if (this.selectedAgent == undefined) {
+      this.showConfirmMessage = "other";
+      self.showMessage = "Please select Agent";
+    } else {
+      console.log(" agentStartStopAction " + actType + " " + this.selectedAgent.agentKey);
+      self.agentService.agentStartStop(this.selectedAgent.agentKey, actType)
+        .then(function (data) {
+          console.log(data);
+          if (actType == "START") {
+            if (data.status == "success") {
+              self.showConfirmMessage = "started";
+            } else {
+              self.showConfirmMessage = "start";
+            }
+          } else {
+            if (data.status == "success") {
+              self.showConfirmMessage = "stopped";
+            } else {
+              self.showConfirmMessage = "stop";
+            }
+          }
+
+          self.getRegisteredAgents();
+        })
+        .catch(function (data) {
+          self.showConfirmMessage = "service_error";
+          self.getRegisteredAgents();
+        });
+    }
+  }
+
+  addAgentData() {
+
+  }
 
 
 }

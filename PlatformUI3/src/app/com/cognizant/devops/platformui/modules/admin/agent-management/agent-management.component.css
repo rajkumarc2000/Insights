@@ -46,3 +46,30 @@ tr.mat-footer-row, tr.mat-row {
     padding-left: 20px;
     padding-right: 20px;
 }
+
+.btnAlign{
+    font-family: Open Sans !important;
+    margin-right: 7px; 
+    float: right;
+}
+
+.heading{
+    color:#0033A0;
+    font-family:Open Sans,Tahoma !important;
+    font-size:16px;
+    padding-left: 10px;
+    align-content: center;
+}
+
+.mat-icon-message{
+    color: #ff4c4c;
+    height: 15px;
+     width: 15px;
+}
+
+.confirmation-message{
+    color: #ff4c4c;
+    text-align: center;
+    font-size: 20px;
+    padding-left: 25px;
+}

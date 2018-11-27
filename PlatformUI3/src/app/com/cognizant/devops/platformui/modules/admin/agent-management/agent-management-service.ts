@@ -75,7 +75,7 @@ export class AgentService implements IAgentService {
     }
 
     agentStartStop(agentId: string, actionType: string): Promise<any> {
-        return this.restCallHandlerService.post("AGENT_START_STOP", { 'agentId': agentId, 'action': actionType }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+        return this.restCallHandlerService.postWithParameter("AGENT_START_STOP", { 'agentId': agentId, 'action': actionType }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
     agentUninstall(agentId: string, toolName: string, osversion: string): Promise<any> {
