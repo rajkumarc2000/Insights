@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         this.framesize = (evt.data + 20);
       }
     }
-    this.framesize = this.framesize - 80;
+    this.framesize = this.framesize - 150;
     console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
@@ -197,7 +197,9 @@ export class HomeComponent implements OnInit {
             displayName: 'Grafana : ',
             iconName: 'grafana',
             isAdminMenu: false,
-            children: [
+            isToolbarDisplay: false,
+            children: this.navOrgList
+            /*children: [
               {
                 displayName: 'Swithch Org',
                 iconName: 'switch_org',
@@ -205,7 +207,7 @@ export class HomeComponent implements OnInit {
                 isAdminMenu: false,
                 children: this.navOrgList,
               }
-            ]
+            ]*/
           },
           {
             displayName: 'ML Capabilities',
@@ -311,7 +313,7 @@ export class HomeComponent implements OnInit {
             ]
           }
         ]
-      },
+      }/*,
       {
         displayName: 'Help',
         iconName: 'help',
@@ -327,7 +329,7 @@ export class HomeComponent implements OnInit {
         isToolbarDisplay: true,
         showIcon: true,
         isAdminMenu: false
-      }
+      }*/
     ];
     this.navItemsBottom = [
       {
@@ -340,7 +342,7 @@ export class HomeComponent implements OnInit {
       }, {
         displayName: 'Logout',
         iconName: 'logout',
-        route: 'loggedout',
+        route: 'login', //loggedout
         isToolbarDisplay: true,
         showIcon: true,
         isAdminMenu: false

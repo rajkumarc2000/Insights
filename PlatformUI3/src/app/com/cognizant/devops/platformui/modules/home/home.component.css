@@ -181,6 +181,9 @@
   flex-direction: column !important;
   bottom: 0 !important;
   display: flex;
+  width: 100%;
+  overflow: hidden;
+  height: 60px;
 }
 
 .navtable{
@@ -197,5 +200,26 @@
     */
     
     width: 100%;
-    overflow: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #cab7b7;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
 }

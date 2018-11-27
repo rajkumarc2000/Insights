@@ -1,6 +1,6 @@
 <tr>
-  <a routerLinkActive=active *ngIf=" item.isAdminMenu ? showAdminTab : true" mat-list-item [ngStyle]="{'padding-left': (depth * 15) + 'px '}"
-    (click)="onItemSelected(item)">
+  <a routerLinkActive=active *ngIf=" item.isAdminMenu ? showAdminTab : true" mat-list-item [ngStyle]="{'padding-left': (depth * 10) + 'px '}"
+    (click)="onItemSelected(item)" title="{{item.displayName}}">
     <mat-icon *ngIf="item.showIcon && !isExpanded">{{item.iconName}}</mat-icon>
     <p matLine class="mat-line-child" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}"
       *ngIf="isExpanded">{{item.displayName}}
