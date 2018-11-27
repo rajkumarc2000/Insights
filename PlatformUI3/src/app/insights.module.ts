@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { InsightsModuleRouting } from '@insights/app/insights.routing';
 import { MaterialModule } from '@insights/app/material.module';
 import { HomeModules } from '@insights/app/modules/home.modules';

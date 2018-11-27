@@ -23,7 +23,7 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
 import { LogService } from '@insights/common/log-service';
-
+import { DataSharedService } from '@insights/common/data-shared-service';
 
 
 @NgModule({
@@ -43,7 +43,8 @@ export class SharedServices {
         ImageHandlerService,
         InsightsInitService,
         CookieService,
-        LogService
+        LogService,
+        DataSharedService
       ]
     };
   }

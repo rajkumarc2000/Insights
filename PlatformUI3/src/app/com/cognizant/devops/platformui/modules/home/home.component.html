@@ -30,7 +30,7 @@
         </div>
         <mat-divider></mat-divider>
       </div>
-      <div class="menu">
+      <div class="menu" [style.height.px]="framesize">
         <table class="navtable">
           <tbody>
             <tr>
@@ -40,13 +40,15 @@
               </mat-nav-list>
 
             </tr>
-            <!--<div class="bottomnavg">
-              <mat-nav-list>
-                <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
-                  [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
-              </mat-nav-list>
-            </div>-->
+
         </table>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="bottomnavg">
+        <mat-nav-list>
+          <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
+            [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
+        </mat-nav-list>
       </div>
       </mat-sidenav>
       <mat-sidenav-content class="mat-drawer-content">
