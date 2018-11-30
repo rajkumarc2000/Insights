@@ -27,7 +27,7 @@ import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphResponse;
 import com.cognizant.devops.platformcommons.dal.neo4j.Neo4jDBHandler;
 import com.cognizant.devops.platformservice.businessmapping.constants.BusinessMappingConstants;
-import com.cognizant.devops.platformservice.rest.datatagging.model.Node;
+import com.cognizant.devops.platformservice.businessmapping.model.Node;
 import com.cognizant.devops.platformservice.rest.util.PlatformServiceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

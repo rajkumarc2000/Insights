@@ -49,7 +49,7 @@ import { BusinessMappingService } from '@insights/app/modules/businessmapping/bu
 import { BusinessMappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
 import { DataArchivingService } from '@insights/app/modules/settings/dataarchiving/dataarchiving-service';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
-
+import { BusinessHierarchyDatabase } from '@insights/app/modules/businessmapping/businessmapping.component';
 
 
 @NgModule({
@@ -90,7 +90,8 @@ import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-m
     AgentService,
     HealthCheckService,
     BusinessMappingService,
-    DataArchivingService
+    DataArchivingService,
+    BusinessHierarchyDatabase
   ]
 })
 
