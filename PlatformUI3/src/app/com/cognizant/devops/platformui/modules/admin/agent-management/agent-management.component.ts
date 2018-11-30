@@ -17,6 +17,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-agent-management',
@@ -43,8 +44,9 @@ export class AgentManagementComponent implements OnInit {
   successIconSrc: string = "dist/icons/svg/ic_check_circle_24px.svg";
   errorIconSrc: string = "dist/icons/svg/ic_report_problem_24px.svg";
   deleteIconSrc: string = "dist/icons/svg/actionIcons/Delete_icon_disabled.svg";
+  agentparameter = {}
 
-  constructor(public agentService: AgentService) {
+  constructor(public agentService: AgentService, public router: Router) {
 
     this.getRegisteredAgents();
     //console.log(this.selectedAgent);
@@ -128,8 +130,34 @@ export class AgentManagementComponent implements OnInit {
   }
 
   addAgentData() {
-
+    console.log("Add Agent");
+    this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
+    console.log(this.agentparameter);
+    let navigationExtras: NavigationExtras = {
+      skipLocationChange: true,
+      queryParams: {
+        "agentparameter": this.agentparameter
+      }
+    };
+    this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
   }
+
+  editAgent() {
+    console.log(this.selectedAgent);
+    this.consolidatedArr(this.selectedAgent);
+    console.log(this.validationArr);
+    this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
+    console.log(this.agentparameter);
+    let navigationExtras: NavigationExtras = {
+      skipLocationChange: true,
+      queryParams: {
+        "agentparameter": this.agentparameter
+      }
+    };
+    this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
+  }
+
+
 
 
 }

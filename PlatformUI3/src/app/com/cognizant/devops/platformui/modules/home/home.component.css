@@ -114,7 +114,7 @@
 
 .mat-drawer-content,mat-sidenav-content {
     z-index: 1;
-    display: block;
+    /*display: block;*/
     height: 100%;
     /*overflow-y: auto !important;
     overflow-x: hidden !important;*/

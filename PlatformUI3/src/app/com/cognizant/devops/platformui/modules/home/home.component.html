@@ -1,3 +1,20 @@
+<!--
+*******************************************************************************
+ * Copyright 2017 Cognizant Technology Solutions
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ****************************************************************************** -->
+
 <div class="container">
   <mat-sidenav-container class="sidenav-container" autosize>
     <mat-sidenav #sidenav class="sidenav" [ngStyle]="{ 'width': isExpanded ? '20%':'4%'}" height="50%" mode="side" opened="true"
@@ -54,10 +71,10 @@
       <mat-sidenav-content class="mat-drawer-content">
         <mat-toolbar *ngIf="isToolbarDisplay" style="height:30px">
           <span class="fill-remaining-space"></span>
-          <img height="20px" width="380px" align="right" src='icons/svg/homePage/icon_insights_branding_powered_by.svg' alt="Powered By Cognizant OneDevOps | Insights"
-            style="margin:auto;display:block" />
+          <img height="20px" width="380px" align="right" src='icons/svg/homePage/icon_insights_branding_powered_by.png' alt="Powered By Cognizant OneDevOps | Insights"
+            style="margin:auto;" />
         </mat-toolbar>
-        <div class="content">
+        <div>
           <router-outlet></router-outlet>
         </div>
       </mat-sidenav-content>

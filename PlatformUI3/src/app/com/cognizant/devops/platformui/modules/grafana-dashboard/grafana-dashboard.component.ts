@@ -15,7 +15,7 @@
  ******************************************************************************/
 
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap, UrlSegmentGroup, UrlSegment, UrlTree } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
@@ -111,7 +111,7 @@ export class GrafanaDashboardComponent implements OnInit {
         var dataArray = dashboardslist.dashboards;
         //console.log(dataArray);
         if (dashboardslist != undefined && dataArray != undefined) {
-            if (dataArray.length > 0){
+            if (dataArray.length > 0) {
                 var model = [];
                 dataArray.forEach(element => {
                     model.push(new GrafanaDashboardMode(element.title, element.id, element.url, null, element.title, false));
@@ -125,7 +125,7 @@ export class GrafanaDashboardComponent implements OnInit {
                 if (self.selectedDashboard) {
                     self.dashboardTitle = self.selectedDashboard.title;
                 }
-            }else {
+            } else {
                 console.log("No dashboard  Array found");
             }
         } else {

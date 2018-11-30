@@ -111,7 +111,7 @@ export class HomeComponent implements OnInit {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });//+ item.orgId
       } else if (item.iconName == 'logout') {
         this.logout();
-        this.router.navigateByUrl(item.route, { skipLocationChange: true });
+        //this.router.navigateByUrl(item.route, { skipLocationChange: true });
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
       }
@@ -373,13 +373,7 @@ export class HomeComponent implements OnInit {
       .then(function (data) {
         //console.log(data);
       });
-    var cookieVal = this.cookieService.getAll();
-    //console.log(cookieVal);
-    for (var key in cookieVal) {
-      cookieVal[key] = '';
-      this.cookieService.set(key, cookieVal[key]);
-      this.cookieService.delete(key);
-    }
+    this.deleteAllPreviousCookies();
     this.router.navigate(['/login']);
   }
 
@@ -407,6 +401,16 @@ export class HomeComponent implements OnInit {
         }
 
       }
+    }
+  }
+
+  deleteAllPreviousCookies(): void {
+    let allCookies = this.cookieService.getAll();
+    console.log(allCookies);
+
+    for (let key of Object.keys(allCookies)) {
+      console.log(key);
+      this.cookieService.delete(key);
     }
   }
 

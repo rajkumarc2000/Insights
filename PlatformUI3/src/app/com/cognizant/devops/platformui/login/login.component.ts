@@ -52,15 +52,16 @@ export class LoginComponent implements OnInit, ILoginComponent {
   imageAlt: String = "";
 
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
-    private restCallHandlerService: RestCallHandlerService,private cookieService: CookieService, 
-    private router: Router,private logger: LogService) {
-    this.logger.log(" logging in login ");
+    private restCallHandlerService: RestCallHandlerService, private cookieService: CookieService,
+    private router: Router, private logger: LogService) {
+    console.log(" logging in login "); //this.logger.log
     this.getAsyncData();
 
   }
 
   ngOnInit() {
     this.createAndValidateForm();
+    this.deleteAllPreviousCookies();
   }
 
   public createAndValidateForm() {
@@ -120,8 +121,8 @@ export class LoginComponent implements OnInit, ILoginComponent {
             // construct a form with hidden inputs, targeting the iframe
             var form = document.createElement("form");
             form.target = uniqueString;
-            form.action = InsightsInitService.grafanaHost+"/login";
-          
+            form.action = InsightsInitService.grafanaHost + "/login";
+
             form.method = "POST";
             // repeat for each parameter
             var input = document.createElement("input");
@@ -152,6 +153,14 @@ export class LoginComponent implements OnInit, ILoginComponent {
             self.isDisabled = false;
           }
         });
+    }
+  }
+
+  deleteAllPreviousCookies(): void {
+    let allCookies = this.cookieService.getAll();
+
+    for (let key of Object.keys(allCookies)) {
+      this.cookieService.delete(key);
     }
   }
 

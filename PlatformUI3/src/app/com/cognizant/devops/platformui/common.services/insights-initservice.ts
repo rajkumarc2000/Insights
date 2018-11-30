@@ -30,26 +30,27 @@ export class InsightsInitService {
     static elasticSearchServiceHost: String;
     static neo4jServiceHost: String;
     static grafanaHost: String;
-    configDesc = {};
+    static agentsOsList = {};
+    static configDesc = {};
 
     constructor(location: Location, private http: HttpClient,
-        private cookieService: CookieService,private imageHandler: ImageHandlerService,
+        private cookieService: CookieService, private imageHandler: ImageHandlerService,
         private logger: LogService) {
     }
 
-    public async initMethods(){
+    public async initMethods() {
         const result1 = await this.loadUiServiceLocation();
-        const result2 =await this.loadAgentConfigDesc();
-        const result3 =await this.loadImageHandler();
+        const result2 = await this.loadAgentConfigDesc();
+        const result3 = await this.loadImageHandler();
     }
 
     private async loadAgentConfigDesc() {
         var self = this;
         var agentConfigJsonUrl = "config/configDesc.json"
-        let gentConfigResponse =await this.getJSONUsingObservable(agentConfigJsonUrl).toPromise();
-             //this.logger.log(gentConfigResponse);
-            self.configDesc = gentConfigResponse.desriptions;
-        
+        let gentConfigResponse = await this.getJSONUsingObservable(agentConfigJsonUrl).toPromise();
+        //this.logger.log(gentConfigResponse);
+        InsightsInitService.configDesc = gentConfigResponse.desriptions;
+
     }
 
     private async loadUiServiceLocation() {
@@ -61,6 +62,8 @@ export class InsightsInitService {
         InsightsInitService.elasticSearchServiceHost = UIConfigResponse.elasticSearchServiceHost;
         InsightsInitService.neo4jServiceHost = UIConfigResponse.neo4jServiceHost;
         InsightsInitService.grafanaHost = UIConfigResponse.grafanaHost;
+        InsightsInitService.agentsOsList = UIConfigResponse.agentsOsList;
+        console.log(InsightsInitService.agentsOsList);
     }
 
     private loadImageHandler() {
@@ -76,7 +79,7 @@ export class InsightsInitService {
     }
 
     public getConfigDesc() {
-        return this.configDesc;
+        return InsightsInitService.configDesc;
     }
 
     public getelasticSearchServiceHost(): String {
@@ -100,6 +103,9 @@ export class InsightsInitService {
         return InsightsInitService.grafanaHost;
     };
 
+    public getAgentsOsList(): any {
+        return InsightsInitService.agentsOsList;
+    }
 
     public getGrafanaHost1(): Promise<any> {
         var self = this;

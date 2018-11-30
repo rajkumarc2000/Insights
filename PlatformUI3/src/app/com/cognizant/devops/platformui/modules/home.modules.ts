@@ -48,8 +48,7 @@ import { HealthCheckService } from '@insights/app/modules/healthcheck/healthchec
 import { BusinessMappingService } from '@insights/app/modules/businessmapping/businessmapping.service';
 import { BusinessMappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
 import { DataArchivingService } from '@insights/app/modules/settings/dataarchiving/dataarchiving-service';
-
-
+import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 
 
 
@@ -65,8 +64,9 @@ import { DataArchivingService } from '@insights/app/modules/settings/dataarchivi
     ShowDetailsDialog,
     AgentManagementComponent,
     DatadictionaryComponent,
-    BusinessMappingComponent,   
-    DataArchivingComponent
+    BusinessMappingComponent,
+    DataArchivingComponent, 
+    AgentConfigurationComponent
 
 
   ],

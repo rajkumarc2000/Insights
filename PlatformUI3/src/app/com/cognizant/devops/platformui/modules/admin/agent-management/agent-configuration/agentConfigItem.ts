@@ -1,5 +1,4 @@
-<!--
-*******************************************************************************
+/*******************************************************************************
  * Copyright 2017 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -13,8 +12,20 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
  * License for the specific language governing permissions and limitations under
  * the License.
- ****************************************************************************** -->
+ ******************************************************************************/
 
-<p>
-  admin works!
-</p>
+export class AgentConfigItem {
+    key: string;
+    value: any;
+    type: string;
+    children?: AgentConfigItem[];
+
+    public setData(key, value, type, children?: any): void {
+        this.key = key;
+        this.value = value;
+        this.type = type;
+        if (children != undefined) {
+            this.children = children;
+        }
+    }
+}

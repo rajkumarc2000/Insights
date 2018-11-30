@@ -26,6 +26,7 @@ import { AgentManagementComponent } from '@insights/app/modules/admin/agent-mana
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
 import { BusinessMappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
+import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 
 
 
@@ -40,9 +41,9 @@ const homeRoutes: Routes = [
       { path: 'loggedout', redirectTo: 'login' },
       { path: 'agentmanagement', component: AgentManagementComponent },
       { path: 'datadictionary', component: DatadictionaryComponent },
-      { path: 'businessmapping', component: BusinessMappingComponent },      
-      { path: 'dataarchiving', component: DataArchivingComponent }
-
+      { path: 'businessmapping', component: BusinessMappingComponent },
+      { path: 'dataarchiving', component: DataArchivingComponent },
+      { path: 'agentconfiguration', component: AgentConfigurationComponent }
     ]
   }
 ];
