@@ -49,7 +49,7 @@ export class AgentManagementComponent implements OnInit {
   constructor(public agentService: AgentService, public router: Router) {
 
     this.getRegisteredAgents();
-    //console.log(this.selectedAgent);
+    ////console.log(this.selectedAgent);
   }
 
   ngOnInit() {
@@ -69,8 +69,8 @@ export class AgentManagementComponent implements OnInit {
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
       this.agentListDatasource = agentList.data;
-      console.log(agentList);
-      console.log(this.agentListDatasource);
+      //console.log(agentList);
+      //console.log(this.agentListDatasource);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
 
       setTimeout(function () {
@@ -89,23 +89,23 @@ export class AgentManagementComponent implements OnInit {
   }
 
   statusEdit(element) {
-    console.log(element)
+    //console.log(element)
     this.runDisableStatus = element.agentStatus;
-    console.log("Status Edit " + this.runDisableStatus);
+    //console.log("Status Edit " + this.runDisableStatus);
     this.buttonDisableStatus = false;
   }
 
   agentStartStopAction(actType): void {
     var self = this;
-    console.log(this.selectedAgent);
+    //console.log(this.selectedAgent);
     if (this.selectedAgent == undefined) {
       this.showConfirmMessage = "other";
       self.showMessage = "Please select Agent";
     } else {
-      console.log(" agentStartStopAction " + actType + " " + this.selectedAgent.agentKey);
+      //console.log(" agentStartStopAction " + actType + " " + this.selectedAgent.agentKey);
       self.agentService.agentStartStop(this.selectedAgent.agentKey, actType)
         .then(function (data) {
-          console.log(data);
+          //console.log(data);
           if (actType == "START") {
             if (data.status == "success") {
               self.showConfirmMessage = "started";
@@ -130,9 +130,9 @@ export class AgentManagementComponent implements OnInit {
   }
 
   addAgentData() {
-    console.log("Add Agent");
+    //console.log("Add Agent");
     this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
-    console.log(this.agentparameter);
+    //console.log(this.agentparameter);
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
@@ -143,11 +143,11 @@ export class AgentManagementComponent implements OnInit {
   }
 
   editAgent() {
-    console.log(this.selectedAgent);
+    //console.log(this.selectedAgent);
     this.consolidatedArr(this.selectedAgent);
-    console.log(this.validationArr);
+    //console.log(this.validationArr);
     this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
-    console.log(this.agentparameter);
+    //console.log(this.agentparameter);
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
@@ -156,8 +156,4 @@ export class AgentManagementComponent implements OnInit {
     };
     this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
   }
-
-
-
-
 }

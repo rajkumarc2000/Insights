@@ -67,12 +67,12 @@ export class AgentConfigurationComponent implements OnInit {
   ngOnInit() {
     /*this.route.paramMap.subscribe(async (params: ParamMap) => {
       this.receivedParam = params.get('param');
-      console.log(this.receivedParam);
+      //console.log(this.receivedParam);
     });*/
     this.route.queryParams.subscribe(params => {
-      console.log(params)
+      //console.log(params)
       this.receivedParam = JSON.parse(params["agentparameter"]);
-      console.log(this.receivedParam);
+      //console.log(this.receivedParam);
       this.showThrobber = true;
       this.initializeVariable();
       this.getOsList()
@@ -82,7 +82,7 @@ export class AgentConfigurationComponent implements OnInit {
   }
 
   initializeVariable() {
-    console.log(this.receivedParam.type);
+    //console.log(this.receivedParam.type);
     if (this.receivedParam.type == "update") {
       /*this.getDbAgentConfig(self.editAgentDetails['agentid']);*/
       this.btnValue = "Update";
@@ -94,7 +94,7 @@ export class AgentConfigurationComponent implements OnInit {
   }
 
   getOsList() {
-    console.log(this.config.getAgentsOsList());
+    //console.log(this.config.getAgentsOsList());
     var agentsListFromUiConfig = this.config.getAgentsOsList();
     if (agentsListFromUiConfig !== undefined) {
       this.osLists = agentsListFromUiConfig;
@@ -110,7 +110,7 @@ export class AgentConfigurationComponent implements OnInit {
     self.toolsArr = [];
     self.agentService.getDocRootAgentVersionTools()
       .then(function (data) {
-        console.log(data);
+        //console.log(data);
         if (data.status == "success") {
           self.response = data.data;
           if (Selversion) {
@@ -128,13 +128,13 @@ export class AgentConfigurationComponent implements OnInit {
       .catch(function (data) {
         self.showMessage = "Something wrong with service, Please try again";
       });
-    console.log(self.toolsArr);
+    //console.log(self.toolsArr);
   }
 
   versionOnChange(key, type): void {
     var self = this;
-    console.log(" In version On Change " + key + " " + type);
-    console.log(self.response);
+    //console.log(" In version On Change " + key + " " + type);
+    //console.log(self.response);
     if (type == "validate") {
       if (self.selectedVersion === undefined || self.selectedTool === undefined || self.selectedOS === undefined) {
         self.buttonDisableStatus = true;
@@ -166,12 +166,12 @@ export class AgentConfigurationComponent implements OnInit {
       self.toolsArr = [];
       self.toolsArr = self.response[key];
     }
-    console.log(self.toolsArr);
+    //console.log(self.toolsArr);
   }
 
 
   async getDocRootAgentConfig(version, toolName) {
-    console.log("In getDocRootAgentConfig");
+    //console.log("In getDocRootAgentConfig");
     var self = this;
     self.isRegisteredTool = false;
     self.checkValidation();
@@ -183,19 +183,17 @@ export class AgentConfigurationComponent implements OnInit {
       self.showMessage = "";
 
       var agentConfigResponse = await self.agentService.getDocrootAgentConfig(version, toolName)
-      /* .then(function (data) {*/
       console.log(agentConfigResponse);
-      console.log(agentConfigResponse.data);
-      //self.showThrobber = false;
+      //console.log(agentConfigResponse.data);
 
       if (agentConfigResponse.status == "success") {
         self.showConfig = true;
         self.defaultConfigdata = JSON.parse(agentConfigResponse.data);
         self.dynamicData = JSON.stringify(self.defaultConfigdata['dynamicTemplate'], undefined, 4);
         self.configLabelMerge();
-        console.log(typeof (agentConfigResponse.data));
-        console.log(self.defaultConfigdata);
-        console.log(typeof (self.defaultConfigdata));
+        //console.log(typeof (agentConfigResponse.data));
+        //console.log(self.defaultConfigdata);
+        //console.log(typeof (self.defaultConfigdata));
         this.getconfigDataParsed(self.defaultConfigdata);
         if (self.selectedOS === undefined || self.dynamicData == '') {
           self.buttonDisableStatus = true;
@@ -207,13 +205,6 @@ export class AgentConfigurationComponent implements OnInit {
         self.buttonDisableStatus = true;
         self.showMessage = "Something wrong with service, Please try again";
       }
-
-      /*})
-      .catch(function (data) {
-        //self.showThrobber = false;
-        self.showMessage = "Something wrong with service, Please try again";
-      });*/
-
     } else {
       self.buttonDisableStatus = true;
       self.showConfig = false;
@@ -227,11 +218,11 @@ export class AgentConfigurationComponent implements OnInit {
         let agentConfig = new AgentConfigItem();
         let agentConfigChilds: AgentConfigItem[] = []
         let value = data[configDatakey];
-        console.log(configDatakey + "," + typeof (value) + " , " + value)
+        //console.log(configDatakey + "," + typeof (value) + " , " + value)
         if (typeof (data[configDatakey]) == 'object' && configDatakey != 'dynamicTemplate') {
           for (let configinnerDatakey of Object.keys(value)) {
             let agentConfigChild = new AgentConfigItem();
-            console.log("    " + configinnerDatakey + "," + typeof (value[configinnerDatakey]) + " , " + value[configinnerDatakey])
+            //console.log("    " + configinnerDatakey + "," + typeof (value[configinnerDatakey]) + " , " + value[configinnerDatakey])
             agentConfigChild.setData(configinnerDatakey, value[configinnerDatakey], typeof (value[configinnerDatakey]))
             agentConfigChilds.push(agentConfigChild);
           }
@@ -243,7 +234,7 @@ export class AgentConfigurationComponent implements OnInit {
         }
         this.agentConfigItems.push(agentConfig);
       }
-      console.log(this.agentConfigItems);
+      //console.log(this.agentConfigItems);
       console.log(this.agentConfigItems.length);
     }
   }
@@ -308,7 +299,7 @@ export class AgentConfigurationComponent implements OnInit {
 
         self.agentService.registerAgent(self.selectedTool, self.selectedVersion, self.selectedOS, self.configData, self.trackingUploadedFileContentStr)
           .then(function (data) {
-            console.log(data);
+            //console.log(data);
             if (data.status == "success") {
               self.sendStatusMsg("registered");
             } else {
@@ -396,7 +387,7 @@ export class AgentConfigurationComponent implements OnInit {
 
     var self = this;
     self.configDesc = InsightsInitService.configDesc;
-    console.log(self.configDesc);
+    //console.log(self.configDesc);
     for (var key in self.defaultConfigdata) {
       if (self.configDesc.hasOwnProperty(key)) {
         self.configAbbr[key] = self.configDesc[key];

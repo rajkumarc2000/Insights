@@ -41,7 +41,6 @@
         <mat-option *ngFor=" let tool of toolsArr | keyvalue" value="{{tool.value}}">{{tool.value}}</mat-option>
         </mat-select>
     </div>
-    <!--</div>-->
     <div>
       <button mat-raised-button (click)="saveData(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut" style="width:159px;">
           {{btnValue}}
