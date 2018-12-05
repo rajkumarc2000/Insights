@@ -24,7 +24,7 @@ import { HomeComponent } from '@insights/app/modules/home/home.component';
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
-import { BusinessMappingComponent } from '@insights/app/modules/businessmapping/businessmapping.component';
+import { BusinessMappingComponent } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 
