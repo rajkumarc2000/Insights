@@ -1,10 +1,14 @@
-.example-tree-invisible {
+.display-tree-invisible {
     display: none;
   }
   
-  .example-tree ul,
-  .example-tree li {
+.disable-list-style ul,
+.disable-list-style li {
     margin-top: 0;
     margin-bottom: 0;
     list-style-type: none;
-  }
+}
+
+.linkTxt {  
+  cursor: pointer;
+}

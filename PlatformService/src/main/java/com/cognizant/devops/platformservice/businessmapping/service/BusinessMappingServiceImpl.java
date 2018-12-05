@@ -18,9 +18,14 @@ package com.cognizant.devops.platformservice.businessmapping.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cognizant.devops.platformcommons.constants.ErrorMessage;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
@@ -35,10 +40,10 @@ import com.google.gson.JsonObject;
 
 @Service("businessMappingService")
 public class BusinessMappingServiceImpl implements BusinessMappingService {
-	
+
 	static Logger log = LogManager.getLogger(BusinessMappingServiceImpl.class.getName());
-	
-	@Override	
+
+	@Override
 	public JsonObject getAllHierarchyDetails() {
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
 		String query = "MATCH (n:METADATA:DATATAGGING) return n";
@@ -57,7 +62,7 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		}
 		return PlatformServiceUtil.buildSuccessResponseWithData(parentArray);
 	}
-	
+
 	/**
 	 * @param array
 	 * @return
@@ -144,6 +149,49 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		if (childArray.size() != 0) {
 			parentJson.add(BusinessMappingConstants.CHILDREN, childArray);
 		}
+	}
+
+	/* 
+	 * Fetches all tools and property details configured for a particular Business Hierarchy
+	 * Provides all four levels as an input to that method
+	 * (non-Javadoc)
+	 * @see com.cognizant.devops.platformservice.businessmapping.service.BusinessMappingService#getHierarchyProperties(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public JsonObject getHierarchyProperties(String level1, String level2, String level3, String level4)
+			throws GraphDBException {
+		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
+		String queryLabels = ":METADATA:DATATAGGING";
+		StringBuilder sb = new StringBuilder();
+		if (null != level1 && !level1.isEmpty()) {
+			sb.append("level_1:'");
+			sb.append(level1.trim());
+			sb.append("'");
+			sb.append(",");
+		}
+		if (null != level2 && !level2.isEmpty()) {
+			sb.append("level_2:'");
+			sb.append(level2.trim());
+			sb.append("'");
+			sb.append(",");
+		}
+		if (null != level3 && !level3.isEmpty()) {
+			sb.append("level_3:'");
+			sb.append(level3.trim());
+			sb.append("'");
+			sb.append(",");
+		}
+		if (null != level4 && !level4.isEmpty()) {
+
+			sb.append("level_4:'");
+			sb.append(level4.trim());
+			sb.append("'");
+
+		}
+		String props = StringUtils.stripEnd(sb.toString(), ",");
+		String query = "MATCH (n " + queryLabels + "{" + props + "}" + ") return n";
+		GraphResponse response = dbHandler.executeCypherQuery(query);
+		return PlatformServiceUtil.buildSuccessResponseWithData(response.getNodes());
 	}
 
 }

@@ -22,25 +22,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
 import com.cognizant.devops.platformservice.businessmapping.service.BusinessMappingService;
 import com.google.gson.JsonObject;
-
 
 @RestController
 @RequestMapping("/admin/businessmapping")
 public class InsightsBusinessMapping {
-	
+
 	static Logger log = LogManager.getLogger(InsightsBusinessMapping.class.getName());
 	@Autowired
 	BusinessMappingService businessMappingService;
-	
+
 	@RequestMapping(value = "/getAllHierarchyDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public JsonObject getAllHierarchyDetails() {
 		return businessMappingService.getAllHierarchyDetails();
 	}
-	
 
+	@RequestMapping(value = "/getHierarchyProperties", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public JsonObject getHierarchyProperties(@RequestParam String level1, @RequestParam String level2,
+			@RequestParam String level3, @RequestParam String level4) throws GraphDBException {
+		return businessMappingService.getHierarchyProperties(level1, level2, level3, level4);
+	}
 
 }
