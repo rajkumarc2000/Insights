@@ -15,10 +15,14 @@
  *******************************************************************************/
 package com.cognizant.devops.platformservice.businessmapping.service;
 
+import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
 import com.google.gson.JsonObject;
 
 public interface BusinessMappingService {
 	
 	public JsonObject getAllHierarchyDetails();
+	
+	public JsonObject getHierarchyProperties(String level1,String level2,
+			 String level3, String level4) throws GraphDBException;
 
 }
