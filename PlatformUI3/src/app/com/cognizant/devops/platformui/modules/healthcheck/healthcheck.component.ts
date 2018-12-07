@@ -75,15 +75,15 @@ export class HealthCheckComponent implements OnInit {
           }
         }
         //Displays Back to Top button when Agent table contains more than 20 rows
-        if (this.agentDataSource.length > 1) {
+        if (this.agentDataSource.length > 20) {
           this.agentBacktoTopFlag = true;
         }
         //Displays Back to Top button when Data Component table contains more than 20 rows
-        if (this.dataComponentDataSource.length > 1) {
+        if (this.dataComponentDataSource.length > 20) {
           this.dataBacktoTopFlag = true;
         }
         //Displays Back to Top button when Services table contains more than 20 rows
-        if (this.servicesDataSource.length > 1) {
+        if (this.servicesDataSource.length > 20) {
           this.servicesBacktoTopFlag = true;
         }
 
