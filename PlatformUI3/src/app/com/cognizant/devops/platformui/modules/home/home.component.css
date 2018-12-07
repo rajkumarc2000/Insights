@@ -1,7 +1,7 @@
 :host ::ng-deep {
   display: block;
-  font-size: 15px;
-  font-family: Open Sans,Tahoma;
+  font-size: 16px;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica;
   font-weight:400;
 }
 
@@ -13,40 +13,40 @@
   bottom: 0;
   left: 0;
   right: 0;
-  color: #404040;
+  color: #393838;
 }
 
 .sidenav-container {
   flex: 1;
-  color: #404040;
+  color: #393838;
 }
 
 .sidenav{
   color: white;
-  /*height:100%;*/
 }
 
 .mat-list-item {
   color: white;
   opacity: 0.8;
-  font-size: 15px;
-  font-family: Open Sans,Tahoma;
+  font-size: 16px;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica;
   height: 30px !important
 }
 
 .mat-nav-list{
   color: white;
   opacity: 0.8;
-  font-size: 15px;
+  font-size: 16px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
-  font-family: Open Sans,Tahoma;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica;
   height: 30px !important;
 
 }
 
 .mat-divider{
-  border-top-color: white
+  border-top-color: white;
+  height: 2px;
 }
 
 .mat-list-item-ripple{
@@ -54,41 +54,62 @@
 }
 
 .mat-list-item.active {
-  font-size: 16px !important;
+  font-size: 17px !important;
   font-weight:bolder !important;
   color:white !important;
+  background-color: #0033A0;
 }
 
 .mat-line.active{
   color: white !important;
   font-weight:900 !important;
-  font-size: 18px !important;
+  font-size: 17px !important;
   opacity: 1.0 !important;
   filter: brightness(100%),contrast(100%) !important;
+  background-color: #0033A0;
   
 }
 
+.material-icons-menu {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 35px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}
+
 .mat-line{
-  color: #f7f3f3 !important;
+  color: #bfbfbf !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-size: 15px !important;
-  font-family: Open Sans,Tahoma !important;
+  font-size: 16px !important;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
 }
 
 .mat-line-heading{
-  color: #f7f3f3 !important;
+  color: #bfbfbf !important;
   opacity: 0.8;
   padding: 5px !important;
-  font-size: 15px;
-  font-family: Open Sans,Tahoma;
+  font-size: 16px;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica;
   height: 30px !important;
+}
+
+.roleName{
+  color: white !important;
+  font-size: 23px!important;
 }
 
 .mat-list-text{
   font-weight:500; 
-  font-size: 15px;
-  font-family: Open Sans,Tahoma !important;
+  font-size: 16px;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
   
 }
 
@@ -100,29 +121,22 @@
   color: #f7f3f3 !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-family: Open Sans,Tahoma !important;
+  font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
 }
 
 .mat-drawer{
   opacity: 0.9;
-  background:#404040;
-  /*overflow-y: auto !important;
-  overflow-x: auto !important;*/
+  background:#393838;
   max-width: 20%;
   min-width: 4%;
+  overflow-x: hidden;
 }
 
 .mat-drawer-content,mat-sidenav-content {
     z-index: 1;
-    /*display: block;*/
     height: 100%;
-    /*overflow-y: auto !important;
-    overflow-x: hidden !important;*/
+    background-color: #dedbdb;
 }
-
-/*.app-menu-list-item{
-  overflow: auto !important;
-}*/
 
 .webkit-scrollbar {
     width: 8px;
@@ -133,7 +147,8 @@
   opacity: 0.9;
   background: #18191b;
   color: white;
-  padding-right: 5px;
+  padding-right: 25px;
+  height:55px !important;
 }
 
 .mat-toolbar-row, .mat-toolbar-single-row {
@@ -142,7 +157,7 @@
 
 .mat-card-image,.mat-card-image:first-child{
  align-items: center;
- width:auto;
+ width: auto;
 }
 
 .sidenav-content {
@@ -150,7 +165,7 @@
   height: 100%;
   align-items: center;
   justify-content: center;
-  background-color: #404040;
+  background-color: #393838;
   opacity: 0.9;
 }
 
@@ -183,22 +198,17 @@
   display: flex;
   width: 100%;
   overflow: hidden;
-  height: 60px;
+  height: 90px;
+  margin-top: 16px; 
+  margin-left: 16px;
 }
 
 .navtable{
   table-layout: auto;
   width: 100%;
-  /*overflow-x: auto !important;
-  overflow-y: auto !important;*/
 }
 
 .menu{
-    /*overflow-x: auto !important;
-    overflow-y: auto !important;
-    height: auto;
-    */
-    
     width: 100%;
     overflow-y: auto !important;
     overflow-x: hidden !important
@@ -223,3 +233,36 @@
 ::-webkit-scrollbar-track {
     border-radius: 10px;
 }
+
+.routeroutlet{
+  margin-right: 16px !important;
+  margin-left: 16px !important;
+}
+
+/*.topdivider{
+  margin-top: 16px;
+  width: 350px;
+}*/
+
+/*.menuList{
+  height: 28px
+}*/
+
+.logoSetting{
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 10px;
+}
+
+.headingPage{
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 10px;
+}
+
+.feviconIcon{
+  margin:auto;
+  display:block;
+  align-items: center;
+}
+

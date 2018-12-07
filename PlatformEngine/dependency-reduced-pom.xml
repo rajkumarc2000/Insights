@@ -3,13 +3,13 @@
   <parent>
     <artifactId>PlatformParent</artifactId>
     <groupId>com.cognizant.devops</groupId>
-    <version>4.5</version>
+    <version>4.7</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.cognizant.devops</groupId>
   <artifactId>PlatformEngine</artifactId>
   <name>PlatformEngine</name>
-  <version>4.5</version>
+  <version>4.7</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>

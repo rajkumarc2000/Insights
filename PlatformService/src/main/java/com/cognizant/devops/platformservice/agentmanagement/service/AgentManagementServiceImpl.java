@@ -27,6 +27,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -192,7 +193,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			agentList = new ArrayList<>(agentConfigList.size());
 			for (AgentConfig agentConfig : agentConfigList) {
 				AgentConfigTO to = new AgentConfigTO();
-				BeanUtils.copyProperties(agentConfig, to);
+				BeanUtils.copyProperties(agentConfig, to,new String[]{"agentJson","updatedDate"});
 				agentList.add(to);
 			}
 		} catch (Exception e) {

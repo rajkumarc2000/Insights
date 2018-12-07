@@ -67,11 +67,11 @@ export class AgentService implements IAgentService {
     }
 
     registerAgent(toolName: string, toolVersion: string, osName: string, configData: string, trackingDetails: string): Promise<any> {
-        return this.restCallHandlerService.post("AGENT_REGISTER", { 'toolName': toolName, 'agentVersion': toolVersion, 'osversion': osName, 'configDetails': configData, 'trackingDetails': trackingDetails }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+        return this.restCallHandlerService.postWithParameter("AGENT_REGISTER", { 'toolName': toolName, 'agentVersion': toolVersion, 'osversion': osName, 'configDetails': configData, 'trackingDetails': trackingDetails }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
     updateAgent(agentId: string, configData: string, toolName: string, toolVersion: string, osName: string): Promise<any> {
-        return this.restCallHandlerService.post("AGENT_UPDATE", { 'agentId': agentId, 'configJson': configData, 'toolName': toolName, 'agentVersion': toolVersion, 'osversion': osName }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+        return this.restCallHandlerService.postWithParameter("AGENT_UPDATE", { 'agentId': agentId, 'configJson': configData, 'toolName': toolName, 'agentVersion': toolVersion, 'osversion': osName }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
     agentStartStop(agentId: string, actionType: string): Promise<any> {

@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         this.framesize = (evt.data + 20);
       }
     }
-    this.framesize = this.framesize - 150;
+    this.framesize = this.framesize - 236; //bottom nav 106 px + tap fix content 110
     console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
@@ -289,29 +289,30 @@ export class HomeComponent implements OnInit {
             isAdminMenu: true
           },
           {
+            displayName: 'Logo Setting',
+            iconName: 'feature',
+            route: 'InSights/Home/grafanadashboard/1000',
+            isToolbarDisplay: true,
+            isAdminMenu: true
+          },
+          {
+            displayName: 'Data Archiving',
+            iconName: 'feature',
+            route: 'InSights/Home/dataarchiving',
+            isToolbarDisplay: true,
+            isAdminMenu: true
+          }
+          /*{
             displayName: 'Settings',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/1000',
             isToolbarDisplay: true,
             isAdminMenu: true,
             children: [
-              {
-                displayName: 'Logo Setting',
-                iconName: 'feature',
-                route: 'InSights/Home/grafanadashboard/1000',
-                isToolbarDisplay: true,
-                isAdminMenu: true
-              },
-              {
-                displayName: 'Data Archiving',
-                iconName: 'feature',
-                route: 'InSights/Home/dataarchiving',
-                isToolbarDisplay: true,
-                isAdminMenu: true
-              }
+              
 
             ]
-          }
+          }*/
         ]
       }/*,
       {
@@ -333,6 +334,13 @@ export class HomeComponent implements OnInit {
     ];
     this.navItemsBottom = [
       {
+        displayName: 'About',
+        iconName: 'feature',
+        route: 'InSights/Home/admin',
+        isToolbarDisplay: true,
+        showIcon: true,
+        isAdminMenu: false
+      }, {
         displayName: 'Help',
         iconName: 'feature',
         route: 'InSights/Home/admin',

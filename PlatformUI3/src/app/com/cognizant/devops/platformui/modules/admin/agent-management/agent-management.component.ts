@@ -17,7 +17,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agent-management',
@@ -38,21 +38,24 @@ export class AgentManagementComponent implements OnInit {
   agentListDatasource = [];
   displayedColumns: string[];
   selectedAgent: any;
-  editIconSrc: string = "dist/icons/svg/actionIcons/Edit_icon_disabled.svg";
-  startIconSrc: string = "dist/icons/svg/actionIcons/Start_icon_Disabled.svg";
-  stopIconSrc: string = "dist/icons/svg/actionIcons/Stop_icon_Disabled.svg";
-  successIconSrc: string = "dist/icons/svg/ic_check_circle_24px.svg";
-  errorIconSrc: string = "dist/icons/svg/ic_report_problem_24px.svg";
-  deleteIconSrc: string = "dist/icons/svg/actionIcons/Delete_icon_disabled.svg";
-  agentparameter = {}
+  agentparameter = {};
+  receivedParam: any;
 
-  constructor(public agentService: AgentService, public router: Router) {
+  constructor(public agentService: AgentService, public router: Router,
+    private route: ActivatedRoute) {
 
     this.getRegisteredAgents();
-    ////console.log(this.selectedAgent);
   }
 
   ngOnInit() {
+    console.log(this.route.queryParams);
+    this.route.queryParams.subscribe(params => {
+      console.log(params["agentstatus"]);
+      if (params["agentstatus"] != undefined) {
+        this.receivedParam = params["agentstatus"];
+        this.showConfirmMessage = this.receivedParam;
+      }
+    });
   }
 
   public async getRegisteredAgents() {
@@ -62,20 +65,14 @@ export class AgentManagementComponent implements OnInit {
     self.showThrobber = true;
     self.buttonDisableStatus = true;
     self.runDisableStatus = "";
-    self.editIconSrc = "dist/icons/svg/actionIcons/Edit_icon_disabled.svg";
-    self.startIconSrc = "dist/icons/svg/actionIcons/Start_icon_Disabled.svg";
-    self.stopIconSrc = "dist/icons/svg/actionIcons/Stop_icon_Disabled.svg";
-    self.deleteIconSrc = "dist/icons/svg/actionIcons/Delete_icon_disabled.svg";
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
       this.agentListDatasource = agentList.data;
-      //console.log(agentList);
-      //console.log(this.agentListDatasource);
+      console.log(agentList);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
-
       setTimeout(function () {
         self.showConfirmMessage = "";
-      }, 5000);
+      }, 10000);
     } else {
       self.showMessage = "Something wrong with Service, Please try again.";
     }
@@ -89,23 +86,18 @@ export class AgentManagementComponent implements OnInit {
   }
 
   statusEdit(element) {
-    //console.log(element)
     this.runDisableStatus = element.agentStatus;
-    //console.log("Status Edit " + this.runDisableStatus);
     this.buttonDisableStatus = false;
   }
 
   agentStartStopAction(actType): void {
     var self = this;
-    //console.log(this.selectedAgent);
     if (this.selectedAgent == undefined) {
       this.showConfirmMessage = "other";
       self.showMessage = "Please select Agent";
     } else {
-      //console.log(" agentStartStopAction " + actType + " " + this.selectedAgent.agentKey);
       self.agentService.agentStartStop(this.selectedAgent.agentKey, actType)
         .then(function (data) {
-          //console.log(data);
           if (actType == "START") {
             if (data.status == "success") {
               self.showConfirmMessage = "started";
@@ -130,9 +122,7 @@ export class AgentManagementComponent implements OnInit {
   }
 
   addAgentData() {
-    //console.log("Add Agent");
     this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
-    //console.log(this.agentparameter);
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
@@ -143,11 +133,8 @@ export class AgentManagementComponent implements OnInit {
   }
 
   editAgent() {
-    //console.log(this.selectedAgent);
     this.consolidatedArr(this.selectedAgent);
-    //console.log(this.validationArr);
     this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
-    //console.log(this.agentparameter);
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {

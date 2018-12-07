@@ -16,7 +16,7 @@
 import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { AgentConfigItem } from '@insights/app/modules/admin/agent-management/agent-configuration/agentConfigItem';
 
 @Component({
@@ -33,13 +33,14 @@ export class AgentConfigurationComponent implements OnInit {
   selectedOS: string;
   versionList = [];
   toolsArr = [];
-  response = {};
+  toolVersionData: any;
   showMessage: string;
   showConfig: boolean = false;
   showThrobber: boolean = false;
   editAgentDetails = {};
   headerData = [];
   updatedConfigdata = {};
+  updatedConfigParamdata = {};
   configData: string;
   item = {};
   defaultConfigdata = {};
@@ -59,119 +60,124 @@ export class AgentConfigurationComponent implements OnInit {
   selectedVersion: string;
   receivedParam: any;
   agentConfigItems: AgentConfigItem[] = [];
+  selectedAgentKey: string;
+  agentConfigstatus: string;
   constructor(public config: InsightsInitService, public agentService: AgentService,
     private router: Router, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    /*this.route.paramMap.subscribe(async (params: ParamMap) => {
-      this.receivedParam = params.get('param');
-      //console.log(this.receivedParam);
-    });*/
     this.route.queryParams.subscribe(params => {
-      //console.log(params)
       this.receivedParam = JSON.parse(params["agentparameter"]);
-      //console.log(this.receivedParam);
+      console.log(this.receivedParam);
       this.showThrobber = true;
       this.initializeVariable();
       this.getOsList()
-      this.getOsVersionTools("");
+      this.getOsVersionTools();
     });
 
   }
 
   initializeVariable() {
-    //console.log(this.receivedParam.type);
     if (this.receivedParam.type == "update") {
-      /*this.getDbAgentConfig(self.editAgentDetails['agentid']);*/
       this.btnValue = "Update";
       this.buttonDisableStatus = true;
+      this.defaultConfigdata = {};
+      if (this.receivedParam.detailedArr != null) {
+        console.log(this.receivedParam.detailedArr);
+        this.selectedOS = this.receivedParam.detailedArr.osVersion;
+        this.selectedVersion = this.receivedParam.detailedArr.agentVersion;
+        this.selectedTool = this.receivedParam.detailedArr.toolName;
+        this.selectedAgentKey = this.receivedParam.detailedArr.agentKey;
+        this.getDbAgentConfig();
+
+      }
     } else {
       this.btnValue = "Register";
-      /*this.validationArr = self.editAgentDetails['detailedArr'];*/
+      this.selectedOS = undefined;
+      this.selectedVersion = undefined
+      this.selectedTool = undefined;
     }
   }
 
   getOsList() {
-    //console.log(this.config.getAgentsOsList());
     var agentsListFromUiConfig = this.config.getAgentsOsList();
     if (agentsListFromUiConfig !== undefined) {
       this.osLists = agentsListFromUiConfig;
     }
-    //this.selectedOS = "";
+
   }
 
-
-
-  getOsVersionTools(Selversion): void {
-
+  async getOsVersionTools() {
     var self = this;
+    var selversion;
     self.toolsArr = [];
-    self.agentService.getDocRootAgentVersionTools()
-      .then(function (data) {
-        //console.log(data);
-        if (data.status == "success") {
-          self.response = data.data;
-          if (Selversion) {
-            self.toolsArr = self.response[Selversion];
-          } else {
-            for (var key in self.response) {
-              self.versionList.push(key);
-            }
-          }
-        } else {
-          self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
+
+    console.log(this.selectedVersion);
+    this.toolVersionData = await this.agentService.getDocRootAgentVersionTools()
+
+    console.log(this.toolVersionData);
+    if (this.toolVersionData.status == "success") {
+      if (this.selectedVersion) {
+        this.toolsArr = this.toolVersionData.data[this.selectedVersion];
+        for (var key in this.toolVersionData.data) {
+          this.versionList.push(key);
         }
-        self.showThrobber = false;
-      })
-      .catch(function (data) {
-        self.showMessage = "Something wrong with service, Please try again";
-      });
-    //console.log(self.toolsArr);
+      } else {
+        for (var key in this.toolVersionData.data) {
+          this.versionList.push(key);
+        }
+      }
+    } else {
+      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
+    }
+    self.showThrobber = false;
+
+    console.log(self.toolsArr);
   }
 
   versionOnChange(key, type): void {
     var self = this;
-    //console.log(" In version On Change " + key + " " + type);
-    //console.log(self.response);
+    console.log(" In version On Change " + key + " " + type);
+    console.log(this.toolVersionData.data);
     if (type == "validate") {
       if (self.selectedVersion === undefined || self.selectedTool === undefined || self.selectedOS === undefined) {
         self.buttonDisableStatus = true;
       } else {
         self.buttonDisableStatus = false;
       }
-      //self.buttonDisableStatus = false;
     } else if (type == "Update") {
       self.showConfig = false;
-      //self.showThrobber = true;
       self.showMessage = "";
       self.defaultConfigdata = JSON.parse(self.tempConfigdata);
-      self.agentService.getDocrootAgentConfig(key, self.selectedTool)
-        .then(function (vdata) {
-          self.showConfig = true;
-          //self.showThrobber = false;
-          self.versionChangeddata = JSON.parse(vdata.data);
-          self.concatConfigelement(self.versionChangeddata);
-          self.removeConfigelement(self.versionChangeddata);
-          self.configLabelMerge();
-        })
-        .catch(function (vdata) {
-          //self.showThrobber = false;
-          self.showMessage = "Something wrong with service, Please try again";
-        });
+      if (key == this.selectedVersion) {
+        this.getAgentConfig(key, self.selectedTool);
+      } else {
+        self.agentService.getDocrootAgentConfig(key, self.selectedTool)
+          .then(function (vdata) {
+            console.log(vdata);
+            self.showConfig = true;
+            self.versionChangeddata = JSON.parse(vdata.data);
+            self.concatConfigelement(self.versionChangeddata);
+            self.removeConfigelement(self.versionChangeddata);
+            self.configLabelMerge();
+          })
+          .catch(function (vdata) {
+            self.showMessage = "Something wrong with service, Please try again";
+          });
+      }
     } else {
       self.buttonDisableStatus = true;
       self.selectedTool = "";
       self.toolsArr = [];
-      self.toolsArr = self.response[key];
+      self.toolsArr = this.toolVersionData.data[key];
     }
-    //console.log(self.toolsArr);
   }
 
 
-  async getDocRootAgentConfig(version, toolName) {
-    //console.log("In getDocRootAgentConfig");
+  async getAgentConfig(version, toolName) {
+    console.log("In getAgentConfig " + version + "  " + toolName);
     var self = this;
     self.isRegisteredTool = false;
     self.checkValidation();
@@ -179,21 +185,17 @@ export class AgentConfigurationComponent implements OnInit {
     if (!self.isRegisteredTool) {
       this.agentConfigItems = [];
       self.showConfig = false;
-      //self.showThrobber = true;
       self.showMessage = "";
 
       var agentConfigResponse = await self.agentService.getDocrootAgentConfig(version, toolName)
       console.log(agentConfigResponse);
-      //console.log(agentConfigResponse.data);
+      console.log(agentConfigResponse.data);
 
       if (agentConfigResponse.status == "success") {
         self.showConfig = true;
-        self.defaultConfigdata = JSON.parse(agentConfigResponse.data);
         self.dynamicData = JSON.stringify(self.defaultConfigdata['dynamicTemplate'], undefined, 4);
         self.configLabelMerge();
-        //console.log(typeof (agentConfigResponse.data));
-        //console.log(self.defaultConfigdata);
-        //console.log(typeof (self.defaultConfigdata));
+        this.defaultConfigdata = JSON.parse(agentConfigResponse.data);
         this.getconfigDataParsed(self.defaultConfigdata);
         if (self.selectedOS === undefined || self.dynamicData == '') {
           self.buttonDisableStatus = true;
@@ -218,11 +220,9 @@ export class AgentConfigurationComponent implements OnInit {
         let agentConfig = new AgentConfigItem();
         let agentConfigChilds: AgentConfigItem[] = []
         let value = data[configDatakey];
-        //console.log(configDatakey + "," + typeof (value) + " , " + value)
         if (typeof (data[configDatakey]) == 'object' && configDatakey != 'dynamicTemplate') {
           for (let configinnerDatakey of Object.keys(value)) {
             let agentConfigChild = new AgentConfigItem();
-            //console.log("    " + configinnerDatakey + "," + typeof (value[configinnerDatakey]) + " , " + value[configinnerDatakey])
             agentConfigChild.setData(configinnerDatakey, value[configinnerDatakey], typeof (value[configinnerDatakey]))
             agentConfigChilds.push(agentConfigChild);
           }
@@ -234,13 +234,12 @@ export class AgentConfigurationComponent implements OnInit {
         }
         this.agentConfigItems.push(agentConfig);
       }
-      //console.log(this.agentConfigItems);
       console.log(this.agentConfigItems.length);
     }
   }
 
   getAgentConfigItems(filtername: any) {
-    if (filtername == 'object') { //&&
+    if (filtername == 'object') {
       return this.agentConfigItems.filter(item => (item.type == filtername && item.key != 'dynamicTemplate'));
     } else if (filtername == 'dynamicTemplate') {
       return this.agentConfigItems.filter(item => item.key == 'dynamicTemplate');
@@ -249,69 +248,95 @@ export class AgentConfigurationComponent implements OnInit {
     }
   }
 
-  saveData(actionType) {
+  async getDbAgentConfig() {
     var self = this;
-    self.updatedConfigdata = {};
+    self.showConfig = false;
+    self.showThrobber = true;
+    self.showMessage = "";
+    if (this.selectedAgentKey != undefined) {
+      var agentData = await self.agentService.getDbAgentConfig(this.selectedAgentKey)
 
-    for (var key in self.defaultConfigdata) {
-
-      if (key != "dynamicTemplate" && self.findDataType(key, self.defaultConfigdata) == "object") {
-
-        self.item = {};
-
-        for (var value in self.defaultConfigdata[key]) {
-          self.item[value] = self.checkDatatype(self.defaultConfigdata[key][value]);
-        }
-
-        self.updatedConfigdata[key] = self.item;
-
-        if (key == "communication" && self.dynamicData != "") {
-          self.updatedConfigdata["dynamicTemplate"] = JSON.parse(self.dynamicData);
-        }
-
-      } else if (key != "dynamicTemplate") {
-        self.updatedConfigdata[key] = self.checkDatatype(self.defaultConfigdata[key]);
+      if (agentData != undefined) {
+        console.log(this.selectedAgentKey + "   " + agentData);
+        self.showConfig = true;
+        self.showThrobber = false;
+        this.defaultConfigdata = JSON.parse(agentData.data.agentJson);
+        this.getconfigDataParsed(this.defaultConfigdata);
+        this.configLabelMerge();
+      } else {
+        self.showThrobber = false;
+        self.showMessage = "Something wrong with service, Please try again";
       }
     }
 
-    if (self.updatedConfigdata) {
+
+  }
+
+  async saveData(actionType) {
+    var self = this;
+    this.agentConfigstatus = undefined;
+    self.updatedConfigdata = {};
+    this.updatedConfigParamdata = {};
+    console.log(actionType);
+
+    for (let configParamData of this.agentConfigItems) {
+      if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
+        this.item = {};
+        for (let configinnerData of configParamData.children) {
+          this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
+        }
+        this.updatedConfigParamdata[configParamData.key] = this.item;
+      } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
+        this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
+      } else if (configParamData.key == "dynamicTemplate") {
+        this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
+      }
+    }
+    console.log(this.updatedConfigParamdata);
+
+    console.log(self.updatedConfigdata);
+    if (this.updatedConfigParamdata) {
 
       self.configData = "";
-      self.configData = encodeURIComponent(JSON.stringify(self.updatedConfigdata));
-
+      self.configData = JSON.stringify(self.updatedConfigParamdata);
+      //console.log(this.configData)
       if (actionType == "Update") {
 
-        self.agentService.updateAgent(self.editAgentDetails['agentid'], self.configData, self.selectedTool, self.selectedVersion, self.selectedOS)
-          .then(function (data) {
+        var updateAgentRes = await self.agentService.updateAgent(this.selectedAgentKey, self.configData, self.selectedTool, self.selectedVersion, self.selectedOS)
 
-            if (data.status == "success") {
-              self.sendStatusMsg("updated");
-            } else {
-              self.sendStatusMsg("update");
-            }
-          })
-          .catch(function (data) {
-            self.sendStatusMsg("service_error");
-          });
-
-
+        self.agentConfigstatus = updateAgentRes.status;
+        //console.log(updateAgentRes);
+        if (updateAgentRes.status == "success") {
+          self.sendStatusMsg("updated");
+          self.agentConfigstatus = "updated"
+        } else {
+          self.sendStatusMsg("update");
+          self.agentConfigstatus = "update"
+        }
       } else {
 
-        self.agentService.registerAgent(self.selectedTool, self.selectedVersion, self.selectedOS, self.configData, self.trackingUploadedFileContentStr)
-          .then(function (data) {
-            //console.log(data);
-            if (data.status == "success") {
-              self.sendStatusMsg("registered");
-            } else {
-              self.sendStatusMsg("register");
-            }
-          })
-          .catch(function (data) {
-            self.sendStatusMsg("service_error");
-          });
-
+        var registerAgentRes = await self.agentService.registerAgent(self.selectedTool, self.selectedVersion, self.selectedOS, self.configData, self.trackingUploadedFileContentStr)
+        self.agentConfigstatus = registerAgentRes.status;
+        //console.log(registerAgentRes);
+        if (registerAgentRes.status == "success") {
+          self.sendStatusMsg("registered");
+          self.agentConfigstatus = "registered"
+        } else {
+          self.sendStatusMsg("register");
+          self.agentConfigstatus = "register"
+        }
       }
 
+    }
+    console.log(this.agentConfigstatus)
+    if (this.agentConfigstatus) {
+      let navigationExtras: NavigationExtras = {
+        skipLocationChange: true,
+        queryParams: {
+          "agentstatus": this.agentConfigstatus
+        }
+      };
+      this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
     }
   }
 
@@ -321,15 +346,19 @@ export class AgentConfigurationComponent implements OnInit {
 
   checkDatatype(dataVal) {
 
-    if (typeof (dataVal) == "boolean") { return dataVal; }
-    else if (isNaN(dataVal)) {
-
-      if (dataVal == "true") { this.datatypeVal = true; return this.datatypeVal; }
-      else if (dataVal == "false") { this.datatypeVal = false; return this.datatypeVal; }
-      else { return dataVal; }
-
-    }
-    else {
+    if (typeof (dataVal) == "boolean") {
+      return dataVal;
+    } else if (isNaN(dataVal)) {
+      if (dataVal == "true") {
+        this.datatypeVal = true;
+        return this.datatypeVal;
+      } else if (dataVal == "false") {
+        this.datatypeVal = false;
+        return this.datatypeVal;
+      } else {
+        return dataVal;
+      }
+    } else {
       return parseInt(dataVal);
     }
   }
@@ -384,18 +413,17 @@ export class AgentConfigurationComponent implements OnInit {
     }
   }
   configLabelMerge(): void {
-
-    var self = this;
-    self.configDesc = InsightsInitService.configDesc;
-    //console.log(self.configDesc);
-    for (var key in self.defaultConfigdata) {
-      if (self.configDesc.hasOwnProperty(key)) {
-        self.configAbbr[key] = self.configDesc[key];
+    this.configDesc = InsightsInitService.configDesc;
+    for (let configParamData of this.agentConfigItems) {
+      if (this.configDesc.hasOwnProperty(configParamData.key)) {
+        this.configAbbr[configParamData.key] = this.configDesc[configParamData.key];
       } else {
-        self.configAbbr[key] = key;
+        this.configAbbr[configParamData.key] = configParamData.key;
       }
     }
+    console.log(this.configAbbr);
   }
+
   findDataType(key, arr): string {
     return typeof (arr[key]);
   }

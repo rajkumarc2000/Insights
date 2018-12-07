@@ -55,11 +55,21 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .heading{
-    color:lightblue;
-    font-family:Open Sans,Tahoma !important;
-    font-size:16px;
-    padding-left: 10px;
-    align-content: center;
+    margin-left:20px;
+    color: #0033A0;
+    font-family: Open Sans !important;
+    font-size: 17px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.orangeStripCss {
+    background-color: #FF8F1C;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100% !important;
+    height: 1px;
+    margin: 0 auto;
 }
 
 .mat-icon-message{
@@ -105,7 +115,7 @@ tr.mat-footer-row, tr.mat-row {
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
-    background-color: #f0f0f0;
+    /*background-color: #f0f0f0;*/
 }
 
 .button-row{
@@ -154,14 +164,14 @@ tr.mat-footer-row, tr.mat-row {
 
 
 .dataHead {
-    font-family: proxima_novasemibold !important;
+    font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
     font-size: 14px !important;
     color: black !important;
     font-weight: 600
 }
 
 .theadCss {
-    font-family: proxima_novasemibold !important;
+    font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
     font-size: 16px !important;
     background-color:  #00B140 !important;
 }
@@ -239,6 +249,11 @@ tr.mat-footer-row, tr.mat-row {
     display: -webkit-flex;
     margin-left: 10px;
     margin-right: 10px
+}
+
+.agentchange{
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 
