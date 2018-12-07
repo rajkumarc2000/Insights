@@ -29,6 +29,13 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
    /*  font-size: 12px !important; */
 }
 
+  tr:nth-child(odd) td {
+    background-color: #ffffff;
+  }
+  
+  tr:nth-child(even) td {
+    background-color: #E1E3E7;
+  }
 
 tr.mat-footer-row, tr.mat-row {
     height: 30px !important;
