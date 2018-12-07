@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *******************************************************************************/
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -23,7 +23,8 @@ import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck
 @Component({
   selector: 'app-healthcheck',
   templateUrl: './healthcheck.component.html',
-  styleUrls: ['./healthcheck.component.css']
+  styleUrls: ['./healthcheck.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HealthCheckComponent implements OnInit {
 
@@ -74,15 +75,15 @@ export class HealthCheckComponent implements OnInit {
           }
         }
         //Displays Back to Top button when Agent table contains more than 20 rows
-        if (this.agentDataSource.length > 20) {
+        if (this.agentDataSource.length > 1) {
           this.agentBacktoTopFlag = true;
         }
         //Displays Back to Top button when Data Component table contains more than 20 rows
-        if (this.dataComponentDataSource.length > 20) {
+        if (this.dataComponentDataSource.length > 1) {
           this.dataBacktoTopFlag = true;
         }
         //Displays Back to Top button when Services table contains more than 20 rows
-        if (this.servicesDataSource.length > 20) {
+        if (this.servicesDataSource.length > 1) {
           this.servicesBacktoTopFlag = true;
         }
 

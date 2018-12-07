@@ -2,17 +2,22 @@ table {
     width: 100%;  
     border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;
-    font-family: Open Sans,Tahoma;
+    font-family: Open Sans;
+    font-size: 14px;
+    text-align: left;
+    vertical-align: center;
 }
 
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
-    font-family: Open Sans,Tahoma !important;
-    font-size: 15px;
-    height: 30px;
+    font-family: Open Sans !important;
+    font-size: 14px;
+    height: 40px;
     margin: 0px;
     padding:0px;
+    text-align: left;
+    vertical-align: center;
 }
 
 th:first-child { border-radius: 10px 0 0 0; }
@@ -21,50 +26,60 @@ th:last-child { border-radius: 0 10px 0 0; }
 tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 
+tr:nth-child(odd) td {
+  background-color: #ffffff;
+}
+
+tr:nth-child(even) td {
+  background-color: #E1E3E7;
+}
+
 .mat-table {
-    font-family: Open Sans,Tahoma !important;    
+    font-family: Open Sans !important;    
+    font-size: 14px;
+    text-align: left;
+    vertical-align: center;
 }
 .tableContainerStyle {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
 tr.mat-footer-row, tr.mat-row {
-    height: 30px !important;
+    height: 40px !important;
+    font-size: 14px;
     text-align: left !important;
+    vertical-align: center;
 }
-.tableContainerStyle {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
+
 
 .sectionHeadingStyle {
     background-color: #0033A0;   
     color: white;
     font-family: Open Sans !important;
-    font-size: 15px;
-    margin-left:20px;
-    margin-right:20px;
+    font-size: 16px;
+    margin-left:16px;
+    margin-right:16px;
     margin-top:20px;    
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
     padding-top: 3px;
     padding-bottom: 3px;
     border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;   
+    vertical-align:center;
 }
 
 .titleStyle {
-    margin-left:20px;
+    margin-left:16px;
+    margin-top:25px;
     color: #0033A0;
     font-family: Open Sans !important;
-    font-size: 17px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    font-size: 20px;
+    padding-bottom: 10px;    
+    vertical-align: center;
 }
 
 .backToTopButtonStyle {    
@@ -78,16 +93,16 @@ tr.mat-footer-row, tr.mat-row {
 }
 .rightAlignStyle {
     text-align: right;
-    padding-right: 20px;   
+    padding-right: 16px; 
 }
 
 .orangeStripCss {
     background-color: #FF8F1C;
-    padding-left: 20px;
-    padding-right: 20px;
     width: 100% !important;
-    height: 1px;
-    margin: 0 auto;
+    height: 2px;
+    margin-left:16px;
+    margin-right:16px;
+    padding-right:16px;
 }
 
 .mat-dialog-container, .mat-dialog {
@@ -108,3 +123,28 @@ tr.mat-footer-row, tr.mat-row {
      font-family: Open Sans !important;
      font-size: 17px;
  } 
+ 
+ /* Styles for tab labels */
+  .mat-tab-label {
+     /* min-width: 25px !important;
+     padding: 5px; */
+     background-color: transparent;
+     color: #0033A0;     
+     font-family: Open Sans !important;
+     font-size: 18px;
+ }
+ 
+ /* Styles for the active tab label */
+   .mat-tab-label-active {
+    color: #00B140;
+    font-weight:bold;
+    font-family: Open Sans !important;
+    font-size: 18px;
+    text-decoration: underline;
+    background-color: transparent;
+ }
+ 
+ /* Styles for the ink bar */
+ /* .mat-ink-bar {
+     background-color: transparent;
+ }  */

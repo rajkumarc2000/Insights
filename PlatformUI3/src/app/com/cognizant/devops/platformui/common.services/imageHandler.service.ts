@@ -41,9 +41,10 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('password-icon', "icons/svg/login/password_icon.svg");
         this.addImage('password-icon-active', "icons/svg/login/password_icon_active.svg");
         this.addImage('favicon_icon', "icons/svg/IS.svg");
-        this.addImage('healthcheck_success_status', "icons/svg/Status.svg");
+        this.addImage('healthcheck_success_status', "icons/svg/sharp-check_circle-24px.svg");
         this.addImage('healthcheck_failure_status', "icons/svg/Exclamation.svg");
-        this.addImage('healthcheck_show_details', "icons/svg/ShowDetails.svg");
+        this.addImage('healthcheck_show_details', "icons/svg/sharp-list_alt-24px.svg");
+        this.addImage('healthcheck_back_to_top', "icons/svg/backToTop.svg");
         this.addImage('close_dialog', "icons/svg/close.svg");
         this.addImage('edit_icon', "icons/svg/actionIcons/Edit_icon_disabled.svg");
         this.addImage('start_icon', "icons/svg/actionIcons/Start_icon_Disabled.svg");

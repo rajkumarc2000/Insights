@@ -59,7 +59,8 @@ export class ShowDetailsDialog implements OnInit {
         if (dataArray.length === 0) {
           this.checkResponseData = false;
         }
-        this.showFieldVal = ['type', 'uuid', 'status', 'execId', 'message', 'inSightsTimeX'];
+        //this.showFieldVal = ['type', 'uuid', 'status', 'execId', 'message', 'inSightsTimeX'];
+        this.showFieldVal = ['status', 'execId', 'message', 'inSightsTimeX'];
         for (var key in dataArray) {
           var dataNodes = dataArray[key];
           for (var node in dataNodes) {
