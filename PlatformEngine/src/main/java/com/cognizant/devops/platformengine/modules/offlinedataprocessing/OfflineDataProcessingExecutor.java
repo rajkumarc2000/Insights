@@ -259,10 +259,4 @@ public class OfflineDataProcessingExecutor implements Job {
 		}
 		return Boolean.FALSE;
 	}
-	
-	public static void main(String[] args) {
-		ApplicationConfigCache.loadConfigCache();
-		OfflineDataProcessingExecutor exe = new OfflineDataProcessingExecutor();
-		exe.executeOfflineProcessing();
-	}
 }
