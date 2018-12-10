@@ -125,7 +125,6 @@
 }
 
 .mat-drawer{
-  opacity: 0.9;
   background:#393838;
   max-width: 20%;
   min-width: 4%;
@@ -198,8 +197,8 @@
   display: flex;
   width: 100%;
   overflow: hidden;
-  height: 90px;
-  margin-top: 16px; 
+  /*height: 20%;*/
+  margin-top: 10px; 
   margin-left: 16px;
 }
 
@@ -252,12 +251,14 @@
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 10px;
+  height: 10%;
 }
 
 .headingPage{
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 10px;
+  height: 10%;
 }
 
 .feviconIcon{

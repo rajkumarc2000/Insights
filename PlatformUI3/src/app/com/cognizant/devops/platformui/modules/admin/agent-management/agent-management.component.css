@@ -67,7 +67,7 @@ tr.mat-footer-row, tr.mat-row {
     background-color: #FF8F1C;
     padding-left: 20px;
     padding-right: 20px;
-    width: 100% !important;
+    width: 80% !important;
     height: 1px;
     margin: 0 auto;
 }

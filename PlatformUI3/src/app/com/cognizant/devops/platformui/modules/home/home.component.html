@@ -22,11 +22,13 @@
       <div class="logoSetting">
         <table style="border-spacing:2px; height:100%; width: 100%">
           <tr>
-            <td style="height:28px">
+            <td>
+              <!--style="height:28px"-->
               <img mat-card-image *ngIf="isExpanded" align="left" height="35px" src='icons/svg/homePage/Cognizant_Logo_Reversed.svg' alt="Cognizant log"
                 style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
             </td>
-            <td style="height:28px">
+            <td>
+              <!--style="height:28px"-->
               <mat-icon (click)="isExpanded = !isExpanded" class="material-icons-menu">menu</mat-icon>
             </td>
           </tr>
@@ -58,7 +60,7 @@
         </table>
       </div>
       <mat-divider></mat-divider>
-      <div class="bottomnavg">
+      <div style="height:15%" class="bottomnavg">
         <mat-nav-list>
           <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
             [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>

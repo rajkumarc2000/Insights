@@ -94,7 +94,9 @@ export class HomeComponent implements OnInit {
         this.framesize = (evt.data + 20);
       }
     }
-    this.framesize = this.framesize - 236; //bottom nav 106 px + tap fix content 110
+    var otherMenu = ((45 / 100) * this.framesize);
+    console.log(otherMenu + " " + this.framesize);
+    this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
     console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
