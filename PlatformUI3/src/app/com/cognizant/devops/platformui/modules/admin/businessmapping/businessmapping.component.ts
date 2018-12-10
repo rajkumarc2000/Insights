@@ -109,28 +109,28 @@ export class BusinessMappingComponent implements OnInit {
 
 
   showChildToolsProperties(selectedNode: string) {
-    console.log("Leaf Node>> " + selectedNode);
+   // console.log("Leaf Node>> " + selectedNode);
     var selectedElement = document.getElementById(selectedNode);
-    console.log("Selected UI element>>" + selectedElement);
+    //console.log("Selected UI element>>" + selectedElement);
     selectedElement.style.backgroundColor = "#eee";
     var levels = [];
     levels.unshift(selectedElement.id);
     while (selectedElement.parentElement) {
-      console.log("Tag Name:# " + selectedElement.parentElement.tagName);
+      //console.log("Tag Name:# " + selectedElement.parentElement.tagName);
       if (selectedElement.parentElement.tagName == "LI") {
-        console.log("Value:>> " + selectedElement.parentElement.id);
+        //console.log("Value:>> " + selectedElement.parentElement.id);
         levels.unshift(selectedElement.parentElement.id);
       }
       selectedElement = selectedElement.parentElement;
     }
-    console.log("Levels:>> " + levels);
+   // console.log("Levels:>> " + levels);
     var level1 = levels[0] || '';
     var level2 = levels[1] || '';
     var level3 = levels[2] || '';
     var level4 = levels[3] || '';
     this.businessMappingService.getHierarchyProperties(level1,level2,level3,level4)
         .then((data)=> {
-          console.log(data);
+          //console.log(data);
           this.hierarchyProperties = data.data;
         });
   }

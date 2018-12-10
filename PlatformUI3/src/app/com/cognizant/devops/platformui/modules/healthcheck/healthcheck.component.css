@@ -98,7 +98,7 @@ tr.mat-footer-row, tr.mat-row {
 
 .orangeStripCss {
     background-color: #FF8F1C;
-    width: 100% !important;
+    width: 96% !important;
     height: 2px;
     margin-left:16px;
     margin-right:16px;
@@ -110,24 +110,12 @@ tr.mat-footer-row, tr.mat-row {
     padding: 0 !important;
 }
 
-.linkTxt {
-    /* text-decoration: underline; */
+.linkTxt {    
     cursor: pointer;
 }
-/* 
-.mat-ink-bar{
-    background-color:#00B140; 
-} */
-.mat-tab-label, .mat-tab-label-content {
-     /* color: #00B140 !important; */
-     font-family: Open Sans !important;
-     font-size: 17px;
- } 
  
  /* Styles for tab labels */
-  .mat-tab-label {
-     /* min-width: 25px !important;
-     padding: 5px; */
+ ::ng-deep .healthcheck-tab-style .mat-tab-label {     
      background-color: transparent;
      color: #0033A0;     
      font-family: Open Sans !important;
@@ -135,16 +123,21 @@ tr.mat-footer-row, tr.mat-row {
  }
  
  /* Styles for the active tab label */
-   .mat-tab-label-active {
+ ::ng-deep .healthcheck-tab-style .mat-tab-label-active {
     color: #00B140;
     font-weight:bold;
     font-family: Open Sans !important;
-    font-size: 18px;
-    text-decoration: underline;
+    font-size: 18px;    
     background-color: transparent;
+ }
+
+ ::ng-deep .healthcheck-tab-style .mat-tab-header {
+    border-bottom-style: none !important;  
+    margin-left: 16px;  
  }
  
  /* Styles for the ink bar */
- /* .mat-ink-bar {
-     background-color: transparent;
- }  */
+ ::ng-deep .healthcheck-tab-style .mat-ink-bar {
+     background-color: #00B140 !important;
+
+ }  

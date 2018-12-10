@@ -19,12 +19,13 @@ import { HealthCheckService } from '@insights/app/modules/healthcheck/healthchec
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
 
+/* ,
+  encapsulation: ViewEncapsulation.None */
 
 @Component({
   selector: 'app-healthcheck',
   templateUrl: './healthcheck.component.html',
-  styleUrls: ['./healthcheck.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./healthcheck.component.css']
 })
 export class HealthCheckComponent implements OnInit {
 
