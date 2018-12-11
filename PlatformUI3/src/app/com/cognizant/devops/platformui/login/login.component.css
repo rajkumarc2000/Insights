@@ -54,28 +54,23 @@
   color: #0033A0;
   font-size: 22px;
   width: 400px;
-  font-family: Open Sans;
   margin-top:-25px
 }
 .middleTextColr{
   color: #00B140;
   font-size: 22px;
-  font-family: Open Sans;
 }
 .inputGreyTextCss{
   font-size: 17px;
-  font-family: Open Sans; 
 }
 
 .copyRightCss {
    color: #000000;
    font-size: 10px;
-   font-family: Open Sans;
    margin-top:30px;
    text-align:center;
 }
 .validCredTextCss{
-  font-family: Open Sans;
   font-size: 17px;
   color: #0033A0;
   margin-bottom: 20px;
@@ -88,7 +83,6 @@
   min-height: 38px !important;
   min-width: 138px !important;
   font-size: 17px !important;
-  font-family: Open Sans !important;
   border-radius: 0px !important;
   text-transform: initial !important;
   color: white !important;
@@ -100,7 +94,7 @@
   margin: -2px;
 }
 .buttonMar{
-      margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 .activeCss {
     color: #0033A0 !important;
@@ -146,7 +140,6 @@
 .tckCss{
   margin-top: 2px;
   margin-left: 335px;
-
 }
 
 .actvIcoCss{
@@ -177,12 +170,10 @@ md-icon {
 .wrnTxt{
   color: #ff8f1c !important;
   font-size: 13px !important;
-  font-family: Open Sans !important
 }
 .errTxt{
     color: #ff8f1c !important;
     font-size: 16px !important;
-    font-family: Open Sans !important;
     padding-left: 36px;
     padding-bottom: 16px;
     

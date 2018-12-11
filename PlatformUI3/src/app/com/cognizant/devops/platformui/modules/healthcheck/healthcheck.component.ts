@@ -19,13 +19,11 @@ import { HealthCheckService } from '@insights/app/modules/healthcheck/healthchec
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
 
-/* ,
-  encapsulation: ViewEncapsulation.None */
 
 @Component({
   selector: 'app-healthcheck',
   templateUrl: './healthcheck.component.html',
-  styleUrls: ['./healthcheck.component.css']
+  styleUrls: ['./healthcheck.component.css', './../home.module.css']
 })
 export class HealthCheckComponent implements OnInit {
 
@@ -42,18 +40,18 @@ export class HealthCheckComponent implements OnInit {
   dataComponentDataSource = [];
   servicesDataSource = [];
   healthResponse: any;
-  agentBacktoTopFlag:boolean =false;
-  dataBacktoTopFlag:boolean =false;
-  servicesBacktoTopFlag:boolean =false;
+  agentBacktoTopFlag: boolean = false;
+  dataBacktoTopFlag: boolean = false;
+  servicesBacktoTopFlag: boolean = false;
 
 
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
     this.loadAllHealthCheckInfo();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
- async loadAllHealthCheckInfo() {
+  async loadAllHealthCheckInfo() {
     try {
       // Loads Agent , Data Component and Services
       this.showThrobber = true;
@@ -93,7 +91,7 @@ export class HealthCheckComponent implements OnInit {
         this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
 
       }
-      
+
     } catch (error) {
       this.showContent = false;
       console.log(error);
@@ -111,30 +109,30 @@ export class HealthCheckComponent implements OnInit {
   }
 
   //Transfers focus of Heath Check page as per User's selection
-  goToSection(source:string,target:string) {
+  goToSection(source: string, target: string) {
     // Changes the selected section color in the title
     this.changeSelectedSectionColor(source);
-    let element = document.querySelector("#"+ target);
+    let element = document.querySelector("#" + target);
     if (element) {
       element.scrollIntoView();
     }
   }
 
   // Changes the selected section color in the title
-  changeSelectedSectionColor(source:string) {    
-    if (source=='agentTxt') {
+  changeSelectedSectionColor(source: string) {
+    if (source == 'agentTxt') {
       document.getElementById(source).style.color = "#00B140";
       document.getElementById('dataCompTxt').style.color = "#0033A0";
       document.getElementById('servicesTxt').style.color = "#0033A0";
-    } else if (source=='dataCompTxt') {
+    } else if (source == 'dataCompTxt') {
       document.getElementById(source).style.color = "#00B140";
       document.getElementById('agentTxt').style.color = "#0033A0";
       document.getElementById('servicesTxt').style.color = "#0033A0";
-    } else if(source=='servicesTxt') {
+    } else if (source == 'servicesTxt') {
       document.getElementById(source).style.color = "#00B140";
       document.getElementById('dataCompTxt').style.color = "#0033A0";
       document.getElementById('agentTxt').style.color = "#0033A0";
-    }   
+    }
 
   }
 

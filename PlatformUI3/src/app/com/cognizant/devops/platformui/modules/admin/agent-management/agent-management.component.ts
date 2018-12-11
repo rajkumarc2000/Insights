@@ -22,7 +22,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-agent-management',
   templateUrl: './agent-management.component.html',
-  styleUrls: ['./agent-management.component.css']
+  styleUrls: ['./agent-management.component.css', './../../home.module.css']
 })
 export class AgentManagementComponent implements OnInit {
 

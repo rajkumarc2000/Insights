@@ -14,104 +14,110 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
+<div class="pageCss">
+  <div layout layout-align="left" class="heading">
+    <div id="healthCheckTitle">Agent Management </div>
+  </div>
 
-<div layout layout-align="left" class="heading">
-  <div id="healthCheckTitle">Agent List </div>
-</div>
+  <div class="orangeStripCss"></div>
 
-<div class="orangeStripCss"></div>
+  <div layout layout-align="left" class="sectionHeadingStyle">
+    <div layout> &nbsp; Agent List </div>
+  </div>
 
-<div flex="70" layout layout-align="center center" class="selectToolTxt">
-  <div *ngIf="showConfirmMessage != ''" id="confrmMsg">
-    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'registered' || showConfirmMessage === 'updated' || showConfirmMessage === 'started' || showConfirmMessage === 'stopped'">
-      <mat-icon svgIcon="successIconSrc" [ngStyle]="{color: '#4ca64c', height: '15px', width: '15px'}"></mat-icon>
-      <span>Agent {{showConfirmMessage}} successfully</span>
-    </div>
-    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'uninstall'">
-      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
-      <span class="confirmation-message">Please stop the Agent before uninstalling!</span>
-    </div>
-    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'register' || showConfirmMessage === 'update' || showConfirmMessage === 'start' || showConfirmMessage === 'stop'">
-      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
-      <span class="confirmation-message">Agent {{showConfirmMessage}} failed.</span>
-    </div>
-    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'service_error'">
-      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
-      <span class="confirmation-message">Something wrong with service, Please try again</span>
-    </div>
-    <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'other'">
-      <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
-      <span class="confirmation-message">{{showMessage}}</span>
+  <div flex="70" layout layout-align="center center" class="selectToolTxt">
+    <div *ngIf="showConfirmMessage != ''" id="confrmMsg">
+      <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'registered' || showConfirmMessage === 'updated' || showConfirmMessage === 'started' || showConfirmMessage === 'stopped'">
+        <mat-icon svgIcon="successIconSrc" [ngStyle]="{color: '#4ca64c', height: '15px', width: '15px'}"></mat-icon>
+        <span>Agent {{showConfirmMessage}} successfully</span>
+      </div>
+      <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'uninstall'">
+        <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+        <span class="confirmation-message">Please stop the Agent before uninstalling!</span>
+      </div>
+      <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'register' || showConfirmMessage === 'update' || showConfirmMessage === 'start' || showConfirmMessage === 'stop'">
+        <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+        <span class="confirmation-message">Agent {{showConfirmMessage}} failed.</span>
+      </div>
+      <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'service_error'">
+        <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+        <span class="confirmation-message">Something wrong with service, Please try again</span>
+      </div>
+      <div layout="row" layout-align="center center" *ngIf="showConfirmMessage === 'other'">
+        <mat-icon svgIcon="ic_report_problem" class="mat-icon-message"></mat-icon>
+        <span class="confirmation-message">{{showMessage}}</span>
+      </div>
     </div>
   </div>
-</div>
-<div class="btnAlign">
-  <button mat-button (click)="addAgentData()">
+  <div class="btnAlign">
+    <button mat-button (click)="addAgentData()">
     <mat-icon title="Add" class="mat-icon material-icons">
       add
     </mat-icon>
   </button>
-  <button mat-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
+    <button mat-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
     <mat-icon title=" Start " class="mat-icon material-icons ">
       play_arrow
     </mat-icon>
   </button>
-  <button mat-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
+    <button mat-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
     <mat-icon title="Stop " class="mat-icon material-icons ">
       stop
     </mat-icon>
   </button>
-  <button mat-button [disabled]="buttonDisableStatus" (click)="editAgent()">
+    <button mat-button [disabled]="buttonDisableStatus" (click)="editAgent()">
     <mat-icon title="Edit " class="mat-icon material-icons" >
       edit
     </mat-icon>
   </button>
-  <button mat-button [disabled]="buttonDisableStatus">
+    <button mat-button [disabled]="buttonDisableStatus">
     <mat-icon title="Delete " class="mat-icon material-icons" >
       delete
     </mat-icon>
   </button>
-</div>
+  </div>
 
-<div class="tableDiv">
-  <mat-radio-group [(ngModel)]="selectedAgent">
-    <table mat-table [dataSource]="agentListDatasource" class="mat-elevation-z8">
-      <!-- Radio Button Column -->
-      <ng-container matColumnDef="radio">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss "></th>
-        <td mat-cell *matCellDef="let element ">
-          <mat-radio-button [value]="element" (click)="statusEdit(element)"></mat-radio-button>
-        </td>
-      </ng-container>
+  <div>
+    <mat-radio-group [(ngModel)]="selectedAgent">
+      <table mat-table [dataSource]="agentListDatasource" class="mat-elevation-z8">
+        <!-- Radio Button Column -->
+        <ng-container matColumnDef="radio">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss "></th>
+          <td mat-cell *matCellDef="let element ">
+            <mat-radio-button [value]="element" (click)="statusEdit(element)"></mat-radio-button>
+          </td>
+        </ng-container>
 
-      <!-- OS Column -->
-      <ng-container matColumnDef="OS">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">OS</th>
-        <td mat-cell *matCellDef="let element"> {{element.osVersion}} </td>
-      </ng-container>
+        <!-- OS Column -->
+        <ng-container matColumnDef="OS">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">OS</th>
+          <td mat-cell *matCellDef="let element"> {{element.osVersion}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="ToolName">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Name</th>
-        <td mat-cell *matCellDef="let element"> {{element.toolName}} </td>
-      </ng-container>
+        <ng-container matColumnDef="ToolName">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.toolName}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="ToolCategory">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Category</th>
-        <td mat-cell *matCellDef="let element"> {{element.toolCategory}} </td>
-      </ng-container>
+        <ng-container matColumnDef="ToolCategory">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Category</th>
+          <td mat-cell *matCellDef="let element"> {{element.toolCategory}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="Version">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
-        <td mat-cell *matCellDef="let element"> {{element.agentVersion}} </td>
-      </ng-container>
+        <ng-container matColumnDef="Version">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
+          <td mat-cell *matCellDef="let element"> {{element.agentVersion}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="Status">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
-        <td mat-cell *matCellDef="let element"> {{element.agentStatus}} </td>
-      </ng-container>
+        <ng-container matColumnDef="Status">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
+          <td mat-cell *matCellDef="let element"> {{element.agentStatus}} </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
-    </table>
-  </mat-radio-group>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+      </table>
+    </mat-radio-group>
+  </div>
+
 </div>

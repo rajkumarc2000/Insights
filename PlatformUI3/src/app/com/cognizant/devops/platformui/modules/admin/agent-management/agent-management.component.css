@@ -2,19 +2,9 @@ table {
     width: 100%;  
     border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;
-    font-family: Open Sans,Tahoma;
     margin-bottom: 4px;
 }
 
-.tableHeaderCss {
-    background-color: #00B140;   
-    color: white;
-    font-family: Open Sans,Tahoma !important;
-    font-size: 15px;
-    height: 30px;
-    margin: 0px;
-    padding:0px;
-}
 
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
@@ -23,21 +13,14 @@ tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 
 .mat-table {
-    font-family: Open Sans,Tahoma !important;    
+    font-family: inherit !important;    
 }
-.tableContainerStyle {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
 tr.mat-footer-row, tr.mat-row {
     height: 30px !important;
     text-align: left !important;
 }
 .mat-button{
-    font-family: Open Sans,Tahoma !important;
+	font-family: inherit !important; 
     font-size: 15px;
     font-weight: 500;
     min-width: 50px;
@@ -49,33 +32,14 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .btnAlign{
-    font-family: Open Sans !important;
     margin-right: 7px; 
     float: right;
-}
-
-.heading{
-    margin-left:20px;
-    color: #0033A0;
-    font-family: Open Sans !important;
-    font-size: 17px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-
-.orangeStripCss {
-    background-color: #FF8F1C;
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 80% !important;
-    height: 1px;
-    margin: 0 auto;
 }
 
 .mat-icon-message{
     color: #ff4c4c;
     height: 15px;
-     width: 15px;
+    width: 15px;
 }
 
 .confirmation-message{
@@ -88,7 +52,6 @@ tr.mat-footer-row, tr.mat-row {
 .form-control {
     display: block;
     width: 100%;
-    /*height: 25px;*/
     padding: 6px 12px;
     font-size: 15px;
     line-height: 1.42857143;
@@ -97,17 +60,10 @@ tr.mat-footer-row, tr.mat-row {
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
     margin-left: 10px;
 }
 
 .arrange-horizontally {
-   /* display:table !important;
-    text-align: center !important;*/
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
@@ -115,13 +71,10 @@ tr.mat-footer-row, tr.mat-row {
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
-    /*background-color: #f0f0f0;*/
 }
 
 .button-row{
     margin-bottom: 10px;
-    /*background-color: lightskyblue;
-    border-bottom: 1px solid #d8d8d8;*/
     margin-top: 21px;
 }
 
@@ -132,7 +85,7 @@ tr.mat-footer-row, tr.mat-row {
 .configureBut {
     min-width: 150px;
     font-size: 15px;
-    font-family: Open Sans,Tahoma !important;
+	font-family: inherit !important; 
     border-radius: 0px;
     text-transform: initial;
     color: white;
@@ -164,14 +117,12 @@ tr.mat-footer-row, tr.mat-row {
 
 
 .dataHead {
-    font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
     font-size: 14px !important;
     color: black !important;
     font-weight: 600
 }
 
 .theadCss {
-    font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
     font-size: 16px !important;
     background-color:  #00B140 !important;
 }
@@ -182,7 +133,6 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .tableHeadingStyle {
-    font-family: proxima_novabold;
     font-size: 16px;   
     color: black;
 }
@@ -251,10 +201,6 @@ tr.mat-footer-row, tr.mat-row {
     margin-right: 10px
 }
 
-.agentchange{
-    margin-left: 16px;
-    margin-right: 16px;
-}
 
 
 

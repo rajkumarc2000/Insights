@@ -22,7 +22,7 @@ import { AgentConfigItem } from '@insights/app/modules/admin/agent-management/ag
 @Component({
   selector: 'app-agent-configuration',
   templateUrl: './agent-configuration.component.html',
-  styleUrls: ['../agent-management.component.css']
+  styleUrls: ['../agent-management.component.css', './../../../home.module.css']
 })
 export class AgentConfigurationComponent implements OnInit {
   datatypeVal: boolean;

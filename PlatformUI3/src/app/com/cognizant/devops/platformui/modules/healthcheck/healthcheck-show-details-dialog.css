@@ -1,14 +1,10 @@
 table {
     width: 100%;
-    /* border: 1px solid #00B140;
-    border-radius: 10px 10px 10px 10px; */
-    font-family: Open Sans;
-    /* font-size: 12px !important; */
 }
+
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
-    font-family: Open Sans !important;
     font-size: 14px !important;
     height: 40px !important;
     margin: 0px;
@@ -18,35 +14,23 @@ table {
 	text-align: center;
 }
 
-/* th:first-child { border-radius: 10px 0 0 0; }
-th:last-child { border-radius: 0 10px 0 0; }
 
-tr:last-child td:first-child { border-radius: 0 0 0 10px; }
-tr:last-child td:last-child { border-radius: 0 0 10px 0; }
- */
-.mat-table {
-    font-family: Open Sans !important;    
-   /*  font-size: 12px !important; */
+tr:nth-child(odd) td {
+    background-color: #ffffff;
 }
 
-  tr:nth-child(odd) td {
-    background-color: #ffffff;
-  }
-  
-  tr:nth-child(even) td {
+tr:nth-child(even) td {
     background-color: #E1E3E7;
-  }
+}
 
 tr.mat-footer-row, tr.mat-row {
-    height: 30px !important;
-    font-family: Open Sans !important;    
+    height: 30px !important;   
     font-size: 12px !important;
 }
 
 td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     width:200px !important;
-    height:30px !important;
-    font-family: Open Sans !important;    
+    height:30px !important; 
     font-size: 12px !important;
     letter-spacing: .010em;
     line-height: 1.2em;

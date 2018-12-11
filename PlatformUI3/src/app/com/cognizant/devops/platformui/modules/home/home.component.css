@@ -1,7 +1,6 @@
 :host ::ng-deep {
   display: block;
-  font-size: 16px;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica;
+  font-size: 18px;
   font-weight:400;
 }
 
@@ -28,18 +27,18 @@
 .mat-list-item {
   color: white;
   opacity: 0.8;
-  font-size: 16px;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica;
-  height: 30px !important
+  font-size: 18px;
+  height: 30px !important;
+  font-family: inherit;
 }
 
 .mat-nav-list{
   color: white;
   opacity: 0.8;
-  font-size: 16px;
+  font-size: 18px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica;
+  font-family:inherit;
   height: 30px !important;
 
 }
@@ -54,19 +53,21 @@
 }
 
 .mat-list-item.active {
-  font-size: 17px !important;
+  font-size: 18px !important;
   font-weight:bolder !important;
   color:white !important;
   background-color: #0033A0;
+  font-family: inherit;
 }
 
 .mat-line.active{
   color: white !important;
   font-weight:900 !important;
-  font-size: 17px !important;
+  font-size: 18px !important;
   opacity: 1.0 !important;
   filter: brightness(100%),contrast(100%) !important;
   background-color: #0033A0;
+  font-family: inherit;
   
 }
 
@@ -88,16 +89,15 @@
   color: #bfbfbf !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-size: 16px !important;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
+  font-size: 18px !important;
+  font-family: inherit;
 }
 
 .mat-line-heading{
   color: #bfbfbf !important;
   opacity: 0.8;
   padding: 5px !important;
-  font-size: 16px;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica;
+  font-size: 18px;
   height: 30px !important;
 }
 
@@ -108,20 +108,19 @@
 
 .mat-list-text{
   font-weight:500; 
-  font-size: 16px;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
-  
+  font-size: 18px;
+  font-family: inherit;
 }
 
 .mat-list-item-content{
  height: 30px !important; 
+ font-family: inherit;
 }
 
 .mat-line-child{
   color: #f7f3f3 !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-family: Open Sans, Tahoma, San Serif, Helvitica !important;
 }
 
 .mat-drawer{
@@ -237,15 +236,6 @@
   margin-right: 16px !important;
   margin-left: 16px !important;
 }
-
-/*.topdivider{
-  margin-top: 16px;
-  width: 350px;
-}*/
-
-/*.menuList{
-  height: 28px
-}*/
 
 .logoSetting{
   margin-left: 16px;

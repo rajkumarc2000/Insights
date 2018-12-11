@@ -2,13 +2,13 @@ table {
     width: 100%;  
     border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;
-    font-family: Open Sans,Tahoma;
+    /*font-family: Open Sans,Tahoma;*/
 }
 
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
-    font-family: Open Sans,Tahoma !important;
+    /*font-family: Open Sans,Tahoma !important;*/
     font-size: 15px;
     height: 30px;
     margin: 0px;
@@ -19,7 +19,7 @@ table {
 }
 
 .mat-cell {
-    font-family: Open Sans,Tahoma !important;
+    /*font-family: Open Sans,Tahoma !important;*/
     font-size: 15px;
     height: 30px;
     margin: 0px;
@@ -36,7 +36,7 @@ tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 
 .mat-table {
-    font-family: Open Sans,Tahoma !important;
+    /*font-family: Open Sans,Tahoma !important;*/
 }
 .tableContainerStyle {
     padding-left: 20px;
@@ -50,20 +50,20 @@ tr.mat-footer-row, tr.mat-row {
     text-align: left !important;
 }
 .mat-button{
-    font-family: Open Sans,Tahoma !important;
+    /*font-family: Open Sans,Tahoma !important;*/
     font-size: 15px;
     font-weight: 500;
     min-width: 50px;
 }
 .heading{
     color:#0033A0;
-    font-family:Open Sans,Tahoma !important;
+    /*font-family:Open Sans,Tahoma !important;*/
     font-size:16px;
     padding-left: 10px;
 }
 
 .btnAlign{
-    font-family: Open Sans !important;
+    /*font-family: Open Sans !important;*/
     margin-right: 7px; 
     float: right;
 }
@@ -87,7 +87,7 @@ tr.mat-footer-row, tr.mat-row {
     min-height: 38px !important;
     min-width: 138px !important;
     font-size: 17px !important;
-    font-family: Open Sans !important;
+    /*font-family: Open Sans !important;*/
     border-radius: 0px !important;
     text-transform: initial !important;
     color: white !important;
@@ -95,7 +95,7 @@ tr.mat-footer-row, tr.mat-row {
 }
 .label{
     padding-right: 10px;
-    font-family: Open Sans,Tahoma !important;
+    /*font-family: Open Sans,Tahoma !important;*/
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
@@ -126,7 +126,7 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .selectToolTxt{
-    font-family: Open Sans,Tahoma !important;
+    /*font-family: Open Sans,Tahoma !important;*/
     font-size: 16px;
     color: #38840C;
     margin-top: 28px;

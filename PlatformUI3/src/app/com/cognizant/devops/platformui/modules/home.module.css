@@ -1,0 +1,64 @@
+.heading{
+    margin-left:20px;
+    color: #0033A0;
+    font-size: 26px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.pageCss{
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.orangeStripCss {
+    background-color: #FF8F1C;
+    margin-left: 16px;
+    margin-right: 16px;
+    width: 100% !important;
+    height: 1px;
+    margin: 0 auto;
+}
+
+.tableHeaderCss {
+    background-color: #00B140;   
+    color: white;
+    font-size: 15px;
+    height: 40px;
+    margin: 0px;
+    padding:0px;
+    padding-left: 4px;
+}
+
+.sectionHeadingStyle {
+    background-color: #0033A0;   
+    color: white;
+    font-size: 20px;
+    margin-top:20px; 
+    height: 30px;
+    border: 1px solid #0033A0;
+    border-radius: 10px 10px 10px 10px;   
+    vertical-align:middle;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 20px;
+}
+
+tr.mat-footer-row, tr.mat-row{
+    height: 30px !important;
+    text-align: left !important;
+    vertical-align: middle;
+}
+
+.mat-row:nth-child(even){
+    background-color:#e1e3e7;
+}
+
+.mat-row:nth-child(odd){
+    background-color:#FFFFFF;
+}
+
+.mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line{
+    font-family: inherit;
+    font-size: 18px;
+}

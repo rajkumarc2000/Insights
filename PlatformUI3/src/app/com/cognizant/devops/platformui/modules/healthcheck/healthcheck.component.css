@@ -2,20 +2,7 @@ table {
     width: 100%;  
     border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;
-    font-family: Open Sans;
     font-size: 14px;
-    text-align: left;
-    vertical-align: center;
-}
-
-.tableHeaderCss {
-    background-color: #00B140;   
-    color: white;
-    font-family: Open Sans !important;
-    font-size: 14px;
-    height: 40px;
-    margin: 0px;
-    padding:0px;
     text-align: left;
     vertical-align: center;
 }
@@ -34,17 +21,10 @@ tr:nth-child(even) td {
   background-color: #E1E3E7;
 }
 
-.mat-table {
-    font-family: Open Sans !important;    
+.mat-table {  
     font-size: 14px;
     text-align: left;
     vertical-align: center;
-}
-.tableContainerStyle {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 tr.mat-footer-row, tr.mat-row {
@@ -54,38 +34,9 @@ tr.mat-footer-row, tr.mat-row {
     vertical-align: center;
 }
 
-
-.sectionHeadingStyle {
-    background-color: #0033A0;   
-    color: white;
-    font-family: Open Sans !important;
-    font-size: 16px;
-    margin-left:16px;
-    margin-right:16px;
-    margin-top:20px;    
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border: 1px solid #0033A0;
-    border-radius: 10px 10px 10px 10px;   
-    vertical-align:center;
-}
-
-.titleStyle {
-    margin-left:16px;
-    margin-top:25px;
-    color: #0033A0;
-    font-family: Open Sans !important;
-    font-size: 20px;
-    padding-bottom: 10px;    
-    vertical-align: center;
-}
-
 .backToTopButtonStyle {    
     color: #FF8F1C;
     background-color: white !important;
-    font-family: Open Sans !important;
     font-size: 15px;
     font-weight: bold;
     border: 1px solid #FF8F1C;
@@ -94,15 +45,6 @@ tr.mat-footer-row, tr.mat-row {
 .rightAlignStyle {
     text-align: right;
     padding-right: 16px; 
-}
-
-.orangeStripCss {
-    background-color: #FF8F1C;
-    width: 96% !important;
-    height: 2px;
-    margin-left:16px;
-    margin-right:16px;
-    padding-right:16px;
 }
 
 .mat-dialog-container, .mat-dialog {
@@ -117,8 +59,7 @@ tr.mat-footer-row, tr.mat-row {
  /* Styles for tab labels */
  ::ng-deep .healthcheck-tab-style .mat-tab-label {     
      background-color: transparent;
-     color: #0033A0;     
-     font-family: Open Sans !important;
+     color: #0033A0;
      font-size: 18px;
  }
  
@@ -126,7 +67,6 @@ tr.mat-footer-row, tr.mat-row {
  ::ng-deep .healthcheck-tab-style .mat-tab-label-active {
     color: #00B140;
     font-weight:bold;
-    font-family: Open Sans !important;
     font-size: 18px;    
     background-color: transparent;
  }
