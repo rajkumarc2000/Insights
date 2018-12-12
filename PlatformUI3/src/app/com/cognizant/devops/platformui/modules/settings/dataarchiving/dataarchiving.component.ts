@@ -23,7 +23,7 @@ import { MatTable } from '@angular/material';
 @Component({
   selector: 'app-dataarchiving',
   templateUrl: './dataarchiving.component.html',
-  styleUrls: ['./dataarchiving.component.css']
+  styleUrls: ['./dataarchiving.component.css','./../../home.module.css']
 })
 export class DataArchivingComponent implements OnInit {
   fileLocation: string;

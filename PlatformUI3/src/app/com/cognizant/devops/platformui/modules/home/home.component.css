@@ -1,6 +1,6 @@
 :host ::ng-deep {
   display: block;
-  font-size: 18px;
+  font-size: 16px;
   font-weight:400;
 }
 
@@ -27,7 +27,7 @@
 .mat-list-item {
   color: white;
   opacity: 0.8;
-  font-size: 18px;
+  font-size: 16px;
   height: 30px !important;
   font-family: inherit;
 }
@@ -35,7 +35,7 @@
 .mat-nav-list{
   color: white;
   opacity: 0.8;
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
   font-family:inherit;
@@ -53,7 +53,7 @@
 }
 
 .mat-list-item.active {
-  font-size: 18px !important;
+  font-size: 17px !important;
   font-weight:bolder !important;
   color:white !important;
   background-color: #0033A0;
@@ -63,7 +63,7 @@
 .mat-line.active{
   color: white !important;
   font-weight:900 !important;
-  font-size: 18px !important;
+  font-size: 17px !important;
   opacity: 1.0 !important;
   filter: brightness(100%),contrast(100%) !important;
   background-color: #0033A0;
@@ -89,7 +89,7 @@
   color: #bfbfbf !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-family: inherit;
 }
 
@@ -97,7 +97,7 @@
   color: #bfbfbf !important;
   opacity: 0.8;
   padding: 5px !important;
-  font-size: 18px;
+  font-size: 16px;
   height: 30px !important;
 }
 
@@ -108,7 +108,7 @@
 
 .mat-list-text{
   font-weight:500; 
-  font-size: 18px;
+  font-size: 16px;
   font-family: inherit;
 }
 

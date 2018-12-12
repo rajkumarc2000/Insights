@@ -263,7 +263,7 @@ export class HomeComponent implements OnInit {
         isAdminMenu: true
       },
       {
-        displayName: 'Admin',
+        displayName: 'Configuration',
         iconName: 'admin',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
