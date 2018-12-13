@@ -20,38 +20,30 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataSharedService } from '@insights/common/data-shared-service';
 import { MatTable } from '@angular/material';
 
+
 @Component({
   selector: 'app-dataarchiving',
   templateUrl: './dataarchiving.component.html',
-  styleUrls: ['./dataarchiving.component.css','./../../home.module.css']
+  styleUrls: ['./dataarchiving.component.css', './../../home.module.css']
 })
 export class DataArchivingComponent implements OnInit {
-  fileLocation: string;
-  rowLimit: string;
-  backupFileFormat: string = "JSON";
-  @ViewChild(MatTable) matTable: MatTable<any>;
-  fileName: string;
-  retention: string;
+
   settingsType: string;
-  listView: boolean = true;
-  saveView: boolean = false;
   showConfirmMessage: string;
   showThrobber: boolean;
   serviceResponseForList: any;
-  datalist = [];
   settingData = {};
   nextRunTime: string;
   lastRunTime: string;
   settingJsonstring: string;
-  settingJsonObj = {};
+  dataJsonObj = {};
+  sendJsonObj = {};
   activeFlag: string;
   lastModifiedByUser: String;
-  editIconSrc = "dist/icons/svg/userOnboarding/Edit_icon_MouseOver.svg";
-  showadd: boolean = false;
-  dataFreq: string;
+  iseditdisabled: boolean = false;
   displayedColumns = [];
-  selectedRecordg: any;
   currentUserName: String;
+  displayedColumnsNameMapping = [];
   backupRecord = [
     { value: '10', name: '10' },
     { value: '100', name: '100' },
@@ -63,7 +55,6 @@ export class DataArchivingComponent implements OnInit {
     { value: 'Monthly', name: 'Monthly' }
   ];
 
-
   constructor(private dataArchivingService: DataArchivingService, private dataShare: DataSharedService) {
     this.listData();
   }
@@ -71,80 +62,92 @@ export class DataArchivingComponent implements OnInit {
   ngOnInit() {
     this.dataShare.currentUser.subscribe(user => this.currentUserName = user)
     console.log(this.currentUserName);
+    this.setInitailData();
   }
 
-  async listData() {
-    var self = this;
+  async  listData() {
 
-    self.listView = true;
-    self.saveView = false;
-
-    self.datalist.length = 0;
-    this.serviceResponseForList = await self.dataArchivingService.listDatapurgingdata("DATAPURGING");
+    this.setInitailData();
+    this.serviceResponseForList = await this.dataArchivingService.listDatapurgingdata("DATAPURGING");
     console.log(this.serviceResponseForList);
     if (this.serviceResponseForList != null) { }
-    self.showThrobber = false;
-    console.log(this.serviceResponseForList.status);
+    this.showThrobber = false;
     if (this.serviceResponseForList.status == "success") {
       if (this.serviceResponseForList.data != undefined) {
-        self.showadd = true;
-        self.settingData = JSON.parse(this.serviceResponseForList.data.settingsJson);
-        console.log(self.settingData);
-        self.datalist.push(self.settingData);
-        this.matTable.renderRows();
+        this.iseditdisabled = false;
+        this.settingData = JSON.parse(this.serviceResponseForList.data.settingsJson);
+        for (let record of this.displayedColumnsNameMapping) {
+          if (this.settingData.hasOwnProperty(record.key)) {
+            record.value = this.settingData[record.key];
+          } else {
+            record.value = ""
+          }
+        }
       } else {
-        self.showadd = false;
+        this.iseditdisabled = true;
       }
     } else {
-      self.showConfirmMessage = "Something wrong with service, please try again";
+      this.showConfirmMessage = "Something wrong with service, please try again";
     }
-    console.log(this.datalist);
-    this.displayedColumns = ['radio', 'DataRetentionPeriod', 'MaximumNumberOfRecords', 'Location', 'FrequencyOfDataArchival',
-      'LastRuntime', 'NextRuntime', 'FileFormat'];
-    setTimeout(function () {
-      self.showConfirmMessage = "";
-    }, 3500);
   }
 
-  addData(): void {
-    console.log("In add data");
-    this.listView = false;
-    this.saveView = true;
+  public setInitailData() {
+    this.displayedColumnsNameMapping = [
+      {
+        key: 'backupRetentionInDays', value: "", displayName: 'Input number of days for Data Retention',
+        infoText: "(please input only numeric values)", isReadOnly: false,
+        type: "input", record: this.dataJsonObj
+      },
+      {
+        key: 'backupFileLocation', value: "", displayName: 'Data Archival Location',
+        infoText: "(please copy and paste the path of destination folder)", isReadOnly: false,
+        type: "input", record: this.dataJsonObj
+      },
+      {
+        key: 'dataArchivalFrequency', value: "", displayName: 'Please select the frequency of Data Archival',
+        infoText: "(Daily / Weekly / Monthly)", isReadOnly: false,
+        type: "list", record: this.dataFreqRecord
+      },
+      {
+        key: 'rowLimit', displayName: 'Number of Records to Archive',
+        infoText: "(once the limit is attained multiple files will be created)", isReadOnly: false,
+        type: "list", record: this.backupRecord
+      },
+      {
+        key: 'backupFileFormat', value: "JSON", displayName: 'Backup file format',
+        infoText: "(Backup files will be archived only in JSON file format)", isReadOnly: true,
+        type: "text", record: this.dataJsonObj
+      },
+      {
+        key: 'lastRunTime', displayName: 'Last Runtime',
+        infoText: "", isReadOnly: true,
+        type: "text", record: this.dataJsonObj
+      },
+      {
+        key: 'nextRunTime', displayName: 'Next Runtime',
+        infoText: "", isReadOnly: true,
+        type: "text", record: this.dataJsonObj
+      }
+    ];
+    this.displayedColumns = ['displayName', 'input'];
   }
 
-  editData() {
-    console.log(this.selectedRecordg)
-    this.listView = false;
-    this.saveView = true;
-    this.retention = this.selectedRecordg['backupRetentionInDays'];
-    this.rowLimit = this.selectedRecordg['rowLimit'];
-    this.fileLocation = this.selectedRecordg['backupFileLocation'];
-    this.backupFileFormat = this.backupFileFormat;
-    this.dataFreq = this.selectedRecordg['dataArchivalFrequency'];
-    this.lastRunTime = this.selectedRecordg['lastRunTime'];
-    this.nextRunTime = this.selectedRecordg['nextRunTime'];
+  public editData() {
+    this.iseditdisabled = true;
   }
 
-  saveData() {
-    console.log("In save add data");
-    this.listView = false;
-    this.saveView = true;
+  public saveData(actionType) {
+    for (let record of this.displayedColumnsNameMapping) {
+      this.sendJsonObj[record.key] = (record.value == undefined ? "" : record.value)
+    }
+    console.log(this.sendJsonObj)
     var self = this;
-    self.settingsType = "DATAPURGING";
-    self.activeFlag = "Y";
-    self.lastModifiedByUser = this.currentUserName;
-    self.settingJsonObj = {
-      "backupRetentionInDays": self.retention,
-      "rowLimit": self.rowLimit,
-      "backupFileLocation": self.fileLocation,
-      "backupFileFormat": this.backupFileFormat,
-      "dataArchivalFrequency": self.dataFreq,
-      "lastRunTime": self.lastRunTime,
-      "nextRunTime": ''
-    }
-    self.settingJsonstring = JSON.stringify(self.settingJsonObj);// encodeURIComponent()
+    this.settingsType = "DATAPURGING";
+    this.activeFlag = "Y";
+    this.lastModifiedByUser = this.currentUserName;
+    this.settingJsonstring = JSON.stringify(self.sendJsonObj);
     console.log(self.settingJsonstring);
-    self.dataArchivingService.saveDatapurging(self.settingsType, self.activeFlag, self.lastModifiedByUser.toString(), self.settingJsonstring)
+    this.dataArchivingService.saveDatapurging(self.settingsType, self.activeFlag, self.lastModifiedByUser.toString(), self.settingJsonstring)
       .then(function (data) {
         console.log("Setting " + data);
         if (data.status == "success") {
@@ -155,26 +158,10 @@ export class DataArchivingComponent implements OnInit {
         self.listData();
       })
       .catch(function (data) {
-        self.listView = false;
-        self.saveView = true;
         self.showConfirmMessage = "Failed to save settings";
         self.listData();
       });
+
+    this.iseditdisabled = true;
   }
-
-  checkData(event, myValue, txtName) {
-
-    if (myValue == undefined) { return '' }
-    else {
-      while (myValue.charAt(0) === '0') {
-        myValue = myValue.substr(1);
-      }
-    }
-    if (txtName == 'retention') { this.retention = myValue; }
-  }
-
-  compareObjects(o1: any, o2: any): boolean {
-    return o1.id === o2.id && o1.name === o2.name;
-  }
-
 }

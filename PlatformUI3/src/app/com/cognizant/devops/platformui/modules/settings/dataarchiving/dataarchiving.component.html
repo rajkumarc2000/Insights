@@ -27,137 +27,105 @@
     </div>
   </div>
 
-  <div flex="70" layout layout-align="center center" class="selectToolTxt" style="margin-top:-5px;margin-bottom:10px">
+  <div flex="70" layout layout-align="center center" class="messageText" style="margin-top:-5px;margin-bottom:10px">
     <div *ngIf="showConfirmMessage != ''" style="text-transform: capitalize;" id="confrmMsg"> {{showConfirmMessage}}
     </div>
   </div>
 
-  <div class="tableDiv" *ngIf="listView">
-    <div flex="60" flex-offset="15" class="btnAlign">
-      <button mat-button (click)="addData()" [disabled]="showadd">
-    <mat-icon title="Add" class="mat-icon material-icons">
-      add
+  <div>
+    <div class="btnAlign">
+      <button mat-button (click)="saveData('add')" [disabled]="!iseditdisabled">
+    <mat-icon title="Save" class="mat-icon material-icons">
+      save
     </mat-icon>
   </button>
 
-      <button mat-button (click)="editData()" [disabled]="!showadd">
+      <button mat-button (click)="editData()" [disabled]="iseditdisabled">
     <mat-icon title="Edit" class="mat-icon material-icons"> <!--usingBtnCss usingBtnCss-->
       edit
     </mat-icon>
   </button>
     </div>
-    <mat-radio-group [(ngModel)]="selectedRecordg">
-      <table mat-table [dataSource]="datalist" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="radio">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"></th>
-          <td mat-cell *matCellDef="let element">
-            <mat-radio-button [value]="element"></mat-radio-button>
-          </td>
-        </ng-container>
-
-        <!-- Data Retention Period -->
-        <ng-container matColumnDef="DataRetentionPeriod">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Data Retention Period</th>
-          <td mat-cell *matCellDef="let element"> {{element.backupRetentionInDays}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="MaximumNumberOfRecords">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Maximum number of records for Backup File</th>
-          <td mat-cell *matCellDef="let element"> {{element.rowLimit}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Location">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Location</th>
-          <td mat-cell *matCellDef="let element"> {{element.backupFileLocation}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="FrequencyOfDataArchival">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Frequency of Data Archival</th>
-          <td mat-cell *matCellDef="let element"> {{element.dataArchivalFrequency}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="LastRuntime">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Last Runtime</th>
-          <td mat-cell *matCellDef="let element"> {{element.lastRunTime | date:'medium'}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="NextRuntime">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Next Runtime</th>
-          <td mat-cell *matCellDef="let element"> {{element.nextRunTime | date:'medium'}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="FileFormat">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">File Format</th>
-          <td mat-cell *matCellDef="let element"> {{element.backupFileFormat}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+    <div>
+      <table class="mat-elevation-z8 mat-table">
+        <thead>
+          <tr class="mat-header-row" layout-align="start start">
+            <th colspan="3" class="tableHeaderCss mat-header-cell">
+              <!--<mat-radio-group [(ngModel)]="selectedRecordg">
+                <mat-radio-button [value]="element"></mat-radio-button>
+              </mat-radio-group>-->
+              <span class="mainHeaderText">Add/Edit information to Archive Data</span>
+              <span class="infoHeaderText">(Please note fields marked as <span style="color:black">“*” </span> are mandatory,
+              runtime will be auto-populated)</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="mat-row" *ngFor="let element of displayedColumnsNameMapping">
+            <td class="mat-cell" style="width:2%;">
+            </td>
+            <td class="mat-cell" style="width:48%;">
+              <span class="mainText">{{element.displayName}}</span>
+              <span *ngIf="element.type!='text'" style="color:#ff0000">*</span>
+              <span class="infoText">{{element.infoText}}</span>
+            </td>
+            <td class="mat-cell" style="width:50%;">
+              <div *ngIf="element.type=='input'">
+                <input [(ngModel)]="element.value" name="{{element.key}}" [disabled]="!iseditdisabled" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
+                  required>
+              </div>
+              <div *ngIf="element.type=='text'" [(ngModel)]="element.value" [name]="element.key" ngDefaultControl [disabled]="!iseditdisabled">
+                <span class="nonEditableText">{{element.value}}</span>
+              </div>
+              <div *ngIf="element.type=='list'">
+                <mat-select [(ngModel)]="element.value" name="{{element.key}}" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
+                  required placeholder="Select number of records" [disabled]="!iseditdisabled">
+                  <mat-option *ngFor="let record of element.record" [value]="record.value">
+                    {{record.name}}
+                  </mat-option>
+                  </mat-select>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
-    </mat-radio-group>
-  </div>
-
-
-  <div *ngIf="saveView">
-    <h4 class="heading">Customize your Data Archiving settings.</h4>
-    <div class="panel panel-default">
-      <form #frmdatapurging="ngForm">
-        <div layout="row" layout-align="space-between start" layout-wrap layout-margin layout-padding>
-          <div class="form-group">
-            <label for="retention">Data Retention Period (in Days)  
-          <input type="text" [(ngModel)]="retention" name="retention" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-            ng-keypress="checkData($event,retention, 'retention')" ng-blur="checkData($event,retention, 'retention')" required
-            style="width:10%;">
-            </label>
-          </div>
-          <div class="form-group">
-            <label for="rowLimitCtr">Maximum number of records for Backup File  
-          <mat-select  [(ngModel)]="rowLimit" name="rowLimit" class="form-control" required placeholder="Select number of records" style="width:21%;">
-            <mat-option *ngFor="let record of backupRecord" [value]="record.value">
-              {{record.name}}
-            </mat-option>
-          </mat-select>
-          </label>
-          </div>
-          <div class="form-group">
-            <span>Backup Location  </span>
-            <input [(ngModel)]="fileLocation" name="fileLocation" class="form-control" required style="width:31%;">
-          </div>
-        </div>
-        <div layout="row" layout-align="space-between start" layout-wrap layout-margin layout-padding>
-
-          <div class="form-group">
-            <label for="dataFreqCtr">Frequency of Data Archival  </label>
-            <mat-select [(ngModel)]="dataFreq" name="dataFreq" class="form-control" required placeholder="Select Frequency" style="width:21%;">
-              <mat-option *ngFor="let record of dataFreqRecord" [value]="record.value">
-                {{record.name}}
-              </mat-option>
-            </mat-select>
-          </div>
-          <div layout="row" layout-align="space-between start" layout-margin layout-padding class="inline-fields">
-            <br>
-            <div class="form-group">
-              <label>Backup File Format  </label>
-              <input type="text" style="width: 10%;" name="Backup File Format" class="form-control" value="JSON" readonly>
-            </div>
-            <div class="form-group">
-              <label>Last Run Time  </label>
-              <input type="text" style="width: 21%;" name="Last Run Time" class="form-control" value="{{lastRunTime}}" readonly>
-            </div>
-            <div class="form-group">
-              <label>Next Run Time </label>
-              <input type="text" style="width: 21%;" name="Next Run Time" class="form-control" value="{{nextRunTime}}" readonly>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div>
-          <button mat-raised-button (click)="saveData()" [disabled]="frmdatapurging.invalid">
-          Save
-        </button>
-        </div>
-      </form>
     </div>
   </div>
+
+  <!--<table mat-table [dataSource]="displayedColumnsNameMapping" class="mat-elevation-z8">
+    <!--<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>->
+    <ng-container *matHeaderRowDef="displayedColumns">
+      <!--Group1->
+      <div class="mat-header-row header-group-row">
+        <div class="mat-header-cell header-group" role="columnheader" style="flex: 2">Add/Edit information to Archive Data (Please note fields marked as <span style="color:black">“*” </span> are mandatory,
+          runtime will be auto-populated)</div>
+      </div>
+      <!--<mat-header-row></mat-header-row>->
+    </ng-container>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <ng-container matColumnDef="displayName">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Add/Edit information to Archive Data (Please note fields marked as <span style="color:black">“*” </span> are mandatory,
+        runtime will be auto-populated)</th>
+      <td mat-cell *matCellDef="let element">{{element['displayName']}} {{element['infoText']}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="input">
+      <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"></th>
+      <td mat-cell *matCellDef="let element">
+        {{ element[type]}} aa {{element.type}}
+        <input *ngIf="element.type=='input'" [(ngModel)]="element.value" name="{{element[key]}}" [disabled]="!iseditdisabled" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
+          required>
+          <span *ngIf="element[type]=='text'" class="nonEditableText">{{element[value]}}</span>
+          <mat-select *ngIf="element[type]=='list'" [(ngModel)]="element[value]" name="{{element[key]}}" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
+            required placeholder="Select number of records" [disabled]="!iseditdisabled">
+            <mat-option *ngFor="let record of element.record" [value]="record.value">
+              {{record.name}}
+            </mat-option>
+            </mat-select>
+      </td>
+    </ng-container>
+  </table>-->
+
 </div>
