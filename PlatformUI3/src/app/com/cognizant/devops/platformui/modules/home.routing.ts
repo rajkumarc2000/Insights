@@ -27,7 +27,7 @@ import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/da
 import { BusinessMappingComponent } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
-
+import { BlockChainComponent } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.component';
 
 
 const homeRoutes: Routes = [
@@ -37,6 +37,7 @@ const homeRoutes: Routes = [
       { path: 'playlist', component: PlaylistComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'grafanadashboard/:id', component: GrafanaDashboardComponent },
+      { path: 'blockchain', component: BlockChainComponent },
       { path: 'healthcheck', component: HealthCheckComponent },
       { path: 'loggedout', redirectTo: 'login' },
       { path: 'agentmanagement', component: AgentManagementComponent },

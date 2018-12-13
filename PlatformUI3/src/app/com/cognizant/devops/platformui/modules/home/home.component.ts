@@ -235,7 +235,7 @@ export class HomeComponent implements OnInit {
           {
             displayName: 'BlockChain Development',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/400',
+            route: 'InSights/Home/blockchain',
             isToolbarDisplay: true,
             isAdminMenu: true
           }

@@ -73,7 +73,7 @@ tr.mat-footer-row, tr.mat-row {
 
  ::ng-deep .healthcheck-tab-style .mat-tab-header {
     border-bottom-style: none !important;  
-    margin-left: 16px;  
+    
  }
  
  /* Styles for the ink bar */

@@ -52,6 +52,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('successIconSrc', "icons/svg/ic_check_circle_24px.svg");
         this.addImage('ic_report_problem', "icons/svg/ic_report_problem_24px.svg");
         this.addImage('ic_delete_icon', "icons/svg/actionIcons/Delete_icon_disabled.svg");
+        this.addImage('search_icon', "icons/svg/ic_search_24px.svg");
     }
 
 

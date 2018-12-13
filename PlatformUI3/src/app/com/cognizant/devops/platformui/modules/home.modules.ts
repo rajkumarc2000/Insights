@@ -23,6 +23,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@insights/app/material.module';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 import { HomeRouting } from '@insights/app/modules/home.routing';
@@ -36,8 +37,7 @@ import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboa
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 import { HealthCheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
-
-
+import { BlockChainComponent } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.component';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
@@ -66,9 +66,8 @@ import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessm
     DatadictionaryComponent,
     BusinessMappingComponent,
     DataArchivingComponent, 
-    AgentConfigurationComponent
-
-
+    AgentConfigurationComponent,
+    BlockChainComponent
   ],
   imports: [
     HomeRouting,
@@ -78,7 +77,8 @@ import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessm
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
-    SharedServices
+    SharedServices,
+    MatDatepickerModule
   ],
   entryComponents: [
     ShowDetailsDialog

@@ -1,0 +1,61 @@
+.titleStyle {    
+    margin-top:25px;
+    color: #0033A0;
+    font-family: Open Sans !important;
+    font-size: 20px;
+    padding-bottom: 10px;    
+    vertical-align: center;
+}
+
+.greenTitleTxt {
+    color: #00B140;    
+    font-family: Open Sans !important;
+    font-size: 20px; 
+}
+
+.searchTitleTxt {    
+    margin-top:20px;
+    color: #0033A0;
+    font-family: Open Sans !important;
+    font-size: 16px;
+    padding-bottom: 10px;    
+    vertical-align: center;
+}
+
+.dateRowStyle {    
+    overflow: auto; 
+    width: 100%; 
+}
+.dateElementStyle {
+    width:30%;
+    float: left;  
+    font-family: Open Sans !important;
+    font-size: 14px; 
+}
+.searchBtnStyle {
+    width:57px;
+    height:29px; 
+    vertical-align: center;
+    background-color: #00B140;
+    color: white;
+    border: 1px solid #00B140;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.searchHeadingStyle{
+    background-color: #0033A0;
+    color: white;
+    font-size: 16px;
+    /* margin-top: 20px; */
+    height: 30px;
+    border: 1px solid #0033A0;
+    border-radius: 10px 10px 10px 10px;
+    vertical-align: middle;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+table {
+    width: 100%;
+}

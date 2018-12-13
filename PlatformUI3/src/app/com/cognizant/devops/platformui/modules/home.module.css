@@ -33,12 +33,12 @@
 .sectionHeadingStyle {
     background-color: #0033A0;   
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     margin-top:20px; 
     height: 30px;
     border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;   
-    vertical-align:middle;
+    vertical-align:center;
     padding-top: 3px;
     padding-bottom: 3px;
     margin-bottom: 20px;
