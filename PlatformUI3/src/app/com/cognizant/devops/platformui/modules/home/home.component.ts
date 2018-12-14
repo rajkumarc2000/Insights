@@ -142,7 +142,7 @@ export class HomeComponent implements OnInit {
       this.userRole = this.grafanaResponse.grafanaCurrentOrgRole;
       this.userCurrentOrg = this.grafanaResponse.grafanaCurrentOrg;
       currentUserResponce = await this.grafanaService.getCurrentUserOrgs();
-      if (currentUserResponce.data != undefined) {
+      /* if (currentUserResponce.data != undefined) {
         let filterOrgName = currentUserResponce.data.filter(function (i) {
           return i.orgId == self.userCurrentOrg;
         });
@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit {
         this.selectedOrg = (filterOrgName.length > 0) ? filterOrgName[0].name : null;
       } else {
         this.router.navigate(['/login']);
-      }
+      } */
       //console.log(this.selectedOrg);
     }
   }
