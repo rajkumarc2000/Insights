@@ -79,7 +79,7 @@ export class AgentConfigurationComponent implements OnInit {
       this.showThrobber = true;
       this.initializeVariable();
       this.getOsList()
-      //this.getOsVersionTools();
+      this.getOsVersionTools();
     });
 
   }
