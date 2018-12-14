@@ -52,9 +52,6 @@
         <thead>
           <tr class="mat-header-row" layout-align="start start">
             <th colspan="3" class="tableHeaderCss mat-header-cell">
-              <!--<mat-radio-group [(ngModel)]="selectedRecordg">
-                <mat-radio-button [value]="element"></mat-radio-button>
-              </mat-radio-group>-->
               <span class="mainHeaderText">Add/Edit information to Archive Data</span>
               <span class="infoHeaderText">(Please note fields marked as <span style="color:black">“*” </span> are mandatory,
               runtime will be auto-populated)</span>
@@ -67,13 +64,15 @@
             </td>
             <td class="mat-cell" style="width:48%;">
               <span class="mainText">{{element.displayName}}</span>
-              <span *ngIf="element.type!='text'" style="color:#ff0000">*</span>
+              <span *ngIf="element.type!='text'" style="color:#ff0000; padding-left: 8px;">*</span>
+              <br/>
               <span class="infoText">{{element.infoText}}</span>
             </td>
             <td class="mat-cell" style="width:50%;">
               <div *ngIf="element.type=='input'">
                 <input [(ngModel)]="element.value" name="{{element.key}}" [disabled]="!iseditdisabled" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
                   required>
+                  <!--OnlyNumber="true"-->
               </div>
               <div *ngIf="element.type=='text'" [(ngModel)]="element.value" [name]="element.key" ngDefaultControl [disabled]="!iseditdisabled">
                 <span class="nonEditableText">{{element.value}}</span>

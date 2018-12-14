@@ -89,6 +89,9 @@ export class DataArchivingComponent implements OnInit {
     } else {
       this.showConfirmMessage = "Something wrong with service, please try again";
     }
+    setTimeout(() => {
+      this.showConfirmMessage = "";
+    }, 3000);
   }
 
   public setInitailData() {
@@ -164,4 +167,5 @@ export class DataArchivingComponent implements OnInit {
 
     this.iseditdisabled = true;
   }
+
 }

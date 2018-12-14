@@ -51,6 +51,8 @@ import { DataArchivingService } from '@insights/app/modules/settings/dataarchivi
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 
+import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-management/agent-configuration/uninstall-agent-dialog';
+
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessm
     BusinessMappingComponent,
     DataArchivingComponent, 
     AgentConfigurationComponent,
-    BlockChainComponent
+    BlockChainComponent,
+    UninstallAgentDialog
   ],
   imports: [
     HomeRouting,
@@ -81,7 +84,8 @@ import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessm
     MatDatepickerModule
   ],
   entryComponents: [
-    ShowDetailsDialog
+    ShowDetailsDialog,
+    UninstallAgentDialog
   ],
 
   providers: [

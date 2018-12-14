@@ -70,7 +70,7 @@
       edit
     </mat-icon>
   </button>
-    <button mat-button [disabled]="buttonDisableStatus">
+    <button mat-button [disabled]="runDisableStatus!='STOP'" (click)="uninstallAgent()">
     <mat-icon title="Delete " class="mat-icon material-icons" >
       delete
     </mat-icon>

@@ -19,6 +19,7 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { AgentConfigItem } from '@insights/app/modules/admin/agent-management/agent-configuration/agentConfigItem';
 
+
 @Component({
   selector: 'app-agent-configuration',
   templateUrl: './agent-configuration.component.html',
@@ -68,13 +69,17 @@ export class AgentConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.route.queryParams);
     this.route.queryParams.subscribe(params => {
+      console.log(params);
       this.receivedParam = JSON.parse(params["agentparameter"]);
+      //this.toolVersionData = JSON.parse(params["versionAndToolInfo"]);
       console.log(this.receivedParam);
+      //console.log(this.toolVersionData);
       this.showThrobber = true;
       this.initializeVariable();
       this.getOsList()
-      this.getOsVersionTools();
+      //this.getOsVersionTools();
     });
 
   }
@@ -91,7 +96,6 @@ export class AgentConfigurationComponent implements OnInit {
         this.selectedTool = this.receivedParam.detailedArr.toolName;
         this.selectedAgentKey = this.receivedParam.detailedArr.agentKey;
         this.getDbAgentConfig();
-
       }
     } else {
       this.btnValue = "Register";

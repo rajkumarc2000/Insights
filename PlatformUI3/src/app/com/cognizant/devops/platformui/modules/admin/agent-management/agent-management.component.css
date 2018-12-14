@@ -201,6 +201,29 @@ tr.mat-footer-row, tr.mat-row {
     margin-right: 10px
 }
 
+.mat-dialog-title {
+    margin: 0 0 10px;
+    display: block;
+    text-align: center;
+    color: #00B140;
+    font-family: inherit;
+}
+
+.mat-button-dialog {
+    font-family: inherit !important;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: yellowgreen;
+    min-width: 50px;
+}
+
+.mat-dialog-content{
+    margin-top: 10px
+}
+
+.mat-dialog-actions{
+    float: center;
+}
 
 
 

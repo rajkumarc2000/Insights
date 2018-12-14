@@ -46,7 +46,7 @@ tr.mat-footer-row, tr.mat-row {
 
 .form-control {
     display: block;
-    width: 90%;
+    width: 60%;
     padding: 6px 12px;
     font-size: 13px;
     background-color: white;
@@ -94,6 +94,7 @@ tr.mat-footer-row, tr.mat-row {
 .nonEditableText{
     font-size: 13px;
     color: #9e9a9a;
+    padding-left: 12px;
 }
 
 .mainHeaderText{
@@ -113,7 +114,7 @@ tr.mat-footer-row, tr.mat-row {
     color: rgba(0,0,0,.38);
     background-color:#e1e3e7;
     display: block;
-    width: 90%;
+    width: 60%;
     padding: 6px 12px;
     font-size: 13px;
     background-image: none;

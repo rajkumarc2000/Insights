@@ -79,7 +79,7 @@ export class AgentService implements IAgentService {
     }
 
     agentUninstall(agentId: string, toolName: string, osversion: string): Promise<any> {
-        return this.restCallHandlerService.post("AGENT_UNINSTALL", { 'agentId': agentId, 'toolName': toolName, 'osversion': osversion }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+        return this.restCallHandlerService.postWithParameter("AGENT_UNINSTALL", { 'agentId': agentId, 'toolName': toolName, 'osversion': osversion }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
 }

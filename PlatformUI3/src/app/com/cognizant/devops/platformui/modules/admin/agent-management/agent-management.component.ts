@@ -18,6 +18,9 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-management/agent-configuration/uninstall-agent-dialog';
+
 
 @Component({
   selector: 'app-agent-management',
@@ -40,10 +43,11 @@ export class AgentManagementComponent implements OnInit {
   selectedAgent: any;
   agentparameter = {};
   receivedParam: any;
+  toolVersionData: any;
+  versionList = [];
 
   constructor(public agentService: AgentService, public router: Router,
-    private route: ActivatedRoute) {
-
+    private route: ActivatedRoute, public dialog: MatDialog) {
     this.getRegisteredAgents();
   }
 
@@ -70,9 +74,9 @@ export class AgentManagementComponent implements OnInit {
       this.agentListDatasource = agentList.data;
       console.log(agentList);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
-      setTimeout(function () {
-        self.showConfirmMessage = "";
-      }, 10000);
+      setTimeout(() => {
+        this.showConfirmMessage = "";
+      }, 3000);
     } else {
       self.showMessage = "Something wrong with Service, Please try again.";
     }
@@ -121,26 +125,73 @@ export class AgentManagementComponent implements OnInit {
     }
   }
 
-  addAgentData() {
+  async addAgentData() {
     this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
+    /*if (this.toolVersionData == undefined) {
+      await this.getOsVersionTools();
+    }*/
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
-        "agentparameter": this.agentparameter
+        "agentparameter": this.agentparameter/*,
+        "versionAndToolInfo": this.toolVersionData*/
+      }
+    };
+    console.log(navigationExtras);
+    this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
+  }
+
+  async editAgent() {
+    this.consolidatedArr(this.selectedAgent);
+    /*if (this.toolVersionData == undefined) {
+      await this.getOsVersionTools();
+    }*/
+    this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
+    let navigationExtras: NavigationExtras = {
+      skipLocationChange: true,
+      queryParams: {
+        "agentparameter": this.agentparameter/*,
+        "versionAndToolInfo": this.toolVersionData*/
       }
     };
     this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
   }
 
-  editAgent() {
-    this.consolidatedArr(this.selectedAgent);
-    this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
-    let navigationExtras: NavigationExtras = {
-      skipLocationChange: true,
-      queryParams: {
-        "agentparameter": this.agentparameter
+  uninstallAgent() {
+    var self = this;
+    console.log("uninstall agent " + JSON.stringify(this.selectedAgent));
+
+    const dialogRef = this.dialog.open(UninstallAgentDialog, {
+      width: '40%',
+      height: '40%',
+      data: { name: this.selectedAgent.toolName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed  ' + result);
+      if (result == 'yes') {
+        self.agentService.agentUninstall(self.selectedAgent.agentKey, self.selectedAgent.toolName, self.selectedAgent.osVersion).then(function (data) {
+          self.getRegisteredAgents();
+        }).catch(function (data) {
+          self.showConfirmMessage = "service_error";
+          self.getRegisteredAgents();
+        });
       }
-    };
-    this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
+    });
+
   }
+
+  /*async getOsVersionTools() {
+    var self = this;
+    var selversion;
+    let DocrootData: any = await this.agentService.getDocRootAgentVersionTools()
+
+    console.log(DocrootData);
+    if (DocrootData.status == "success") {
+      this.toolVersionData = JSON.stringify(DocrootData.data);
+    } else {
+      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
+    }
+    self.showThrobber = false;
+  }*/
 }
