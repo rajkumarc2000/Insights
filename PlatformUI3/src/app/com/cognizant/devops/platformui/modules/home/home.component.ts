@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit {
     let currentUserResponce: any;
     this.grafanaResponse = await this.grafanaService.getGrafanaCurrentOrgAndRole();
     let self = this;
-    //console.log(this.grafanaResponse);
+    console.log(this.grafanaResponse);
     if (this.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
       this.showAdminTab = true;
     } else {
@@ -142,16 +142,22 @@ export class HomeComponent implements OnInit {
       this.userRole = this.grafanaResponse.grafanaCurrentOrgRole;
       this.userCurrentOrg = this.grafanaResponse.grafanaCurrentOrg;
       currentUserResponce = await this.grafanaService.getCurrentUserOrgs();
-      /* if (currentUserResponce.data != undefined) {
-        let filterOrgName = currentUserResponce.data.filter(function (i) {
-          return i.orgId == self.userCurrentOrg;
-        });
-        //console.log(filterOrgName.length > 0);
-        this.selectedOrg = (filterOrgName.length > 0) ? filterOrgName[0].name : null;
+      console.log(currentUserResponce);
+      if (currentUserResponce.data != undefined) {
+        /* let filterOrgName = currentUserResponce.data.filter(function (i) {
+           return i.orgId == self.userCurrentOrg;
+         });
+         //console.log(filterOrgName.length > 0);
+         this.selectedOrg = (filterOrgName.length > 0) ? filterOrgName[0].name : null; */
+        for (let orgData of currentUserResponce.data) {
+          if (orgData.orgId == self.userCurrentOrg) {
+            this.selectedOrg = orgData.name;
+          }
+        }
       } else {
         this.router.navigate(['/login']);
-      } */
-      //console.log(this.selectedOrg);
+      }
+      console.log(this.selectedOrg);
     }
   }
 

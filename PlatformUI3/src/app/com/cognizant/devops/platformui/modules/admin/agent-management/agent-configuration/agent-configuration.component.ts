@@ -59,6 +59,7 @@ export class AgentConfigurationComponent implements OnInit {
   dynamicData: string;
   selectedTool: string;
   selectedVersion: string;
+  oldSelectedVersion: string;
   receivedParam: any;
   agentConfigItems: AgentConfigItem[] = [];
   selectedAgentKey: string;
@@ -89,10 +90,12 @@ export class AgentConfigurationComponent implements OnInit {
       this.btnValue = "Update";
       this.buttonDisableStatus = true;
       this.defaultConfigdata = {};
+      console.log(this.receivedParam.detailedArr);
       if (this.receivedParam.detailedArr != null) {
         console.log(this.receivedParam.detailedArr);
         this.selectedOS = this.receivedParam.detailedArr.osVersion;
         this.selectedVersion = this.receivedParam.detailedArr.agentVersion;
+        this.oldSelectedVersion = this.receivedParam.detailedArr.agentVersion;
         this.selectedTool = this.receivedParam.detailedArr.toolName;
         this.selectedAgentKey = this.receivedParam.detailedArr.agentKey;
         this.getDbAgentConfig();
@@ -154,15 +157,19 @@ export class AgentConfigurationComponent implements OnInit {
     } else if (type == "Update") {
       self.showConfig = false;
       self.showMessage = "";
-      self.defaultConfigdata = JSON.parse(self.tempConfigdata);
-      if (key == this.selectedVersion) {
+      console.log(key + "  " + this.selectedVersion + " " + this.oldSelectedVersion);
+      //self.defaultConfigdata = JSON.parse(self.tempConfigdata);
+      if (this.oldSelectedVersion == key) {
         this.getAgentConfig(key, self.selectedTool);
       } else {
+        console.log(" retrivr data for another version " + key);
+        self.configData = JSON.stringify(self.agentConfigItems);
         self.agentService.getDocrootAgentConfig(key, self.selectedTool)
           .then(function (vdata) {
             console.log(vdata);
             self.showConfig = true;
             self.versionChangeddata = JSON.parse(vdata.data);
+            console.log(self.versionChangeddata);
             self.concatConfigelement(self.versionChangeddata);
             self.removeConfigelement(self.versionChangeddata);
             self.configLabelMerge();
@@ -198,9 +205,9 @@ export class AgentConfigurationComponent implements OnInit {
       if (agentConfigResponse.status == "success") {
         self.showConfig = true;
         self.dynamicData = JSON.stringify(self.defaultConfigdata['dynamicTemplate'], undefined, 4);
-        self.configLabelMerge();
         this.defaultConfigdata = JSON.parse(agentConfigResponse.data);
         this.getconfigDataParsed(self.defaultConfigdata);
+        self.configLabelMerge();
         if (self.selectedOS === undefined || self.dynamicData == '') {
           self.buttonDisableStatus = true;
         } else {
@@ -374,22 +381,37 @@ export class AgentConfigurationComponent implements OnInit {
 
       if (self.findDataType(vkeys, addObj) == 'object' && vkeys != "dynamicTemplate") {
 
-        if (!self.defaultConfigdata.hasOwnProperty(vkeys)) {
-          self.defaultConfigdata[vkeys] = addObj[vkeys];
+        if (!self.configData.hasOwnProperty(vkeys)) {
+          self.configData[vkeys] = addObj[vkeys];
         }
         for (var vkeys1 in addObj[vkeys]) {
-          if (!self.defaultConfigdata[vkeys].hasOwnProperty(vkeys1)) {
-            self.defaultConfigdata[vkeys][vkeys1] = addObj[vkeys][vkeys1];
+          if (!self.configData[vkeys].hasOwnProperty(vkeys1)) {
+            self.configData[vkeys][vkeys1] = addObj[vkeys][vkeys1];
           }
         }
       } else {
 
-        if (!self.defaultConfigdata.hasOwnProperty(vkeys)) {
-          self.defaultConfigdata[vkeys] = addObj[vkeys];
+        if (!self.configData.hasOwnProperty(vkeys)) {
+          self.configData[vkeys] = addObj[vkeys];
         }
       }
 
+      /* for (let configParamData of this.agentConfigItems) {
+       if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
+         this.item = {};
+         for (let configinnerData of configParamData.children) {
+           this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
+         }
+         this.updatedConfigParamdata[configParamData.key] = this.item;
+       } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
+         this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
+       } else if (configParamData.key == "dynamicTemplate") {
+         this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
+       }
+     }*/
+
     }
+    console.log(self.configData);
   }
 
   removeConfigelement(remObj): void {

@@ -28,7 +28,7 @@
     <div class="arrange-horizontally button-row">
       <!--<div>-->
       <div>
-        <mat-select required [(ngModel)]="selectedOS" name="selectedOS" class="form-control" placeholder="Select OS" (ngModelChange)="versionOnChange(selectedVersion, 'validate')"
+        <mat-select required [(ngModel)]="selectedOS" name="selectedOS" class="form-control" placeholder="Select OS" (ngModelChange)="versionOnChange(os.value, 'validate')"
           style="width:195px;">
           <mat-option *ngFor="let os of osLists | keyvalue" value="{{os.value}}">{{os.key}}</mat-option>
           </mat-select>
