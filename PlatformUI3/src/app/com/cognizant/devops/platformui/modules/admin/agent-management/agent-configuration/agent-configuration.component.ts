@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
+import { Component, OnInit, PipeTransform, Pipe, ViewChild, ElementRef } from '@angular/core';
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
@@ -50,7 +50,8 @@ export class AgentConfigurationComponent implements OnInit {
   uploadedFile: File;
   isTypeError: string = "";
   files = [];
-  fileUploadSuccessMessage: boolean = false;
+  fileUploadSuccessMessage: string = "";
+  fileUploadErrorMessage: string = "";
   trackingUploadedFileContentStr: string = "";
   showTrackingJsonUploadButton: boolean;
   buttonDisableStatus: boolean = true;
@@ -59,23 +60,22 @@ export class AgentConfigurationComponent implements OnInit {
   dynamicData: string;
   selectedTool: string;
   selectedVersion: string;
-  oldSelectedVersion: string;
   receivedParam: any;
   agentConfigItems: AgentConfigItem[] = [];
   selectedAgentKey: string;
   agentConfigstatus: string;
+  @ViewChild('fileInput') myFileDiv: ElementRef;
+
   constructor(public config: InsightsInitService, public agentService: AgentService,
     private router: Router, private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    console.log(this.route.queryParams);
     this.route.queryParams.subscribe(params => {
-      console.log(params);
       this.receivedParam = JSON.parse(params["agentparameter"]);
       //this.toolVersionData = JSON.parse(params["versionAndToolInfo"]);
-      console.log(this.receivedParam);
+      //console.log(this.receivedParam);
       //console.log(this.toolVersionData);
       this.showThrobber = true;
       this.initializeVariable();
@@ -90,12 +90,9 @@ export class AgentConfigurationComponent implements OnInit {
       this.btnValue = "Update";
       this.buttonDisableStatus = true;
       this.defaultConfigdata = {};
-      console.log(this.receivedParam.detailedArr);
       if (this.receivedParam.detailedArr != null) {
-        console.log(this.receivedParam.detailedArr);
         this.selectedOS = this.receivedParam.detailedArr.osVersion;
         this.selectedVersion = this.receivedParam.detailedArr.agentVersion;
-        this.oldSelectedVersion = this.receivedParam.detailedArr.agentVersion;
         this.selectedTool = this.receivedParam.detailedArr.toolName;
         this.selectedAgentKey = this.receivedParam.detailedArr.agentKey;
         this.getDbAgentConfig();
@@ -120,11 +117,7 @@ export class AgentConfigurationComponent implements OnInit {
     var self = this;
     var selversion;
     self.toolsArr = [];
-
-    console.log(this.selectedVersion);
     this.toolVersionData = await this.agentService.getDocRootAgentVersionTools()
-
-    console.log(this.toolVersionData);
     if (this.toolVersionData.status == "success") {
       if (this.selectedVersion) {
         this.toolsArr = this.toolVersionData.data[this.selectedVersion];
@@ -140,14 +133,10 @@ export class AgentConfigurationComponent implements OnInit {
       self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
     }
     self.showThrobber = false;
-
-    console.log(self.toolsArr);
   }
 
   versionOnChange(key, type): void {
     var self = this;
-    console.log(" In version On Change " + key + " " + type);
-    console.log(this.toolVersionData.data);
     if (type == "validate") {
       if (self.selectedVersion === undefined || self.selectedTool === undefined || self.selectedOS === undefined) {
         self.buttonDisableStatus = true;
@@ -157,27 +146,16 @@ export class AgentConfigurationComponent implements OnInit {
     } else if (type == "Update") {
       self.showConfig = false;
       self.showMessage = "";
-      console.log(key + "  " + this.selectedVersion + " " + this.oldSelectedVersion);
-      //self.defaultConfigdata = JSON.parse(self.tempConfigdata);
-      if (this.oldSelectedVersion == key) {
-        this.getAgentConfig(key, self.selectedTool);
-      } else {
-        console.log(" retrivr data for another version " + key);
-        self.configData = JSON.stringify(self.agentConfigItems);
-        self.agentService.getDocrootAgentConfig(key, self.selectedTool)
-          .then(function (vdata) {
-            console.log(vdata);
-            self.showConfig = true;
-            self.versionChangeddata = JSON.parse(vdata.data);
-            console.log(self.versionChangeddata);
-            self.concatConfigelement(self.versionChangeddata);
-            self.removeConfigelement(self.versionChangeddata);
-            self.configLabelMerge();
-          })
-          .catch(function (vdata) {
-            self.showMessage = "Something wrong with service, Please try again";
-          });
-      }
+      self.configData = JSON.stringify(self.agentConfigItems);
+      self.agentService.getDocrootAgentConfig(key, self.selectedTool)
+        .then(function (vdata) {
+          self.showConfig = true;
+          self.versionChangeddata = JSON.parse(vdata.data);
+          self.mergeConfigelement(self.versionChangeddata);
+        })
+        .catch(function (vdata) {
+          self.showMessage = "Something wrong with service, Please try again";
+        });
     } else {
       self.buttonDisableStatus = true;
       self.selectedTool = "";
@@ -188,7 +166,6 @@ export class AgentConfigurationComponent implements OnInit {
 
 
   async getAgentConfig(version, toolName) {
-    console.log("In getAgentConfig " + version + "  " + toolName);
     var self = this;
     self.isRegisteredTool = false;
     self.checkValidation();
@@ -199,8 +176,8 @@ export class AgentConfigurationComponent implements OnInit {
       self.showMessage = "";
 
       var agentConfigResponse = await self.agentService.getDocrootAgentConfig(version, toolName)
-      console.log(agentConfigResponse);
-      console.log(agentConfigResponse.data);
+      //console.log(agentConfigResponse);
+      //console.log(agentConfigResponse.data);
 
       if (agentConfigResponse.status == "success") {
         self.showConfig = true;
@@ -268,7 +245,7 @@ export class AgentConfigurationComponent implements OnInit {
       var agentData = await self.agentService.getDbAgentConfig(this.selectedAgentKey)
 
       if (agentData != undefined) {
-        console.log(this.selectedAgentKey + "   " + agentData);
+        //console.log(this.selectedAgentKey + "   " + agentData);
         self.showConfig = true;
         self.showThrobber = false;
         this.defaultConfigdata = JSON.parse(agentData.data.agentJson);
@@ -288,7 +265,6 @@ export class AgentConfigurationComponent implements OnInit {
     this.agentConfigstatus = undefined;
     self.updatedConfigdata = {};
     this.updatedConfigParamdata = {};
-    console.log(actionType);
 
     for (let configParamData of this.agentConfigItems) {
       if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
@@ -303,9 +279,7 @@ export class AgentConfigurationComponent implements OnInit {
         this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
       }
     }
-    console.log(this.updatedConfigParamdata);
-
-    console.log(self.updatedConfigdata);
+    //console.log(this.updatedConfigParamdata);
     if (this.updatedConfigParamdata) {
 
       self.configData = "";
@@ -374,70 +348,57 @@ export class AgentConfigurationComponent implements OnInit {
     }
   }
 
-  concatConfigelement(addObj): void {
+  mergeConfigelement(versionChangeddataObj): void {
     var self = this;
+    var unknownKeys = [];
+    /*Add Extra field*/
+    for (var vkeys in versionChangeddataObj) {
+      if (self.findDataType(vkeys, versionChangeddataObj) == 'object' && vkeys != "dynamicTemplate") {
 
-    for (var vkeys in addObj) {
-
-      if (self.findDataType(vkeys, addObj) == 'object' && vkeys != "dynamicTemplate") {
-
-        if (!self.configData.hasOwnProperty(vkeys)) {
-          self.configData[vkeys] = addObj[vkeys];
+        if (!self.defaultConfigdata.hasOwnProperty(vkeys)) {
+          self.defaultConfigdata[vkeys] = versionChangeddataObj[vkeys];
         }
-        for (var vkeys1 in addObj[vkeys]) {
-          if (!self.configData[vkeys].hasOwnProperty(vkeys1)) {
-            self.configData[vkeys][vkeys1] = addObj[vkeys][vkeys1];
+        for (var vkeys1 in versionChangeddataObj[vkeys]) {
+          if (!self.defaultConfigdata[vkeys].hasOwnProperty(vkeys1)) {
+            self.defaultConfigdata[vkeys][vkeys1] = versionChangeddataObj[vkeys][vkeys1];
           }
         }
       } else {
-
-        if (!self.configData.hasOwnProperty(vkeys)) {
-          self.configData[vkeys] = addObj[vkeys];
+        if (!self.defaultConfigdata.hasOwnProperty(vkeys)) {
+          self.defaultConfigdata[vkeys] = versionChangeddataObj[vkeys];
         }
       }
-
-      /* for (let configParamData of this.agentConfigItems) {
-       if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
-         this.item = {};
-         for (let configinnerData of configParamData.children) {
-           this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
-         }
-         this.updatedConfigParamdata[configParamData.key] = this.item;
-       } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
-         this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
-       } else if (configParamData.key == "dynamicTemplate") {
-         this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
-       }
-     }*/
-
     }
-    console.log(self.configData);
-  }
 
-  removeConfigelement(remObj): void {
-    var self = this;
+    /*Delete Unnecessay filed*/
 
     for (var dkeys in self.defaultConfigdata) {
 
       if (self.findDataType(dkeys, self.defaultConfigdata) == 'object' && dkeys != "dynamicTemplate") {
 
-        if (!remObj.hasOwnProperty(dkeys)) {
+        if (!versionChangeddataObj.hasOwnProperty(dkeys)) {
           delete self.defaultConfigdata[dkeys];
         }
 
         for (var dkeys1 in self.defaultConfigdata[dkeys]) {
-          if (!remObj[dkeys].hasOwnProperty(dkeys1)) {
+          if (!versionChangeddataObj[dkeys].hasOwnProperty(dkeys1)) {
             delete self.defaultConfigdata[dkeys][dkeys1];
           }
         }
 
       } else {
-        if (!remObj.hasOwnProperty(dkeys)) {
+        if (!versionChangeddataObj.hasOwnProperty(dkeys)) {
           delete self.defaultConfigdata[dkeys];
         }
       }
     }
+    //console.log(JSON.stringify(self.defaultConfigdata));
+    this.agentConfigItems = [];
+    this.getconfigDataParsed(self.defaultConfigdata);
+    this.configLabelMerge();
   }
+
+
   configLabelMerge(): void {
     this.configDesc = InsightsInitService.configDesc;
     for (let configParamData of this.agentConfigItems) {
@@ -447,7 +408,6 @@ export class AgentConfigurationComponent implements OnInit {
         this.configAbbr[configParamData.key] = configParamData.key;
       }
     }
-    console.log(this.configAbbr);
   }
 
   findDataType(key, arr): string {
@@ -462,5 +422,51 @@ export class AgentConfigurationComponent implements OnInit {
         self.selectedTool = "";
       }
     }
+  }
+  uploadFile() {
+    this.trackingUploadedFileContentStr = "";
+    var uploadedFile = this.myFileDiv.nativeElement.files;
+    for (var i = 0; i < uploadedFile.length; i++) {
+      var testFileExt = this.checkFile(uploadedFile[i], ".json");
+      if (!testFileExt) {
+        this.fileUploadErrorMessage = "Please upload only json file";
+      }
+      if (testFileExt) {
+        this.getTrackingFileContentToString(uploadedFile[i]);
+        setTimeout(() => {
+          console.log(uploadedFile[i]);
+        }, 5000);
+        this.fileUploadSuccessMessage = "File uploaded successfully!";
+      }
+    }
+  }
+
+  getTrackingFileContentToString(trackingJsonFileArray): void {
+    var self = this;
+    var reader = new FileReader();
+    reader.onload = () => {
+      this.trackingUploadedFileContentStr = reader.result;
+      if (this.trackingUploadedFileContentStr == "") {
+        this.fileUploadErrorMessage = "Unable to read file ,Please try again ";
+      }
+    };
+    reader.readAsText(trackingJsonFileArray);
+  }
+
+  checkFile(sender, validExts) {
+    if (sender) {
+      var fileExt = sender.name;
+      fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+      if (validExts.indexOf(fileExt) < 0 && fileExt != "") {
+        return false;
+      }
+      else return true;
+    }
+  }
+
+  cancelFileUpload() {
+    this.trackingUploadedFileContentStr = "";
+    this.fileUploadSuccessMessage = "";
+    this.fileUploadErrorMessage = "";
   }
 }

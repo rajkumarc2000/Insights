@@ -16,17 +16,20 @@
  ****************************************************************************** -->
 <div class="pageCss">
   <div layout layout-align="left" class="heading">
-    <div id="healthCheckTitle">Agent Register/ Update </div>
+    <div id="healthCheckTitle"> Agent Management </div>
   </div>
 
   <div class="orangeStripCss"></div>
+
+  <div layout layout-align="left" class="sectionHeadingStyle">
+    <div layout> &nbsp; Agent Register/ Update </div>
+  </div>
 
   <form #frmagentconfig="ngForm" class="form">
     <div class="agentConfigTable" layout layout-align="center center" *ngIf="!showConfig">
       <h3 class="agentdefaultMessage">{{showMessage}} </h3>
     </div>
     <div class="arrange-horizontally button-row">
-      <!--<div>-->
       <div>
         <mat-select required [(ngModel)]="selectedOS" name="selectedOS" class="form-control" placeholder="Select OS" (ngModelChange)="versionOnChange(selectedVersion, 'validate')"
           style="width:195px;">
@@ -117,6 +120,48 @@
           <div class="agentConfigTable" layout layout-align="start center" *ngFor="let configData of getAgentConfigItems('dynamicTemplate')">
             <textarea [(ngModel)]="configData.value" name="{{configData.value}}" rows="5" class="frmTxtarea"></textarea>
           </div>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="agentConfigTable fileUpload" layout layout-align="start center" *ngIf="showConfig" style="margin-top: 10px">
+      <table class="md-api-table-landing">
+        <thead class="theadCss">
+          <tr layout="row" layout-align="start start">
+            <th flex="22.5" class="tableHeader">
+              <span class="tableHeadingStyle">Upload Tracking File</span>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody layout layout-wrap layout-margin layout-padding>
+
+          <tr flex="100" layout layout-align="start start" style="display: inline-table;">
+            <td class="agentlistLabel">
+              <span class="dataHead">If you are migrating previous version of agents, Please upload the tracking.JSON file of {{selectedTool}}
+								agent </span>
+
+              <div style="width:100%;background-color:#f3f3f3;margin-top:10px;border-bottom:1px solid #d8d9da">
+                <div class="contentCss fnt" style="padding:15px">
+                  <div layout flex="100">
+                    <div style="padding-right:20px;font-size:16px;padding-top:50px;font-weight:bold;width:20%">Select a File to Upload:</div>
+                    <div>
+
+                      <div class="drop" id="dropbox">
+                        <div class="cont">
+                          <input #fileInput type="file" accept=".json" (change)="fileChanged($event)" />
+                          <button mat-raised-button type="button" class="configureBut" (click)="uploadFile()">Upload File</button>
+                          <button mat-raised-button type="button" class="configureBut" (click)="cancelFileUpload()">Cancle Upload</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="color:green;margin-left:35%;margin-top:5px">{{fileUploadSuccessMessage}}</div>
+                  <div style="color:red;margin-left:35%;margin-top:5px">{{fileUploadErrorMessage}}</div>
+                </div>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
