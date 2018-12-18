@@ -33,7 +33,9 @@ import {
     MatCheckboxModule,
     MatSidenavModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatPaginatorModule,
+    MatSortModule
 } from '@angular/material';
 
 @NgModule({
@@ -55,7 +57,9 @@ import {
         MatSelectModule,
         MatRadioModule,
         MatTabsModule,
-        MatTreeModule
+        MatTreeModule,
+        MatPaginatorModule,
+        MatSortModule        
     ],
     declarations: []
 })
