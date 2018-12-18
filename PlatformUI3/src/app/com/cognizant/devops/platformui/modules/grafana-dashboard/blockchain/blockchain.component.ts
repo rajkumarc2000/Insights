@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *******************************************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material';
+import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
 
 
 export interface PeriodicElement {
@@ -49,31 +49,39 @@ export class BlockChainComponent implements OnInit {
   today = new Date();
   yesterday = new Date();
   maxDateValue:any;
-
-  constructor() {
-    this.yesterday.setDate(this.today.getDate()-1);
-    console.log("Yesterday's date:>>>" + this.yesterday);
-  }  
-
-  ngOnInit() {
-  }
-
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
+  constructor() {
+    this.yesterday.setDate(this.today.getDate()-1);
+    console.log("Yesterday's date:>>>" + this.yesterday);
+    this.dataSource.sort = this.sort;
+    console.log("Sorting set");
+    this.dataSource.paginator = this.paginator;
+
+  }  
+
+  ngOnInit() {
+    
+  }
+
+ 
+
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
+  /* isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
-  }
+  }*/
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
+ /* masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+  } */
 
 }
