@@ -20,7 +20,8 @@
 
 	"queryCache": 
 	{
-		"esCacheIndex": "neo4j-cached-results"
+		"esCacheIndex": "neo4j-cached-results",
+		"purgeEsResultsBefore": 0
 	},
 
 	"emailConfiguration": 
