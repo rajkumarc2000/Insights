@@ -16,6 +16,7 @@
 import { Component, OnInit,ViewChild} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 
 export interface PeriodicElement {
@@ -54,13 +55,13 @@ export class BlockChainComponent implements OnInit {
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
-
+  MAX_ROWS_PER_TABLE = 5;
+  startDate : Date = new Date();
+  endDate: Date = new Date();
   constructor() {
     this.yesterday.setDate(this.today.getDate()-1);
     console.log("Yesterday's date:>>>" + this.yesterday);
-    this.dataSource.sort = this.sort;
-    console.log("Sorting set");
-    this.dataSource.paginator = this.paginator;
+    
 
   }  
 
@@ -68,7 +69,53 @@ export class BlockChainComponent implements OnInit {
     
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    console.log("Sorting set");
+    this.dataSource.paginator = this.paginator;
+  }
+
+  searchAllAssets() {
+     let result: number = this.compareDate(this.startDate, this.endDate); 
+     alert("Result >>" + result);
+    
+  }
+
+  getStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
+      this.startDate = event.value;
+      //alert("Start Date: >>" + this.startDate)
+  }
+
+  getEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
+      this.endDate = event.value;
+      //alert("End Date: >>" + this.endDate)
+  }
+
+ /* 
+ * Compares two Date objects and returns e number value that represents 
+ * the result:
+ * 0 if the two dates are equal.
+ * 1 if the first date is greater than second.
+ * -1 if the first date is less than second.
+ * @param date1 First date object to compare.
+ * @param date2 Second date object to compare.
+ */
+  compareDate(date1: Date, date2: Date): number {
+  // With Date object we can compare dates them using the >, <, <= or >=.
+  // The ==, !=, ===, and !== operators require to use date.getTime(),
+  // so we need to create a new instance of Date with 'new Date()'
+  let d1 = new Date(date1); let d2 = new Date(date2);
+
+  // Check if the dates are equal
+  let same = d1.getTime() === d2.getTime();
+  if (same) return 0;
+
+  // Check if the first is greater than second
+  if (d1 > d2) return 1;
  
+  // Check if the first is less than second
+  if (d1 < d2) return -1;
+}
 
   /** Whether the number of selected elements matches the total number of rows. */
   /* isAllSelected() {
