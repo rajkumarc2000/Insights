@@ -28,6 +28,7 @@ import { BusinessMappingComponent } from '@insights/app/modules/admin/businessma
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 import { BlockChainComponent } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.component';
+import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 
 
 const homeRoutes: Routes = [
@@ -44,7 +45,8 @@ const homeRoutes: Routes = [
       { path: 'datadictionary', component: DatadictionaryComponent },
       { path: 'businessmapping', component: BusinessMappingComponent },
       { path: 'dataarchiving', component: DataArchivingComponent },
-      { path: 'agentconfiguration', component: AgentConfigurationComponent }
+      { path: 'agentconfiguration', component: AgentConfigurationComponent },
+      { path: 'accessGroupManagement' , component : UserOnboardingComponent }
     ]
   }
 ];

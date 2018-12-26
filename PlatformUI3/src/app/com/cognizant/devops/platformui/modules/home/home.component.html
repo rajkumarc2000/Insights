@@ -75,6 +75,7 @@
         </mat-toolbar>
         <div>
           <router-outlet></router-outlet>
+          <app-landing-page *ngIf="displayLandingPage"></app-landing-page>
         </div>
       </mat-sidenav-content>
   </mat-sidenav-container>

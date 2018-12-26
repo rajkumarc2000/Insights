@@ -66,13 +66,15 @@ export class HomeComponent implements OnInit {
   selectedOrg: String;
   sidenavWidth: number = 14;
   framesize: any;
+  displayLandingPage: boolean = false;
   ngOnInit() {
   }
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router, private dataShare: DataSharedService) {
     router.onSameUrlNavigation = 'reload';
-    //console.log("In Home Component");
+    this.displayLandingPage = true;
+    console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -105,6 +107,7 @@ export class HomeComponent implements OnInit {
 
   onItemSelected(item: NavItem) {
     this.selectedItem = item;
+    this.displayLandingPage = false;
     this.isToolbarDisplay = item.isToolbarDisplay
     if (!item.children || !item.children.length) {
       if (item.iconName == 'grafanaOrg') {
@@ -292,14 +295,14 @@ export class HomeComponent implements OnInit {
           {
             displayName: 'Access Group Management',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/900',
+            route: 'InSights/Home/accessGroupManagement',
             isToolbarDisplay: true,
             isAdminMenu: true
           },
           {
             displayName: 'Logo Setting',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/1000',
+            route: 'InSights/Home/grafanadashboard/900',
             isToolbarDisplay: true,
             isAdminMenu: true
           },

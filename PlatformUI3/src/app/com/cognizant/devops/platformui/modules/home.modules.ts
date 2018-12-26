@@ -52,6 +52,8 @@ import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-m
 import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 
 import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-management/agent-configuration/uninstall-agent-dialog';
+import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
+import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-manageme
     DataArchivingComponent, 
     AgentConfigurationComponent,
     BlockChainComponent,
-    UninstallAgentDialog
+    UninstallAgentDialog,
+    UserOnboardingComponent,
+    LandingPageComponent
   ],
   imports: [
     HomeRouting,
