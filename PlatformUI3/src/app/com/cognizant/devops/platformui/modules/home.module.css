@@ -82,3 +82,8 @@ th:last-child { border-radius: 0 10px 0 0; }
 
 tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
+
+.rightAlignStyle {
+    text-align: right;
+    padding-right: 16px; 
+}

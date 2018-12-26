@@ -42,10 +42,10 @@ tr.mat-footer-row, tr.mat-row {
     border: 1px solid #FF8F1C;
     border-radius: 10px 10px 10px 10px; 
 }
-.rightAlignStyle {
+/*.rightAlignStyle {
     text-align: right;
     padding-right: 16px; 
-}
+}*/
 
 .mat-dialog-container, .mat-dialog {
     margin: 0 !important;

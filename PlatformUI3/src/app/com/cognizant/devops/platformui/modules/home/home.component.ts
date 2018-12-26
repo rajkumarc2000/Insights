@@ -242,7 +242,7 @@ export class HomeComponent implements OnInit {
             isAdminMenu: true
           },
           {
-            displayName: 'BlockChain Development',
+            displayName: 'Traceability 2.0',
             iconName: 'feature',
             route: 'InSights/Home/blockchain',
             isToolbarDisplay: true,
