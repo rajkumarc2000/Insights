@@ -53,22 +53,19 @@
           <tr class="mat-header-row" layout-align="start start">
             <th colspan="3" class="tableHeaderCss mat-header-cell">
               <span class="mainHeaderText">Add/Edit information to Archive Data</span>
-              <span class="infoHeaderText">(Please note fields marked as <span style="color:black">“*” </span> are mandatory,
+              <span class="infoHeaderText">(Please note fields marked as “ <span style="color:#ff0000">* </span> ” are mandatory,
               runtime will be auto-populated)</span>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr class="mat-row" *ngFor="let element of displayedColumnsNameMapping">
-            <td class="mat-cell" style="width:2%;">
-            </td>
-            <td class="mat-cell" style="width:48%;">
+            <td class="mat-cell" style="width:65%;">
               <span class="mainText">{{element.displayName}}</span>
-              <span *ngIf="element.type!='text'" style="color:#ff0000; padding-left: 8px;">*</span>
-              <br/>
+              <span *ngIf="element.type!='text'" style="color:#ff0000;">*</span>
               <span class="infoText">{{element.infoText}}</span>
             </td>
-            <td class="mat-cell" style="width:50%;">
+            <td class="mat-cell" style="width:34%;">
               <div *ngIf="element.type=='input'">
                 <input [(ngModel)]="element.value" name="{{element.key}}" [disabled]="!iseditdisabled" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
                   required>

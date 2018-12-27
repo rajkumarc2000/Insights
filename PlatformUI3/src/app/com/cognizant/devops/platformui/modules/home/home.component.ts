@@ -67,6 +67,8 @@ export class HomeComponent implements OnInit {
   sidenavWidth: number = 14;
   framesize: any;
   displayLandingPage: boolean = false;
+  aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
+  helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
   ngOnInit() {
   }
   constructor(private grafanaService: GrafanaAuthenticationService,
@@ -74,21 +76,12 @@ export class HomeComponent implements OnInit {
     public router: Router, private dataShare: DataSharedService) {
     router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
-    console.log("In Home Component");
+    //console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
     }
     this.grafanaService.validateSession();
     this.isValidUser = true;
-    /*this.iframeStyle = 'width:100%; height:400px;';
-    var receiveMessage = function (evt) {
-      var height = parseInt(evt.data);
-      if (!isNaN(height)) {
-        this.iframeStyle = 'width:100%; height:' + (evt.data + 20) + 'px';
-      }
-    }
-    console.log(this.iframeStyle);
-    window.addEventListener('message', receiveMessage, false);*/
     this.framesize = window.frames.innerHeight;
     var receiveMessage = function (evt) {
       var height = parseInt(evt.data);
@@ -113,16 +106,17 @@ export class HomeComponent implements OnInit {
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.switchOrganizations(item.orgId);
-        this.router.navigateByUrl(item.route, { skipLocationChange: true });//+ item.orgId
+        this.router.navigateByUrl(item.route, { skipLocationChange: true });
+      } else if (item.iconName == 'about') {
+        window.open(this.aboutPageURL, "_blank");
+      } else if (item.iconName == 'help') {
+        window.open(this.helpPageURL, "_blank");
       } else if (item.iconName == 'logout') {
         this.logout();
-        //this.router.navigateByUrl(item.route, { skipLocationChange: true });
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
       }
-    }/*else if (item.children && item.children.length) {
-      this.expanded = !this.expanded;
-    }*/
+    }
   }
 
   public async getInformationFromGrafana() {
@@ -147,11 +141,6 @@ export class HomeComponent implements OnInit {
       currentUserResponce = await this.grafanaService.getCurrentUserOrgs();
       console.log(currentUserResponce);
       if (currentUserResponce.data != undefined) {
-        /* let filterOrgName = currentUserResponce.data.filter(function (i) {
-           return i.orgId == self.userCurrentOrg;
-         });
-         //console.log(filterOrgName.length > 0);
-         this.selectedOrg = (filterOrgName.length > 0) ? filterOrgName[0].name : null; */
         for (let orgData of currentUserResponce.data) {
           if (orgData.orgId == self.userCurrentOrg) {
             this.selectedOrg = orgData.name;
@@ -219,7 +208,7 @@ export class HomeComponent implements OnInit {
                 children: this.navOrgList,
               }
             ]*/
-          },
+          }/*,
           {
             displayName: 'ML Capabilities',
             iconName: 'feature',
@@ -233,7 +222,7 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/grafanadashboard/200',
             isToolbarDisplay: true,
             isAdminMenu: true
-          },
+          }*/,
           {
             displayName: 'DevOps Maturity',
             iconName: 'feature',
@@ -298,16 +287,16 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/accessGroupManagement',
             isToolbarDisplay: true,
             isAdminMenu: true
-          },
+          }/*,
           {
             displayName: 'Logo Setting',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/900',
             isToolbarDisplay: true,
             isAdminMenu: true
-          },
+          }*/,
           {
-            displayName: 'Data Archiving',
+            displayName: 'Data Archival',
             iconName: 'feature',
             route: 'InSights/Home/dataarchiving',
             isToolbarDisplay: true,
@@ -346,14 +335,14 @@ export class HomeComponent implements OnInit {
     this.navItemsBottom = [
       {
         displayName: 'About',
-        iconName: 'feature',
+        iconName: 'about',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,
         isAdminMenu: false
       }, {
         displayName: 'Help',
-        iconName: 'feature',
+        iconName: 'help',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,
@@ -383,7 +372,6 @@ export class HomeComponent implements OnInit {
     form.target = uniqueString;
     this.config.getGrafanaHost1().then(function (response) {
       form.action = InsightsInitService.grafanaHost + "/logout";
-      // console.log("form action "+form.action); //response.grafanaEndPoint
       form.method = "GET";
       document.body.appendChild(form);
       form.submit();

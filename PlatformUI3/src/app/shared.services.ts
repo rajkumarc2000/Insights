@@ -24,6 +24,7 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 import { ImageHandlerService } from '@insights/common/imageHandler.service';
 import { LogService } from '@insights/common/log-service';
 import { DataSharedService } from '@insights/common/data-shared-service';
+import { AuthInterceptor } from '@insights/common/rest-api-setting';
 
 
 @NgModule({

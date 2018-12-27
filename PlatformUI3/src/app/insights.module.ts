@@ -20,6 +20,7 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InsightsModuleRouting } from '@insights/app/insights.routing';
@@ -30,6 +31,7 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 
 import { InsightsAppComponent } from '@insights/app/insights.component';
 import { LoginComponent } from '@insights/app/login/login.component';
+import { AuthInterceptor } from '@insights/common/rest-api-setting';
 
 
 export function initializeApp(initConfig: InsightsInitService) {
@@ -58,6 +60,11 @@ export function initializeApp(initConfig: InsightsInitService) {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       deps: [InsightsInitService], multi: true
+    },
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
     }
   ],
   bootstrap: [InsightsAppComponent]

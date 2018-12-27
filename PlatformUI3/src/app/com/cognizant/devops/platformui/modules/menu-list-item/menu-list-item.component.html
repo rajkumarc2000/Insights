@@ -13,7 +13,7 @@
     </span>
     </a>
     <div *ngIf="expanded && isExpanded">
-      <app-menu-list-item style="max-width: 250px;" *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded"
+      <app-menu-list-item style="max-width: 260px;" *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded"
         [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab">
         </app-menu-list-item>
     </div>

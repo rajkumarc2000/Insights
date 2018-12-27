@@ -34,14 +34,14 @@
     background-color: #0033A0;   
     color: white;
     font-size: 16px;
-    margin-top:20px; 
+    margin-top:16px; 
     height: 30px;
     border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;   
     vertical-align:center;
-    padding-top: 3px;
+    padding-top: 8px;
     padding-bottom: 3px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .sectionSubHeading{
@@ -86,4 +86,8 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 .rightAlignStyle {
     text-align: right;
     padding-right: 16px; 
+}
+
+.mat-radio-button.mat-primary .mat-radio-inner-circle .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #5c068c;
 }
