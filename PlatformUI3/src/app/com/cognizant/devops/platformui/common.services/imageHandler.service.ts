@@ -36,6 +36,7 @@ export class ImageHandlerService implements IImageHandlerService {
     public initializeImageIcons() {
         this.addImage('defaultLogo', "icons/svg/landingPage/OneDevOps_InsightsLOGO.svg");
         this.addImage('verticleLine', "icons/svg/login/Vertical_Line.svg");
+        this.addImage('OrangeVerticalLine2', "icons/svg/OrangeVerticalLine2.svg");
         this.addImage('user-icon', "icons/svg/login/user_icon.svg");
         this.addImage('user-icon-active', "icons/svg/login/user_icon_active.svg");
         this.addImage('password-icon', "icons/svg/login/password_icon.svg");
@@ -54,7 +55,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('ic_delete_icon', "icons/svg/actionIcons/Delete_icon_disabled.svg");
         this.addImage('search_icon', "icons/svg/ic_search_24px.svg");
         this.addImage('blockchain_show_details', "icons/svg/sharp-list_alt-24px.svg");
-        this.addImage('export_to_pdf_icon', "icons/svg/exportToPdf.svg");        
+        this.addImage('export_to_pdf_icon', "icons/svg/exportToPdf.svg");
     }
 
 
