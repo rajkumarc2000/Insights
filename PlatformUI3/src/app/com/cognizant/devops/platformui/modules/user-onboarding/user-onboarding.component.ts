@@ -29,6 +29,7 @@ export class UserOnboardingComponent implements OnInit {
   accessGroupName: String = "";
   grafanaUrl: String = "";
   showApplicationMessage: String = "";
+  selectedAdminOrg: any;
   roleRecord = [
     { value: 'Editor', name: 'Editor' },
     { value: 'Admin', name: 'Admin' },
