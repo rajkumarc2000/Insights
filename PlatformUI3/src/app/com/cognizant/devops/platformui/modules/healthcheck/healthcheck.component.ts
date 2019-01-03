@@ -99,12 +99,22 @@ export class HealthCheckComponent implements OnInit {
   }
 
   // Displays Show Details dialog box when Details column is clicked
-  showDetailsDialog(toolName: string, categoryName: string) {
+  showDetailsDialog(toolName: string, categoryName: string,pathName: string) {
+    //console.log(toolName);
+    //console.log(categoryName);
+    var rcategoryName=categoryName.replace(/ +/g, "");
+    if (toolName=="-"){
+      var filePath="${INSIGHTS_HOME} /logs/"+rcategoryName+"/"+rcategoryName+".log";
+      //console.log(filePath);
+    }else {
+      var filePath="${INSIGHTS_HOME} /logs/PlatformAgent/log_"+toolName+"Agent.log";
+      //console.log(filePath);
+    }
     let showDetailsDialog = this.dialog.open(ShowDetailsDialog, {
       panelClass: 'healthcheck-show-details-dialog-container',
       height: '500px',
       width: '900px',
-      data: { toolName: toolName, categoryName: categoryName }
+      data: { toolName: toolName, categoryName: categoryName, pathName:filePath },
     });
   }
 

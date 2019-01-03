@@ -29,6 +29,8 @@ export class ShowDetailsDialog implements OnInit {
   showContent: boolean;
   showThrobber: boolean;
   checkResponseData: boolean;
+  pathName:string;
+  columnLength:number;
   headerArray = [];
   agentDetailedNode = [];
   showFieldVal = [];
@@ -49,18 +51,20 @@ export class ShowDetailsDialog implements OnInit {
     this.showThrobber = true;
     this.showContent = !this.showThrobber;
     this.checkResponseData = true;
-    //console.log(this.data);
     this.healthCheckService.loadHealthConfigurations(this.data.toolName, this.data.categoryName)
       .then((data) => {
         //console.log(data);
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
         var dataArray = data.data.nodes;
+        this.pathName=this.data.pathName;
         if (dataArray.length === 0) {
           this.checkResponseData = false;
         }
         //this.showFieldVal = ['type', 'uuid', 'status', 'execId', 'message', 'inSightsTimeX'];
         this.showFieldVal = ['status', 'execId', 'message', 'inSightsTimeX'];
+        this.columnLength=this.showFieldVal.length
+        //console.log(columnLenght)
         for (var key in dataArray) {
           var dataNodes = dataArray[key];
           for (var node in dataNodes) {
