@@ -96,15 +96,18 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_GET_CURRENT_USER_ORGS", '/PlatformService/accessGrpMgmt/getCurrentUserOrgs');
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_SWITCH_ORGS", '/PlatformService/accessGrpMgmt/switchUserOrg');
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_GET_USERS", '/PlatformService/accessGrpMgmt/getUser');
+        this.addEndPoint("ACCESS_GROUP_MANAGEMENT_GET_ORGS_USERS", '/PlatformService/accessGrpMgmt/getOrganizationUsers');
+        this.addEndPoint("ACCESS_GROUP_MANAGEMENT_EDIT_ORGS", '/PlatformService/accessGrpMgmt/editOrganizationUser');
+
         this.addEndPoint("GET_GRAFANA_VERSION", "/PlatformService/accessGrpMgmt/getGrafanaVersion");
 
         //Business Mapping module under Admin section
         this.addEndPoint("GET_ALL_HIERARCHY_DETAILS", '/PlatformService/admin/businessmapping/getAllHierarchyDetails');
         this.addEndPoint("GET_HIERARCHY_PROPERTIES", '/PlatformService/admin/businessmapping/getHierarchyProperties');
-        
+
         this.addEndPoint("UPLOAD_HIERARCHY_DETAILS", '/PlatformService/admin/hierarchyDetails/uploadHierarchyDetails');
         this.addEndPoint("GET_METADATA", '/PlatformService/admin/hierarchyDetails/getMetaData');
-        
+
 
         this.addEndPoint("INSIGHTS_GET", '/PlatformService/insights/inferences');
 

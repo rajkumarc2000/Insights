@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
     let currentUserResponce: any;
     this.grafanaResponse = await this.grafanaService.getGrafanaCurrentOrgAndRole();
     let self = this;
-    console.log(this.grafanaResponse);
+    //console.log(this.grafanaResponse);
     if (this.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
       this.showAdminTab = true;
     } else {
@@ -149,7 +149,7 @@ export class HomeComponent implements OnInit {
       } else {
         this.router.navigate(['/login']);
       }
-      console.log(this.selectedOrg);
+      //console.log(this.selectedOrg);
     }
   }
 

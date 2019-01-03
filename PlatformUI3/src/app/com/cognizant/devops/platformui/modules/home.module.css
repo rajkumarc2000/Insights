@@ -1,5 +1,4 @@
 .heading{
-    margin-left:20px;
     color: #0033A0;
     font-size: 26px;
     padding-bottom: 10px;
@@ -49,7 +48,7 @@
 }
 
 tr.mat-footer-row, tr.mat-row{
-    height: 30px !important;
+    height: 40px !important;
     text-align: left !important;
     vertical-align: middle;
 }

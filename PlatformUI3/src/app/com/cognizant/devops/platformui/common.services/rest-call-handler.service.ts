@@ -52,7 +52,7 @@ export class RestCallHandlerService {
     //console.log(headers);
     var restCallUrl = this.constructGetUrl(url, requestParams);
     this.asyncResult = await this.http.get(restCallUrl, { headers }).toPromise();
-    //console.log(this.asyncResult.toString)
+    //console.log(this.asyncResult)//.toString
     return this.asyncResult;
   }
 
@@ -91,7 +91,7 @@ export class RestCallHandlerService {
         return;
       }
     }
-    console.log(allData)
+    //console.log(allData)
     dataresponse = this.http.post(restCallUrl, {}, allData);
     return dataresponse;
 
@@ -127,7 +127,7 @@ export class RestCallHandlerService {
       headers: headers,
       params: params
     }
-    console.log(httpOptions);
+    //console.log(httpOptions);
     dataresponse = this.http.post(restCallUrl, {}, httpOptions);
     return dataresponse;
 

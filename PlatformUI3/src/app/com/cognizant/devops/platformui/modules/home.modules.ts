@@ -56,6 +56,9 @@ import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/u
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 
 
+import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
+
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -99,7 +102,8 @@ import { LandingPageComponent } from '@insights/app/modules/landing-page/landing
     HealthCheckService,
     BusinessMappingService,
     DataArchivingService,
-    BusinessHierarchyDatabase
+    BusinessHierarchyDatabase,
+    UserOnboardingService
   ]
 })
 

@@ -31,7 +31,7 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 }
 
 tr.mat-footer-row, tr.mat-row {
-    height: 50px !important;
+    height: 40px !important;
     text-align: left !important;
 }
 .mat-button{
