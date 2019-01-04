@@ -173,7 +173,7 @@ public class AccessGroupManagement {
 		return response.getEntity(String.class);
 	}
 	
-	@RequestMapping(value = "/deleteOrganizationUser", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/deleteOrganizationUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String deleteOrganizationUser(@RequestParam int orgId,@RequestParam int userId, @RequestParam String role) {
 		log.debug("\n\nInside editOrganizationUser method call");
 		String apiUrl = ApplicationConfigProvider.getInstance().getGrafana().getGrafanaEndpoint() + "/api/orgs/"+orgId+"/users/"+userId;

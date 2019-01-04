@@ -52,7 +52,11 @@ export class UserOnboardingService implements IUserOnboardingService {
     }
 
     editUserOrg(orgId: number, userId: number, role: String): Promise<any> {
-        return this.restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_EDIT_ORGS", { "orgId": orgId, "userId": userId, "role": role }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+        return this.restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_EDIT_ORGS_UESRS", { "orgId": orgId, "userId": userId, "role": role }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+    }
+
+    deleteUserOrg(orgId: number, userId: number, role: String): Promise<any> {
+        return this.restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_DELETE_ORGS_UESRS", { "orgId": orgId, "userId": userId, "role": role }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
 }

@@ -148,10 +148,10 @@ export class LoginComponent implements OnInit, ILoginComponent {
             console.log("check user ");
             setTimeout(() => {
               console.log("in timeout");
+              //self.showThrobber = false;
               self.router.navigate(['/InSights/Home']);
             }, 2000);
-
-
+            console.log("check user done");
           } else if (data.error.message) {
             self.showThrobber = false;
             self.isLoginError = true;

@@ -43,7 +43,7 @@
         <button mat-flat-button color="primary" (click)="displayaccessGroupCreateField()">Add New Access Group</button>
         <input [(ngModel)]="accessGroupName" *ngIf="displayAccessGroupDetail" name="accessGroupName" [style.height.px]="30" [style.width.%]="55"
           class="form-control" placeholder="Please input an Access Group Name" required>
-          <button mat-flat-button color="primary" *ngIf="displayAccessGroupDetail" (click)="accessGroupCreate()">Go</button>
+          <button mat-flat-button color="primary" *ngIf="displayAccessGroupDetail" (click)="accessGroupCreate(accessGroupName)">Go</button>
       </div>
   </div>
   <br>
@@ -62,7 +62,7 @@
       </button>
 
       <button mat-button [disabled]="!isbuttonenabled || isSaveEnable " (click)="deleteOrgUser()">
-        <mat-icon title="Delete " class="mat-icon material-icons" >
+        <mat-icon title="Delete Organization User" class="mat-icon material-icons" >
           delete
         </mat-icon>
       </button>

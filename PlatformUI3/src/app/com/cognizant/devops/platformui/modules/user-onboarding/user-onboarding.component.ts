@@ -4,6 +4,9 @@ import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 import { MatTableDataSource } from '@angular/material';
+import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 
 
 @Component({
@@ -36,7 +39,8 @@ export class UserOnboardingComponent implements OnInit {
     { value: 'Viewer', name: 'Viewer' }
   ];
 
-  constructor(private userOnboardingService: UserOnboardingService, private sanitizer: DomSanitizer) {
+  constructor(private userOnboardingService: UserOnboardingService, private sanitizer: DomSanitizer,
+    public dialog: MatDialog) {
     var self = this;
 
     this.framesize = window.frames.innerHeight;
@@ -108,6 +112,37 @@ export class UserOnboardingComponent implements OnInit {
 
   deleteOrgUser() {
     console.log("Delete " + this.selectedUser);
+    console.log(this.selectedAdminOrg)
+    if (this.selectedUser != undefined) {
+      var self = this;
+      const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
+        width: '40%',
+        height: '40%',
+        data: {
+          title: "Delete User",
+          message: "Are you sure we want ot delete this  " + this.selectedUser.login + " user from organization "
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed  ' + result);
+        if (result == 'yes') {
+          self.userOnboardingService.deleteUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role)
+            .then(function (deleteResponse) {
+              if (deleteResponse.message = "User removed from organization") {
+                self.isSaveEnable = false;
+                self.showApplicationMessage = deleteResponse.message;
+              } else {
+                self.showApplicationMessage = "Unable to update user Data";
+              }
+            });
+          self.loadUsersInfo(this.selectedAdminOrg);
+          setTimeout(() => {
+            self.showApplicationMessage = "";
+          }, 2000);
+        }
+      });
+    }
+
   }
 
   async saveData() {
@@ -120,14 +155,38 @@ export class UserOnboardingComponent implements OnInit {
     } else {
       this.showApplicationMessage = "Unable to update user Data";
     }
+    setTimeout(() => {
+      this.showApplicationMessage = "";
+    }, 2000);
   }
 
   applyFilter(filterValue: string) {
     this.userDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  accessGroupCreate() {
+  accessGroupCreate(accessGroupName) {
     console.log(this.accessGroupName);
+    if (this.accessGroupName != undefined) {
+      var self = this;
+      const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
+        width: '40%',
+        height: '40%',
+        data: {
+          title: "Confirm Access Group Name",
+          message: "Adding an Access Group cannot be REVERTED." +
+            "Once the Access Group name is added you will not be able to RENAME or DELETE the Access Group <br> Are you sure you want to create accessGroup " + accessGroupName
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed  ' + result);
+        if (result == 'yes') {
+          console.log("confirm access group " + accessGroupName)
+        }
+      });
+    }
+    setTimeout(() => {
+      this.showApplicationMessage = "";
+    }, 2000);
   }
 
   displayaccessGroupCreateField() {

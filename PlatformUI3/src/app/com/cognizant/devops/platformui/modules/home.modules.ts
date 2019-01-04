@@ -23,7 +23,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@insights/app/material.module';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 import { HomeRouting } from '@insights/app/modules/home.routing';
@@ -54,7 +54,7 @@ import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessm
 import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-management/agent-configuration/uninstall-agent-dialog';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
-
+import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
 
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 
@@ -72,12 +72,13 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     AgentManagementComponent,
     DatadictionaryComponent,
     BusinessMappingComponent,
-    DataArchivingComponent, 
+    DataArchivingComponent,
     AgentConfigurationComponent,
     BlockChainComponent,
     UninstallAgentDialog,
     UserOnboardingComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ConfirmationMessageDialog
   ],
   imports: [
     HomeRouting,
@@ -92,7 +93,8 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
   ],
   entryComponents: [
     ShowDetailsDialog,
-    UninstallAgentDialog
+    UninstallAgentDialog,
+    ConfirmationMessageDialog
   ],
 
   providers: [
