@@ -30,6 +30,7 @@ export class ShowDetailsDialog implements OnInit {
   showThrobber: boolean;
   checkResponseData: boolean;
   pathName:string;
+  detailType:string;
   columnLength:number;
   headerArray = [];
   agentDetailedNode = [];
@@ -45,7 +46,9 @@ export class ShowDetailsDialog implements OnInit {
 
   ngOnInit() {
     this.loadDetailsDialogInfo();
+    this.detailType=this.data.detailType;
   }
+  
 
   loadDetailsDialogInfo(): void {
     this.showThrobber = true;

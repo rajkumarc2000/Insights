@@ -21,7 +21,7 @@
         </mat-icon>
     </a>
 </div>
-<div layout-align="center center" class="titleStyle">Additional Details</div>
+<div layout-align="center center" class="titleStyle">Additional Details - {{detailType}} </div>
 
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="showThrobber">
     <mat-progress-spinner [color]="primmary" [mode]="indeterminate" [value]="50">
@@ -33,12 +33,12 @@
 <mat-dialog-content *ngIf="showContent" style="margin:0;padding: 0">
     <table mat-table [dataSource]="agentDetailedNode">
         <ng-container *ngFor="let header of headerArrayDisplay" matColumnDef="{{header}}">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">{{header}}</th>
+            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" style="text-transform: capitalize">{{header}}</th>
             <td mat-cell *matCellDef="let element"> {{ header=='inSightsTimeX' ? (element[header] | date:'yyyy-MM-dd HH:mm:ss') : element[header]}}</td>
         </ng-container>
         <ng-container matColumnDef="footer">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnLength" class="tableFooterCss">
-             For detailed information about the execution please refer to the logs placed in the path: <a style="color:blue">{{pathName}}</a>
+             For detailed information please refer to the logs: <a style="color:blue">{{pathName}}</a>
             </td>
         </ng-container>
 

@@ -14,7 +14,7 @@ table {
 	text-align: center;
 }
 .tableFooterCss {
-    color: red;
+    color: orange;
 }
 
 tr:nth-child(odd) td {
