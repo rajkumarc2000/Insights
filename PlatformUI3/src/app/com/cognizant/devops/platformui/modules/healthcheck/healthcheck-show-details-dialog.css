@@ -13,7 +13,9 @@ table {
     line-height: 1.2em;
 	text-align: center;
 }
-
+.tableFooterCss {
+    color: red;
+}
 
 tr:nth-child(odd) td {
     background-color: #ffffff;

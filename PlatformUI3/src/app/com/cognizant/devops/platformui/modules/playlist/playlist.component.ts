@@ -15,11 +15,9 @@
  ******************************************************************************/
 
 import { Component, ViewChild, HostBinding, Input, ElementRef, ViewEncapsulation, AfterViewInit, OnInit, HostListener } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
-import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { MatSidenav } from "@angular/material";
+import { InsightsInitService } from '@insights/common/insights-initservice';
 
 
 @Component({
@@ -32,8 +30,7 @@ export class PlaylistComponent implements OnInit {
   iframeStyleAdd = "{'height': 1500 +'px '+ '!important' }";
   playListUrl: SafeResourceUrl;
   framesize: any;
-  constructor(private restAPIUrlService: RestAPIurlService, private config: InsightsInitService,
-    private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
+  constructor(private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
     var self = this;
 
     this.framesize = window.frames.innerHeight;
@@ -46,9 +43,6 @@ export class PlaylistComponent implements OnInit {
     }
     //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
-
-    //console.log(this.framesize);
-
     self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
     //self.setScrollBarPosition();
   }

@@ -1,5 +1,4 @@
 .heading{
-    margin-left:20px;
     color: #0033A0;
     font-size: 26px;
     padding-bottom: 10px;
@@ -49,7 +48,7 @@
 }
 
 tr.mat-footer-row, tr.mat-row{
-    height: 30px !important;
+    height: 40px !important;
     text-align: left !important;
     vertical-align: middle;
 }
@@ -90,4 +89,28 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 
 .mat-radio-button.mat-primary .mat-radio-inner-circle .mat-radio-button.mat-accent .mat-radio-inner-circle {
     background-color: #5c068c;
+}
+
+.mat-dialog-title {
+    margin: 0 0 10px;
+    display: block;
+    text-align: center;
+    color: #00B140;
+    font-family: inherit;
+}
+
+.mat-button-dialog {
+    font-family: inherit !important;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: yellowgreen;
+    min-width: 50px;
+}
+
+.mat-dialog-content{
+    margin-top: 10px
+}
+
+.mat-dialog-actions{
+    float: center;
 }
