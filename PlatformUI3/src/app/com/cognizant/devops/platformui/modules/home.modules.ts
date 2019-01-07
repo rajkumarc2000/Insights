@@ -55,6 +55,8 @@ import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-manageme
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
+import { ApplicationMessageDialog } from '@insights/app/modules/application-dialog/application-message-dialog';
+import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
 
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 
@@ -78,7 +80,9 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     UninstallAgentDialog,
     UserOnboardingComponent,
     LandingPageComponent,
-    ConfirmationMessageDialog
+    ConfirmationMessageDialog,
+    ApplicationMessageDialog,
+    AddGroupMessageDialog
   ],
   imports: [
     HomeRouting,
@@ -94,7 +98,9 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
   entryComponents: [
     ShowDetailsDialog,
     UninstallAgentDialog,
-    ConfirmationMessageDialog
+    ConfirmationMessageDialog,
+    ApplicationMessageDialog,
+    AddGroupMessageDialog
   ],
 
   providers: [

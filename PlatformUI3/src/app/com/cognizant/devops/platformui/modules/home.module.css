@@ -26,7 +26,6 @@
     height: 40px;
     margin: 0px;
     padding:0px;
-    padding-left: 4px;
 }
 
 .sectionHeadingStyle {
@@ -62,7 +61,7 @@ tr.mat-footer-row, tr.mat-row{
 }
 
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
-mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content{
+mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button{
     font-family: inherit;
     font-size: 18px;
 }
@@ -87,8 +86,12 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
     padding-right: 16px; 
 }
 
-.mat-radio-button.mat-primary .mat-radio-inner-circle .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #5c068c;
+mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #5c068c !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    background-color: #5c068c !important;
 }
 
 .mat-dialog-title {
@@ -114,3 +117,15 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 .mat-dialog-actions{
     float: center;
 }
+
+.mat-icon-button{
+    color: #0033A0
+}
+
+.messageText{
+    font-size: 16px;
+    color: #5C068C;
+    margin-top: 28px;
+    padding-left: 20px;
+}
+

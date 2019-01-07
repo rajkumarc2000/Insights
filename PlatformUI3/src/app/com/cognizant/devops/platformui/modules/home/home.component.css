@@ -103,7 +103,8 @@
 
 .roleName{
   color: white !important;
-  font-size: 23px!important;
+  font-size: 18px!important;
+  font-weight: bold;
 }
 
 .mat-list-text{
@@ -196,8 +197,7 @@
   display: flex;
   width: 100%;
   overflow: hidden;
-  /*height: 20%;*/
-  margin-top: 10px; 
+  margin-top: 16px; 
   margin-left: 16px;
 }
 

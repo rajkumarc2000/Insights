@@ -59,17 +59,19 @@
 }
 
 .accessGroupAdd{
-    display: -webkit-box;
-    display: -webkit-flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    box-sizing: border-box;
-    width: 60%;
-    float: right;
+   float: right;
 }
 .mat-flat-button{
     margin-left: 5px;
 }
+
+mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #5c068c !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    background-color: #5c068c !important;
+}
+
+
 

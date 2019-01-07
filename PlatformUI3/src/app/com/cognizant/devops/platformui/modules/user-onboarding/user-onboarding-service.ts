@@ -59,5 +59,9 @@ export class UserOnboardingService implements IUserOnboardingService {
         return this.restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_DELETE_ORGS_UESRS", { "orgId": orgId, "userId": userId, "role": role }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
+    createOrg(orgName: string): Promise<any> {
+        return this.restHandler.postWithParameter("ORG_CREATE", { "orgName": orgName }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+    }
+
 }
 

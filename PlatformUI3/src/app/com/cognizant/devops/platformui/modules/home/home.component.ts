@@ -229,15 +229,15 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/grafanadashboard/300',
             isToolbarDisplay: true,
             isAdminMenu: true
-          },
-          {
-            displayName: 'Traceability 2.0',
-            iconName: 'feature',
-            route: 'InSights/Home/blockchain',
-            isToolbarDisplay: true,
-            isAdminMenu: true
           }
         ]
+      },
+      {
+        displayName: 'Audit Reporting',
+        iconName: 'feature',
+        route: 'InSights/Home/blockchain',
+        isToolbarDisplay: true,
+        isAdminMenu: true
       },
       {
         displayName: 'Playlist',
@@ -274,15 +274,15 @@ export class HomeComponent implements OnInit {
             isToolbarDisplay: true,
             isAdminMenu: true
           },
-          {
+          /*{
             displayName: 'Business Mapping',
             iconName: 'feature',
             route: 'InSights/Home/businessmapping',
             isToolbarDisplay: true,
             isAdminMenu: true
-          },
+          },*/
           {
-            displayName: 'Access Group Management',
+            displayName: 'Group & Users',
             iconName: 'feature',
             route: 'InSights/Home/accessGroupManagement',
             isToolbarDisplay: true,
@@ -335,7 +335,7 @@ export class HomeComponent implements OnInit {
     this.navItemsBottom = [
       {
         displayName: 'About',
-        iconName: 'about',
+        iconName: 'info',
         route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,

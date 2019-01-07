@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { InsightsInitService } from '@insights/common/insights-initservice';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 import { MatTableDataSource } from '@angular/material';
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
 
 
 
@@ -53,10 +53,9 @@ export class UserOnboardingComponent implements OnInit {
     }
     //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
-    this.grafanaUrl = InsightsInitService.grafanaHost;
     //console.log(this.framesize);
     this.getApplicationDetail();
-    self.userListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
+    //self.userListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
 
   }
 
@@ -67,7 +66,7 @@ export class UserOnboardingComponent implements OnInit {
     this.adminOrgDataArray = [];
 
     let adminOrgsResponse = await this.userOnboardingService.getCurrentUserOrgs();
-    console.log(adminOrgsResponse);
+    //console.log(adminOrgsResponse);
     if (adminOrgsResponse.data != undefined && adminOrgsResponse.status == "success") {
       for (var org in adminOrgsResponse.data) {
         if ((adminOrgsResponse.data[org].role) === 'Admin') {
@@ -75,26 +74,18 @@ export class UserOnboardingComponent implements OnInit {
         }
       }
     }
-    console.log(this.adminOrgDataArray);
-    /*then(function (orgData) { 
-      var orgDataArray = orgData.data;
-      /*self.getUserAdminOrgs(orgDataArray);
-      self.authenticationService.getGrafanaCurrentOrgAndRole()
-        .then(function (data) {
-          self.getCurrentOrgName(data, orgDataArray);
-        });*
-    }); */
+    //console.log(this.adminOrgDataArray);
   }
 
   async loadUsersInfo(selectedAdminOrg) {
 
-    console.log(selectedAdminOrg);
+    //console.log(selectedAdminOrg);
     let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
-    console.log(usersResponseData);
-    console.log(usersResponseData.data);
+    //console.log(usersResponseData);
+    //console.log(usersResponseData.data);
     if (usersResponseData.data != undefined && usersResponseData.status == "success") {
       this.showDetail = true;
-      this.displayedColumns = ['radio', 'UserImage', 'Login', 'Email', 'Seen', 'Role'];
+      this.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
       this.userDataSource = new MatTableDataSource(usersResponseData.data);
     }
   }
@@ -106,13 +97,13 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   editUserData() {
-    console.log("Edit " + JSON.stringify(this.selectedUser) + " select org " + this.selectedUser.orgId);
+    //console.log("Edit " + JSON.stringify(this.selectedUser) + " select org " + this.selectedUser.orgId);
     this.isSaveEnable = true;
   }
 
   deleteOrgUser() {
-    console.log("Delete " + this.selectedUser);
-    console.log(this.selectedAdminOrg)
+    //console.log("Delete " + this.selectedUser);
+    //console.log(this.selectedAdminOrg)
     if (this.selectedUser != undefined) {
       var self = this;
       const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
@@ -124,7 +115,7 @@ export class UserOnboardingComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed  ' + result);
+        //console.log('The dialog was closed  ' + result);
         if (result == 'yes') {
           self.userOnboardingService.deleteUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role)
             .then(function (deleteResponse) {
@@ -140,15 +131,16 @@ export class UserOnboardingComponent implements OnInit {
             self.showApplicationMessage = "";
           }, 2000);
         }
+        this.loadUsersInfo(this.selectedAdminOrg);
       });
     }
 
   }
 
   async saveData() {
-    console.log("Edit " + JSON.stringify(this.selectedUser) + " select org " + this.selectedUser.orgId + " Role " + this.selectedUser.role);
+    //console.log("Edit " + JSON.stringify(this.selectedUser) + " select org " + this.selectedUser.orgId + " Role " + this.selectedUser.role);
     let editResponse = await this.userOnboardingService.editUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role);
-    console.log(editResponse);
+    //console.log(editResponse);
     if (editResponse.message = "Organization user updated") {
       this.isSaveEnable = false;
       this.showApplicationMessage = editResponse.message;
@@ -164,32 +156,38 @@ export class UserOnboardingComponent implements OnInit {
     this.userDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  accessGroupCreate(accessGroupName) {
-    console.log(this.accessGroupName);
+  displayaccessGroupCreateField() {
+    this.displayAccessGroupDetail = !this.displayAccessGroupDetail;
     if (this.accessGroupName != undefined) {
       var self = this;
-      const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
-        width: '40%',
-        height: '40%',
+      const dialogRef = this.dialog.open(AddGroupMessageDialog, {
+        width: '45%',
+        height: '45%',
         data: {
-          title: "Confirm Access Group Name",
-          message: "Adding an Access Group cannot be REVERTED." +
-            "Once the Access Group name is added you will not be able to RENAME or DELETE the Access Group <br> Are you sure you want to create accessGroup " + accessGroupName
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed  ' + result);
-        if (result == 'yes') {
-          console.log("confirm access group " + accessGroupName)
+        //console.log('The dialog was closed  ' + result);
+        if (result != undefined && result != 'no') { //'yes'
+          //console.log("confirm access group ")
+          self.userOnboardingService.createOrg(result)
+            .then(function (createOrgResponse) {
+              if (createOrgResponse.message = "Organization created") {
+                self.isSaveEnable = false;
+                self.showApplicationMessage = createOrgResponse.message;
+              } else {
+                self.showApplicationMessage = "Unable create";
+              }
+            });
+          self.loadUsersInfo(this.selectedAdminOrg);
+          setTimeout(() => {
+            self.showApplicationMessage = "";
+          }, 2000);
         }
       });
     }
     setTimeout(() => {
       this.showApplicationMessage = "";
     }, 2000);
-  }
-
-  displayaccessGroupCreateField() {
-    this.displayAccessGroupDetail = !this.displayAccessGroupDetail;
   }
 }

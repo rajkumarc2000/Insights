@@ -50,27 +50,27 @@
     </div>
   </div>
   <div class="btnAlign">
-    <button mat-button (click)="addAgentData()">
+    <button mat-icon-button (click)="addAgentData()">
     <mat-icon title="Add" class="mat-icon material-icons">
       add
     </mat-icon>
   </button>
-    <button mat-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
+    <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
     <mat-icon title=" Start " class="mat-icon material-icons ">
       play_arrow
     </mat-icon>
   </button>
-    <button mat-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
+    <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
     <mat-icon title="Stop " class="mat-icon material-icons ">
       stop
     </mat-icon>
   </button>
-    <button mat-button [disabled]="buttonDisableStatus" (click)="editAgent()">
+    <button mat-icon-button [disabled]="buttonDisableStatus" (click)="editAgent()">
     <mat-icon title="Edit " class="mat-icon material-icons" >
       edit
     </mat-icon>
   </button>
-    <button mat-button [disabled]="runDisableStatus!='STOP'" (click)="uninstallAgent()">
+    <button mat-icon-button [disabled]="runDisableStatus!='STOP'" (click)="uninstallAgent()">
     <mat-icon title="Delete " class="mat-icon material-icons" >
       delete
     </mat-icon>

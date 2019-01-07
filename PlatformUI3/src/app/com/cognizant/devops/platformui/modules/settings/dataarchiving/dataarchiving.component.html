@@ -34,13 +34,13 @@
 
   <div>
     <div class="btnAlign">
-      <button mat-button (click)="saveData('add')" [disabled]="!iseditdisabled">
+      <button mat-icon-button (click)="saveData('add')" [disabled]="!iseditdisabled">
     <mat-icon title="Save" class="mat-icon material-icons">
       save
     </mat-icon>
   </button>
 
-      <button mat-button (click)="editData()" [disabled]="iseditdisabled">
+      <button mat-icon-button (click)="editData()" [disabled]="iseditdisabled">
     <mat-icon title="Edit" class="mat-icon material-icons"> <!--usingBtnCss usingBtnCss-->
       edit
     </mat-icon>

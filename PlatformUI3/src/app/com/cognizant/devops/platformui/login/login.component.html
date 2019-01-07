@@ -22,7 +22,7 @@
     <div class="row" flex>
       <div class="blueStripCss"></div>
 
-      <div class="column textPad">        
+      <div class="column textPad">
         <mat-icon svgIcon="defaultLogo" layout layout-align="center center" [ngStyle]="{'height':'120px', 'width':'300px', 'margin':'0 auto', 'display':'flex', 'justify-align':'center'}">
         </mat-icon>
 
@@ -31,8 +31,7 @@
           <div layout class="textCss">
             <p>
               Leverage real-time
-              <span class="middleTextColr">Dashboards</span>
-              for the
+              <span class="middleTextColr">Dashboards</span> for the
               <span class="middleTextColr">DevOps Journey</span>
             </p>
           </div>
@@ -42,8 +41,7 @@
           <div layout class="textCss">
             <p>
               Achieve end-to-end
-              <span class="middleTextColr">Traceability</span>
-              across the
+              <span class="middleTextColr">Traceability</span> across the
               <span class="middleTextColr">DevOps Lifecycle</span>
             </p>
           </div>
@@ -59,11 +57,12 @@
         <form [formGroup]="loginForm">
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
-          <div layout="column" style="width: 360px;">          
+          <div layout="column" style="width: 360px;">
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
             &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text" formControlName="username"/>            
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text" formControlName="username"
+              />
             </mat-form-field>
             <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt">Please enter a valid username.</div>
@@ -72,9 +71,8 @@
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-                <input matInput placeholder="Password" type="password" name="password" required 
-                      class="inputGreyTextCss activeCss" formControlName="password"
-                      autocomplete="new-password"/>
+              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss" formControlName="password"
+                autocomplete="new-password" />
             </mat-form-field>
             <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
@@ -90,6 +88,10 @@
                 <mat-progress-spinner style="display: inline;" diameter="30" mode="indeterminate"></mat-progress-spinner></span> -->
             </div>
           </mat-card-actions>
+          <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
         </form>
       </div>
 

@@ -1,0 +1,36 @@
+<!--
+*******************************************************************************
+ * Copyright 2017 Cognizant Technology Solutions
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ****************************************************************************** -->
+
+<h2 mat-dialog-title>Confirm Access Group Name</h2>
+
+<div class="orangeStripCss"></div>
+
+<mat-dialog-content>
+    <label class="mainText"> Access Group Name </label>
+    <input [(ngModel)]="accessGroupName" name="accessGroupName" [style.height.px]="30" [style.width.%]="55" class="form-control"
+        placeholder="Please input an Access Group Name" required>
+        <br>
+        <span class="messageText" *ngIf="message!=''">{{message}}</span>
+        <br> Once the Access Group name is added you will not be able to RENAME or DELETE the Access Group Adding an Access
+        Group cannot be REVERTED.
+        <br> Are you sure you want to create New Access Group ?
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button class="mat-button-dialog" (click)="dialogRef.close('no')">No</button>
+    <button mat-button class="mat-button-dialog" (click)="onYesClick()">Yes</button>
+</mat-dialog-actions>
