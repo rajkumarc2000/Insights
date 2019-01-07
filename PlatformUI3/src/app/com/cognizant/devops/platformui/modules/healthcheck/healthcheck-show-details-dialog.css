@@ -3,7 +3,7 @@ table {
 }
 
 .tableHeaderCss {
-    background-color: #00B140;   
+    background-color: grey;   
     color: white;
     font-size: 14px !important;
     height: 40px !important;
@@ -44,7 +44,7 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
 }
 
 .titleStyle{
-    background-color: #0033A0; 
+    background-color: orange; 
     color:white;
     margin:0;
     padding-bottom:10px;
