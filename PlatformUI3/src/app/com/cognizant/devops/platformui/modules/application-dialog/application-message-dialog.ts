@@ -24,8 +24,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 
 export class ApplicationMessageDialog implements OnInit {
-
+    colorCode: String;
     constructor(public dialogRef: MatDialogRef<ApplicationMessageDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
+        if (data.type == 'SUCCESS') {
+            this.colorCode = "#008000"
+        } else if (data.type = 'WARN') {
+            this.colorCode = "#FFFF00"
+        } else if (data.type = 'ERROR') {
+            this.colorCode = "#ff0000";
+        }
     }
 
     ngOnInit() {

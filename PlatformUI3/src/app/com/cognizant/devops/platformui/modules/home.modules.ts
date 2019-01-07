@@ -57,6 +57,7 @@ import { LandingPageComponent } from '@insights/app/modules/landing-page/landing
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
 import { ApplicationMessageDialog } from '@insights/app/modules/application-dialog/application-message-dialog';
 import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 
@@ -111,7 +112,8 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     BusinessMappingService,
     DataArchivingService,
     BusinessHierarchyDatabase,
-    UserOnboardingService
+    UserOnboardingService,
+    MessageDialogService
   ]
 })
 

@@ -26,11 +26,6 @@
     </div>
   </div>
 
-  <div flex="70" layout layout-align="center center" class="messageText" style="margin-top:-5px;margin-bottom:10px">
-    <div *ngIf="showApplicationMessage != ''" style="text-transform: capitalize;" id="confrmMsg"> {{showApplicationMessage}}
-    </div>
-  </div>
-
   <div>
     <label class="mainText"> Current Access Group </label>
     <mat-select [(ngModel)]="selectedAdminOrg" [style.height.px]="20" [style.width.%]="20" (ngModelChange)="loadUsersInfo(selectedAdminOrg)"
@@ -39,13 +34,16 @@
         {{record.name}}
       </mat-option>
       </mat-select>
-      <div class="accessGroupAdd">
-        <button mat-flat-button color="primary" (click)="displayaccessGroupCreateField()">Add New Access Group</button>
-      </div>
   </div>
   <br>
   <div *ngIf=" showDetail ">
+
     <div class="btnAlign ">
+      <button mat-icon-button (click)="displayaccessGroupCreateField()">
+    <mat-icon title="Add New Access Group" class="mat-icon material-icons">
+      add
+    </mat-icon>
+  </button>
       <button mat-icon-button (click)="saveData() " [disabled]="!isSaveEnable ">
         <mat-icon title="Save " class="mat-icon material-icons ">
           save
@@ -74,7 +72,7 @@
             <ng-container matColumnDef="radio">
               <th mat-header-cell *matHeaderCellDef class="tableHeaderCss "></th>
               <td mat-cell [style.width.%]="10 " *matCellDef="let element ">
-                <mat-radio-button [value]="element " (click)="statusEdit(element) "></mat-radio-button>
+                <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element)"></mat-radio-button>
               </td>
             </ng-container>
 
@@ -110,13 +108,5 @@
           </table>
         </mat-radio-group>
     </div>
-    <!-- <mat-card>
-      <mat-card-content>
-        <div>
-          <iframe class="iframe " [style.height.px]="framesize " [style.width.%]="100 " [src]="userListUrl
-          " fscrolling="no "></iframe>
-        </div>
-      </mat-card-content>
-    </mat-card>-->
   </div>
 </div>

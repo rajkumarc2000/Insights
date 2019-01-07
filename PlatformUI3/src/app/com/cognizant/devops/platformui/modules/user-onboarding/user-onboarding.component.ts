@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material';
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 
 
@@ -40,7 +41,7 @@ export class UserOnboardingComponent implements OnInit {
   ];
 
   constructor(private userOnboardingService: UserOnboardingService, private sanitizer: DomSanitizer,
-    public dialog: MatDialog) {
+    public dialog: MatDialog, public messageDialog: MessageDialogService) {
     var self = this;
 
     this.framesize = window.frames.innerHeight;
@@ -51,12 +52,8 @@ export class UserOnboardingComponent implements OnInit {
         self.framesize = (evt.data + 20);
       }
     }
-    //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
-    //console.log(this.framesize);
     this.getApplicationDetail();
-    //self.userListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
-
   }
 
   ngOnInit() {
@@ -66,7 +63,6 @@ export class UserOnboardingComponent implements OnInit {
     this.adminOrgDataArray = [];
 
     let adminOrgsResponse = await this.userOnboardingService.getCurrentUserOrgs();
-    //console.log(adminOrgsResponse);
     if (adminOrgsResponse.data != undefined && adminOrgsResponse.status == "success") {
       for (var org in adminOrgsResponse.data) {
         if ((adminOrgsResponse.data[org].role) === 'Admin') {
@@ -74,19 +70,16 @@ export class UserOnboardingComponent implements OnInit {
         }
       }
     }
-    //console.log(this.adminOrgDataArray);
   }
 
   async loadUsersInfo(selectedAdminOrg) {
-
-    //console.log(selectedAdminOrg);
     let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
-    //console.log(usersResponseData);
-    //console.log(usersResponseData.data);
     if (usersResponseData.data != undefined && usersResponseData.status == "success") {
       this.showDetail = true;
       this.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
       this.userDataSource = new MatTableDataSource(usersResponseData.data);
+    } else {
+      this.messageDialog.showApplicationsMessage("Unable to load data", "WARN");
     }
   }
 
@@ -97,33 +90,28 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   editUserData() {
-    //console.log("Edit " + JSON.stringify(this.selectedUser) + " select org " + this.selectedUser.orgId);
     this.isSaveEnable = true;
   }
 
   deleteOrgUser() {
-    //console.log("Delete " + this.selectedUser);
-    //console.log(this.selectedAdminOrg)
+    console.log("result " + this.selectedUser.login);
     if (this.selectedUser != undefined) {
       var self = this;
-      const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
-        width: '40%',
-        height: '40%',
-        data: {
-          title: "Delete User",
-          message: "Are you sure we want ot delete this  " + this.selectedUser.login + " user from organization "
-        }
-      });
+      var title = "Delete User";
+      var dialogmessage = "Are you sure we want to delete this \" " + this.selectedUser.login + " \" user from organization ";
+      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, "");
       dialogRef.afterClosed().subscribe(result => {
-        //console.log('The dialog was closed  ' + result);
+        console.log(result);
         if (result == 'yes') {
           self.userOnboardingService.deleteUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role)
             .then(function (deleteResponse) {
               if (deleteResponse.message = "User removed from organization") {
                 self.isSaveEnable = false;
                 self.showApplicationMessage = deleteResponse.message;
+                self.messageDialog.showApplicationsMessage(deleteResponse.message, "SUCCESS");
               } else {
                 self.showApplicationMessage = "Unable to update user Data";
+                self.messageDialog.showApplicationsMessage("Unable to Delete user Data", "WARN");
               }
             });
           self.loadUsersInfo(this.selectedAdminOrg);
@@ -134,18 +122,17 @@ export class UserOnboardingComponent implements OnInit {
         this.loadUsersInfo(this.selectedAdminOrg);
       });
     }
-
   }
 
   async saveData() {
-    //console.log("Edit " + JSON.stringify(this.selectedUser) + " select org " + this.selectedUser.orgId + " Role " + this.selectedUser.role);
     let editResponse = await this.userOnboardingService.editUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role);
-    //console.log(editResponse);
     if (editResponse.message = "Organization user updated") {
       this.isSaveEnable = false;
       this.showApplicationMessage = editResponse.message;
+      this.messageDialog.showApplicationsMessage(editResponse.message, "SUCCESS");
     } else {
       this.showApplicationMessage = "Unable to update user Data";
+      this.messageDialog.showApplicationsMessage(editResponse.message, "WARN");
     }
     setTimeout(() => {
       this.showApplicationMessage = "";
@@ -167,16 +154,16 @@ export class UserOnboardingComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        //console.log('The dialog was closed  ' + result);
         if (result != undefined && result != 'no') { //'yes'
-          //console.log("confirm access group ")
           self.userOnboardingService.createOrg(result)
             .then(function (createOrgResponse) {
               if (createOrgResponse.message = "Organization created") {
                 self.isSaveEnable = false;
                 self.showApplicationMessage = createOrgResponse.message;
+                self.messageDialog.showApplicationsMessage(createOrgResponse.message, "SUCCESS");
               } else {
                 self.showApplicationMessage = "Unable create";
+                self.messageDialog.showApplicationsMessage("Unable to Create Organization", "WARN");
               }
             });
           self.loadUsersInfo(this.selectedAdminOrg);
