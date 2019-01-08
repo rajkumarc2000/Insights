@@ -69,7 +69,6 @@ mat-tab-label,mat-tab-link,mat-tab{
 
 table {
     width: 100%;  
-    border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;
     font-size: 14px;
     text-align: left;
@@ -77,7 +76,7 @@ table {
 }
 
 th:first-child { border-radius: 10px 0 0 0; }
-th:last-child { border-radius: 0 10px 0 0; }
+th:last-child { border-radius: 10px 10px 0 0; }
 
 tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
