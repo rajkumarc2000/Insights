@@ -70,24 +70,25 @@ export class DataArchivingComponent implements OnInit {
     this.setInitailData();
     this.serviceResponseForList = await this.dataArchivingService.listDatapurgingdata("DATAPURGING");
     console.log(this.serviceResponseForList);
-    if (this.serviceResponseForList != null) { }
-    this.showThrobber = false;
-    if (this.serviceResponseForList.status == "success") {
-      if (this.serviceResponseForList.data != undefined) {
-        this.iseditdisabled = false;
-        this.settingData = JSON.parse(this.serviceResponseForList.data.settingsJson);
-        for (let record of this.displayedColumnsNameMapping) {
-          if (this.settingData.hasOwnProperty(record.key)) {
-            record.value = this.settingData[record.key];
-          } else {
-            record.value = ""
+    if (this.serviceResponseForList != null) {
+      this.showThrobber = false;
+      if (this.serviceResponseForList.status == "success") {
+        if (this.serviceResponseForList.data != undefined) {
+          this.iseditdisabled = false;
+          this.settingData = JSON.parse(this.serviceResponseForList.data.settingsJson);
+          for (let record of this.displayedColumnsNameMapping) {
+            if (this.settingData.hasOwnProperty(record.key)) {
+              record.value = this.settingData[record.key];
+            } else {
+              record.value = ""
+            }
           }
+        } else {
+          this.iseditdisabled = true;
         }
       } else {
-        this.iseditdisabled = true;
+        this.showConfirmMessage = "Something wrong with service, please try again";
       }
-    } else {
-      this.showConfirmMessage = "Something wrong with service, please try again";
     }
     setTimeout(() => {
       this.showConfirmMessage = "";

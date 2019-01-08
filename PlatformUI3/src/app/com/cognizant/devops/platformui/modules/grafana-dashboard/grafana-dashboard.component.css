@@ -3,20 +3,9 @@
 }
 .mat-card {
     position: relative;
-    padding:1px;
+    padding:0px;
 }
-
-
 .mat-card-content>:first-child, .mat-card>:first-child {
     margin-top: 0;
 }
 
-.iframe {
-     overflow-y:auto !important;
-     overflow-x: hidden !important
-}
-
-.iframeStyle{
-    height: 100%;
-    width: 100%;
-}

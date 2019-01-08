@@ -8,8 +8,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
-
-
 @Component({
   selector: 'app-user-onboarding',
   templateUrl: './user-onboarding.component.html',
@@ -34,6 +32,7 @@ export class UserOnboardingComponent implements OnInit {
   grafanaUrl: String = "";
   showApplicationMessage: String = "";
   selectedAdminOrg: any;
+  isSelected: boolean = false;
   roleRecord = [
     { value: 'Editor', name: 'Editor' },
     { value: 'Admin', name: 'Admin' },
@@ -91,17 +90,18 @@ export class UserOnboardingComponent implements OnInit {
 
   editUserData() {
     this.isSaveEnable = true;
+    this.isSelected = true;
   }
 
   deleteOrgUser() {
-    console.log("result " + this.selectedUser.login);
+    //console.log("result " + this.selectedUser.login);
     if (this.selectedUser != undefined) {
       var self = this;
       var title = "Delete User";
       var dialogmessage = "Are you sure we want to delete this \" " + this.selectedUser.login + " \" user from organization ";
       const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, "");
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
+        //console.log(result);
         if (result == 'yes') {
           self.userOnboardingService.deleteUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role)
             .then(function (deleteResponse) {

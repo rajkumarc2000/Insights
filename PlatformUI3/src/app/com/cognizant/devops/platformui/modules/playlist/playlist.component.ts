@@ -19,20 +19,17 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { InsightsInitService } from '@insights/common/insights-initservice';
 
-
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',
-  styleUrls: ['./playlist.component.css']
+  styleUrls: ['./playlist.component.css', './../home.module.css']
 })
 export class PlaylistComponent implements OnInit {
-  mainContentMinHeightWoSbTab: string = 'min-height:' + (window.innerHeight - 146 - 48) + 'px';
-  iframeStyleAdd = "{'height': 1500 +'px '+ '!important' }";
   playListUrl: SafeResourceUrl;
   framesize: any;
   constructor(private restCallHandlerService: RestCallHandlerService, private sanitizer: DomSanitizer) {
     var self = this;
-
+    self.setScrollBarPosition();
     this.framesize = window.frames.innerHeight;
 
     var receiveMessage = function (evt) {
@@ -41,13 +38,22 @@ export class PlaylistComponent implements OnInit {
         self.framesize = (evt.data + 20);
       }
     }
-    //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
+    console.log(this.framesize);
     self.playListUrl = sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/playlists');
-    //self.setScrollBarPosition();
+
   }
 
   setScrollBarPosition() {
+    var self = this;
+    this.framesize = window.frames.innerHeight;
+    var receiveMessage = function (evt) {
+      var height = parseInt(evt.data);
+      if (!isNaN(height)) {
+        self.framesize = (evt.data + 20);
+      }
+    }
+    window.addEventListener('message', receiveMessage, false);
     setTimeout(function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 1000);
