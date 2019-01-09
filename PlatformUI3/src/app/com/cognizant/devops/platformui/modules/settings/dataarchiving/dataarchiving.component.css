@@ -14,6 +14,11 @@ table,mat-table {
     text-align: left;
 }
 
+.greenTitleTxt {
+    color: #00B140;    
+    font-family: Open Sans !important;
+    font-size: 20px; 
+}
 
 .mat-cell {
     font-size: 13px;
