@@ -19,6 +19,7 @@ import { DataArchivingService } from '@insights/app/modules/settings/dataarchivi
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataSharedService } from '@insights/common/data-shared-service';
 import { MatTable } from '@angular/material';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class DataArchivingComponent implements OnInit {
   nextRunTime: string;
   lastRunTime: string;
   settingJsonstring: string;
+  showApplicationMessage: String = "";
   dataJsonObj = {};
   sendJsonObj = {};
   activeFlag: string;
@@ -55,7 +57,8 @@ export class DataArchivingComponent implements OnInit {
     { value: 'Monthly', name: 'Monthly' }
   ];
 
-  constructor(private dataArchivingService: DataArchivingService, private dataShare: DataSharedService) {
+  constructor(private dataArchivingService: DataArchivingService, private dataShare: DataSharedService,
+    public messageDialog: MessageDialogService) {
     this.listData();
   }
 
@@ -155,14 +158,20 @@ export class DataArchivingComponent implements OnInit {
       .then(function (data) {
         console.log("Setting " + data);
         if (data.status == "success") {
-          self.showConfirmMessage = "Settings saved successfully";
+          //self.showConfirmMessage = "Settings saved successfully";
+          self.showApplicationMessage = "Settings saved successfully"
+          self.messageDialog.showApplicationsMessage("Settings saved successfully", "SUCCESS");
         } else {
           self.showConfirmMessage = "Failed to save settings";
+          self.showApplicationMessage = "Failed to save settings"
+        self.messageDialog.showApplicationsMessage("Failed to save settings", "ERROR");
         }
         self.listData();
       })
       .catch(function (data) {
-        self.showConfirmMessage = "Failed to save settings";
+        //self.showConfirmMessage = "Failed to save settings";
+        self.showApplicationMessage = "Failed to save settings"
+        self.messageDialog.showApplicationsMessage("Failed to save settings", "ERROR");
         self.listData();
       });
 
