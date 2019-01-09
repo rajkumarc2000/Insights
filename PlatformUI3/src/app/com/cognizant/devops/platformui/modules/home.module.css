@@ -50,6 +50,8 @@ tr.mat-footer-row, tr.mat-row{
     height: 40px !important;
     text-align: left !important;
     vertical-align: middle;
+    padding-right: 65px !important;
+    padding-left: 65px !important;
 }
 
 .mat-row:nth-child(even){
@@ -62,7 +64,7 @@ tr.mat-footer-row, tr.mat-row{
 
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
 mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card
-mat-tab-label,mat-tab-link,mat-tab{
+mat-tab-label,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,select,mat-option{
     font-family: inherit;
     font-size: 18px;
 }
@@ -76,7 +78,7 @@ table {
 }
 
 th:first-child { border-radius: 10px 0 0 0; }
-th:last-child { border-radius: 0 10px 0 0; }
+th:last-child { border-radius: 0px 10px 0 0; }
 
 tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
@@ -139,10 +141,10 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 }
 
 .titleStyle {    
-    margin-top:25px;
+    margin-top:16px;
     color: #0033A0;
     font-family: Open Sans !important;
-    font-size: 20px;
+    font-size: 26px;
     padding-bottom: 10px;    
     vertical-align: center;
 }
@@ -150,6 +152,14 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 .greenTitleTxt {
     color: #00B140;    
     font-family: Open Sans !important;
-    font-size: 20px; 
+    font-size: 26px; 
+}
+
+.mat-icon-button[disabled][disabled]{
+    color: #9e9a9a
+}
+
+tr.mat-header-row {
+    height: 40px;
 }
 

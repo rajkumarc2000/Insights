@@ -92,7 +92,7 @@ tr.mat-footer-row, tr.mat-row {
 .mainHeaderText{
     font-size: 15px;
     color:  white;
-    padding-left: 5px;
+    padding-left: 10px;
     
 }
 
@@ -140,5 +140,10 @@ tr.mat-header-row {
 .header-group {
     display: flex;
     align-items: center;
+}
+
+td{
+    padding-left: 65px;
+    padding-right: 65px;
 }
 

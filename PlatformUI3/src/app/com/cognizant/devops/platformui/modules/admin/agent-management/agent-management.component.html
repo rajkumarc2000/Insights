@@ -15,8 +15,10 @@
  * the License.
  ****************************************************************************** -->
 <div class="pageCss">
-  <div layout layout-align="left" class="heading">
-    <div id="healthCheckTitle">Agent Management </div>
+  <div layout layout-align="left" class="titleStyle">
+    <div>Configuration |
+      <a class="greenTitleTxt">Agent Management </a>
+    </div>
   </div>
 
   <div class="orangeStripCss"></div>
@@ -51,18 +53,20 @@
   </div>
   <div class="btnAlign">
     <button mat-icon-button (click)="addAgentData()">
-    <mat-icon title="Add" class="mat-icon material-icons">
-      add
+    <mat-icon title="Add Agent" class="mat-icon material-icons">
+      add_circle
+    </mat-icon>
+    <mat-icon svgIcon="lineInButton" class="mat-icon material-icons">
     </mat-icon>
   </button>
     <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
     <mat-icon title=" Start " class="mat-icon material-icons ">
-      play_arrow
-    </mat-icon>
+      play_circle_filled
+    </mat-icon> <!--play_arrow-->
   </button>
     <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
     <mat-icon title="Stop " class="mat-icon material-icons ">
-      stop
+      fiber_manual_record
     </mat-icon>
   </button>
     <button mat-icon-button [disabled]="buttonDisableStatus" (click)="editAgent()">

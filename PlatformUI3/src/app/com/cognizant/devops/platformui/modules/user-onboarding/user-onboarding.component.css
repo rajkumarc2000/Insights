@@ -31,7 +31,7 @@
 
 .mainText{
     font-size: 14px;
-    color:  #5C068C;
+    color:  #00b140;
     font-weight:bold;
     vertical-align: sub;
     width: 10%
@@ -58,8 +58,9 @@
   padding-left: 10px;
 }
 
-.accessGroupAdd{
+.filterGroupCSS{
    float: right;
+   width: 30%
 }
 .mat-flat-button{
     margin-left: 5px;
@@ -71,6 +72,13 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
     background-color: #5c068c !important;
+}
+
+th[_ngcontent-c15]:last-child{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 

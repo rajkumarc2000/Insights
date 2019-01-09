@@ -56,6 +56,10 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('search_icon', "icons/svg/ic_search_24px.svg");
         this.addImage('blockchain_show_details', "icons/svg/sharp-list_alt-24px.svg");
         this.addImage('export_to_pdf_icon', "icons/svg/exportToPdf.svg");
+        this.addImage('addButton', "icons/svg/buttonIcon/Add.svg");
+        this.addImage('startButton', "icons/svg/buttonIcon/sharp-play_circle.svg");
+        this.addImage('stopButton', "icons/svg/buttonIcon/sharp-stop.svg");
+        this.addImage('lineInButton', "icons/svg/buttonIcon/Line_menu.svg");
     }
 
 

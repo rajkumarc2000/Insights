@@ -32,7 +32,7 @@ export class UserOnboardingComponent implements OnInit {
   grafanaUrl: String = "";
   showApplicationMessage: String = "";
   selectedAdminOrg: any;
-  isSelected: boolean = false;
+  isSelectedUserId: any = -1;
   roleRecord = [
     { value: 'Editor', name: 'Editor' },
     { value: 'Admin', name: 'Admin' },
@@ -74,6 +74,7 @@ export class UserOnboardingComponent implements OnInit {
   async loadUsersInfo(selectedAdminOrg) {
     let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
     if (usersResponseData.data != undefined && usersResponseData.status == "success") {
+      console.log(usersResponseData.data);
       this.showDetail = true;
       this.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
       this.userDataSource = new MatTableDataSource(usersResponseData.data);
@@ -89,8 +90,9 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   editUserData() {
+    console.log(this.selectedUser.userId);
     this.isSaveEnable = true;
-    this.isSelected = true;
+    this.isSelectedUserId = this.selectedUser.userId;
   }
 
   deleteOrgUser() {

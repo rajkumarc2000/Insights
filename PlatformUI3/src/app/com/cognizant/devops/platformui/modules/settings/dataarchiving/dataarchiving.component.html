@@ -16,8 +16,10 @@
  ****************************************************************************** -->
 <div class="pageCss">
 
-  <div layout layout-align="left" class="heading">
-    <div id="healthCheckTitle">Data Archival </div>
+  <div layout layout-align="left" class="titleStyle">
+    <div>Configuration |
+      <a class="greenTitleTxt">Data Archival </a>
+    </div>
   </div>
   <div class="orangeStripCss"></div>
 
@@ -27,24 +29,18 @@
     </div>
   </div>
 
-  <!--<div flex="70" layout layout-align="center center" class="messageText" style="margin-top:-5px;margin-bottom:10px">
-    <div *ngIf="showConfirmMessage != ''" style="text-transform: capitalize;" id="confrmMsg"> {{showConfirmMessage}}
-    </div>
-  </div>-->
-
   <div>
     <div class="btnAlign">
-      <button mat-icon-button (click)="saveData('add')" [disabled]="!iseditdisabled">
-    <mat-icon title="Save" class="mat-icon material-icons">
-      save
-    </mat-icon>
-  </button>
-
       <button mat-icon-button (click)="editData()" [disabled]="iseditdisabled">
-    <mat-icon title="Edit" class="mat-icon material-icons"> <!--usingBtnCss usingBtnCss-->
-      edit
-    </mat-icon>
-  </button>
+        <mat-icon title="Edit" class="mat-icon material-icons"> <!--usingBtnCss usingBtnCss-->
+          edit
+        </mat-icon>
+      </button>
+      <button mat-icon-button (click)="saveData('add')" [disabled]="!iseditdisabled">
+        <mat-icon title="Save" class="mat-icon material-icons">
+          save
+        </mat-icon>
+      </button>
     </div>
 
     <div>
@@ -60,7 +56,7 @@
         </thead>
         <tbody>
           <tr class="mat-row" *ngFor="let element of displayedColumnsNameMapping">
-            <td class="mat-cell" style="width:65%;padding:5px;">
+            <td class="mat-cell" style="width:65%;">
               <span class="mainText">{{element.displayName}}</span>
               <span *ngIf="element.type!='text'" style="color:#ff0000;">*</span>
               <span class="infoText">{{element.infoText}}</span>

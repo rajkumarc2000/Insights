@@ -90,9 +90,9 @@ export class HomeComponent implements OnInit {
       }
     }
     var otherMenu = ((45 / 100) * this.framesize);
-    console.log(otherMenu + " " + this.framesize);
+    //console.log(otherMenu + " " + this.framesize);
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
-    console.log(this.framesize);
+    //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
     this.loadorganizations();
@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit {
       this.userRole = this.grafanaResponse.grafanaCurrentOrgRole;
       this.userCurrentOrg = this.grafanaResponse.grafanaCurrentOrg;
       currentUserResponce = await this.grafanaService.getCurrentUserOrgs();
-      console.log(currentUserResponce);
+      //console.log(currentUserResponce);
       if (currentUserResponce.data != undefined) {
         for (let orgData of currentUserResponce.data) {
           if (orgData.orgId == self.userCurrentOrg) {
@@ -413,10 +413,10 @@ export class HomeComponent implements OnInit {
 
   deleteAllPreviousCookies(): void {
     let allCookies = this.cookieService.getAll();
-    console.log(allCookies);
+    //console.log(allCookies);
 
     for (let key of Object.keys(allCookies)) {
-      console.log(key);
+      //console.log(key);
       this.cookieService.delete(key);
     }
   }

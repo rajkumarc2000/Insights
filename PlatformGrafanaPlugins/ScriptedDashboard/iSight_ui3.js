@@ -52,7 +52,7 @@ $('<style>iframe {overflow:hidden; width:100%} </style>').appendTo('head');
 var documentWidth = $(document).width(); // documentWidth - 10;
 var width = 100;
 var documentHeight = window.innerHeight;
-var documentHeight = 20;
+//var documentHeight = 20;
 
 var addDashboardIframeToDom = function (url) {
 	console.log(width + " "  + documentHeight)
@@ -82,10 +82,12 @@ var addRouteChangeDetector = function () {
 					calculateHeight();
 				});
 			});
+			console.log(" iSightIframe height  "+document.getElementById("iSightIframe").height())
 		}
 		finally {
 			addStyleTag();
 		}
+		
 	}
 };
 
@@ -96,13 +98,13 @@ var calculateHeight = function (time) {
 	if (view.length !== 0 && (dashboard.length !== 0 || playlist.length !== 0)) {
 		var height = $('#iSightIframe').contents().find('.main-view').height();
 		//var height = 1500;
-		/*if (height < 800) {
+		if (height < 800) {
 			height = 800;
-			$('#iSightIframe').width(documentWidth);
+			/*$('#iSightIframe').width(documentWidth);*/
 		} else {
-			$('#iSightIframe').width(documentWidth - 10);
+			/*$('#iSightIframe').width(documentWidth - 10);*/
 		}
-		$('#iSightIframe').width(documentWidth);*/
+		/*$('#iSightIframe').width(documentWidth);*/
 		$('#iSightIframe').height(height);
 		window.parent.postMessage(height, '*');
 		if (time !== undefined && time !== 0) {

@@ -20,7 +20,7 @@
               "src/assets",
               "src/config",
               "src/icons",
-              "src/favicon.ico"
+              "src/favicon.png"
             ],
             "styles": [
               "src/styles.css"
