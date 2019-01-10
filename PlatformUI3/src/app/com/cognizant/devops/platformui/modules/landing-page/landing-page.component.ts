@@ -1,5 +1,3 @@
-import { Component, OnInit } from '@angular/core';
-
 /*******************************************************************************
  * Copyright 2017 Cognizant Technology Solutions
  *
@@ -15,13 +13,16 @@ import { Component, OnInit } from '@angular/core';
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
+import { Component, OnInit, Input } from '@angular/core';
+
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-
+  @Input() isExpanded: boolean = false;
   constructor() { }
 
   ngOnInit() {

@@ -14,151 +14,114 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
+<div [ngClass]="{ 'landingpageCssCollapse' : !isExpanded , 'landingpageCssExpand': isExpanded}">
+  <div class="headerdiv" autosize="true">
 
-<div class="yourdiv" autosize="true">
+    <p>
+      <span class="heading1"> Welcome to </span>
+      <span class="textCss">One</span>
+      <span class="heading1">DevOps<sup>TM</sup> | Insights</span>
+    </p>
+  </div>
+  <div class="textcenter">
+    <p>
+      <span class="BlackCss">Leverage </span>
+      <span class="textCssSmall">Real-Time Dashboard </span>
+      <span class="BlackCss">for</span>
+      <span class="heading2"> Devops Journey. </span>
 
-  <p>
-    <span class="middleTextColr"> Welcome to </span>
-    <span class="textCss">One</span>
-    <span class="middleTextColr">DevOps<sup>TM</sup> | Insights</span>
-  </p>
-</div>
-<div class="textcenter">
-  <p>
-    <span class="BlackCss">Leverage </span>
-    <span class="textCss2">Real-Time Dashboard </span>
-    <span class="BlackCss">for</span>
-    <span class="middleTextColr2"> Devops Journey. </span>
+      <span class="BlackCss">Achieve end-to-end </span>
+      <span class="textCssSmall">Traceability </span>
+      <span class="BlackCss">across the</span>
+      <span class="heading2"> Devops Lifecycle</span>
+    </p>
+  </div>
 
-    <span class="BlackCss">Acheive end-to-end </span>
-    <span class="textCss2">Traceability </span>
-    <span class="BlackCss">across the</span>
-    <span class="middleTextColr2"> Devops Lifecycle</span>
-  </p>
-</div>
+  <div class="header-logo">
+    What does Insights mean to you?
+  </div>
+  <div>
+    <p>
+      <span class="BlueColumn1">For Admin and Powerusers</span>
+      <span class="BlueColumn2">For Users and Editors</span>
 
-<span class="middleTextColr3">What does Insights mean to you?</span>
-
-
-
-<div class="margindivleft">
-  <p>
-
-    <span class="BlueCss">For Admin and Powerusers</span>
-    <span class="BlueCss2">For Users and Editors</span>
-
-  </p>
-
-
-
-  <div class="row">
-    <div class="column">
-      <div class="topTxtCss2">
-        <div layout class="bulletCss"></div>
-        <div layout class="BlackCss2">
-          <p>
-            Configure Agents for Collecting Data from DevOps tools
-          </p>
-        </div>
-      </div>
-      <div class="topTxtCss2">
-        <div layout class="bulletCss"></div>
-        <div layout class="BlackCss2">
-          <p>
-            Create and Modify Access Groups and add Users to them
-          </p>
-        </div>
-      </div>
-      <div class="topTxtCss2">
-        <div layout class="bulletCss"></div>
-        <div layout class="BlackCss2">
-          <p>
-            Archive your data
-          </p>
-        </div>
-      </div>
-
-
-      <div class="topTxtCss2">
-        <div layout class="bulletCss"></div>
-        <div layout class="BlackCss2">
-          <p>
-            Monitor the status of the Various Components in Insights.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="topTxtCss2">
-        <div layout class="bulletCss"></div>
-        <div layout class="BlackCss2">
-          <p>
-            Get real time notifications by integrating with Communication Channels
-          </p>
-        </div>
-      </div>
-
-
-
-
+    </p>
+    <div class="column-image">
+      <mat-icon svgIcon="OrangeLine" [ngStyle]="{height: '190px', width: '1px'}"></mat-icon>
     </div>
-  </div>
 
-  <div class="column-image">
-    <mat-icon svgIcon="OrangeLine" [ngStyle]="{height: '150px', width: '1px'}"></mat-icon>
-  </div>
-  <div class="lift">
-    <div class="row">
-      <div class="column">
-        <div class="topTxtCss3">
-          <div layout class="bulletCss"></div>
-          <div layout class="BlackCss2">
-            <p>
-              Create Dashboards and Panels for measuring KPI
-            </p>
-          </div>
-        </div>
-        <div class="topTxtCss3">
-          <div layout class="bulletCss"></div>
-          <div layout class="BlackCss2">
-            <p>
-              Create Playlists display Dashboards in Round Robin
-            </p>
-          </div>
-        </div>
-
-        <div class="topTxtCss3">
-          <div layout class="bulletCss"></div>
-          <div layout class="BlackCss2">
-            <p>
-              Measure the overall Progress of DevOps Maturity
-            </p>
-          </div>
-        </div>
-
-        <div class="topTxtCss3">
-          <div layout class="bulletCss"></div>
-          <div layout class="BlackCss2">
-            <p>
-              Life of a Code - Know where your code is
-            </p>
-          </div>
-        </div>
-
-        <div class="topTxtCss3">
-          <div layout class="bulletCss"></div>
-          <div layout class="BlackCss2">
-            <p>
-              Search and Download Reports for Auditing
-            </p>
-          </div>
-        </div>
+    <div class="topTxtCss">
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Configure Agents for Collecting Data from DevOps tools </p>
+      </div>
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Create Dashboards and Panels for measuring KPI </p>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="greencode">
-  For more information - please refer to our detailed help section.
-</div>
+    <div class="topTxtCss">
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Create and Modify Access Groups and add Users to them </p>
+      </div>
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Search and Download Reports for Auditing </p>
+      </div>
+    </div>
+
+    <div class="topTxtCss">
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Archive your data
+        </p>
+      </div>
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Measure the overall Progress of DevOps Maturity
+        </p>
+      </div>
+    </div>
+
+    <div class="topTxtCss">
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Monitor the status of the Various Components in Insights.
+        </p>
+      </div>
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Life of a Code - Know where your code is
+        </p>
+      </div>
+    </div>
+
+    <div class="topTxtCss">
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Get real time notifications by integrating with Communication Channels
+        </p>
+      </div>
+      <div layout class="bulletCss"></div>
+      <div layout class="BlackCssColumn">
+        <p>
+          Create Playlists to have Dashboards displayed in Round Robin
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <div class="bottomgreencode">
+    For more information - please refer to our detailed help section.
+  </div>

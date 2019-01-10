@@ -17,15 +17,15 @@
 
 <div class="container">
   <mat-sidenav-container class="sidenav-container" autosize>
-    <mat-sidenav #sidenav class="sidenav" [ngStyle]="{ 'width': isExpanded ? '20%':'6%'}" height="50%" mode="side" opened="true"
-      autosize="true">
+    <mat-sidenav #sidenav class="sidenav" [ngStyle]="{ 'width': isExpanded ? '20%':'6%'}" height="50%" mode="side"
+      opened="true" autosize="true">
       <div class="logoSetting">
         <table style="border-spacing:2px; height:100%; width: 100%">
           <tr>
             <td>
               <!--style="height:28px"-->
-              <img mat-card-image *ngIf="isExpanded" align="left" height="35px" src='icons/svg/homePage/Insights.png' alt="Cognizant log"
-                style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
+              <img mat-card-image *ngIf="isExpanded" align="left" height="35px" src='icons/svg/homePage/Insights.png'
+                alt="Cognizant log" style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
             </td>
             <td>
               <!--style="height:28px"-->
@@ -37,14 +37,13 @@
       <div class="headingPage">
         <div>
           <span mat-line class="mat-line-heading" title="{{userName}}" *ngIf="isExpanded">
-          Welcome : {{userName}}
+            Welcome : {{userName}}
           </span>
           <br *ngIf="isExpanded">
           <span mat-line class="mat-line-heading" *ngIf="isExpanded">
-          Role : <span class="roleName"> {{userRole}} </span>
+            Role : <span class="roleName"> {{userRole}} </span>
           </span>
-          <img mat-card-image class="feviconIcon" *ngIf="!isExpanded" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg'
-          />
+          <img mat-card-image class="feviconIcon" *ngIf="!isExpanded" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg' />
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -53,8 +52,8 @@
           <tbody>
             <tr>
               <mat-nav-list>
-                <app-menu-list-item *ngFor="let item of navItems" [item]="item" [depth]="depth" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg"
-                  [showAdminTab]="showAdminTab"></app-menu-list-item>
+                <app-menu-list-item *ngFor="let item of navItems" [item]="item" [depth]="depth" [isExpanded]="isExpanded"
+                  [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
               </mat-nav-list>
             </tr>
         </table>
@@ -62,21 +61,21 @@
       <mat-divider></mat-divider>
       <div style="height:15%" class="bottomnavg">
         <mat-nav-list>
-          <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
-            [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
+          <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth"
+            [isExpanded]="isExpanded" [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
         </mat-nav-list>
       </div>
-      </mat-sidenav>
-      <mat-sidenav-content class="mat-drawer-content">
-        <mat-toolbar *ngIf="isToolbarDisplay">
-          <span class="fill-remaining-space"></span>
-          <img height="20px" width="380px" align="right" src='icons/svg/homePage/PoweredBy.png' alt="Powered By Cognizant OneDevOps | Insights"
-            style="margin:auto;" />
-        </mat-toolbar>
-        <div>
-          <router-outlet></router-outlet>
-          <app-landing-page *ngIf="displayLandingPage"></app-landing-page>
-        </div>
-      </mat-sidenav-content>
+    </mat-sidenav>
+    <mat-sidenav-content class="mat-drawer-content">
+      <mat-toolbar *ngIf="isToolbarDisplay">
+        <span class="fill-remaining-space"></span>
+        <img height="20px" width="380px" align="right" src='icons/svg/homePage/PoweredBy.png' alt="Powered By Cognizant OneDevOps | Insights"
+          style="margin:auto;" />
+      </mat-toolbar>
+      <div>
+        <router-outlet></router-outlet>
+        <app-landing-page *ngIf="displayLandingPage" [isExpanded]="isExpanded"></app-landing-page>
+      </div>
+    </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
