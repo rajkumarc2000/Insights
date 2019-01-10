@@ -288,7 +288,12 @@ public class Neo4jDBHandler {
 	 * @return ClientResponse
 	 */
 	private ClientResponse doCommitCall(JsonObject requestJson) {
-		WebResource resource = Client.create()
+		Client client = Client.create();
+		if(ApplicationConfigProvider.getInstance().getGraph().getConnectionExpiryTimeOut() != null) 
+		{
+			client.setConnectTimeout(ApplicationConfigProvider.getInstance().getGraph().getConnectionExpiryTimeOut() * 1000);
+		}
+		WebResource resource = client
 				// .resource("http://localhost:7474/db/data/transaction/commit");
 				.resource(ApplicationConfigProvider.getInstance().getGraph().getEndpoint()
 						+ "/db/data/transaction/commit");
@@ -306,7 +311,12 @@ public class Neo4jDBHandler {
 	 * @return
 	 */
 	public JsonArray loadFieldIndices() {
-		WebResource resource = Client.create()
+		Client client = Client.create();
+		if(ApplicationConfigProvider.getInstance().getGraph().getConnectionExpiryTimeOut() != null) 
+		{
+			client.setConnectTimeout(ApplicationConfigProvider.getInstance().getGraph().getConnectionExpiryTimeOut() * 1000);
+		}
+		WebResource resource = client
 				.resource(ApplicationConfigProvider.getInstance().getGraph().getEndpoint() + "/db/data/schema/index");
 		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
 				.header("Authorization", ApplicationConfigProvider.getInstance().getGraph().getAuthToken())
@@ -326,7 +336,12 @@ public class Neo4jDBHandler {
 		JsonArray properties = new JsonArray();
 		properties.add(field);
 		requestJson.add("property_keys", properties);
-		WebResource resource = Client.create().resource(
+		Client client = Client.create();
+		if(ApplicationConfigProvider.getInstance().getGraph().getConnectionExpiryTimeOut() != null) 
+		{
+			client.setConnectTimeout(ApplicationConfigProvider.getInstance().getGraph().getConnectionExpiryTimeOut() * 1000);
+		}
+		WebResource resource = client.resource(
 				ApplicationConfigProvider.getInstance().getGraph().getEndpoint() + "/db/data/schema/index/" + label);
 		ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
 				.header("Authorization", ApplicationConfigProvider.getInstance().getGraph().getAuthToken())

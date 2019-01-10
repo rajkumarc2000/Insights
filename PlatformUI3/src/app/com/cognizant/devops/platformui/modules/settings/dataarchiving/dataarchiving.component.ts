@@ -19,6 +19,7 @@ import { DataArchivingService } from '@insights/app/modules/settings/dataarchivi
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataSharedService } from '@insights/common/data-shared-service';
 import { MatTable } from '@angular/material';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class DataArchivingComponent implements OnInit {
   nextRunTime: string;
   lastRunTime: string;
   settingJsonstring: string;
+  showApplicationMessage: String = "";
   dataJsonObj = {};
   sendJsonObj = {};
   activeFlag: string;
@@ -55,7 +57,8 @@ export class DataArchivingComponent implements OnInit {
     { value: 'Monthly', name: 'Monthly' }
   ];
 
-  constructor(private dataArchivingService: DataArchivingService, private dataShare: DataSharedService) {
+  constructor(private dataArchivingService: DataArchivingService, private dataShare: DataSharedService,
+    public messageDialog: MessageDialogService) {
     this.listData();
   }
 
@@ -70,24 +73,25 @@ export class DataArchivingComponent implements OnInit {
     this.setInitailData();
     this.serviceResponseForList = await this.dataArchivingService.listDatapurgingdata("DATAPURGING");
     console.log(this.serviceResponseForList);
-    if (this.serviceResponseForList != null) { }
-    this.showThrobber = false;
-    if (this.serviceResponseForList.status == "success") {
-      if (this.serviceResponseForList.data != undefined) {
-        this.iseditdisabled = false;
-        this.settingData = JSON.parse(this.serviceResponseForList.data.settingsJson);
-        for (let record of this.displayedColumnsNameMapping) {
-          if (this.settingData.hasOwnProperty(record.key)) {
-            record.value = this.settingData[record.key];
-          } else {
-            record.value = ""
+    if (this.serviceResponseForList != null) {
+      this.showThrobber = false;
+      if (this.serviceResponseForList.status == "success") {
+        if (this.serviceResponseForList.data != undefined) {
+          this.iseditdisabled = false;
+          this.settingData = JSON.parse(this.serviceResponseForList.data.settingsJson);
+          for (let record of this.displayedColumnsNameMapping) {
+            if (this.settingData.hasOwnProperty(record.key)) {
+              record.value = this.settingData[record.key];
+            } else {
+              record.value = ""
+            }
           }
+        } else {
+          this.iseditdisabled = true;
         }
       } else {
-        this.iseditdisabled = true;
+        this.showConfirmMessage = "Something wrong with service, please try again";
       }
-    } else {
-      this.showConfirmMessage = "Something wrong with service, please try again";
     }
     setTimeout(() => {
       this.showConfirmMessage = "";
@@ -154,14 +158,20 @@ export class DataArchivingComponent implements OnInit {
       .then(function (data) {
         console.log("Setting " + data);
         if (data.status == "success") {
-          self.showConfirmMessage = "Settings saved successfully";
+          //self.showConfirmMessage = "Settings saved successfully";
+          self.showApplicationMessage = "Settings saved successfully"
+          self.messageDialog.showApplicationsMessage("Settings saved successfully", "SUCCESS");
         } else {
           self.showConfirmMessage = "Failed to save settings";
+          self.showApplicationMessage = "Failed to save settings"
+        self.messageDialog.showApplicationsMessage("Failed to save settings", "ERROR");
         }
         self.listData();
       })
       .catch(function (data) {
-        self.showConfirmMessage = "Failed to save settings";
+        //self.showConfirmMessage = "Failed to save settings";
+        self.showApplicationMessage = "Failed to save settings"
+        self.messageDialog.showApplicationsMessage("Failed to save settings", "ERROR");
         self.listData();
       });
 

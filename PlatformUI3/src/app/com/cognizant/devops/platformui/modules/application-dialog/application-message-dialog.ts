@@ -28,9 +28,9 @@ export class ApplicationMessageDialog implements OnInit {
     constructor(public dialogRef: MatDialogRef<ApplicationMessageDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
         if (data.type == 'SUCCESS') {
             this.colorCode = "#008000"
-        } else if (data.type = 'WARN') {
+        } else if (data.type == 'WARN') {
             this.colorCode = "#FFFF00"
-        } else if (data.type = 'ERROR') {
+        } else if (data.type == 'ERROR') {
             this.colorCode = "#ff0000";
         }
     }

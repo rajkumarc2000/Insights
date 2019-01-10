@@ -17,7 +17,6 @@ import { Injectable } from '@angular/core';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { Observable } from 'rxjs';
 
-
 export interface IUserOnboardingService {
     getCurrentUserOrgs(): Promise<any>;
     switchUserOrg(orgId: number): Promise<any>;

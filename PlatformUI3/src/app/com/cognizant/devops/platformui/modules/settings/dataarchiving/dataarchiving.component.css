@@ -1,6 +1,5 @@
 table,mat-table {
     width: 100%;  
-    border-radius: 10px 10px 10px 10px;
     border-collapse: collapse;
 }
 
@@ -12,20 +11,13 @@ table,mat-table {
     margin: 0px;
     padding:5px;
     flex: 0 0 10px;
-    border-right: 1px solid black;
     text-align: left;
 }
 
 
-th:first-child { border-radius: 10px 10px 10px 10px; }
-th:last-child { border-radius: 0 10px 0 0; }
-
-tr:last-child td:first-child { border-radius: 0 0 0 10px; }
-tr:last-child td:last-child { border-radius: 0 0 10px 0; }
-
 .mat-cell {
     font-size: 13px;
-    height: 35px;
+    height: 40px;
     text-align: left;
     font-family: inherit
 }
@@ -100,7 +92,7 @@ tr.mat-footer-row, tr.mat-row {
 .mainHeaderText{
     font-size: 15px;
     color:  white;
-    padding-left: 5px;
+    padding-left: 10px;
     
 }
 
@@ -148,5 +140,10 @@ tr.mat-header-row {
 .header-group {
     display: flex;
     align-items: center;
+}
+
+td{
+    padding-left: 65px;
+    padding-right: 65px;
 }
 

@@ -30,7 +30,7 @@ import { HomeComponent } from '@insights/app/modules/home/home.component';
 @Component({
     selector: 'app-grafana-dashboard',
     templateUrl: './grafana-dashboard.component.html',
-    styleUrls: ['./grafana-dashboard.component.css']
+    styleUrls: ['./grafana-dashboard.component.css', './../home.module.css']
 })
 export class GrafanaDashboardComponent implements OnInit {
     orgId: string;
@@ -57,10 +57,7 @@ export class GrafanaDashboardComponent implements OnInit {
                 self.framesize = (evt.data + 20);
             }
         }
-        //console.log(this.framesize);
         window.addEventListener('message', receiveMessage, false);
-
-        //console.log(this.framesize);
     }
 
     ngOnInit() {
@@ -98,9 +95,7 @@ export class GrafanaDashboardComponent implements OnInit {
                 self.framesize = (evt.data + 20);
             }
         }
-        //console.log(this.framesize);
         window.addEventListener('message', receiveMessage, false);
-        //console.log(this.framesize);
         setTimeout(function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 1000);
@@ -109,7 +104,6 @@ export class GrafanaDashboardComponent implements OnInit {
     async parseDashboards(dashboardslist) {
         var self = this;
         var dataArray = dashboardslist.dashboards;
-        //console.log(dataArray);
         if (dashboardslist != undefined && dataArray != undefined) {
             if (dataArray.length > 0) {
                 var model = [];
@@ -136,10 +130,8 @@ export class GrafanaDashboardComponent implements OnInit {
     private setSelectedDashboard(dashboard) {
         var self = this;
         self.selectedDashboard = dashboard;
-        //console.log(self.selectedDashboard);
         self.dashboardTitle = dashboard.title;
         if (dashboard.dashboardUrl) {
-            //console.log(dashboard.iframeUrl);
             self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
             self.setScrollBarPosition();
         }
