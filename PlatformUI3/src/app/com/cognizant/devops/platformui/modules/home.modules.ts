@@ -51,7 +51,6 @@ import { DataArchivingService } from '@insights/app/modules/settings/dataarchivi
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 
-import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-management/agent-configuration/uninstall-agent-dialog';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
@@ -78,7 +77,6 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     DataArchivingComponent,
     AgentConfigurationComponent,
     BlockChainComponent,
-    UninstallAgentDialog,
     UserOnboardingComponent,
     LandingPageComponent,
     ConfirmationMessageDialog,
@@ -98,7 +96,6 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
   ],
   entryComponents: [
     ShowDetailsDialog,
-    UninstallAgentDialog,
     ConfirmationMessageDialog,
     ApplicationMessageDialog,
     AddGroupMessageDialog

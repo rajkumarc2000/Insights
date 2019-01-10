@@ -39,11 +39,11 @@
     vertical-align:center;
     padding-top: 8px;
     padding-bottom: 3px;
-    margin-bottom: 16px;
 }
 
 .sectionSubHeading{
     font-size: 13px;
+    color: #00B140; 
 }
 
 tr.mat-footer-row, tr.mat-row{
@@ -64,7 +64,7 @@ tr.mat-footer-row, tr.mat-row{
 
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
 mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card
-mat-tab-label,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,select,mat-option{
+mat-tab-label,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,select,mat-option,mat-raised-button{
     font-family: inherit;
     font-size: 18px;
 }
@@ -108,8 +108,8 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     font-family: inherit !important;
     font-size: 15px;
     font-weight: 500;
-    background-color: yellowgreen;
     min-width: 50px;
+    float: right;
 }
 
 .mat-dialog-content{
@@ -161,5 +161,9 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 
 tr.mat-header-row {
     height: 40px;
+}
+
+.mat-raised-button{
+    border-radius: 10px !important;
 }
 

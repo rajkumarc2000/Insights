@@ -34,14 +34,13 @@ export class ShowDetailsDialog implements OnInit {
   columnLength:number;
   headerArray = [];
   agentDetailedNode = [];
-  showFieldVal = [];
   headerArrayDisplay = [];
-
+  imageMap = new Map<String, String>();
+  map3={"status":'Status',"execId": "Execution Id","message": "Message","inSightsTimeX" : "Execution Time"};
   constructor(public dialogRef: MatDialogRef<ShowDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private restCallHandlerService: RestCallHandlerService,
     private healthCheckService: HealthCheckService, ) {
-    //this.loadDetailsDialogInfo();          
   }
 
   ngOnInit() {
@@ -56,7 +55,6 @@ export class ShowDetailsDialog implements OnInit {
     this.checkResponseData = true;
     this.healthCheckService.loadHealthConfigurations(this.data.toolName, this.data.categoryName)
       .then((data) => {
-        //console.log(data);
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
         var dataArray = data.data.nodes;
@@ -64,10 +62,7 @@ export class ShowDetailsDialog implements OnInit {
         if (dataArray.length === 0) {
           this.checkResponseData = false;
         }
-        //this.showFieldVal = ['type', 'uuid', 'status', 'execId', 'message', 'inSightsTimeX'];
-        this.showFieldVal = ['status', 'execId', 'message', 'inSightsTimeX'];
-        this.columnLength=this.showFieldVal.length
-        //console.log(columnLenght)
+        this.columnLength=Object.keys(this.map3).length; 
         for (var key in dataArray) {
           var dataNodes = dataArray[key];
           for (var node in dataNodes) {
@@ -88,17 +83,16 @@ export class ShowDetailsDialog implements OnInit {
   }
 
   showSelectedField(): void {
-    for (var key in this.showFieldVal) {
-      for (var val in this.headerArray) {
-        if (this.showFieldVal[key] === this.headerArray[val]) {
-          if (this.headerArrayDisplay.indexOf(this.showFieldVal[key]) < 0) {
-            this.headerArrayDisplay.push(this.showFieldVal[key]);
-          }
-        }
+    for (var val in this.headerArray) {
+      if (this.headerArray[val] in this.map3  == true) {
+        if (!this.imageMap.has(this.headerArray[val])) {
+          this.imageMap.set(this.headerArray[val], this.map3[this.headerArray[val]]);
+          this.headerArrayDisplay.push(this.headerArray[val]);
       }
-    }
+      }
+    }  
   }
-
+  
   closeShowDetailsDialog(): void {
     this.dialogRef.close();
   }

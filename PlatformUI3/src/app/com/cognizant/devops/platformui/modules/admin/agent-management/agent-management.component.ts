@@ -19,8 +19,7 @@ import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UninstallAgentDialog } from '@insights/app/modules/admin/agent-management/agent-configuration/uninstall-agent-dialog';
-
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 @Component({
   selector: 'app-agent-management',
@@ -47,7 +46,8 @@ export class AgentManagementComponent implements OnInit {
   versionList = [];
 
   constructor(public agentService: AgentService, public router: Router,
-    private route: ActivatedRoute, public dialog: MatDialog) {
+    private route: ActivatedRoute, public dialog: MatDialog,
+    public messageDialog: MessageDialogService) {
     this.getRegisteredAgents();
   }
 
@@ -57,7 +57,9 @@ export class AgentManagementComponent implements OnInit {
       console.log(params["agentstatus"]);
       if (params["agentstatus"] != undefined) {
         this.receivedParam = params["agentstatus"];
+        var agentConfigstatusCode = params["agentConfigstatusCode"]
         this.showConfirmMessage = this.receivedParam;
+        this.messageDialog.showApplicationsMessage(this.receivedParam, agentConfigstatusCode);
       }
     });
   }
@@ -79,6 +81,7 @@ export class AgentManagementComponent implements OnInit {
       }, 3000);
     } else {
       self.showMessage = "Something wrong with Service, Please try again.";
+      self.messageDialog.showApplicationsMessage("Something wrong with Service, Please try again.", "ERROR");
     }
   }
   private consolidatedArr(detailArr): void {
@@ -104,15 +107,15 @@ export class AgentManagementComponent implements OnInit {
         .then(function (data) {
           if (actType == "START") {
             if (data.status == "success") {
-              self.showConfirmMessage = "started";
+              self.messageDialog.showApplicationsMessage("Agent Started Successfully", "SUCCESS");
             } else {
-              self.showConfirmMessage = "start";
+              self.messageDialog.showApplicationsMessage("Agent Start failed,Please try again later", "ERROR");
             }
           } else {
             if (data.status == "success") {
-              self.showConfirmMessage = "stopped";
+              self.messageDialog.showApplicationsMessage("Agent Stopped Successfully", "SUCCESS");
             } else {
-              self.showConfirmMessage = "stop";
+              self.messageDialog.showApplicationsMessage("Agent Stop failed,Please try again later", "ERROR");
             }
           }
 
@@ -127,14 +130,10 @@ export class AgentManagementComponent implements OnInit {
 
   async addAgentData() {
     this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
-    /*if (this.toolVersionData == undefined) {
-      await this.getOsVersionTools();
-    }*/
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
-        "agentparameter": this.agentparameter/*,
-        "versionAndToolInfo": this.toolVersionData*/
+        "agentparameter": this.agentparameter
       }
     };
     console.log(navigationExtras);
@@ -143,15 +142,11 @@ export class AgentManagementComponent implements OnInit {
 
   async editAgent() {
     this.consolidatedArr(this.selectedAgent);
-    /*if (this.toolVersionData == undefined) {
-      await this.getOsVersionTools();
-    }*/
     this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
-        "agentparameter": this.agentparameter/*,
-        "versionAndToolInfo": this.toolVersionData*/
+        "agentparameter": this.agentparameter
       }
     };
     this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
@@ -160,38 +155,24 @@ export class AgentManagementComponent implements OnInit {
   uninstallAgent() {
     var self = this;
     console.log("uninstall agent " + JSON.stringify(this.selectedAgent));
+    if (self.selectedAgent.agentStatus == 'STOP') {
+      var title = "Delete User";
+      var dialogmessage = "Note: Uninstalling the Agent doesn't delete the data that has been collected. The agent could be re-registered again, and the data collection would be resumed from the last run time. <br> Do you want to uninstall <b> " + self.selectedAgent.toolName + " </b> on <b>" + self.selectedAgent.osVersion + " </b> ";
+      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName);
 
-    const dialogRef = this.dialog.open(UninstallAgentDialog, {
-      width: '40%',
-      height: '40%',
-      data: { name: this.selectedAgent.toolName }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed  ' + result);
-      if (result == 'yes') {
-        self.agentService.agentUninstall(self.selectedAgent.agentKey, self.selectedAgent.toolName, self.selectedAgent.osVersion).then(function (data) {
-          self.getRegisteredAgents();
-        }).catch(function (data) {
-          self.showConfirmMessage = "service_error";
-          self.getRegisteredAgents();
-        });
-      }
-    });
-
-  }
-
-  /*async getOsVersionTools() {
-    var self = this;
-    var selversion;
-    let DocrootData: any = await this.agentService.getDocRootAgentVersionTools()
-
-    console.log(DocrootData);
-    if (DocrootData.status == "success") {
-      this.toolVersionData = JSON.stringify(DocrootData.data);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed  ' + result);
+        if (result == 'yes') {
+          self.agentService.agentUninstall(self.selectedAgent.agentKey, self.selectedAgent.toolName, self.selectedAgent.osVersion).then(function (data) {
+            self.getRegisteredAgents();
+          }).catch(function (data) {
+            self.showConfirmMessage = "service_error";
+            self.getRegisteredAgents();
+          });
+        }
+      });
     } else {
-      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
+      self.messageDialog.showApplicationsMessage("Please stop the Agent before uninstalling!", "WARN");
     }
-    self.showThrobber = false;
-  }*/
+  }
 }
