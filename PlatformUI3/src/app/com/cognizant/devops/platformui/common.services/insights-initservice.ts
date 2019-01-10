@@ -63,7 +63,7 @@ export class InsightsInitService {
         InsightsInitService.neo4jServiceHost = UIConfigResponse.neo4jServiceHost;
         InsightsInitService.grafanaHost = UIConfigResponse.grafanaHost;
         InsightsInitService.agentsOsList = UIConfigResponse.agentsOsList;
-        console.log(InsightsInitService.agentsOsList);
+        //console.log(InsightsInitService.agentsOsList);
     }
 
     private loadImageHandler() {

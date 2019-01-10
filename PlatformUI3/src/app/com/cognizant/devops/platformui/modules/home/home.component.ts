@@ -107,11 +107,11 @@ export class HomeComponent implements OnInit {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.switchOrganizations(item.orgId);
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
-      } else if (item.iconName == 'about') {
+      } else if (item.displayName == 'About') {
         window.open(this.aboutPageURL, "_blank");
-      } else if (item.iconName == 'help') {
+      } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
-      } else if (item.iconName == 'logout') {
+      } else if (item.displayName == 'Logout') {
         this.logout();
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
@@ -263,7 +263,6 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'Configuration',
         iconName: 'admin',
-        route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         isAdminMenu: true,
         children: [
@@ -336,14 +335,12 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'About',
         iconName: 'info',
-        route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,
         isAdminMenu: false
       }, {
         displayName: 'Help',
         iconName: 'help',
-        route: 'InSights/Home/admin',
         isToolbarDisplay: true,
         showIcon: true,
         isAdminMenu: false

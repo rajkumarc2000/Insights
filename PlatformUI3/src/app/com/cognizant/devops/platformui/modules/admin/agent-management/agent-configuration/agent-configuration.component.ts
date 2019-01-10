@@ -18,6 +18,7 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { AgentConfigItem } from '@insights/app/modules/admin/agent-management/agent-configuration/agentConfigItem';
+import { AdminComponent } from '@insights/app/modules/admin/admin.component';
 
 
 @Component({
@@ -64,6 +65,9 @@ export class AgentConfigurationComponent implements OnInit {
   agentConfigItems: AgentConfigItem[] = [];
   selectedAgentKey: string;
   agentConfigstatus: string;
+  agentConfigstatusCode: string;
+  subTitleName: string;
+  subTitleInfoText: string;
   @ViewChild('fileInput') myFileDiv: ElementRef;
 
   constructor(public config: InsightsInitService, public agentService: AgentService,
@@ -88,6 +92,8 @@ export class AgentConfigurationComponent implements OnInit {
   initializeVariable() {
     if (this.receivedParam.type == "update") {
       this.btnValue = "Update";
+      this.subTitleName = "Update an Agent"
+      this.subTitleInfoText = "(you may add.edit/delete agent from the main page)";
       this.buttonDisableStatus = true;
       this.defaultConfigdata = {};
       if (this.receivedParam.detailedArr != null) {
@@ -98,7 +104,9 @@ export class AgentConfigurationComponent implements OnInit {
         this.getDbAgentConfig();
       }
     } else {
-      this.btnValue = "Register";
+      this.btnValue = "Add";//Register
+      this.subTitleName = "Add an Agent"
+      this.subTitleInfoText = "(you may edit the Agent from the main page after adding the agent)";
       this.selectedOS = undefined;
       this.selectedVersion = undefined
       this.selectedTool = undefined;
@@ -263,6 +271,7 @@ export class AgentConfigurationComponent implements OnInit {
   async saveData(actionType) {
     var self = this;
     this.agentConfigstatus = undefined;
+    this.agentConfigstatusCode = undefined;
     self.updatedConfigdata = {};
     this.updatedConfigParamdata = {};
 
@@ -293,10 +302,12 @@ export class AgentConfigurationComponent implements OnInit {
         //console.log(updateAgentRes);
         if (updateAgentRes.status == "success") {
           self.sendStatusMsg("updated");
-          self.agentConfigstatus = "updated"
+          self.agentConfigstatus = "Agent updated Successfully"
+          self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("update");
-          self.agentConfigstatus = "update"
+          self.agentConfigstatus = "Agent update Failed"
+          self.agentConfigstatusCode = "ERROR";
         }
       } else {
 
@@ -305,10 +316,12 @@ export class AgentConfigurationComponent implements OnInit {
         //console.log(registerAgentRes);
         if (registerAgentRes.status == "success") {
           self.sendStatusMsg("registered");
-          self.agentConfigstatus = "registered"
+          self.agentConfigstatus = " Agent Registered Successfully"
+          self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("register");
-          self.agentConfigstatus = "register"
+          self.agentConfigstatus = "Agent Register Failed"
+          self.agentConfigstatusCode = "ERROR";
         }
       }
 
@@ -318,7 +331,8 @@ export class AgentConfigurationComponent implements OnInit {
       let navigationExtras: NavigationExtras = {
         skipLocationChange: true,
         queryParams: {
-          "agentstatus": this.agentConfigstatus
+          "agentstatus": this.agentConfigstatus,
+          "agentConfigstatusCode": this.agentConfigstatusCode
         }
       };
       this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);

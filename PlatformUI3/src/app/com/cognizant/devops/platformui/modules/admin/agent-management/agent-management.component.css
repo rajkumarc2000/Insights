@@ -53,7 +53,7 @@ tr.mat-footer-row, tr.mat-row {
     display: block;
     width: 100%;
     padding: 6px 12px;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.42857143;
     color: #555;
     background-color: #fff;
@@ -83,7 +83,7 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .configureBut {
-    min-width: 150px;
+    /*min-width: 150px;
     font-size: 15px;
 	font-family: inherit !important; 
     border-radius: 0px;
@@ -91,7 +91,8 @@ tr.mat-footer-row, tr.mat-row {
     color: white;
     background-color: #00728f;
     padding-right: 20px;
-    margin-left: 10px;
+    margin-left: 10px;*/
+    float: right;
 }
 
 ::-webkit-scrollbar {
@@ -153,6 +154,8 @@ tr.mat-footer-row, tr.mat-row {
     height: 28px !important;
     box-sizing: initial !important;
     max-width: 100%;
+    font-size: 14px;
+    padding-left: 2px;
 }
 
 .frmTxtarea {
@@ -223,6 +226,15 @@ tr.mat-footer-row, tr.mat-row {
 
 .mat-dialog-actions{
     float: center;
+}
+
+.mainText{
+    font-size: 14px;
+    color:  #00b140;
+    font-weight:bold;
+    vertical-align:sub;
+    width: 10%;
+    padding-left: 5px;
 }
 
 

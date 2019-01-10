@@ -21,12 +21,15 @@
 
 <mat-dialog-content>
 
-    {{data.message}}
+    <!-- {{data.message}}
+    <br> {{data.submessage}}-->
 
+    <div [innerHTML]="data.message">
+    </div>
 
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button class="mat-button-dialog" (click)="dialogRef.close('no')">No</button>
-    <button mat-button class="mat-button-dialog" (click)="dialogRef.close('yes')">Yes</button>
+    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="dialogRef.close('no')">No</button>
+    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="dialogRef.close('yes')">Yes</button>
 </mat-dialog-actions>
