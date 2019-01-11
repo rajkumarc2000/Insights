@@ -41,6 +41,20 @@
     padding-bottom: 3px;
 }
 
+.sectionHeadingStyleWithoutButton {
+    background-color: #0033A0;   
+    color: white;
+    font-size: 16px;
+    margin-top:16px; 
+    height: 30px;
+    border: 1px solid #0033A0;
+    border-radius: 10px 10px 10px 10px;   
+    vertical-align:center;
+    padding-top: 8px;
+    padding-bottom: 3px;
+    margin-bottom: 30px;
+}
+
 .sectionSubHeading{
     font-size: 13px;
     color: #00B140; 
