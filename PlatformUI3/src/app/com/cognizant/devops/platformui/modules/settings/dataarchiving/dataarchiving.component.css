@@ -9,7 +9,6 @@ table,mat-table {
     font-size: 14px;
     height: 30px;
     margin: 0px;
-    padding:5px;
     flex: 0 0 10px;
     text-align: left;
 }
@@ -92,7 +91,6 @@ tr.mat-footer-row, tr.mat-row {
 .mainHeaderText{
     font-size: 15px;
     color:  white;
-    padding-left: 10px;
     
 }
 
@@ -130,7 +128,7 @@ tr.mat-header-row {
 
 
 .mat-header-cell, .mat-cell {
-  padding: 0 10px; 
+   
 }
 
 .header-group-row {
