@@ -57,7 +57,8 @@ import { ConfirmationMessageDialog } from '@insights/app/modules/application-dia
 import { ApplicationMessageDialog } from '@insights/app/modules/application-dialog/application-message-dialog';
 import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
-
+import { BlockChainService } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.service';
+import { DatePipe } from '@angular/common';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 
 
@@ -110,7 +111,9 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     DataArchivingService,
     BusinessHierarchyDatabase,
     UserOnboardingService,
-    MessageDialogService
+    MessageDialogService,
+    BlockChainService,
+    DatePipe
   ]
 })
 

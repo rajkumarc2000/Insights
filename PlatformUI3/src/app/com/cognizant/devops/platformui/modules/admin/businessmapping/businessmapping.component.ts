@@ -100,7 +100,7 @@ export class BusinessMappingComponent implements OnInit {
 
   constructor(private businessMappingService: BusinessMappingService, private database: BusinessHierarchyDatabase) {
     this.nestedTreeControl = new NestedTreeControl<TreeNode>(this._getChildren);
-    this.nestedDataSource = new MatTreeNestedDataSource();
+    this.nestedDataSource = new MatTreeNestedDataSource<TreeNode>();
     database.dataChange.subscribe(data => this.nestedDataSource.data = data);
   }
 
@@ -130,7 +130,7 @@ export class BusinessMappingComponent implements OnInit {
     var level4 = levels[3] || '';
     this.businessMappingService.getHierarchyProperties(level1,level2,level3,level4)
         .then((data)=> {
-          //console.log(data);
+          console.log(data);
           this.hierarchyProperties = data.data;
         });
   }
