@@ -34,6 +34,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     margin: 0px;
     padding:0px;
     text-align: center;
+    font-weight: bold;
 }
 
 
@@ -51,6 +52,22 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     vertical-align: middle;
     width: inherit
 }
+
+.mat-row-upload-data{
+    height: 40px !important;
+    text-align: left !important;
+    vertical-align: middle;
+    margin-left: 15px;
+}
+
+.mat-row-icon-button{
+    height: 60px !important;
+    text-align: left !important;
+    vertical-align: middle;
+    width: inherit;
+    margin-right: 21px;
+}
+
 .mat-cell-value-dynamic-data{
     font-size: 13px;
     height: 40px;
@@ -68,20 +85,21 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 }
 
 .mat-cell-header{
-    font-size: 17px;
+    font-size: 16px;
     height: 40px;
     text-align: left;
     font-family: inherit;
     width: 40%;
-    padding-left: 4px;
+    padding-left: 10px;
 }
 
 .mat-cell-header-single{
-    font-size: 17px;
+    font-size: 16px;
     height: 40px;
     text-align: left;
     font-family: inherit;
     padding-left: 4px;
+    margin-left: 19px;
 }
 
 .mat-cell-value{
@@ -105,12 +123,10 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 }
 
 .upload-main-text{
-    font-size: 17px;
+    font-size: 16px;
     color:  #00b140;
-    font-weight:bold;
     vertical-align:sub;
     width: 10%;
-    padding-left: 5px;
 }
 
 .dynamic-table-body{
@@ -166,7 +182,6 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 
 .button-row{
     margin-bottom: 10px;
-    margin-top: 21px;
 }
 
 .form{
@@ -184,6 +199,15 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     padding-right: 20px;
     margin-left: 10px;*/
     float: right;
+    background-color: #00B140 ;
+    margin-bottom: 10px;
+}
+
+.configureButIcon{
+    float: right;
+    margin-left: 10px;
+    margin-right: inherit;
+    font-size: 50px !important;
 }
 
 ::-webkit-scrollbar {
@@ -238,15 +262,15 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 .inputBoxCont {
     border: 1px !important;
     border-style: solid !important;
-    border-color: black !important;
-    border-bottom-color: black !important;
+    border-color: #9e9a9a  !important;
+    border-bottom-color: #9e9a9a !important;
     background-color: white !important;
     text-align: left !important;
     height: 28px !important;
     box-sizing: initial !important;
     max-width: 100%;
     font-size: 14px;
-    padding-left: 2px;
+    padding-left: 5px;
     width: inherit;
 }
 
@@ -257,8 +281,8 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     padding-left: 2px;
     border: 1px !important;
     border-style: solid !important;
-    border-color: black !important;
-    border-bottom-color: black !important;
+    border-color: #9e9a9a !important;
+    border-bottom-color: #9e9a9a !important;
 }
 
 .layout-row > .flex-30 {
@@ -342,6 +366,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     align-items: baseline;
     color: #0033A0;
     text-align: start;
+    height: 30px;
 }
 
 

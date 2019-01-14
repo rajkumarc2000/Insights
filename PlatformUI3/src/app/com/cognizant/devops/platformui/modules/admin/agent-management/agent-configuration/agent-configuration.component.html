@@ -23,16 +23,13 @@
 
   <div class="orangeStripCss"></div>
 
-  <div layout layout-align="left" class="sectionHeadingStyle">
+  <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
     <div layout>&nbsp; {{subTitleName}}
       <span class="sectionSubHeading"> {{subTitleInfoText}} </span>
     </div>
   </div>
 
   <form #frmagentconfig="ngForm" class="form">
-    <div class="agentConfigTable" layout layout-align="center center" *ngIf="!showConfig">
-      <h3 class="agentdefaultMessage">{{showMessage}} </h3>
-    </div>
     <div class="arrange-horizontally button-row">
       <div> <label class="mainText"> Select the Operating System </label> </div>
       <div>
@@ -41,14 +38,14 @@
           <mat-option *ngFor="let os of osLists | keyvalue" value="{{os.value}}">{{os.key}}</mat-option>
           </mat-select>
       </div>
-      <div> <label class="mainText"> Select Version of Agent </label> </div>
+      <div> <label class="mainText"> Version of the Agent </label> </div>
       <div>
         <mat-select required [(ngModel)]="selectedVersion" name="selectedVersion" class="form-control" placeholder="Select Version"
           (ngModelChange)="versionOnChange(selectedVersion, btnValue)" style="width:150px;">
           <mat-option *ngFor="let key of versionList" value="{{key}}">{{key}}</mat-option>
           </mat-select>
       </div>
-      <div> <label class="mainText"> Select a Tool </label> </div>
+      <div> <label class="mainText"> Tool </label> </div>
       <div>
         <mat-select required [(ngModel)]="selectedTool" name="selectedTool" class="form-control" placeholder="Select Tool" (ngModelChange)="getAgentConfig(selectedVersion, selectedTool)"
           style="width:150px;" [disabled]="btnValue == 'Update'">
@@ -145,28 +142,28 @@
           </tr>
         </thead>
         <tbody style="width: inherit;">
-          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="display: inline-table;">
+          <tr layout layout-align="start start" class="mat-row-upload-data" style="display: inline-table;">
             <td class="mat-cell-value-dynamic-data">
-              <span class="upload-main-text">If you are migrating previous version of agents, Please upload the tracking.JSON file of <b> {{selectedTool}} </b>
-								agent </span>
+              <span class="upload-main-text">If you are migrating previous version of agents, please upload the tracking.json file of <b> {{selectedTool}} </b>
+								Agent </span>
             </td>
           </tr>
-          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="display: inline-table;">
+          <tr layout layout-align="start start" class="mat-row-upload-data" style="display: inline-table;">
             <td class="mat-cell-header-single">
-              <span>Select a File to Upload:</span>
+              <span>Select a file to Upload:</span>
             </td>
             <td class="mat-cell-value-single">
               <input #fileInput class="input-file" type="file" accept=".json" (change)="fileChanged($event)" />
             </td>
           </tr>
-          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="float: right;">
-            <button class="configureBut" mat-icon-button (click)="uploadFile()">
-              <mat-icon title="Upload File " class="mat-icon material-icons" >
+          <tr layout layout-align="start start" class="mat-row-icon-button" style="float: right;">
+            <button class="configureButIcon" mat-icon-button (click)="uploadFile()">
+              <mat-icon style="font-size: 50px;" title="Upload File " class="mat-icon material-icons" >
                 cloud_upload
               </mat-icon>
             </button>
-            <button class="configureBut" mat-icon-button (click)="cancelFileUpload()">
-              <mat-icon title="Cancel Upload " class="mat-icon material-icons" >
+            <button class="configureButIcon" mat-icon-button (click)="cancelFileUpload()">
+              <mat-icon style="font-size: 50px;" title="Cancel Upload " class="mat-icon material-icons" >
                 cancel
               </mat-icon>
             </button>
@@ -176,10 +173,10 @@
     </div>
 
 
-    <div>
+    <div style="margin-bottom: 15px;">
       <button mat-raised-button color="primary" (click)="saveData(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut"
         style="width:150px;">
-        {{btnValue}}
+        {{btnValue | uppercase }}
         </button>
         <br>
     </div>
