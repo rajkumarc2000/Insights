@@ -48,7 +48,7 @@
           <mat-option *ngFor="let key of versionList" value="{{key}}">{{key}}</mat-option>
           </mat-select>
       </div>
-      <div> <label class="mainText"> Select a Agent </label> </div>
+      <div> <label class="mainText"> Select a Tool </label> </div>
       <div>
         <mat-select required [(ngModel)]="selectedTool" name="selectedTool" class="form-control" placeholder="Select Tool" (ngModelChange)="getAgentConfig(selectedVersion, selectedTool)"
           style="width:150px;" [disabled]="btnValue == 'Update'">
@@ -63,18 +63,16 @@
 
 
     <div class="agentConfigTable" layout layout-align="start center" *ngFor="let configData of getAgentConfigItems('object')">
-      <table>
-        <thead class="theadCss">
-          <tr layout="row" layout-align="start start">
-            <th flex="22.5" class="tableHeader">
-              <span class="tableHeadingStyle" style="text-transform: capitalize;">
-								{{configAbbr[configData.key]}}
-							</span>
+      <table class="mat-elevation-z8 mat-table dynamic-table">
+        <thead>
+          <tr class="mat-header-row" layout-align="start start">
+            <th colspan="3" class="dynamicTableHeaderCss mat-header-cell" style="height:40px;border-radius: 10px 10px 0 0;">
+              <span class="mainHeaderText">{{configAbbr[configData.key]}}</span>
             </th>
           </tr>
         </thead>
         <tbody layout layout-wrap layout-margin layout-padding>
-          <tr flex="30" layout layout-align="start start" *ngFor="let configDataChild of configData.children" style="display: inline-table;">
+          <!--  <tr flex="30" layout layout-align="start start" *ngFor="let configDataChild of configData.children" style="display: inline-table;">
             <td class="agentlistLabel">
               <span class="dataHead">{{configDataChild.key}}</span>
             </td>
@@ -82,89 +80,102 @@
               <input class="inputBoxCont" [(ngModel)]="configDataChild.value" name="{{configDataChild.value}}">
             </td>
           </tr>
-        </tbody>
+        </tbody>-->
+
+          <tbody class="dynamic-table-body" layout layout-wrap layout-margin layout-padding>
+            <tr flex="30" layout layout-align="start start" class="mat-row-dynamic" *ngFor="let configDataChild of configData.children"
+              style="display: inline-table;">
+              <td class="mat-cell-header">
+                <span>{{configDataChild.key}}</span>
+              </td>
+              <td class="mat-cell-value">
+                <input class="inputBoxCont" [(ngModel)]="configDataChild.value" name="{{configDataChild.value}}">
+              </td>
+              </tr>
+          </tbody>
       </table>
     </div>
     <div class="others" layout layout-align="start center" *ngIf="showConfig">
-      <table class="md-api-table-landing">
-        <thead class="theadCss">
-          <tr layout="row" layout-align="start start">
-            <th flex="22.5" class="tableHeader">
-              <span class="tableHeadingStyle">Others</span>
+      <table class="mat-elevation-z8 mat-table dynamic-table">
+        <thead>
+          <tr class="mat-header-row" layout-align="start start">
+            <th colspan="3" class="dynamicTableHeaderCss mat-header-cell" style="height:40px;border-radius: 10px 10px 0 0;">
+              <span class="mainHeaderText">Others</span>
             </th>
           </tr>
         </thead>
-        <tbody layout layout-wrap layout-margin layout-padding>
-          <tr flex="30" layout layout-align="start start" *ngFor="let configData of getAgentConfigItems('all')" style="display: inline-table;">
-            <td class="agentlistLabel">
-              <span class="dataHead">{{configData.key}}</span>
+        <tbody class="dynamic-table-body" layout layout-wrap layout-margin layout-padding>
+          <tr layout layout-align="start start" class="mat-row-dynamic" *ngFor="let configData of getAgentConfigItems('all')" style="display: inline-table;">
+            <td class="mat-cell-header">
+              <span>{{configData.key}}</span>
             </td>
-            <td>
+            <td class="mat-cell-value">
               <input class="inputBoxCont" [(ngModel)]="configData.value" name="{{configData.key}}">
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
     <div class="others" layout layout-align="start center" *ngIf="showConfig">
-      <table class="md-api-table-landing">
-        <thead class="theadCss">
-          <tr layout="row" layout-align="start start">
-            <th flex="22.5" class="tableHeader">
-              <span class="tableHeadingStyle">Dynamic Data</span>
+      <table class="mat-elevation-z8 mat-table dynamic-table">
+        <thead>
+          <tr class="mat-header-row" layout-align="start start">
+            <th colspan="3" class="dynamicTableHeaderCss mat-header-cell" style="height:40px;border-radius: 10px 10px 0 0;">
+              <span class="mainHeaderText">Dynamic Data</span>
             </th>
           </tr>
         </thead>
-        <tbody>
-          <div class="agentConfigTable" layout layout-align="start center" *ngFor="let configData of getAgentConfigItems('dynamicTemplate')">
-            <textarea [(ngModel)]="configData.value" name="{{configData.value}}" rows="5" class="frmTxtarea"></textarea>
-          </div>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="agentConfigTable fileUpload" layout layout-align="start center" *ngIf="showConfig" style="margin-top: 10px">
-      <table class="md-api-table-landing">
-        <thead class="theadCss">
-          <tr layout="row" layout-align="start start">
-            <th flex="22.5" class="tableHeader">
-              <span class="tableHeadingStyle">Upload Tracking File</span>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody layout layout-wrap layout-margin layout-padding>
-
-          <tr flex="100" layout layout-align="start start" style="display: inline-table;">
-            <td class="agentlistLabel">
-              <span class="dataHead">If you are migrating previous version of agents, Please upload the tracking.JSON file of {{selectedTool}}
-								agent </span>
-
-              <div style="width:100%;background-color:#f3f3f3;margin-top:10px;border-bottom:1px solid #d8d9da">
-                <div class="contentCss fnt" style="padding:15px">
-                  <div layout flex="100">
-                    <div style="padding-right:20px;font-size:16px;padding-top:50px;font-weight:bold;width:20%">Select a File to Upload:</div>
-                    <div>
-
-                      <div class="drop" id="dropbox">
-                        <div class="cont">
-                          <input #fileInput type="file" accept=".json" (change)="fileChanged($event)" />
-                          <button mat-raised-button type="button" class="configureBut" (click)="uploadFile()">Upload File</button>
-                          <button mat-raised-button type="button" class="configureBut" (click)="cancelFileUpload()">Cancel Upload</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div style="color:green;margin-left:35%;margin-top:5px">{{fileUploadSuccessMessage}}</div>
-                  <div style="color:red;margin-left:35%;margin-top:5px">{{fileUploadErrorMessage}}</div>
-                </div>
-              </div>
+        <tbody style="width: inherit;">
+          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="display: inline-table;" *ngFor="let configData of getAgentConfigItems('dynamicTemplate')">
+            <td class="mat-cell-value-dynamic-data">
+              <textarea [(ngModel)]="configData.value" name="{{configData.value}}" rows="5" class="frmTxtarea"></textarea>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <div class="others" layout layout-align="start center" *ngIf="showConfig && showTrackingJsonUploadButton">
+      <table class="mat-elevation-z8 mat-table dynamic-table">
+        <thead>
+          <tr class="mat-header-row" layout-align="start start">
+            <th colspan="3" class="dynamicTableHeaderCss mat-header-cell" style="height:40px;border-radius: 10px 10px 0 0;">
+              <span class="mainHeaderText">Upload Tracking File</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody style="width: inherit;">
+          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="display: inline-table;">
+            <td class="mat-cell-value-dynamic-data">
+              <span class="upload-main-text">If you are migrating previous version of agents, Please upload the tracking.JSON file of <b> {{selectedTool}} </b>
+								agent </span>
+            </td>
+          </tr>
+          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="display: inline-table;">
+            <td class="mat-cell-header-single">
+              <span>Select a File to Upload:</span>
+            </td>
+            <td class="mat-cell-value-single">
+              <input #fileInput class="input-file" type="file" accept=".json" (change)="fileChanged($event)" />
+            </td>
+          </tr>
+          <tr flex="30" layout layout-align="start start" class="mat-row-dynamic-data" style="float: right;">
+            <button class="configureBut" mat-icon-button (click)="uploadFile()">
+              <mat-icon title="Upload File " class="mat-icon material-icons" >
+                cloud_upload
+              </mat-icon>
+            </button>
+            <button class="configureBut" mat-icon-button (click)="cancelFileUpload()">
+              <mat-icon title="Cancel Upload " class="mat-icon material-icons" >
+                cancel
+              </mat-icon>
+            </button>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
     <div>
       <button mat-raised-button color="primary" (click)="saveData(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut"
         style="width:150px;">
@@ -172,7 +183,7 @@
         </button>
         <br>
     </div>
-
+    <br>
   </form>
 
 </div>

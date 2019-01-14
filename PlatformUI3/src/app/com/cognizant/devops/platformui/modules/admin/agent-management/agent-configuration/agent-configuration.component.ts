@@ -102,6 +102,7 @@ export class AgentConfigurationComponent implements OnInit {
         this.selectedTool = this.receivedParam.detailedArr.toolName;
         this.selectedAgentKey = this.receivedParam.detailedArr.agentKey;
         this.getDbAgentConfig();
+        this.showTrackingJsonUploadButton = false;
       }
     } else {
       this.btnValue = "Add";//Register
@@ -110,6 +111,7 @@ export class AgentConfigurationComponent implements OnInit {
       this.selectedOS = undefined;
       this.selectedVersion = undefined
       this.selectedTool = undefined;
+      this.showTrackingJsonUploadButton = true;
     }
   }
 

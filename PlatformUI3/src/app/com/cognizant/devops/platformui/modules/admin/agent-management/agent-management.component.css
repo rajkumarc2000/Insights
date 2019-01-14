@@ -5,7 +5,6 @@ table {
     margin-bottom: 4px;
 }
 
-
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
 
@@ -15,15 +14,107 @@ tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 .mat-table {
     font-family: inherit !important;    
 }
-tr.mat-footer-row, tr.mat-row {
-    height: 30px !important;
+
+.dynamic-table{
+    margin-bottom: 30px;
+}
+
+tr.mat-footer-row, tr.mat-row-dynamic{
+    height: 40px !important;
     text-align: left !important;
+    vertical-align: middle;
+    width: 50%;
+}
+
+.dynamicTableHeaderCss {
+    background-color: #00B140;   
+    color: white;
+    font-size: 15px;
+    height: 40px;
+    margin: 0px;
+    padding:0px;
+    text-align: center;
+}
+
+
+/*tr.mat-row-dynamic:nth-child(even){
+    background-color:#e1e3e7;
+}*/
+
+/*.mat-row-dynamic-data:nth-child(odd){
+    background-color:#FFFFFF;
+}
+*/
+.mat-row-dynamic-data{
+    height: 40px !important;
+    text-align: left !important;
+    vertical-align: middle;
+    width: inherit
+}
+.mat-cell-value-dynamic-data{
+    font-size: 13px;
+    height: 40px;
+    text-align: left;
+    font-family: inherit;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .mat-button{
 	font-family: inherit !important; 
     font-size: 15px;
     font-weight: 500;
     min-width: 50px;
+}
+
+.mat-cell-header{
+    font-size: 17px;
+    height: 40px;
+    text-align: left;
+    font-family: inherit;
+    width: 40%;
+    padding-left: 4px;
+}
+
+.mat-cell-header-single{
+    font-size: 17px;
+    height: 40px;
+    text-align: left;
+    font-family: inherit;
+    padding-left: 4px;
+}
+
+.mat-cell-value{
+    font-size: 13px;
+    height: 40px;
+    text-align: left;
+    font-family: inherit;
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 80%;
+}
+
+.mat-cell-value-single{
+    font-size: 13px;
+    height: 40px;
+    text-align: left;
+    font-family: inherit;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.upload-main-text{
+    font-size: 17px;
+    color:  #00b140;
+    font-weight:bold;
+    vertical-align:sub;
+    width: 10%;
+    padding-left: 5px;
+}
+
+.dynamic-table-body{
+    width: inherit;
 }
 
 .tableDiv{
@@ -156,11 +247,18 @@ tr.mat-footer-row, tr.mat-row {
     max-width: 100%;
     font-size: 14px;
     padding-left: 2px;
+    width: inherit;
 }
 
 .frmTxtarea {
     width: 100%;
     height: 200px;
+    font-size: 14px;
+    padding-left: 2px;
+    border: 1px !important;
+    border-style: solid !important;
+    border-color: black !important;
+    border-bottom-color: black !important;
 }
 
 .layout-row > .flex-30 {
@@ -229,13 +327,24 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .mainText{
-    font-size: 14px;
+    font-size: 15px;
     color:  #00b140;
     font-weight:bold;
     vertical-align:sub;
     width: 10%;
     padding-left: 5px;
 }
+.input-file {
+    -webkit-appearance: initial;
+    background-color: initial;
+    padding: initial;
+    border: initial;
+    align-items: baseline;
+    color: #0033A0;
+    text-align: start;
+}
+
+
 
 
 
