@@ -40,7 +40,7 @@ export class BlockChainService implements IBlockChainService {
 
     getAssetInfo(assetID:string): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ASSET_INFO", {'assetID': assetID});
+        return restHandler.get("GET_ASSET_INFO", {'assetId': assetID});
     }
 
 }

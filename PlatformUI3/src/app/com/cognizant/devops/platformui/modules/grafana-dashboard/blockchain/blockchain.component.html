@@ -51,7 +51,8 @@
       <mat-radio-button value="searchByAssetId" color="primary">
         <div class="dateElementStyle">
           <mat-form-field class="inputAssetIdStyle">
-            <input matInput type="text">
+            <input matInput #assetId type="text" (keyup.enter)="getAssetID(assetId.value)"
+                          (blur)="getAssetID(assetId.value)">
             <mat-placeholder class="placeholder">Input Asset ID</mat-placeholder>
           </mat-form-field>
         </div>

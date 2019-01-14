@@ -51,12 +51,17 @@ export class BlockChainComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[];
-  dataSource = new MatTableDataSource<AssetData>([]); 
+  dataSource = new MatTableDataSource<AssetData>([]);
   MAX_ROWS_PER_TABLE = 5;
   startDate: string;
   endDate: string;
   showSearchResult = false;
   selectedOption: string;
+  startDateFormatted: string;
+  endDateFormatted: string;
+  assetID: string = "";  
+  startDateInput:Date;
+  endDateInput:Date;
 
   constructor(private blockChainService: BlockChainService, private datepipe: DatePipe) {
     this.yesterday.setDate(this.today.getDate() - 1);
@@ -73,9 +78,18 @@ export class BlockChainComponent implements OnInit {
   }
 
   //Method gets invoked when search button is clicked
-  searchAllAssets() {  
+  searchAllAssets() {
+    if (this.selectedOption === undefined) {
+      alert("Please select a search criteria >>" + this.selectedOption);
+      return;
+    }
     if (this.selectedOption == "searchByDates") {
-      alert("Search by Date Ranges >>");
+      //alert("Search by Date Ranges >>");
+      let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);
+      if (dateCompareResult == 1 ) {
+        alert ("Start date cannot be greater than end date..");
+        return;
+      }
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
         .then((data) => {
           console.log("server result >>");
@@ -94,21 +108,46 @@ export class BlockChainComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
         });
     } else if (this.selectedOption == "searchByAssetId") {
-      alert("Search by Input Asset ID selected >>");
+      //alert("Search by Input Asset ID selected >>" + this.assetID);
+      if (this.assetID !== undefined && this.assetID !== "") {
+         this.blockChainService.getAssetInfo(this.assetID)
+        .then((data) => {
+          console.log("server result >>");
+          console.log(data);
+          this.dataSource.data = data.data;
+          console.log("assets >>");          
+          this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+          this.showSearchResult = true;          
+          this.dataSource.sort = this.sort;          
+          this.dataSource.paginator = this.paginator;
+        }); 
+      }
+      
     }
 
   }
 
+  //Sets value in assetID property from user's input
+  getAssetID(assetIdInput: string) {
+    if (assetIdInput) {
+      this.assetID = assetIdInput;
+    } else {
+      this.assetID = "";
+    }
+  }
+
   getStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    let startDateInput: Date = event.value;
-    this.startDate = this.datepipe.transform(startDateInput, 'MM-dd-yyyy');
-    //alert("Start Date: >>" + this.startDate)
+    this.startDateInput = event.value;
+    this.startDate = this.datepipe.transform(this.startDateInput,'yyyy-MM-dd');
+    this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');
+    //alert("Start Date: >>" + this.startDateFormatted)
   }
 
   getEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    let endDateInput: Date = event.value;
-    this.endDate = this.datepipe.transform(endDateInput, 'MM-dd-yyyy');
-    //alert("End Date: >>" + this.endDate)
+    this.endDateInput = event.value;
+    this.endDate = this.datepipe.transform(this.endDateInput,'yyyy-MM-dd');
+    this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');
+    //alert("End Date: >>" + this.endDateFormatted)
   }
 
   /* 
