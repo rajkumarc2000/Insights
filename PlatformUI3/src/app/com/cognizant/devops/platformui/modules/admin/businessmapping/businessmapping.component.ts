@@ -49,10 +49,10 @@ export class BusinessHierarchyDatabase {
   async loadAllBusinessHierarchies() {
     this.businessMappingService.getAllHierarchyMappings()
       .then((result) => {
-        console.log("result of hierarchy mappings:" + result);
+        //console.log("result of hierarchy mappings:" + result);
         if (result != null) {
           this.hierarchyList = result.data[0].children;
-          console.log("all hierarchy mappings" + this.hierarchyList);
+          //console.log("all hierarchy mappings" + this.hierarchyList);
           let data = this.buildTreeNode(this.hierarchyList, 0);
           // Notify the change.
           this.dataChange.next(data);
@@ -130,7 +130,7 @@ export class BusinessMappingComponent implements OnInit {
     var level4 = levels[3] || '';
     this.businessMappingService.getHierarchyProperties(level1,level2,level3,level4)
         .then((data)=> {
-          console.log(data);
+          //console.log(data);
           this.hierarchyProperties = data.data;
         });
   }

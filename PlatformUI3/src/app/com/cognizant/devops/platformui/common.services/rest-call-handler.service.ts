@@ -60,7 +60,7 @@ export class RestCallHandlerService {
   public post(url: string, requestParams?: Object, additionalheaders?: Object): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
-    console.log(restCallUrl);
+    //console.log(restCallUrl);
     var dataresponse;
     var headers;
     var authToken = this.cookieService.get('Authorization');
@@ -100,7 +100,7 @@ export class RestCallHandlerService {
   public postWithParameter(url: string, requestParams?: Object, additionalheaders?: Object): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
-    console.log(restCallUrl);
+    //console.log(restCallUrl);
     var dataresponse;
     let headers;
     var authToken = this.cookieService.get('Authorization');

@@ -52,9 +52,9 @@ export class AgentManagementComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.route.queryParams);
+    //console.log(this.route.queryParams);
     this.route.queryParams.subscribe(params => {
-      console.log(params["agentstatus"]);
+      //console.log(params["agentstatus"]);
       if (params["agentstatus"] != undefined) {
         this.receivedParam = params["agentstatus"];
         var agentConfigstatusCode = params["agentConfigstatusCode"]
@@ -74,7 +74,7 @@ export class AgentManagementComponent implements OnInit {
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
       this.agentListDatasource = agentList.data;
-      console.log(agentList);
+      //console.log(agentList);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
       setTimeout(() => {
         this.showConfirmMessage = "";
@@ -136,7 +136,7 @@ export class AgentManagementComponent implements OnInit {
         "agentparameter": this.agentparameter
       }
     };
-    console.log(navigationExtras);
+    //console.log(navigationExtras);
     this.router.navigate(['InSights/Home/agentconfiguration'], navigationExtras);
   }
 
@@ -154,14 +154,14 @@ export class AgentManagementComponent implements OnInit {
 
   uninstallAgent() {
     var self = this;
-    console.log("uninstall agent " + JSON.stringify(this.selectedAgent));
+    //console.log("uninstall agent " + JSON.stringify(this.selectedAgent));
     if (self.selectedAgent.agentStatus == 'STOP') {
       var title = "Delete User";
       var dialogmessage = "Note: Uninstalling the Agent doesn't delete the data that has been collected. The agent could be re-registered again, and the data collection would be resumed from the last run time. <br> Do you want to uninstall <b> " + self.selectedAgent.toolName + " </b> on <b>" + self.selectedAgent.osVersion + " </b> ";
       const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName);
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed  ' + result);
+        //console.log('The dialog was closed  ' + result);
         if (result == 'yes') {
           self.agentService.agentUninstall(self.selectedAgent.agentKey, self.selectedAgent.toolName, self.selectedAgent.osVersion).then(function (data) {
             self.getRegisteredAgents();

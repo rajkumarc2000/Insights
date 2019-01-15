@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
     private restCallHandlerService: RestCallHandlerService, private cookieService: CookieService,
     private router: Router, private logger: LogService) {
-    console.log(" logging in login "); //this.logger.log
+    //console.log(" logging in login "); //this.logger.log
     this.getAsyncData();
 
   }
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
         this.imageAlt = 'Cognizant log';
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -146,7 +146,6 @@ export class LoginComponent implements OnInit, ILoginComponent {
             document.body.appendChild(form);
             form.submit();
             setTimeout(() => {
-              console.log("in timeout");
               //self.showThrobber = false;
               self.router.navigate(['/InSights/Home']);
             }, 2000);

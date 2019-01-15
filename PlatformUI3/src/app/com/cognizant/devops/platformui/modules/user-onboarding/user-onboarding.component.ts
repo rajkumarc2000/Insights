@@ -74,7 +74,7 @@ export class UserOnboardingComponent implements OnInit {
   async loadUsersInfo(selectedAdminOrg) {
     let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
     if (usersResponseData.data != undefined && usersResponseData.status == "success") {
-      console.log(usersResponseData.data);
+      //console.log(usersResponseData.data);
       this.showDetail = true;
       this.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
       this.userDataSource = new MatTableDataSource(usersResponseData.data);
@@ -90,7 +90,7 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   editUserData() {
-    console.log(this.selectedUser.userId);
+    //console.log(this.selectedUser.userId);
     this.isSaveEnable = true;
     this.isSelectedUserId = this.selectedUser.userId;
   }

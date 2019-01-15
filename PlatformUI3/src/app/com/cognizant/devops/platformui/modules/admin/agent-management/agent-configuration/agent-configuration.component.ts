@@ -232,7 +232,7 @@ export class AgentConfigurationComponent implements OnInit {
         }
         this.agentConfigItems.push(agentConfig);
       }
-      console.log(this.agentConfigItems.length);
+      //console.log(this.agentConfigItems.length);
     }
   }
 
@@ -328,7 +328,7 @@ export class AgentConfigurationComponent implements OnInit {
       }
 
     }
-    console.log(this.agentConfigstatus)
+    //console.log(this.agentConfigstatus)
     if (this.agentConfigstatus) {
       let navigationExtras: NavigationExtras = {
         skipLocationChange: true,
@@ -450,7 +450,7 @@ export class AgentConfigurationComponent implements OnInit {
       if (testFileExt) {
         this.getTrackingFileContentToString(uploadedFile[i]);
         setTimeout(() => {
-          console.log(uploadedFile[i]);
+          //console.log(uploadedFile[i]);
         }, 5000);
         this.fileUploadSuccessMessage = "File uploaded successfully!";
       }
