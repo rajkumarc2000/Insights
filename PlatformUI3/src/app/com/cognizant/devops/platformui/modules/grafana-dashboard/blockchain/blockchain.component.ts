@@ -23,6 +23,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 export interface AssetData {
   assetID: string;
@@ -31,11 +32,6 @@ export interface AssetData {
   toolName: string;
 }
 
-const ELEMENT_DATA: AssetData[] = [
-  { "assetID": "CH2", "phase": "Plan", "toolStatus": "Done", "toolName": "JIRA" },
-  { "assetID": "TE1", "phase": "Build", "toolStatus": "Success", "toolName": "GIT" },
-  { "assetID": "PK1", "phase": "Plan", "toolStatus": "Done", "toolName": "SCM" }
-];
 
 
 @Component({
@@ -62,8 +58,9 @@ export class BlockChainComponent implements OnInit {
   assetID: string = "";  
   startDateInput:Date;
   endDateInput:Date;
+  searchCriteria:string ="";
 
-  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe) {
+  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, private messageDialog: MessageDialogService) {
     this.yesterday.setDate(this.today.getDate() - 1);
   }
 
@@ -72,57 +69,51 @@ export class BlockChainComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    console.log(" inside after view init Sorting set");
+    this.dataSource.sort = this.sort;    
     this.dataSource.paginator = this.paginator;
   }
 
   //Method gets invoked when search button is clicked
   searchAllAssets() {
-    if (this.selectedOption === undefined) {
-      alert("Please select a search criteria >>" + this.selectedOption);
+    this.searchCriteria ="";
+    if (this.selectedOption === undefined) {      
+      this.messageDialog.showApplicationsMessage("Please select a search criteria.","SUCCESS");
       return;
     }
-    if (this.selectedOption == "searchByDates") {
-      //alert("Search by Date Ranges >>");
-      let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);
-      if (dateCompareResult == 1 ) {
-        alert ("Start date cannot be greater than end date..");
+    if (this.selectedOption == "searchByDates") {      
+      if (this.startDateInput === undefined || this.endDateInput === undefined) {
+        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.","SUCCESS");
+        return;
+      }
+      let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);     
+      if (dateCompareResult == 1 ) {        
+        this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.","SUCCESS");
         return;
       }
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
-        .then((data) => {
-          console.log("server result >>");
-          console.log(data);
-          this.dataSource.data = data.data;
-          console.log("assets >>");
-          //console.log(assets);
-          console.log(ELEMENT_DATA);
-          //this.dataSource.data = assets;
-          //this.dataSource.data = ELEMENT_DATA;
+        .then((data) => {          
+          this.dataSource.data = data.data;          
           this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
           this.showSearchResult = true;
-          //console.log("datasource data length: >>"+ this.dataSource.data.length);
-          this.dataSource.sort = this.sort;
-          console.log("after datasurce set Sorting set");
+          this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;        
+          this.dataSource.sort = this.sort;          
           this.dataSource.paginator = this.paginator;
         });
-    } else if (this.selectedOption == "searchByAssetId") {
-      //alert("Search by Input Asset ID selected >>" + this.assetID);
-      if (this.assetID !== undefined && this.assetID !== "") {
+    } else if (this.selectedOption == "searchByAssetId") {      
+      if (this.assetID === undefined || this.assetID === "") {
+        this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.","SUCCESS");
+        return;
+      } else {
          this.blockChainService.getAssetInfo(this.assetID)
-        .then((data) => {
-          console.log("server result >>");
-          console.log(data);
-          this.dataSource.data = data.data;
-          console.log("assets >>");          
+        .then((data) => {          
+          this.dataSource.data = data.data;                   
           this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
-          this.showSearchResult = true;          
+          this.showSearchResult = true;
+          this.searchCriteria = this.assetID;          
           this.dataSource.sort = this.sort;          
           this.dataSource.paginator = this.paginator;
         }); 
-      }
-      
+      }      
     }
 
   }
@@ -139,15 +130,13 @@ export class BlockChainComponent implements OnInit {
   getStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.startDateInput = event.value;
     this.startDate = this.datepipe.transform(this.startDateInput,'yyyy-MM-dd');
-    this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');
-    //alert("Start Date: >>" + this.startDateFormatted)
+    this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');    
   }
 
   getEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.endDateInput = event.value;
     this.endDate = this.datepipe.transform(this.endDateInput,'yyyy-MM-dd');
-    this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');
-    //alert("End Date: >>" + this.endDateFormatted)
+    this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');    
   }
 
   /* 

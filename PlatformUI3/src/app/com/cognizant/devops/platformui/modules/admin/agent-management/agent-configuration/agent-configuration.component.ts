@@ -19,6 +19,7 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { AgentConfigItem } from '@insights/app/modules/admin/agent-management/agent-configuration/agentConfigItem';
 import { AdminComponent } from '@insights/app/modules/admin/admin.component';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 
 @Component({
@@ -71,7 +72,8 @@ export class AgentConfigurationComponent implements OnInit {
   @ViewChild('fileInput') myFileDiv: ElementRef;
 
   constructor(public config: InsightsInitService, public agentService: AgentService,
-    private router: Router, private route: ActivatedRoute) {
+    private router: Router, private route: ActivatedRoute,
+    public messageDialog: MessageDialogService) {
 
   }
 
@@ -484,5 +486,24 @@ export class AgentConfigurationComponent implements OnInit {
     this.trackingUploadedFileContentStr = "";
     this.fileUploadSuccessMessage = "";
     this.fileUploadErrorMessage = "";
+  }
+
+  cancelChange(actionType) {
+    var title = "Delete User";
+    var dialogmessage = "Are you sure you want to discard your changes?";
+    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "");
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed  ' + result);
+      if (result == 'yes') {
+        let navigationExtras: NavigationExtras = {
+          skipLocationChange: true,
+          queryParams: {
+            "agentstatus": undefined,
+            "agentConfigstatusCode": ""
+          }
+        };
+        this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+      }
+    });
   }
 }
