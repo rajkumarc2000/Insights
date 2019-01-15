@@ -58,6 +58,7 @@ export class BlockChainComponent implements OnInit {
   assetID: string = "";  
   startDateInput:Date;
   endDateInput:Date;
+  searchCriteria:string ="";
 
   constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, private messageDialog: MessageDialogService) {
     this.yesterday.setDate(this.today.getDate() - 1);
@@ -74,6 +75,7 @@ export class BlockChainComponent implements OnInit {
 
   //Method gets invoked when search button is clicked
   searchAllAssets() {
+    this.searchCriteria ="";
     if (this.selectedOption === undefined) {      
       this.messageDialog.showApplicationsMessage("Please select a search criteria.","SUCCESS");
       return;
@@ -92,7 +94,8 @@ export class BlockChainComponent implements OnInit {
         .then((data) => {          
           this.dataSource.data = data.data;          
           this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
-          this.showSearchResult = true;          
+          this.showSearchResult = true;
+          this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;        
           this.dataSource.sort = this.sort;          
           this.dataSource.paginator = this.paginator;
         });
@@ -105,7 +108,8 @@ export class BlockChainComponent implements OnInit {
         .then((data) => {          
           this.dataSource.data = data.data;                   
           this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
-          this.showSearchResult = true;          
+          this.showSearchResult = true;
+          this.searchCriteria = this.assetID;          
           this.dataSource.sort = this.sort;          
           this.dataSource.paginator = this.paginator;
         }); 
