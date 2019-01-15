@@ -1,9 +1,3 @@
-table {
-    width: 100%;  
-    border: 1px solid #00B140;
-    border-radius: 10px 10px 10px 10px;
-    margin-bottom: 4px;
-}
 
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
@@ -11,12 +5,25 @@ th:last-child { border-radius: 0 10px 0 0; }
 tr:last-child td:first-child { border-radius: 0 0 0 10px; }
 tr:last-child td:last-child { border-radius: 0 0 10px 0; }
 
+/*tr:nth-child(4n+0) {
+    background: #CCC;
+}
+
+tr:nth-child(3n+0) {
+    background: #999;
+}*/
+
 .mat-table {
-    font-family: inherit !important;    
+    font-family: inherit !important;  
+}
+
+.mat-table tbody{
+    background: unset !important;
 }
 
 .dynamic-table{
     margin-bottom: 30px;
+    border-radius: 10px !important;
 }
 
 tr.mat-footer-row, tr.mat-row-dynamic{
@@ -66,6 +73,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     vertical-align: middle;
     width: inherit;
     margin-right: 21px;
+    float: right;
 }
 
 .mat-cell-value-dynamic-data{
@@ -74,7 +82,6 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     text-align: left;
     font-family: inherit;
     width: 100%;
-    padding-left: 10px;
     padding-right: 10px;
 }
 .mat-button{
@@ -91,6 +98,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     font-family: inherit;
     width: 40%;
     padding-left: 10px;
+    text-transform: capitalize;
 }
 
 .mat-cell-header-single{
@@ -189,18 +197,10 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 }
 
 .configureBut {
-    /*min-width: 150px;
-    font-size: 15px;
-	font-family: inherit !important; 
-    border-radius: 0px;
-    text-transform: initial;
-    color: white;
-    background-color: #00728f;
-    padding-right: 20px;
-    margin-left: 10px;*/
     float: right;
     background-color: #00B140 ;
     margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .configureButIcon{
@@ -309,8 +309,6 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
-    margin-left: 10px;
-    margin-right: 10px
 }
 
 
@@ -322,8 +320,6 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
-    margin-left: 10px;
-    margin-right: 10px
 }
 
 .mat-dialog-title {
