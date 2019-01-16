@@ -24,6 +24,11 @@
   color: white;
 }
 
+.white-icon {
+  fill: green;
+  fill: white;
+}
+
 .mat-list-item {
   color: white;
   opacity: 0.8;
@@ -32,6 +37,18 @@
   font-family: inherit;
 }
 
+
+
+
+/* 
+.colouricon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: white !important;
+    height: 24px;
+    width: 24px;
+}
+ */
 .mat-nav-list{
   color: white;
   opacity: 0.8;

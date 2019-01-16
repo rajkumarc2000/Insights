@@ -26,9 +26,12 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class ApplicationMessageDialog implements OnInit {
     colorCode: String;
     dialogTitle: String;
+
     svgCustomIcon: String;
     constructor(public dialogRef: MatDialogRef<ApplicationMessageDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
+
         if (data.type == 'SUCCESS') {
+
             this.colorCode = "#008000";
             this.dialogTitle = "Success";
             this.svgCustomIcon = "success";

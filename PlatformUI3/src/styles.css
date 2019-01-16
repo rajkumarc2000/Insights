@@ -39,7 +39,13 @@ body {
 }
 
 
-
+.colouricon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: white !important;
+    height: 24px;
+    width: 24px;
+}
 
 
 .DialogBox  .mat-dialog-container{
