@@ -15,7 +15,7 @@
  * the License.
  *******************************************************************************-->
 
- <div layout layout-align="right" style="height:20px;text-align: right;background-color: orange; color:white;margin:0px;padding:0px;">
+<div layout layout-align="right" style="height:20px;text-align: right;background-color: orange; color:white;margin:0px;padding:0px;">
     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
         <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px'}">
         </mat-icon>
@@ -31,19 +31,21 @@
     No data found
 </div>
 <mat-dialog-content *ngIf="showContent" style="margin:0;padding: 0">
-    <table mat-table [dataSource]="agentDetailedNode">
-        <ng-container *ngFor="let header of showFeild | keyvalue" matColumnDef="{{header.key}}">
+    <table mat-table [dataSource]="agentDetailedDatasource">
+        <ng-container *ngFor="let header of finalHeaderToShow | keyvalue" matColumnDef="{{header.key}}">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" style="text-transform: capitalize">{{header.value}}</th>
             <td mat-cell *matCellDef="let element"> {{ header.key=='inSightsTimeX' ? (element[header.key] | date:'yyyy-MM-dd HH:mm:ss') : element[header.key]}}</td>
         </ng-container>
+        <mat-paginator [pageSize]="8"> </mat-paginator>
         <ng-container matColumnDef="footer">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnLength" class="tableFooterCss">
-             For detailed information please refer to the logs: <a style="color:blue">{{pathName}}</a>
+                For detailed information please refer to the logs: <a style="color:blue">{{pathName}}</a>
             </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headerArrayDisplay" class="tableHeaderCss"></tr>
         <tr mat-row *matRowDef="let row; columns: headerArrayDisplay;"></tr>
-        <tr mat-footer-row *matFooterRowDef="['footer'];sticky: true" ></tr>
+        <tr mat-footer-row *matFooterRowDef="['footer'];sticky: true"></tr>
     </table>
+
 </mat-dialog-content>

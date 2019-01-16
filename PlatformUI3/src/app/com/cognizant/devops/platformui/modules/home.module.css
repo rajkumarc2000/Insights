@@ -86,7 +86,7 @@ tr.mat-footer-row, tr.mat-row{
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
 mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card,
 mat-tab-link,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,
-select,mat-option,mat-raised-button{
+select,mat-option,mat-raised-button,mat-table{
     font-family: inherit;
     font-size: 18px;
 }
