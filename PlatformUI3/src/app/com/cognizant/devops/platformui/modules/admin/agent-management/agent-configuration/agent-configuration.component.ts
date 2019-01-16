@@ -19,6 +19,7 @@ import { AgentService } from '@insights/app/modules/admin/agent-management/agent
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { AgentConfigItem } from '@insights/app/modules/admin/agent-management/agent-configuration/agentConfigItem';
 import { AdminComponent } from '@insights/app/modules/admin/admin.component';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 
 @Component({
@@ -71,7 +72,8 @@ export class AgentConfigurationComponent implements OnInit {
   @ViewChild('fileInput') myFileDiv: ElementRef;
 
   constructor(public config: InsightsInitService, public agentService: AgentService,
-    private router: Router, private route: ActivatedRoute) {
+    private router: Router, private route: ActivatedRoute,
+    public messageDialog: MessageDialogService) {
 
   }
 
@@ -102,6 +104,7 @@ export class AgentConfigurationComponent implements OnInit {
         this.selectedTool = this.receivedParam.detailedArr.toolName;
         this.selectedAgentKey = this.receivedParam.detailedArr.agentKey;
         this.getDbAgentConfig();
+        this.showTrackingJsonUploadButton = false;
       }
     } else {
       this.btnValue = "Add";//Register
@@ -110,6 +113,7 @@ export class AgentConfigurationComponent implements OnInit {
       this.selectedOS = undefined;
       this.selectedVersion = undefined
       this.selectedTool = undefined;
+      this.showTrackingJsonUploadButton = true;
     }
   }
 
@@ -230,7 +234,7 @@ export class AgentConfigurationComponent implements OnInit {
         }
         this.agentConfigItems.push(agentConfig);
       }
-      console.log(this.agentConfigItems.length);
+      //console.log(this.agentConfigItems.length);
     }
   }
 
@@ -326,7 +330,7 @@ export class AgentConfigurationComponent implements OnInit {
       }
 
     }
-    console.log(this.agentConfigstatus)
+    //console.log(this.agentConfigstatus)
     if (this.agentConfigstatus) {
       let navigationExtras: NavigationExtras = {
         skipLocationChange: true,
@@ -448,7 +452,7 @@ export class AgentConfigurationComponent implements OnInit {
       if (testFileExt) {
         this.getTrackingFileContentToString(uploadedFile[i]);
         setTimeout(() => {
-          console.log(uploadedFile[i]);
+          //console.log(uploadedFile[i]);
         }, 5000);
         this.fileUploadSuccessMessage = "File uploaded successfully!";
       }
@@ -482,5 +486,24 @@ export class AgentConfigurationComponent implements OnInit {
     this.trackingUploadedFileContentStr = "";
     this.fileUploadSuccessMessage = "";
     this.fileUploadErrorMessage = "";
+  }
+
+  cancelChange(actionType) {
+    var title = "Delete User";
+    var dialogmessage = "Are you sure you want to discard your changes?";
+    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "");
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed  ' + result);
+      if (result == 'yes') {
+        let navigationExtras: NavigationExtras = {
+          skipLocationChange: true,
+          queryParams: {
+            "agentstatus": undefined,
+            "agentConfigstatusCode": ""
+          }
+        };
+        this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+      }
+    });
   }
 }

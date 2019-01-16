@@ -13,24 +13,36 @@
     font-size: 20px; 
 }
 
-.searchTitleTxt {    
-    margin-top:20px;
-    color: #0033A0;
+.searchTitleTxt {        
+    color: #FFFFFF;
+    background-color: #0033A0;
+    border: 1px solid #0033A0;
+    border-radius: 6px 6px 0px 0px;
     font-family: Open Sans !important;
     font-size: 16px;
+    padding-left: 10px;
+    vertical-align: middle;
+    height: 30px;
+}
+
+.searchBoxStyle {
+    margin-top:20px;
     padding-bottom: 10px;    
-    vertical-align: center;
+    background-color: #FFFFFF;
+    border: 1px solid #0033A0;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .dateRowStyle {    
     overflow: auto; 
     width: 100%; 
+    padding-left: 10px;
 }
-.dateElementStyle {
-    width:30%;
+.dateElementStyle {    
     float: left;  
     font-family: Open Sans !important;
-    font-size: 14px; 
+    font-size: 14px;
+    margin-right: 20px; 
 }
 .searchBtnStyle {
     width:57px;
@@ -46,14 +58,11 @@
     background-color: #0033A0;
     color: white;
     font-size: 16px;
-    /* margin-top: 20px; */
+    margin-top: 20px;
     height: 30px;
     border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;
-    vertical-align: middle;
-    /*text-align: center;
-    padding-top: 3px;
-    padding-bottom: 3px;*/
+    vertical-align: middle;    
     margin-bottom: 20px;
     padding-left: 10px;
 }
@@ -89,8 +98,15 @@
       font-family: Open Sans !important;
       font-size: 14px !important; 
       background-color: #DEDBDB;
-
   }
 
+table {
+    width: 100%;  
+    border: 1px solid #00B140;
+    border-radius: 10px 10px 10px 10px;
+    font-size: 14px;
+    text-align: left;
+    vertical-align: middle;
+}
 
 

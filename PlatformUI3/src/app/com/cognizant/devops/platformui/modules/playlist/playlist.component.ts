@@ -59,7 +59,7 @@ export class PlaylistComponent implements OnInit {
     }, 1000);
   }
   ngOnInit() {
-    console.log("playlist init");
+    //console.log("playlist init");
     var self = this;
     self.setScrollBarPosition();
   }

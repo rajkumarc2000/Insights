@@ -131,6 +131,9 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("DATA_DICTIONARY_TOOL_PROPERTIES", '/PlatformService/datadictionary/getToolProperties');
         this.addEndPoint("DATA_DICTIONARY_TOOLS_RELATIONSHIPS", '/PlatformService/datadictionary/getToolsRelationshipAndProperties');
         this.addEndPoint("INSIGHTS_LOG", '/PlatformService/insights/log');
+        //Traceability 2.0 Dashboard
+        this.addEndPoint("GET_ALL_ASSETS", '/PlatformAuditService/traceability/getAllAssets');
+        this.addEndPoint("GET_ASSET_INFO", '/PlatformAuditService/traceability/getAssetInfo');
     }
 
     public addEndPoint(name: String, url: String) {

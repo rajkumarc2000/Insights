@@ -47,7 +47,7 @@
       <table class="mat-elevation-z8 mat-table">
         <thead>
           <tr class="mat-header-row" layout-align="start start">
-            <th colspan="3" class="tableHeaderCss mat-header-cell" style="height:40px;border-radius: 10px 10px 0 0;">
+            <th colspan="3" class="tableHeaderCss mat-header-cell" style="height:40px;border-radius: 10px 10px 0 0;padding-left: 65px;padding-right: 65px">
               <span class="mainHeaderText">Add/Edit information to Archive Data</span>
               <span class="infoHeaderText">(Please note fields marked as “ <span style="color:#ff0000">* </span> ” are mandatory,
               runtime will be auto-populated)</span>
@@ -56,12 +56,12 @@
         </thead>
         <tbody>
           <tr class="mat-row" *ngFor="let element of displayedColumnsNameMapping">
-            <td class="mat-cell" style="width:65%;">
+            <td class="mat-cell" style="width:65%;padding: 0px 0px 0px 65px ;">
               <span class="mainText">{{element.displayName}}</span>
               <span *ngIf="element.type!='text'" style="color:#ff0000;">*</span>
               <span class="infoText">{{element.infoText}}</span>
             </td>
-            <td class="mat-cell" style="width:34%;">
+            <td class="mat-cell" style="width:34%;padding: 0px 0px 0px 115px ;">
               <div *ngIf="element.type=='input'">
                 <input [(ngModel)]="element.value" name="{{element.key}}" [disabled]="!iseditdisabled" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
                   required>

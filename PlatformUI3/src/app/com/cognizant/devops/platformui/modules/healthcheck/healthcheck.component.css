@@ -61,6 +61,7 @@ tr.mat-footer-row, tr.mat-row {
      background-color: transparent;
      color: #0033A0;
      font-size: 18px;
+     font-family: inherit;
  }
  
  /* Styles for the active tab label */
@@ -69,6 +70,7 @@ tr.mat-footer-row, tr.mat-row {
     font-weight:bold;
     font-size: 18px;    
     background-color: transparent;
+    font-family: inherit;
  }
 
  ::ng-deep .healthcheck-tab-style .mat-tab-header {

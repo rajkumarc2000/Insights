@@ -35,7 +35,7 @@ export class ShowDetailsDialog implements OnInit {
   headerArray = [];
   agentDetailedNode = [];
   headerArrayDisplay = [];
-  imageMap = new Map<String, String>();
+  showFeild = new Map<String, String>();
   map3={"status":'Status',"execId": "Execution Id","message": "Message","inSightsTimeX" : "Execution Time"};
   constructor(public dialogRef: MatDialogRef<ShowDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,6 +68,9 @@ export class ShowDetailsDialog implements OnInit {
           for (var node in dataNodes) {
             if (node == "propertyMap") {
               var obj = dataNodes[node];
+              if (typeof obj["message"] !== "undefined"){
+                obj["message"]=obj["message"].slice(0,100);
+              }
               this.agentDetailedNode.push(obj);
               for (var attr in obj) {
                 if (this.headerArray.indexOf(attr) < 0) {
@@ -85,8 +88,8 @@ export class ShowDetailsDialog implements OnInit {
   showSelectedField(): void {
     for (var val in this.headerArray) {
       if (this.headerArray[val] in this.map3  == true) {
-        if (!this.imageMap.has(this.headerArray[val])) {
-          this.imageMap.set(this.headerArray[val], this.map3[this.headerArray[val]]);
+        if (!this.showFeild.has(this.headerArray[val])) {
+          this.showFeild.set(this.headerArray[val], this.map3[this.headerArray[val]]);
           this.headerArrayDisplay.push(this.headerArray[val]);
       }
       }

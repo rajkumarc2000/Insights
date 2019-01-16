@@ -78,7 +78,7 @@ export class GrafanaDashboardComponent implements OnInit {
                 this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
             } else {
                 this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
-                console.log("No dashboard found,set default dashboardUrl");
+                //console.log("No dashboard found,set default dashboardUrl");
             }
             //console.log(this.dashboardUrl);
             this.setScrollBarPosition();

@@ -13,122 +13,156 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *******************************************************************************/
-import { Component, OnInit,ViewChild} from '@angular/core';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { BlockChainService } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.service';
+import { DatePipe } from '@angular/common'
+import { BehaviorSubject } from 'rxjs';
+import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { merge, Observable, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface AssetData {
+  assetID: string;
+  phase: string;
+  toolStatus: string;
+  toolName: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 
 
 @Component({
   selector: 'app-blockchain',
   templateUrl: './blockchain.component.html',
-  styleUrls: ['./blockchain.component.css','./../../home.module.css']
+  styleUrls: ['./blockchain.component.css', './../../home.module.css']
 })
 export class BlockChainComponent implements OnInit {
 
   today = new Date();
   yesterday = new Date();
-  maxDateValue:any;
+  maxDateValue: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource<AssetData>([]);
   MAX_ROWS_PER_TABLE = 5;
-  startDate : Date = new Date();
-  endDate: Date = new Date();
-  constructor() {
-    this.yesterday.setDate(this.today.getDate()-1);
-    console.log("Yesterday's date:>>>" + this.yesterday);
-    
+  startDate: string;
+  endDate: string;
+  showSearchResult = false;
+  selectedOption: string;
+  startDateFormatted: string;
+  endDateFormatted: string;
+  assetID: string = "";  
+  startDateInput:Date;
+  endDateInput:Date;
+  searchCriteria:string ="";
 
-  }  
+  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, private messageDialog: MessageDialogService) {
+    this.yesterday.setDate(this.today.getDate() - 1);
+  }
 
   ngOnInit() {
-    
+
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    console.log("Sorting set");
+    this.dataSource.sort = this.sort;    
     this.dataSource.paginator = this.paginator;
   }
 
+  //Method gets invoked when search button is clicked
   searchAllAssets() {
-     let result: number = this.compareDate(this.startDate, this.endDate); 
-     alert("Result >>" + result);
-    
+    this.searchCriteria ="";
+    if (this.selectedOption === undefined) {      
+      this.messageDialog.showApplicationsMessage("Please select a search criteria.","SUCCESS");
+      return;
+    }
+    if (this.selectedOption == "searchByDates") {      
+      if (this.startDateInput === undefined || this.endDateInput === undefined) {
+        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.","SUCCESS");
+        return;
+      }
+      let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);     
+      if (dateCompareResult == 1 ) {        
+        this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.","SUCCESS");
+        return;
+      }
+      this.blockChainService.getAllAssets(this.startDate, this.endDate)
+        .then((data) => {          
+          this.dataSource.data = data.data;          
+          this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+          this.showSearchResult = true;
+          this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;        
+          this.dataSource.sort = this.sort;          
+          this.dataSource.paginator = this.paginator;
+        });
+    } else if (this.selectedOption == "searchByAssetId") {      
+      if (this.assetID === undefined || this.assetID === "") {
+        this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.","SUCCESS");
+        return;
+      } else {
+         this.blockChainService.getAssetInfo(this.assetID)
+        .then((data) => {          
+          this.dataSource.data = data.data;                   
+          this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+          this.showSearchResult = true;
+          this.searchCriteria = this.assetID;          
+          this.dataSource.sort = this.sort;          
+          this.dataSource.paginator = this.paginator;
+        }); 
+      }      
+    }
+
+  }
+
+  //Sets value in assetID property from user's input
+  getAssetID(assetIdInput: string) {
+    if (assetIdInput) {
+      this.assetID = assetIdInput;
+    } else {
+      this.assetID = "";
+    }
   }
 
   getStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
-      this.startDate = event.value;
-      //alert("Start Date: >>" + this.startDate)
+    this.startDateInput = event.value;
+    this.startDate = this.datepipe.transform(this.startDateInput,'yyyy-MM-dd');
+    this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');    
   }
 
   getEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
-      this.endDate = event.value;
-      //alert("End Date: >>" + this.endDate)
+    this.endDateInput = event.value;
+    this.endDate = this.datepipe.transform(this.endDateInput,'yyyy-MM-dd');
+    this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');    
   }
 
- /* 
- * Compares two Date objects and returns e number value that represents 
- * the result:
- * 0 if the two dates are equal.
- * 1 if the first date is greater than second.
- * -1 if the first date is less than second.
- * @param date1 First date object to compare.
- * @param date2 Second date object to compare.
- */
+  /* 
+  * Compares two Date objects and returns e number value that represents 
+  * the result:
+  * 0 if the two dates are equal.
+  * 1 if the first date is greater than second.
+  * -1 if the first date is less than second.
+  * @param date1 First date object to compare.
+  * @param date2 Second date object to compare.
+  */
   compareDate(date1: Date, date2: Date): number {
-  // With Date object we can compare dates them using the >, <, <= or >=.
-  // The ==, !=, ===, and !== operators require to use date.getTime(),
-  // so we need to create a new instance of Date with 'new Date()'
-  let d1 = new Date(date1); let d2 = new Date(date2);
+    // With Date object we can compare dates them using the >, <, <= or >=.
+    // The ==, !=, ===, and !== operators require to use date.getTime(),
+    // so we need to create a new instance of Date with 'new Date()'
+    let d1 = new Date(date1); let d2 = new Date(date2);
 
-  // Check if the dates are equal
-  let same = d1.getTime() === d2.getTime();
-  if (same) return 0;
+    // Check if the dates are equal
+    let same = d1.getTime() === d2.getTime();
+    if (same) return 0;
 
-  // Check if the first is greater than second
-  if (d1 > d2) return 1;
- 
-  // Check if the first is less than second
-  if (d1 < d2) return -1;
-}
+    // Check if the first is greater than second
+    if (d1 > d2) return 1;
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  /* isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }*/
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
- /* masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  } */
+    // Check if the first is less than second
+    if (d1 < d2) return -1;
+  }
 
 }

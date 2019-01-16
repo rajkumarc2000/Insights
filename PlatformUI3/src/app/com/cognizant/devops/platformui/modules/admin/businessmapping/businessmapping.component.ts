@@ -49,10 +49,10 @@ export class BusinessHierarchyDatabase {
   async loadAllBusinessHierarchies() {
     this.businessMappingService.getAllHierarchyMappings()
       .then((result) => {
-        console.log("result of hierarchy mappings:" + result);
+        //console.log("result of hierarchy mappings:" + result);
         if (result != null) {
           this.hierarchyList = result.data[0].children;
-          console.log("all hierarchy mappings" + this.hierarchyList);
+          //console.log("all hierarchy mappings" + this.hierarchyList);
           let data = this.buildTreeNode(this.hierarchyList, 0);
           // Notify the change.
           this.dataChange.next(data);
@@ -100,7 +100,7 @@ export class BusinessMappingComponent implements OnInit {
 
   constructor(private businessMappingService: BusinessMappingService, private database: BusinessHierarchyDatabase) {
     this.nestedTreeControl = new NestedTreeControl<TreeNode>(this._getChildren);
-    this.nestedDataSource = new MatTreeNestedDataSource();
+    this.nestedDataSource = new MatTreeNestedDataSource<TreeNode>();
     database.dataChange.subscribe(data => this.nestedDataSource.data = data);
   }
 

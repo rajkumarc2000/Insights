@@ -73,6 +73,20 @@
     padding-bottom: 3px;
 }
 
+.sectionHeadingStyleWithoutButton {
+    background-color: #0033A0;   
+    color: white;
+    font-size: 16px;
+    margin-top:16px; 
+    height: 30px;
+    border: 1px solid #0033A0;
+    border-radius: 10px 10px 10px 10px;   
+    vertical-align:center;
+    padding-top: 8px;
+    padding-bottom: 3px;
+    margin-bottom: 30px;
+}
+
 .sectionSubHeading{
     font-size: 13px;
     color: #00B140; 
@@ -95,8 +109,9 @@ tr.mat-footer-row, tr.mat-row{
 }
 
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
-mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card
-mat-tab-label,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,select,mat-option,mat-raised-button{
+mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card,
+mat-tab-link,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,
+select,mat-option,mat-raised-button{
     font-family: inherit;
     font-size: 18px;
 }

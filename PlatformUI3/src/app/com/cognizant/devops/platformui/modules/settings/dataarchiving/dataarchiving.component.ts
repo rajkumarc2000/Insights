@@ -64,7 +64,7 @@ export class DataArchivingComponent implements OnInit {
 
   ngOnInit() {
     this.dataShare.currentUser.subscribe(user => this.currentUserName = user)
-    console.log(this.currentUserName);
+    //console.log(this.currentUserName);
     this.setInitailData();
   }
 
@@ -72,7 +72,7 @@ export class DataArchivingComponent implements OnInit {
 
     this.setInitailData();
     this.serviceResponseForList = await this.dataArchivingService.listDatapurgingdata("DATAPURGING");
-    console.log(this.serviceResponseForList);
+    //console.log(this.serviceResponseForList);
     if (this.serviceResponseForList != null) {
       this.showThrobber = false;
       if (this.serviceResponseForList.status == "success") {
@@ -147,16 +147,16 @@ export class DataArchivingComponent implements OnInit {
     for (let record of this.displayedColumnsNameMapping) {
       this.sendJsonObj[record.key] = (record.value == undefined ? "" : record.value)
     }
-    console.log(this.sendJsonObj)
+    //console.log(this.sendJsonObj)
     var self = this;
     this.settingsType = "DATAPURGING";
     this.activeFlag = "Y";
     this.lastModifiedByUser = this.currentUserName;
     this.settingJsonstring = JSON.stringify(self.sendJsonObj);
-    console.log(self.settingJsonstring);
+    //console.log(self.settingJsonstring);
     this.dataArchivingService.saveDatapurging(self.settingsType, self.activeFlag, self.lastModifiedByUser.toString(), self.settingJsonstring)
       .then(function (data) {
-        console.log("Setting " + data);
+        //console.log("Setting " + data);
         if (data.status == "success") {
           //self.showConfirmMessage = "Settings saved successfully";
           self.showApplicationMessage = "Settings saved successfully"
