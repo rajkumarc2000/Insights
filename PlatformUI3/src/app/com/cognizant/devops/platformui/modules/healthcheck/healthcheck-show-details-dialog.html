@@ -15,13 +15,15 @@
  * the License.
  *******************************************************************************-->
 
-<div layout layout-align="right" style="height:20px;text-align: right;background-color: orange; color:white;margin:0px;padding:0px;">
-    <a (click)="closeShowDetailsDialog()" style="text-align: right;">
+<div class="titleStyle">
+    <ul>
+    <li style="background-color: orange;">Additional Details - {{detailType}}</li>
+    <li (click)="closeShowDetailsDialog()" style="background-color: orange;">
         <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px'}">
         </mat-icon>
-    </a>
+    </li>
+    </ul>   
 </div>
-<div layout-align="center center" class="titleStyle">Additional Details - {{detailType}} </div>
 
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="showThrobber">
     <mat-progress-spinner [color]="primmary" [mode]="indeterminate" [value]="50">
