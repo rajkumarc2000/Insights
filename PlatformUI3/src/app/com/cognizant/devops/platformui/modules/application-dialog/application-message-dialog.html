@@ -21,21 +21,27 @@
             <td>
                 <!--style="height:28px"-->
 
-                <mat-icon class="colouricon" [svgIcon]="svgCustomIcon" [ngStyle]="{height: '40px', width: '50px'}"></mat-icon>
-                <!-- <mat-icon title="Success" class="mat-icon material-icons">
-                    <!-usingBtnCss usingBtnCss->
-                    check_circle
-                </mat-icon> -->
+                <mat-icon class="colouricon" [svgIcon]="svgCustomIcon" [ngStyle]="{height: '40px', width: '40px'}"></mat-icon>
+
             </td>
             <td>
                 <!--style="height:28px"-->
                 <span class="gridheaderleft">{{dialogTitle}}</span>
             </td>
+
+            <td>
+                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
+                    <a (click)="closeShowDetailsDialog()" style="text-align: right;">
+                        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
+                        </mat-icon>
+                    </a>
+                </div>
+            </td>
         </tr>
     </table>
 </div>
 
-<mat-dialog-content>
+<mat-dialog-content class="textpadding">
     <div [style.color]="colorCode"> {{data.message}} </div>
 </mat-dialog-content>
 

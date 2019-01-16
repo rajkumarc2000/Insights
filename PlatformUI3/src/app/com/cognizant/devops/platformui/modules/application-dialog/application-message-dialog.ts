@@ -37,7 +37,7 @@ export class ApplicationMessageDialog implements OnInit {
             this.svgCustomIcon = "success";
         } else if (data.type == 'WARN') {
             this.colorCode = "#FFFF00"
-            this.dialogTitle = "warning";
+            this.dialogTitle = "Warning";
             this.svgCustomIcon = "";
         } else if (data.type == 'ERROR') {
             this.colorCode = "#ff0000";
@@ -50,6 +50,10 @@ export class ApplicationMessageDialog implements OnInit {
     }
 
     onCloseClick(): void {
+        this.dialogRef.close();
+    }
+
+    closeShowDetailsDialog(): void {
         this.dialogRef.close();
     }
 }

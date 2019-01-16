@@ -13,20 +13,6 @@ body {
   padding: 5px;
 }
 
-/* .mat-dialog-container
-{
-  padding: 24px; 
-    border-radius: 25px !important ;
-    box-sizing: border-box;
-    overflow: hidden;
-    outline: 0;
-    width: 100%;
-    height: 100%;
-    min-height: inherit;
-    max-height: inherit;
-    background: #fff;
-    color: rgba(0,0,0,.87);
-} */
 
 
 .healthcheck-show-details-dialog-container .mat-dialog-container {
@@ -45,6 +31,8 @@ body {
     fill: white !important;
     height: 24px;
     width: 24px;
+    padding-left: 30px;
+    padding-top: 2px;
 }
 
 
