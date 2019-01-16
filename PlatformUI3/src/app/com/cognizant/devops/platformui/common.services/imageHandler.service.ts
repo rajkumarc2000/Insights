@@ -61,6 +61,9 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('startButton', "icons/svg/buttonIcon/sharp-play_circle.svg");
         this.addImage('stopButton', "icons/svg/buttonIcon/sharp-stop.svg");
         this.addImage('lineInButton', "icons/svg/buttonIcon/Line_menu.svg");
+        this.addImage('warning', "icons/svg/dialogBoxIcon/warning.svg");
+        this.addImage('success', "icons/svg/dialogBoxIcon/success.svg");
+        this.addImage('error', "icons/svg/dialogBoxIcon/error.svg");
     }
 
 

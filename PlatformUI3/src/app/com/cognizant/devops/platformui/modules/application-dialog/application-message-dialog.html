@@ -15,14 +15,25 @@
  * the License.
  ****************************************************************************** -->
 
-<h2 mat-dialog-title>{{data.title}}</h2>
-
-<div class="orangeStripCss"></div>
+<div class="gridheaderleftbg">
+    <table style="border-spacing:2px; height:100%; width: 100%">
+        <tr>
+            <td>
+                <!--style="height:28px"-->
+                <mat-icon [svgIcon]="svgCustomIcon" [ngStyle]="{height: '40px', width: '50px'}"></mat-icon>
+            </td>
+            <td>
+                <!--style="height:28px"-->
+                <span class="gridheaderleft">{{dialogTitle}}</span>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <mat-dialog-content>
     <div [style.color]="colorCode"> {{data.message}} </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="onCloseClick()">Close</button>
+    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="onCloseClick()">OK</button>
 </mat-dialog-actions>

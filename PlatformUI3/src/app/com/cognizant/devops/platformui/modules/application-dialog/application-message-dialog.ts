@@ -25,13 +25,21 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export class ApplicationMessageDialog implements OnInit {
     colorCode: String;
+    dialogTitle: String;
+    svgCustomIcon: String;
     constructor(public dialogRef: MatDialogRef<ApplicationMessageDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
         if (data.type == 'SUCCESS') {
-            this.colorCode = "#008000"
+            this.colorCode = "#008000";
+            this.dialogTitle = "Success";
+            this.svgCustomIcon = "success";
         } else if (data.type == 'WARN') {
             this.colorCode = "#FFFF00"
+            this.dialogTitle = "warning";
+            this.svgCustomIcon = "";
         } else if (data.type == 'ERROR') {
             this.colorCode = "#ff0000";
+            this.dialogTitle = "Error";
+            this.svgCustomIcon = "error";
         }
     }
 

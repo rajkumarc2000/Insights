@@ -28,8 +28,10 @@ export class MessageDialogService {
 
     public showApplicationsMessage(message, type): MatDialogRef<ApplicationMessageDialog> {
         const dialogRef = this.dialog.open(ApplicationMessageDialog, {
-            width: '40%',
-            height: '25%',
+            panelClass: 'DialogBox',
+            width: '50%px',
+            height: '30%',
+
             data: {
                 title: "Message",
                 message: message,
@@ -41,6 +43,7 @@ export class MessageDialogService {
 
     public showConfirmationMessage(title, message, value): MatDialogRef<ConfirmationMessageDialog> {
         const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
+
             width: '40%',
             height: '40%',
             data: {
