@@ -52,4 +52,12 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     font-weight: bold;
 }
 
+
+.mat-table{
+    font-family: inherit;
+}
+
+.mat-dialog-content{
+    display: unset;
+}
     
