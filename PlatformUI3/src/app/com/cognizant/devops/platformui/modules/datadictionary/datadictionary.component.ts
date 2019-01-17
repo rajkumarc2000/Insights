@@ -26,6 +26,10 @@ export class DatadictionaryComponent implements OnInit {
   showDetail2: boolean = false;
   showDetail3: boolean = false;
   noShowDetailCorr:boolean = false;
+  relationPropertiesSize:boolean=false;
+  showNoToolsSelectedForCorrelation:boolean =false;
+  startToolNullPropertiesMessage=""
+  endToolNullPropertiesMessage=""
   agent1Tool:any;
   agent1Category:any;
   agent2Tool:any;
@@ -71,6 +75,7 @@ export class DatadictionaryComponent implements OnInit {
     } else {
       this.noShowDetail = true;
       this.showDetail = false;
+      this.startToolNullPropertiesMessage="no properties found"
     }
   }
   async loadAgent1Info2(selectedAgent2) {
@@ -86,10 +91,12 @@ export class DatadictionaryComponent implements OnInit {
     } else{
       this.noShowDetail2=true;
       this.showDetail2=false;
+      this.endToolNullPropertiesMessage="no properties found"
     }
   }
 
   async getCorrelation(data1,data2){
+    this.showNoToolsSelectedForCorrelation=true
     //console.log(data1,data2);
     let usersResponseData3 = await this.dataDictionaryService.loadToolsRelationshipAndProperties(data1.toolName,data1.categoryName,data2.toolName,data2.categoryName);
     if (usersResponseData3.data != undefined && usersResponseData3.status == "success") {
@@ -98,9 +105,13 @@ export class DatadictionaryComponent implements OnInit {
         this.showDetail3 = true;
         this.noShowDetailCorr=false;
         this.corrprop=usersResponseData3.data["relationName"];
-        if (usersResponseData3.data["properties"] != undefined){
+        //console.log(Object.keys(usersResponseData3.data["properties"]).length);
+        if (usersResponseData3.data["properties"] != undefined && Object.keys(usersResponseData3.data["properties"]).length > 0){
+          this.relationPropertiesSize=true;
           this.corrData=usersResponseData3.data["properties"];
-          console.log(this.corrData)
+          console.log('hai')
+        }else{
+          this.relationPropertiesSize=false;
         }
       
       } 
@@ -110,4 +121,5 @@ export class DatadictionaryComponent implements OnInit {
     }
 
   }
+
 }
