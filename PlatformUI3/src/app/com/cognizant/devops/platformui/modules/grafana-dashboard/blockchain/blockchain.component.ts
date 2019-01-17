@@ -52,7 +52,7 @@ export class BlockChainComponent implements OnInit {
   startDate: string;
   endDate: string;
   showSearchResult = false;
-  selectedOption: string;
+  selectedOption: string = "searchByDates";
   startDateFormatted: string;
   endDateFormatted: string;
   assetID: string = "";  
@@ -76,10 +76,10 @@ export class BlockChainComponent implements OnInit {
   //Method gets invoked when search button is clicked
   searchAllAssets() {
     this.searchCriteria ="";
-    if (this.selectedOption === undefined) {      
+    /*if (this.selectedOption === undefined) {      
       this.messageDialog.showApplicationsMessage("Please select a search criteria.","ERROR");
       return;
-    }
+    }*/
     if (this.selectedOption == "searchByDates") {      
       if (this.startDateInput === undefined || this.endDateInput === undefined) {
         this.messageDialog.showApplicationsMessage("Please select both start date and end date first.","ERROR");
