@@ -77,17 +77,17 @@ export class BlockChainComponent implements OnInit {
   searchAllAssets() {
     this.searchCriteria ="";
     if (this.selectedOption === undefined) {      
-      this.messageDialog.showApplicationsMessage("Please select a search criteria.","SUCCESS");
+      this.messageDialog.showApplicationsMessage("Please select a search criteria.","ERROR");
       return;
     }
     if (this.selectedOption == "searchByDates") {      
       if (this.startDateInput === undefined || this.endDateInput === undefined) {
-        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.","SUCCESS");
+        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.","ERROR");
         return;
       }
       let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);     
       if (dateCompareResult == 1 ) {        
-        this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.","SUCCESS");
+        this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.","ERROR");
         return;
       }
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
@@ -103,7 +103,7 @@ export class BlockChainComponent implements OnInit {
         });
     } else if (this.selectedOption == "searchByAssetId") {      
       if (this.assetID === undefined || this.assetID === "") {
-        this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.","SUCCESS");
+        this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.","ERROR");
         return;
       } else {
          this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
