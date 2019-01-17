@@ -34,4 +34,7 @@ export class ConfirmationMessageDialog implements OnInit {
     onNoClick(): void {
         this.dialogRef.close();
     }
+    closeShowDetailsDialog(): void {
+        this.dialogRef.close();
+    }
 }

@@ -15,11 +15,36 @@
  * the License.
  ****************************************************************************** -->
 
-<h2 mat-dialog-title>{{data.title}}</h2>
 
-<div class="orangeStripCss"></div>
 
-<mat-dialog-content>
+
+
+
+<!--new code to be written-->
+
+
+<div class="gridheaderleftbg">
+    <table style="border-spacing:2px; height:100%; width: 100%">
+        <tr>
+
+            <td>
+                <!--style="height:28px"-->
+                <span class="gridheadercenter">{{data.title}}</span>
+            </td>
+
+            <!--  <td>
+                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
+                    <a (click)="closeShowDetailsDialog()" style="text-align: right;">
+                        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
+                        </mat-icon>
+                    </a>
+                </div>
+            </td> -->
+        </tr>
+    </table>
+</div>
+
+<mat-dialog-content class="textpaddingConf">
 
     <!-- {{data.message}}
     <br> {{data.submessage}}-->
@@ -29,7 +54,8 @@
 
 </mat-dialog-content>
 
+
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="dialogRef.close('no')">No</button>
-    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="dialogRef.close('yes')">Yes</button>
+    <button mat-raised-button color="primary" class="mat-button-dialogNo" (click)="dialogRef.close('no')">No</button>
+    <button mat-raised-button color="primary" class="mat-button-dialogYes" (click)="dialogRef.close('yes')">Yes</button>
 </mat-dialog-actions>

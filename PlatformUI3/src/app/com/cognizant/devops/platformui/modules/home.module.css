@@ -67,6 +67,11 @@
   padding-left:100px ;
 }
 
+.textpaddingConf
+{
+     padding-left:65px ;
+}
+
 tr.mat-footer-row, tr.mat-row{
     height: 40px !important;
     text-align: left !important;
@@ -138,6 +143,32 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     margin-top: 40px;
 }
 
+.mat-button-dialogNo {
+    font-family: inherit !important;
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 50px;
+    float: right;
+    margin-left: 490px;
+    margin-right: 10px;
+    margin-top: 80px;
+}
+
+
+.mat-button-dialogYes{
+    font-family: inherit !important;
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 50px;
+    float: right;
+    margin-left: 490px;
+    margin-right: 10px;
+     position:absolute;
+    transition: .5s ease;
+    top: 60%;
+    left: 60%;
+}
+
 .mat-dialog-content{
     margin-top: 10px
 }
@@ -179,6 +210,20 @@ height: 50px;
     
     
     /* margin-left: 80px; */
+    text-align: center;
+    font-weight: bold;
+    font-size: 18pt;
+    text-decoration: none;
+    color: white;
+    padding-top: 10px;
+     padding-bottom: 50px; 
+    
+}
+
+.gridheadercenter{    
+    
+    
+    margin-left: 50px; 
     text-align: center;
     font-weight: bold;
     font-size: 18pt;
