@@ -14,7 +14,7 @@ table {
 	text-align: center;
 }
 .tableFooterCss {
-    color: orange;
+    color: #FF8F1C;
 }
 
 tr:nth-child(odd) td {
@@ -64,7 +64,7 @@ li:last-child {
     right: 0;
 }
 .titleStyle{
-    background-color: orange; 
+    background-color: #FF8F1C; 
     color:white;
     margin:0;
     padding-bottom:5px;
