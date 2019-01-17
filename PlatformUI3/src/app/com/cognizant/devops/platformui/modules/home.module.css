@@ -19,6 +19,8 @@
     margin: 0 auto;
 }
 
+
+
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
@@ -60,6 +62,11 @@
     color: #00B140; 
 }
 
+.textpadding
+{
+  padding-left:100px ;
+}
+
 tr.mat-footer-row, tr.mat-row{
     height: 40px !important;
     text-align: left !important;
@@ -79,7 +86,7 @@ tr.mat-footer-row, tr.mat-row{
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
 mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card,
 mat-tab-link,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,
-select,mat-option,mat-raised-button{
+select,mat-option,mat-raised-button,mat-table{
     font-family: inherit;
     font-size: 18px;
 }
@@ -114,8 +121,9 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 .mat-dialog-title {
     margin: 0 0 10px;
     display: block;
-    text-align: center;
-    color: #00B140;
+    text-align: left;
+    font-size: 22pt;
+    color: #ffff;
     font-family: inherit;
 }
 
@@ -125,6 +133,9 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     font-weight: 500;
     min-width: 50px;
     float: right;
+    margin-left: 490px;
+    margin-right: 10px;
+    margin-top: 40px;
 }
 
 .mat-dialog-content{
@@ -144,6 +155,38 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     color: #5C068C;
     margin-top: 28px;
     padding-left: 20px;
+}
+
+
+.gridheaderleftbg
+{
+background:  #5C068C ;
+height: 50px;
+}
+
+.column-image {
+    position: absolute;
+    margin-bottom:50px;
+    margin-top:0px;
+   /*  margin-left: 510px; */
+    display:flex;
+    justify-content: left;
+    top:150px;
+    }
+
+
+.gridheaderleft{    
+    
+    
+    /* margin-left: 80px; */
+    text-align: center;
+    font-weight: bold;
+    font-size: 18pt;
+    text-decoration: none;
+    color: white;
+    padding-top: 10px;
+     padding-bottom: 50px; 
+    
 }
 
 .iframeCss {

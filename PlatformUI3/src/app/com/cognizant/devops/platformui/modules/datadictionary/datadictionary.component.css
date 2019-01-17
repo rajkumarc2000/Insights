@@ -1,0 +1,78 @@
+.mainText{
+    font-size: 14px;
+    color:  #0033A0;
+    font-weight:bold;
+    vertical-align: sub;
+    width: 10%;
+    overflow: auto; 
+}
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
+.propTable{
+    padding-left:0x;
+}
+
+
+.form-control {
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.searchBtnStyle { 
+    vertical-align: center;
+    background-color: grey;
+    color: black;
+    border: 1px solid grey;
+    border-radius: 10px 10px 10px 10px;
+    padding-left: 10px;
+    font-size: 13px;
+}
+.showTable {
+    display: inline-block;
+    background-color: #00B140; 
+    text-align: center;  
+    color: white;
+    font-size: 16px;
+    margin-top:16px; 
+    height: 20px;
+    border: 1px solid #00B140;
+    border-radius: 10px 10px 10px 10px;   
+    vertical-align:center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+} 

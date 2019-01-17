@@ -14,8 +14,8 @@
  * the License.
  *******************************************************************************/
 
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { HealthCheckService } from './healthcheck.service';
 
@@ -29,25 +29,40 @@ export class ShowDetailsDialog implements OnInit {
   showContent: boolean;
   showThrobber: boolean;
   checkResponseData: boolean;
-  pathName:string;
-  detailType:string;
-  columnLength:number;
-  headerArray = [];
+  pathName: string;
+  detailType: string;
+  columnLength: number;
+  resultsLength: number = 6;
   agentDetailedNode = [];
+  agentDetailedDatasource: MatTableDataSource<any> = new MatTableDataSource();
   headerArrayDisplay = [];
-  showFeild = new Map<String, String>();
-  map3={"status":'Status',"execId": "Execution Id","message": "Message","inSightsTimeX" : "Execution Time"};
+  masterHeader = new Map<String, String>();
+  finalHeaderToShow = new Map<String, String>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  headerSet = new Set();
+
   constructor(public dialogRef: MatDialogRef<ShowDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private restCallHandlerService: RestCallHandlerService,
     private healthCheckService: HealthCheckService, ) {
+    this.fillMasterHeaderData();
   }
 
   ngOnInit() {
     this.loadDetailsDialogInfo();
-    this.detailType=this.data.detailType;
+    this.detailType = this.data.detailType;
   }
-  
+
+  ngAfterViewInit() {
+    this.agentDetailedDatasource.paginator = this.paginator;
+  }
+
+  fillMasterHeaderData() {
+    this.masterHeader.set("execId", "Execution Id");
+    this.masterHeader.set("inSightsTimeX", "Execution Time");
+    this.masterHeader.set("status", "Status");
+    this.masterHeader.set("message", "Message");
+  }
 
   loadDetailsDialogInfo(): void {
     this.showThrobber = true;
@@ -58,44 +73,50 @@ export class ShowDetailsDialog implements OnInit {
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
         var dataArray = data.data.nodes;
-        this.pathName=this.data.pathName;
-        if (dataArray.length === 0) {
+        this.pathName = this.data.pathName;
+        if (dataArray.length === 0 && this.data.detailType != "PlatformService") {
           this.checkResponseData = false;
         }
-        this.columnLength=Object.keys(this.map3).length; 
         for (var key in dataArray) {
           var dataNodes = dataArray[key];
           for (var node in dataNodes) {
             if (node == "propertyMap") {
               var obj = dataNodes[node];
-              if (typeof obj["message"] !== "undefined"){
-                obj["message"]=obj["message"].slice(0,100);
+              if (typeof obj["message"] !== "undefined") {
+                obj["message"] = obj["message"].slice(0, 100);
               }
               this.agentDetailedNode.push(obj);
               for (var attr in obj) {
-                if (this.headerArray.indexOf(attr) < 0) {
-                  this.headerArray.push(attr);
-                  this.showSelectedField();
+                // fill data array in set , Only those header which mention in masterHeader
+                if (this.masterHeader.has(attr)) {
+                  this.headerSet.add(attr);
                 }
               }
             }
           }
         }
+        this.agentDetailedDatasource.data = this.agentDetailedNode;
+        /*this.agentDetailedDatasource.paginator = this.paginator;*/
+        this.showSelectedField();
       });
 
   }
 
   showSelectedField(): void {
-    for (var val in this.headerArray) {
-      if (this.headerArray[val] in this.map3  == true) {
-        if (!this.showFeild.has(this.headerArray[val])) {
-          this.showFeild.set(this.headerArray[val], this.map3[this.headerArray[val]]);
-          this.headerArrayDisplay.push(this.headerArray[val]);
+    //Define sequence of headerSet according to mater array and remove unwanted header 
+    this.masterHeader.forEach((value: string, key: string) => {
+      if (this.headerSet.has(key)) {
+        this.finalHeaderToShow.set(key, value);
       }
-      }
-    }  
+
+    });
+    this.columnLength = this.finalHeaderToShow.size;
+    // create headerArrayDisplay from map keys 
+    if (this.finalHeaderToShow.size > 0) {
+      this.headerArrayDisplay = Array.from(this.finalHeaderToShow.keys());
+    }
   }
-  
+
   closeShowDetailsDialog(): void {
     this.dialogRef.close();
   }

@@ -7,6 +7,7 @@
 
 }
 
+
 .landingpageCssExpand{
     overflow-x: hidden;
     overflow-y: hidden;
@@ -35,13 +36,16 @@
   
 
   .bulletCss{
-     list-style-position: outside;
+     /* list-style-position: outside; */
     width:5px;
     height:5px;
     background-color:#0033A0 ;
+    display: inline-block;
     border-radius: 50%;
-    margin-top: -10pt;
-    margin-right: 20px;
+    margin-top: -5pt;
+    margin-right: 18px;
+    vertical-align:top;
+    
   }
 
   .textCss{
@@ -140,5 +144,10 @@
     display:inline-flex;
     justify-content: left;
     margin-left: 100px;
+  }
+
+  .shiftright
+  {
+    padding-left :50px;
   }
   

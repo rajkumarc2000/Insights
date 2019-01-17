@@ -69,16 +69,6 @@
           </tr>
         </thead>
         <tbody layout layout-wrap layout-margin layout-padding>
-          <!--  <tr flex="30" layout layout-align="start start" *ngFor="let configDataChild of configData.children" style="display: inline-table;">
-            <td class="agentlistLabel">
-              <span class="dataHead">{{configDataChild.key}}</span>
-            </td>
-            <td>
-              <input class="inputBoxCont" [(ngModel)]="configDataChild.value" name="{{configDataChild.value}}">
-            </td>
-          </tr>
-        </tbody>-->
-
           <tbody class="dynamic-table-body" layout layout-wrap layout-margin layout-padding>
             <tr flex="30" layout layout-align="start start" class="mat-row-dynamic" *ngFor="let configDataChild of configData.children"
               style="display: inline-table;">
@@ -132,7 +122,7 @@
       </table>
     </div>
 
-    <div class="others" layout layout-align="start center" *ngIf="showConfig && showTrackingJsonUploadButton">
+    <div class="others" layout layout-align="start center" *ngIf="showConfig && showTrackingJsonUploadButton ">
       <table class="mat-elevation-z8 mat-table dynamic-table">
         <thead>
           <tr class="mat-header-row" layout-align="start start">
@@ -141,14 +131,14 @@
             </th>
           </tr>
         </thead>
-        <tbody style="width: inherit;">
-          <tr layout layout-align="start start" class="mat-row-upload-data" style="display: inline-table;">
+        <tbody style="width:inherit;">
+          <tr layout layout-align="start start" class="mat-row-upload-data" style="display: inline-block;">
             <td class="mat-cell-value-dynamic-data">
               <span class="upload-main-text">If you are migrating previous version of agents, please upload the tracking.json file of <b> {{selectedTool}} </b>
 								Agent </span>
             </td>
           </tr>
-          <tr layout layout-align="start start" class="mat-row-upload-data" style="display: inline-table;">
+          <tr layout layout-align="start start" class="mat-row-upload-data" style="display: inline-block;">
             <td class="mat-cell-header-single">
               <span>Select a file to Upload:</span>
             </td>
@@ -178,7 +168,11 @@
         style="width:150px;">
         {{btnValue | uppercase }}
         </button>
-        <br>
+        <button mat-raised-button color="primary" (click)="cancelChange(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut"
+          style="width:150px;padding-left: 10px;padding-right: 10px;">
+          CANCEL
+          </button>
+          <br>
     </div>
     <br>
   </form>

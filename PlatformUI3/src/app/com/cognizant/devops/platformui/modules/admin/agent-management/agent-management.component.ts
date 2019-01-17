@@ -15,7 +15,6 @@
  ******************************************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
-import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
