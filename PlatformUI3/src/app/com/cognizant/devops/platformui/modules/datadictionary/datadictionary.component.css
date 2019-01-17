@@ -35,9 +35,9 @@
 
 .searchBtnStyle { 
     vertical-align: center;
-    background-color: grey;
-    color: black;
-    border: 1px solid grey;
+    background-color: #0033A0;
+    color: white;
+    border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;
     padding-left: 10px;
     font-size: 13px;
@@ -76,3 +76,8 @@
 ::-webkit-scrollbar-track {
     border-radius: 10px;
 } 
+button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: black;
+  }
