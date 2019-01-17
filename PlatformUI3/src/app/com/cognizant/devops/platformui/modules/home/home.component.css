@@ -146,6 +146,7 @@
   max-width: 20%;
   min-width: 4%;
   overflow-x: hidden;
+  /*bottom: -150px;*/
 }
 
 .mat-drawer-content,mat-sidenav-content {

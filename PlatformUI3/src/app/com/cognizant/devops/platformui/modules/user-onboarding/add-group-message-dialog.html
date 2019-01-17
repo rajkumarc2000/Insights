@@ -14,23 +14,44 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
+<div class="dialogHeaderBackground">
+    <table style="border-spacing:2px; height:100%; width: 100%">
+        <tr>
+            <td>
+                <span class="dialogheader">Confirm Access Group Name</span>
+            </td>
+            <!--<td>
+                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
+                    <a (click)="closeShowDetailsDialog()" style="text-align: right;">
+                        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
+                        </mat-icon>
+                    </a>
+                </div>
+            </td>-->
+        </tr>
+    </table>
+</div>
 
-<h2 mat-dialog-title>Confirm Access Group Name</h2>
-
-<div class="orangeStripCss"></div>
-
-<mat-dialog-content>
-    <label class="mainText"> Access Group Name </label>
+<mat-dialog-content style="padding-left: 15px;">
+    <label class="dialogText"> Access Group Name </label>
     <input [(ngModel)]="accessGroupName" name="accessGroupName" [style.height.px]="30" [style.width.%]="55" class="form-control"
         placeholder="Please input an Access Group Name" required>
         <br>
-        <span class="messageText" *ngIf="message!=''">{{message}}</span>
-        <br> Once the Access Group name is added you will not be able to RENAME or DELETE the Access Group Adding an Access
-        Group cannot be REVERTED.
-        <br> Are you sure you want to create New Access Group ?
+        <div class="textPadding">
+            <span class="messageText" *ngIf="message!=''">{{message}}</span>
+            <span class="warningText">
+            <br > Once the Access Group name is added you will not be able to RENAME or DELETE the
+            Access Group.
+            <br >Adding an Access Group cannot be REVERTED.
+            </span>
+            <br>
+            <span style="font-weight: bold;">
+            <br> Are you sure you want to create New Access Group <b> {{accessGroupName}} </b>?
+            </span>
+        </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button mat-button class="mat-button-dialog" (click)="dialogRef.close('no')">No</button>
-    <button mat-button class="mat-button-dialog" (click)="onYesClick()">Yes</button>
+<mat-dialog-actions class="mat-dialog-actions-button">
+    <button mat-raised-button color="primary" (click)="dialogRef.close('no')">No</button>
+    <button mat-raised-button color="primary" (click)="onYesClick()">Yes</button>
 </mat-dialog-actions>

@@ -81,5 +81,34 @@ th[_ngcontent-c15]:last-child{
     border-bottom-left-radius: 0px;
 }
 
+.dialogheader{    
+    text-align: center;
+    font-weight: bold;
+    font-size: 18pt;
+    text-decoration: none;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 50px; 
+    padding-left: 15px
+}
+
+.dialogText{
+    font-size: 14px;
+    color:  #00b140;
+    font-weight:bold;
+    vertical-align: middle;
+    width: 10%;
+    padding-left: inherit;
+}
+
+.mat-dialog-actions-button{
+    float: right;
+    padding-right: 15px;
+}
+
+.warningText{
+    color: #FF8F1C;
+}
+
 
 

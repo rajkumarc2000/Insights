@@ -62,16 +62,6 @@
     color: #00B140; 
 }
 
-.textpadding
-{
-  padding-left:100px ;
-}
-
-.textpaddingConf
-{
-     padding-left:65px ;
-}
-
 tr.mat-footer-row, tr.mat-row{
     height: 40px !important;
     text-align: left !important;
@@ -128,7 +118,7 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     display: block;
     text-align: left;
     font-size: 22pt;
-    color: #ffff;
+    color: #ffffff;
     font-family: inherit;
 }
 
@@ -173,10 +163,6 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     margin-top: 10px
 }
 
-.mat-dialog-actions{
-    float: center;
-}
-
 .mat-icon-button{
     color: #0033A0
 }
@@ -188,13 +174,6 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     padding-left: 20px;
 }
 
-
-.gridheaderleftbg
-{
-background:  #5C068C ;
-height: 50px;
-}
-
 .column-image {
     position: absolute;
     margin-bottom:50px;
@@ -203,26 +182,20 @@ height: 50px;
     display:flex;
     justify-content: left;
     top:150px;
-    }
+}
 
 
 .gridheaderleft{    
-    
-    
-    /* margin-left: 80px; */
     text-align: center;
     font-weight: bold;
     font-size: 18pt;
     text-decoration: none;
     color: white;
     padding-top: 10px;
-     padding-bottom: 50px; 
-    
+    padding-bottom: 50px;  
 }
 
 .gridheadercenter{    
-    
-    
     margin-left: 50px; 
     text-align: center;
     font-weight: bold;
@@ -230,8 +203,7 @@ height: 50px;
     text-decoration: none;
     color: white;
     padding-top: 10px;
-     padding-bottom: 50px; 
-    
+    padding-bottom: 50px; 
 }
 
 .iframeCss {
@@ -268,5 +240,26 @@ tr.mat-header-row {
 
 .mat-raised-button{
     border-radius: 10px !important;
+}
+
+.mat-dialog-actions-button{
+    float: right;
+    padding-right: 15px;
+}
+.textPadding
+{
+  padding-left:100px ;
+  height: 35%
+}
+
+.textPaddingConf
+{
+     padding-left:65px ;
+     height: 50%
+}
+
+.dialogHeaderBackground{
+    background:  #5C068C ;
+    height: 50px;
 }
 

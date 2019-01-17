@@ -14,21 +14,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
-
-<div class="gridheaderleftbg">
+<div class="dialogHeaderBackground">
     <table style="border-spacing:2px; height:100%; width: 100%">
         <tr>
             <td>
-                <!--style="height:28px"-->
-
                 <mat-icon class="colouricon" [svgIcon]="svgCustomIcon" [ngStyle]="{height: '40px', width: '40px'}"></mat-icon>
-
             </td>
             <td>
-                <!--style="height:28px"-->
                 <span class="gridheaderleft">{{dialogTitle}}</span>
             </td>
-
             <td>
                 <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
@@ -41,10 +35,10 @@
     </table>
 </div>
 
-<mat-dialog-content class="textpadding">
+<mat-dialog-content class="textPadding">
     <div [style.color]="colorCode"> {{data.message}} </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button mat-raised-button color="primary" class="mat-button-dialog" (click)="onCloseClick()">OK</button>
+<mat-dialog-actions class="mat-dialog-actions-button">
+    <button mat-raised-button color="primary" (click)="onCloseClick()">OK</button>
 </mat-dialog-actions>

@@ -17,12 +17,12 @@
 
 <div class="titleStyle">
     <ul>
-    <li style="background-color: orange;">Additional Details - {{detailType}}</li>
-    <li (click)="closeShowDetailsDialog()" style="background-color: orange;">
-        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px'}">
-        </mat-icon>
-    </li>
-    </ul>   
+        <li style="background-color: orange;">Additional Details - {{detailType}}</li>
+        <li (click)="closeShowDetailsDialog()" style="background-color: orange;">
+            <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px'}">
+            </mat-icon>
+        </li>
+    </ul>
 </div>
 
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="showThrobber">
@@ -38,10 +38,10 @@
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" style="text-transform: capitalize">{{header.value}}</th>
             <td mat-cell *matCellDef="let element"> {{ header.key=='inSightsTimeX' ? (element[header.key] | date:'yyyy-MM-dd HH:mm:ss') : element[header.key]}}</td>
         </ng-container>
-        <mat-paginator [pageSize]="8"> </mat-paginator>
+
         <ng-container matColumnDef="footer">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnLength" class="tableFooterCss">
-                For detailed information please refer to the logs: <a style="color:blue">{{pathName}}</a>
+                For detailed information please refer to the logs: <a style="color:#0033A0">{{pathName}}</a>
             </td>
         </ng-container>
 
@@ -49,5 +49,5 @@
         <tr mat-row *matRowDef="let row; columns: headerArrayDisplay;"></tr>
         <tr mat-footer-row *matFooterRowDef="['footer'];sticky: true"></tr>
     </table>
-
+    <!--<mat-paginator #paginator pageSize="8"> </mat-paginator>-->
 </mat-dialog-content>

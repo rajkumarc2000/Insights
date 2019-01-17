@@ -150,8 +150,9 @@ export class UserOnboardingComponent implements OnInit {
     if (this.accessGroupName != undefined) {
       var self = this;
       const dialogRef = this.dialog.open(AddGroupMessageDialog, {
-        width: '45%',
-        height: '45%',
+        panelClass: 'DialogBox',
+        width: '50%',
+        height: '50%',
         data: {
         }
       });

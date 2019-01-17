@@ -329,7 +329,7 @@ public class HealthStatus {
 		
 		int limitOfRow=1;
 		if(type.equalsIgnoreCase("Agents")) {
-			limitOfRow=20;
+			limitOfRow=10;
 		}
 		String query = "MATCH (n:"+label+") where n.inSightsTime IS NOT NULL RETURN n order by n.inSightsTime DESC LIMIT "+limitOfRow;
 		GraphResponse graphResponse =null;
