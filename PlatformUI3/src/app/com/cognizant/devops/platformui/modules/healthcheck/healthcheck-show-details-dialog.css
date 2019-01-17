@@ -43,13 +43,41 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     padding: 0 !important;
 }
 
+ul{
+  position: relative;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+li {
+    display: flex;
+    margin: 1px;
+    padding: 5px;
+}
+li:last-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .titleStyle{
     background-color: orange; 
     color:white;
     margin:0;
-    padding-bottom:10px;
-    text-align: center;
+    padding-bottom:5px;
+    padding-top: 5px;
     font-weight: bold;
 }
 
+
+.mat-table{
+    font-family: inherit;
+}
+
+.mat-dialog-content{
+    display: unset;
+}
     
