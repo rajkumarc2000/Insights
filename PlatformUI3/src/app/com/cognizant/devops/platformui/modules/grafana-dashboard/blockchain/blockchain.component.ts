@@ -91,7 +91,9 @@ export class BlockChainComponent implements OnInit {
         return;
       }
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
-        .then((data) => {          
+        .then((data) => {  
+          console.log("server response >>");        
+          console.log(data);        
           this.dataSource.data = data.data;          
           this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
           this.showSearchResult = true;
@@ -104,8 +106,10 @@ export class BlockChainComponent implements OnInit {
         this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.","SUCCESS");
         return;
       } else {
-         this.blockChainService.getAssetInfo(this.assetID)
-        .then((data) => {          
+         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
+        .then((data) => {   
+          console.log("server response >>");        
+          console.log(data);            
           this.dataSource.data = data.data;                   
           this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
           this.showSearchResult = true;
