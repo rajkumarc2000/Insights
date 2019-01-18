@@ -164,15 +164,13 @@
 
 
     <div style="margin-bottom: 15px;">
-      <button mat-raised-button color="primary" (click)="saveData(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut"
-        style="width:150px;">
+      <button mat-raised-button (click)="saveData(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut" style="width:150px;">
         {{btnValue | uppercase }}
         </button>
-        <button mat-raised-button color="primary" (click)="cancelChange(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut"
-          style="width:150px;padding-left: 10px;padding-right: 10px;">
+      <button mat-raised-button (click)="cancelChange(btnValue)" [disabled]="frmagentconfig.invalid" class="configureBut" style="width:150px;padding-left: 10px;padding-right: 10px;">
           CANCEL
           </button>
-          <br>
+      <br>
     </div>
     <br>
   </form>
