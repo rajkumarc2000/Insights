@@ -27,14 +27,14 @@ import { HealthCheckService } from './healthcheck.service';
 })
 export class ShowDetailsDialog implements OnInit {
   showContent: boolean;
-  showThrobber: boolean;
+  showThrobber: boolean = false;
   checkResponseData: boolean;
   pathName: string;
   detailType: string;
   columnLength: number;
   resultsLength: number = 6;
   agentDetailedNode = [];
-  agentDetailedDatasource: MatTableDataSource<any> = new MatTableDataSource();
+  agentDetailedDatasource = new MatTableDataSource([]);
   headerArrayDisplay = [];
   masterHeader = new Map<String, String>();
   finalHeaderToShow = new Map<String, String>();
@@ -96,7 +96,7 @@ export class ShowDetailsDialog implements OnInit {
           }
         }
         this.agentDetailedDatasource.data = this.agentDetailedNode;
-        /*this.agentDetailedDatasource.paginator = this.paginator;*/
+        this.agentDetailedDatasource.paginator = this.paginator;
         this.showSelectedField();
       });
 

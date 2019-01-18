@@ -35,7 +35,7 @@ export class UserOnboardingService implements IUserOnboardingService {
     }
 
     getOrganizationUsers(orgId: number): Promise<any> {
-        return this.restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_ORGS_USERS", { "orgId": orgId }, { 'Content-Type': 'application/x-www-form-urlencoded' });
+        return this.restHandler.postWithParameter("ORG_USERS_GET", { "orgId": orgId }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
     switchUserOrg(orgId: number): Promise<any> {

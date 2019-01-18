@@ -35,26 +35,18 @@
 
 .searchBtnStyle { 
     vertical-align: center;
-    background-color: grey;
-    color: black;
-    border: 1px solid grey;
+    background-color: #0033A0;
+    color: white;
+    border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;
     padding-left: 10px;
     font-size: 13px;
 }
 .showTable {
-    display: inline-block;
-    background-color: #00B140; 
-    text-align: center;  
+    background-color: #00B140;   
     color: white;
-    font-size: 16px;
-    margin-top:16px; 
-    height: 20px;
     border: 1px solid #00B140;
     border-radius: 10px 10px 10px 10px;   
-    vertical-align:center;
-    padding-top: 5px;
-    padding-bottom: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -76,3 +68,52 @@
 ::-webkit-scrollbar-track {
     border-radius: 10px;
 } 
+button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: black;
+  }
+
+
+
+
+
+.mainDivContainer{
+    margin-left: 16px;
+    margin-right: 16px;
+    height: 100vh;
+}
+.column1{
+    float: left;
+    width: 59%;
+    height:500px;
+}
+.column2{
+    float: left;
+    width: 36.5%;
+    height:500px;
+}
+.divTablesHeading{
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 6px;
+    text-align: center;
+    width: 100%;
+}
+.tableDiv {
+    overflow-y:auto; 
+    height: 83%;
+}
+.divTablesHeading{
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 6px;
+    text-align: center;
+    width: 100%;
+}
+.dataDictionaryMessages{
+	color: black;
+    font-size: 15px;
+    margin-top: 70px;
+    text-align: center;
+}

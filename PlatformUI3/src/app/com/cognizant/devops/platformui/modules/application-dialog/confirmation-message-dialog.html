@@ -14,24 +14,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
-
-
-
-
-
-
-<!--new code to be written-->
-
-
-<div class="gridheaderleftbg">
+<div class="dialogHeaderBackground">
     <table style="border-spacing:2px; height:100%; width: 100%">
         <tr>
-
             <td>
-                <!--style="height:28px"-->
                 <span class="gridheadercenter">{{data.title}}</span>
             </td>
-
             <!--  <td>
                 <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
@@ -44,18 +32,13 @@
     </table>
 </div>
 
-<mat-dialog-content class="textpaddingConf">
-
-    <!-- {{data.message}}
-    <br> {{data.submessage}}-->
-
+<mat-dialog-content class="textPaddingConf">
     <div [innerHTML]="data.message">
     </div>
-
 </mat-dialog-content>
 
 
-<mat-dialog-actions>
-    <button mat-raised-button color="primary" class="mat-button-dialogNo" (click)="dialogRef.close('no')">No</button>
-    <button mat-raised-button color="primary" class="mat-button-dialogYes" (click)="dialogRef.close('yes')">Yes</button>
+<mat-dialog-actions class="mat-dialog-actions-button">
+    <button mat-raised-button color="primary" (click)="dialogRef.close('no')">No</button>
+    <button mat-raised-button color="primary" (click)="dialogRef.close('yes')">Yes</button>
 </mat-dialog-actions>
