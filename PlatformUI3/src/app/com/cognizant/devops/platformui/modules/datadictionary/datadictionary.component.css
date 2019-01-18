@@ -1,3 +1,63 @@
+.mainDivContainer{
+    margin-left: 16px;
+    margin-right: 16px;
+    height:90vh;
+    overflow: hidden;
+}
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
+.column1{
+    float: left;
+    width: 60%;
+}
+.showTable {
+    background-color: #00B140;   
+    color: white;
+    border-radius: 10px 10px 0 0;   
+}
+.tableDiv {
+    overflow-X:hidden;
+    height: 100%;
+}
+tbody {
+    display:grid;
+    height:53vh;
+    overflow:auto;
+}
+
+.column2{
+    float: right;
+    width:37%;
+}
+.divTablesHeading{
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 6px;
+    text-align: left;
+    width: 100vh;
+    padding-left: 15px;
+}
+.dat-row{
+    height: 40px !important;
+    text-align: left !important;
+    vertical-align: middle;
+}
+
+.dat-row:nth-child(even){
+    background-color:#e1e3e7;
+}
+
+.dat-row:nth-child(odd){
+    background-color:#FFFFFF;
+}
+
+
+
+
 .mainText{
     font-size: 14px;
     color:  #0033A0;
@@ -6,11 +66,7 @@
     width: 10%;
     overflow: auto; 
 }
-.divider{
-    width:5px;
-    height:auto;
-    display:inline-block;
-}
+
 
 .propTable{
     padding-left:0x;
@@ -39,22 +95,17 @@
     color: white;
     border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;
-    padding-left: 10px;
+    padding: 5px;
     font-size: 13px;
 }
-.showTable {
-    background-color: #00B140;   
-    color: white;
-    border: 1px solid #00B140;
-    border-radius: 10px 10px 10px 10px;   
-}
 
-::-webkit-scrollbar {
+
+tbody::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 
-::-webkit-scrollbar-thumb {
+tbody::-webkit-scrollbar-thumb {
     background-image: initial;
     background-position-x: initial;
     background-position-y: initial;
@@ -65,7 +116,7 @@
     background-color: #676666;
 }
 
-::-webkit-scrollbar-track {
+tbody::-webkit-scrollbar-track {
     border-radius: 10px;
 } 
 button[disabled]{
@@ -78,39 +129,11 @@ button[disabled]{
 
 
 
-.mainDivContainer{
-    margin-left: 16px;
-    margin-right: 16px;
-    height: 100vh;
-}
-.column1{
-    float: left;
-    width: 59%;
-    height:500px;
-}
-.column2{
-    float: left;
-    width: 36.5%;
-    height:500px;
-}
-.divTablesHeading{
-    font-size: 14px;
-    margin-top: 5px;
-    margin-bottom: 6px;
-    text-align: center;
-    width: 100%;
-}
-.tableDiv {
-    overflow-y:auto; 
-    height: 83%;
-}
-.divTablesHeading{
-    font-size: 14px;
-    margin-top: 5px;
-    margin-bottom: 6px;
-    text-align: center;
-    width: 100%;
-}
+
+
+
+
+
 .dataDictionaryMessages{
 	color: black;
     font-size: 15px;
