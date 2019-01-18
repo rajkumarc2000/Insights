@@ -111,7 +111,9 @@ export class HomeComponent implements OnInit {
         window.open(this.aboutPageURL, "_blank");
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
-      } else if (item.displayName == 'Logout') {
+      }/* else if (item.iconName == 'datadictionary') {
+        window.open(item.route, "_blank");
+      }*/ else if (item.displayName == 'Logout') {
         this.logout();
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
@@ -222,14 +224,14 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/grafanadashboard/200',
             isToolbarDisplay: true,
             isAdminMenu: true
-          }*/,
+          },
           {
             displayName: 'DevOps Maturity',
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/300',
             isToolbarDisplay: true,
             isAdminMenu: true
-          }
+          }*/
         ]
       },
       {
@@ -248,7 +250,7 @@ export class HomeComponent implements OnInit {
       },
       {
         displayName: 'Data Dictionary',
-        iconName: 'feature',
+        iconName: 'datadictionary',
         route: 'InSights/Home/datadictionary',
         isToolbarDisplay: true,
         isAdminMenu: false
