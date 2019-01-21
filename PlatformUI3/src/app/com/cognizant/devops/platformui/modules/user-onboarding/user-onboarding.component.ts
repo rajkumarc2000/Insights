@@ -100,7 +100,7 @@ export class UserOnboardingComponent implements OnInit {
     if (this.selectedUser != undefined) {
       var self = this;
       var title = "Delete User";
-      var dialogmessage = "Are you sure we want to delete this \" " + this.selectedUser.login + " \" user from organization ";
+      var dialogmessage = "Are you sure we want to delete this \" " + this.selectedUser.login + " \" user from organization ?";
       const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, "");
       dialogRef.afterClosed().subscribe(result => {
         //console.log(result);
@@ -179,5 +179,9 @@ export class UserOnboardingComponent implements OnInit {
     setTimeout(() => {
       this.showApplicationMessage = "";
     }, 2000);
+  }
+
+  addGlobalUser() {
+
   }
 }

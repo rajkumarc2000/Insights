@@ -24,7 +24,7 @@
           <tr>
             <td>
               <!--style="height:28px"-->
-              <img mat-card-image *ngIf="isExpanded" align="left" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant log"
+              <img mat-card-image *ngIf="isExpanded" align="left" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log"
                 style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
             </td>
             <td>
@@ -35,19 +35,25 @@
         </table>
       </div>
       <div class="headingPage">
-        <div>
-          <span mat-line class="mat-line-heading" title="{{userName}}" *ngIf="isExpanded">
-            Welcome : {{userName}}
-          </span>
-          <br *ngIf="isExpanded">
-          <span mat-line class="mat-line-heading" *ngIf="isExpanded">
-            Role : <span class="roleName"> {{userRole}} </span>
-          </span>
-          <img mat-card-image class="feviconIcon" *ngIf="!isExpanded" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg'
-          />
-        </div>
+        <table style="border-spacing:2px; height:100%; width: 100%">
+          <tr class="mat-line-heading" *ngIf="isExpanded">
+            <td>
+              <span title="{{userName}}"> Welcome: {{userName}} </span>
+            </td>
+          </tr>
+          <tr class="mat-line-heading" *ngIf="isExpanded">
+            <td>
+              Role: <span class="roleName"> {{userRole}} </span>
+            </td>
+          </tr>
+          <tr *ngIf="!isExpanded">
+            <img mat-card-image class="feviconIcon" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg' />
+          </tr>
+        </table>
       </div>
+
       <mat-divider [style.height.%]="1"></mat-divider>
+
       <div class="menu" [style.height.%]="58">
         <!--[style.height.px]="framesize"-->
         <table class="navtable">
