@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
 import { DataDictionaryService } from '@insights/app/modules/datadictionary/datadictionary.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MatTableDataSource } from '@angular/material';
+
 
 @Component({
   selector: 'app-datadictionary',
@@ -76,6 +74,7 @@ export class DatadictionaryComponent implements OnInit {
       this.noShowDetail = true;
       this.showDetail = false;
       this.startToolNullPropertiesMessage="no properties found"
+      //console.log(this.startToolNullPropertiesMessage)
     }
   }
   async loadAgent1Info2(selectedAgent2) {
@@ -92,6 +91,7 @@ export class DatadictionaryComponent implements OnInit {
       this.noShowDetail2=true;
       this.showDetail2=false;
       this.endToolNullPropertiesMessage="no properties found"
+      //console.log(this.endToolNullPropertiesMessage)
     }
   }
 
@@ -100,7 +100,7 @@ export class DatadictionaryComponent implements OnInit {
     //console.log(data1,data2);
     let usersResponseData3 = await this.dataDictionaryService.loadToolsRelationshipAndProperties(data1.toolName,data1.categoryName,data2.toolName,data2.categoryName);
     if (usersResponseData3.data != undefined && usersResponseData3.status == "success") {
-      console.log(usersResponseData3)
+      //console.log(usersResponseData3)
       if (usersResponseData3.data["relationName"] != undefined){
         this.showDetail3 = true;
         this.noShowDetailCorr=false;
@@ -109,7 +109,7 @@ export class DatadictionaryComponent implements OnInit {
         if (usersResponseData3.data["properties"] != undefined && Object.keys(usersResponseData3.data["properties"]).length > 0){
           this.relationPropertiesSize=true;
           this.corrData=usersResponseData3.data["properties"];
-          console.log('hai')
+          //console.log('hai')
         }else{
           this.relationPropertiesSize=false;
         }

@@ -23,11 +23,6 @@
     overflow-X:hidden;
     height: 100%;
 }
-tbody {
-    display:grid;
-    height:53vh;
-    overflow:auto;
-}
 
 .column2{
     float: right;
@@ -35,7 +30,7 @@ tbody {
 }
 .divTablesHeading{
     font-size: 16px;
-    margin-top: 5px;
+    margin-top: 10px;
     margin-bottom: 6px;
     text-align: left;
     width: 100vh;
@@ -56,8 +51,13 @@ tbody {
 }
 
 
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 0px;
+}
 
-
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 0px;
+}
 .mainText{
     font-size: 14px;
     color:  #0033A0;
@@ -67,10 +67,6 @@ tbody {
     overflow: auto; 
 }
 
-
-.propTable{
-    padding-left:0x;
-}
 
 
 .form-control {
@@ -119,20 +115,12 @@ tbody::-webkit-scrollbar-thumb {
 tbody::-webkit-scrollbar-track {
     border-radius: 10px;
 } 
+
 button[disabled]{
     border: 1px solid #999999;
     background-color: #cccccc;
     color: black;
-  }
-
-
-
-
-
-
-
-
-
+}
 
 .dataDictionaryMessages{
 	color: black;

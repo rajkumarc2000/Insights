@@ -20,24 +20,24 @@
                     </mat-option>
                 </mat-select>
                 <div class="divider"></div>
-                <button [disabled]="(!selectedAgent1 || !selectedAgent2) " class="searchBtnStyle" (click)="getCorrelation(selectedAgent1,selectedAgent2)">Click To Show Correlation </button>
-                <h2 style="font-size:13px;display: inline-block;padding-left: 10px;color: black">(Please select Tool 1 and Tool 2 To see The Correlation)</h2>
+                <button [disabled]="(!selectedAgent1 || !selectedAgent2) " style="outline:none;" class="searchBtnStyle" (click)="getCorrelation(selectedAgent1,selectedAgent2)">Click to show Correlation</button>
+                <h2 style="font-size:13px;display: inline-block;padding-left: 10px;color: black">(Please select Tool 1 and Tool 2 to see the Correlation)</h2>
             </div>
         </div>  
     </div>  
     <div >
         <div class="column1" style="margin-bottom: 1%;" style="border :white;border-radius: 10px;background-color:white;height: 68vh;">
             <div class="showTable" style="text-align: center; padding: 5px;">
-                    &nbsp; Tool Properties
+                    <b>&nbsp; Tool Properties</b>
             </div>
             <div style="height:100%;width:100%;overflow:visible;" >
-                <div  *ngIf="showDetail" style="width:47%;display: inline-block;margin-left:1% ">
-                    <div class="divTablesHeading">
+                <div   style="width:47%;display:inline-block;margin-left:8px ">
+                    <div *ngIf="showDetail" class="divTablesHeading">
                         <div ><b style="color:#0033A0;font-size: 18px;">{{agent1Tool}} Properties</b></div>
-                        <div > Label Information:<b>({{agent1Category}}:{{agent1Tool}})</b></div>
+                        <div style="color:#00B140"> Label Information:<b>({{agent1Category}}:{{agent1Tool}})</b></div>
                     </div>
-                    <table style="margin-left: 3%;">
-                        <tbody>
+                    <table *ngIf="showDetail" style="margin-left: 3%;">
+                        <tbody style="display:grid;max-height:52vh;overflow:auto;">
                             <tr class="dat-row" *ngFor="let element of agent1TableData">
                                 <td style="text-align:left;padding-left: 15px;">{{element}}</td>
                             </tr>
@@ -45,25 +45,31 @@
                     </table>
                     <table *ngIf="noShowDetail">
                         <tr>
-                            <td colspan="5" style="text-align: center">{{startToolNullPropertiesMessage}}</td>
+                            <td colspan="5" style="text-align: center;padding-top: 10px">{{startToolNullPropertiesMessage}} for selected tool</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: center">({{agent1Category}}:{{agent1Tool}})</td>
                         </tr>
                     </table>
                 </div>
-                <div  *ngIf="showDetail2"  style="width:47%;display: inline-block;margin-left: 2%">
-                    <div class="divTablesHeading">
+                <div   style="width:47%;display:inline-block;margin-left: 10px">
+                    <div *ngIf="showDetail2"  class="divTablesHeading">
                         <div><b style="color:#0033A0;font-size: 18px;">{{agent2Tool}} Properties</b></div>
-                        <div> Label Information:<b>({{agent2Category}}:{{agent2Tool}})</b></div>
+                        <div style="color:#00B140"> Label Information:<b>({{agent2Category}}:{{agent2Tool}})</b></div>
                     </div>
-                    <table style="margin-left: 4%;">
-                        <tbody>
+                    <table *ngIf="showDetail2" style="margin-left: 4%;">
+                        <tbody style="display:grid;max-height:52vh;overflow:auto;">
                             <tr  class="dat-row"  *ngFor="let element of agent2TableData">
                                 <td style="text-align:left;padding-left: 15px;">{{element}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <table *ngIf="noShowDetail">
+                    <table *ngIf="noShowDetail2">
                         <tr>
-                            <td colspan="5" style="text-align: center">{{endToolNullPropertiesMessage}}</td>
+                            <td colspan="5" style="text-align: center;padding-top: 10px">{{endToolNullPropertiesMessage}} for selected tool</td>
+                        </tr>
+                        <tr>
+                        <td colspan="5" style="text-align: center">({{agent2Category}}:{{agent2Tool}})</td>
                         </tr>
                     </table>
                 </div>
@@ -73,7 +79,7 @@
         </div>
         <div class="column2" style="margin-bottom: 1%;margin-left:10px;border :white;border-radius: 10px;background-color:white;height: 68vh;" >
             <div  class="showTable" style="text-align: center; padding: 5px;" >
-                &nbsp; Correlation Details
+                <b>&nbsp; Correlation Details</b>
             </div>
             <!--<div layout layout-align="center center" *ngIf="!showNoToolsSelectedForCorrelation">
                 <h1 class="dataDictionaryMessages">Please Select Tools To Check Correlations.</h1>
@@ -81,27 +87,28 @@
             <div layout layout-align="center center" *ngIf="noShowDetailCorr">
                 <h1 class="dataDictionaryMessages">No Correlations found between the selected tools.</h1>
             </div>
-            <div *ngIf="showDetail3">
-                <div class="divTablesHeading" style="text-align: center;margin-left: 3%;padding-top: 5px;padding-left: 10px;">
-                    <span style="color:#0033A0;">Realtionship Name:
-                        <b style="color: black;">{{corrprop}}</b>
-                    </span>
+            <div *ngIf="showDetail3" style="margin-left:15px;margin-right: 15px">
+                <div class="divTablesHeading">
+                    <div><b style="color:#0033A0;font-size: 18px;">Realtionship Name:</b></div>
+                    <div style="color:#00B140">{{corrprop}}</div>
                 </div>
-                <div class="tableDiv" style="margin-left: 3%; margin-right: 3%">
+                <div>
                     <div layout layout-align="center center" *ngIf="!relationPropertiesSize">
                         <h1 class="dataDictionaryMessages">No Relationship Properties Found</h1>
                     </div>
-                    <table *ngIf="relationPropertiesSize">
+                    <table *ngIf="relationPropertiesSize" style="border-spacing:10px;">
                         <thead >
-                            <tr class="mat-header-row">
-                            <th style="width:50%;padding: 0px 0px 0px 10px ;text-align:left;">Property Name</th>
-                            <th style="width:50%;padding: 0px 0px 0px 10px ;text-align:left;">Property Value</th>
+                            <tr class="dat-header-row">
+                            <th style="text-align:left;padding-left: 15px;color:#00B140">Property Name</th>
+                            <th style="text-align:left;padding-left: 15px;color:#00B140">Property Value</th>
                             </tr>
                         </thead>
-                            <tr class="mat-row" *ngFor="let element of corrData | keyvalue">
-                            <td class="mat-cell" style="width:50%;padding: 0px 0px 0px 10px ;text-align:left;">{{element.key}}</td>
-                            <td class="mat-cell" style="width:50%;padding: 0px 0px 0px 10px ;text-align:left;">{{element.value}}</td>
+                        <tbody style="max-height:53vh;overflow:auto;">
+                            <tr class="dat-row"  *ngFor="let element of corrData | keyvalue">
+                            <td style="text-align:left;padding-left: 15px">{{element.key}}</td>
+                            <td style="text-align:left;padding-left: 15px">{{element.value}}</td>
                             </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
