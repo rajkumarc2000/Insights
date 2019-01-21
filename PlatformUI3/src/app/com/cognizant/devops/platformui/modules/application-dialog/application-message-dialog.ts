@@ -31,15 +31,15 @@ export class ApplicationMessageDialog implements OnInit {
     constructor(public dialogRef: MatDialogRef<ApplicationMessageDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
 
         if (data.type == 'SUCCESS') {
-            this.colorCode = "#5C068C";
+            this.colorCode = "#000000";
             this.dialogTitle = "Success";
             this.svgCustomIcon = "success";
         } else if (data.type == 'WARN') {
-            this.colorCode = "#5C068C"
+            this.colorCode = "#000000"
             this.dialogTitle = "Warning";
             this.svgCustomIcon = "";
         } else if (data.type == 'ERROR') {
-            this.colorCode = "#5C068C";
+            this.colorCode = "#000000";
             this.dialogTitle = "Error";
             this.svgCustomIcon = "error";
         }

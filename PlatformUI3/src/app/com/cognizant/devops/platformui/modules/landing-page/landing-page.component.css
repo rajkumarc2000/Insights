@@ -36,17 +36,14 @@
   
 
   .bulletCss{
-     /* list-style-position: outside; */
+
     width:5px;
     height:5px;
     background-color:#0033A0 ;
-   /*  display: inline-block; */
     border-radius: 50%;
-  /*   margin-top: -5pt;
-    margin-right: 18px; */
-    text-align:right;
-    
-  }
+     text-align:right;
+     }
+     
   ul {
     list-style: none;
   }
@@ -60,10 +57,7 @@
     margin-left: -1em;
   }
 
-
-
-
-  .textCss{
+ .textCss{
     color: #0033A0;
     font-size: 25pt;
     width: 400px;
@@ -86,6 +80,7 @@
 
 
   .BlackCssColumn{
+    text-align: initial;
     color: black;
     font-size: 10.5pt;
     width: 400px;
@@ -120,7 +115,12 @@
     color: #00B140;
     font-size: 13pt;
     text-align: center;
-    margin-top: 10px;
+    margin-top: -100px;
+    margin-bottom: 500px;
+  }
+   sup {
+    vertical-align: super;
+    font-size: 18px;
   }
  
   .BlueColumn1{

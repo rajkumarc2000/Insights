@@ -192,7 +192,8 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     text-decoration: none;
     color: white;
     padding-top: 10px;
-    padding-bottom: 50px;  
+    padding-bottom: 50px; 
+    padding-left: 160px; 
 }
 
 .gridheadercenter{    
