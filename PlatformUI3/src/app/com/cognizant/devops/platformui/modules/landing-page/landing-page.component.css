@@ -40,13 +40,28 @@
     width:5px;
     height:5px;
     background-color:#0033A0 ;
-    display: inline-block;
+   /*  display: inline-block; */
     border-radius: 50%;
-    margin-top: -5pt;
-    margin-right: 18px;
-    vertical-align:top;
+  /*   margin-top: -5pt;
+    margin-right: 18px; */
+    text-align:right;
     
   }
+  ul {
+    list-style: none;
+  }
+
+   ul li::before {
+    content: "\2022";
+    color: #0033A0;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+
+
+
 
   .textCss{
     color: #0033A0;
@@ -111,14 +126,14 @@
   .BlueColumn1{
     color: #0033A0;
     font-size: 11pt;
-    margin-left: 125px;
+    margin-left: 140px;
     margin-bottom: 10px;
   }
 
     .BlueColumn2{
     color: #0033A0;
     font-size: 11pt;
-    margin-left: 240px;
+    margin-left: 292px;
     margin-bottom: 10px;
   }
   
@@ -126,10 +141,10 @@
     position: absolute;
     margin-bottom:0px;
     margin-top:0px;
-    margin-left: 510px;
+    margin-left: 560px;
     display:flex;
     justify-content: left;
-    top:290px;
+    top:285px;
     }
 
     .header-logo{
