@@ -63,6 +63,7 @@
 .mat-divider{
   border-top-color: white;
   height: 2px;
+  margin-top:5px; 
 }
 
 .mat-list-item-ripple{
@@ -113,9 +114,15 @@
 .mat-line-heading{
   color: #bfbfbf !important;
   opacity: 0.8;
-  padding: 5px !important;
+  padding-top: 0px !important;
+  padding-right: 5px !important;
+  padding-bottom: 0px !important;
+  padding-left: 5px !important;
+  margin-bottom: 15px!important;
+  margin-top :15px !important;
   font-size: 16px;
   height: 30px !important;
+  
 }
 
 .roleName{
@@ -274,3 +281,9 @@
   align-items: center;
 }
 
+.mat-list-item-content{
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 16px;
+}

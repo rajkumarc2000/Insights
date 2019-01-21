@@ -240,6 +240,8 @@ tr.mat-header-row {
 
 .mat-raised-button{
     border-radius: 10px !important;
+    background-color: #5C068C;
+    color: #FFFFFF;
 }
 
 .mat-dialog-actions-button{
@@ -262,4 +264,6 @@ tr.mat-header-row {
     background:  #5C068C ;
     height: 50px;
 }
+
+
 

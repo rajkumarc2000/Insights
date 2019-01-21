@@ -33,7 +33,6 @@ import { InsightsAppComponent } from '@insights/app/insights.component';
 import { LoginComponent } from '@insights/app/login/login.component';
 import { AuthInterceptor } from '@insights/common/rest-api-setting';
 
-
 export function initializeApp(initConfig: InsightsInitService) {
   return () => initConfig.initMethods();
 }

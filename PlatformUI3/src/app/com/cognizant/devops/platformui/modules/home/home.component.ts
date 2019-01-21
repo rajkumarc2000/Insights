@@ -40,7 +40,8 @@ import { DataSharedService } from '@insights/common/data-shared-service';
   ]
 })
 export class HomeComponent implements OnInit {
-  isExpanded = false;
+  @ViewChild('sidenav') sidenav: ElementRef;
+  isExpanded = true;
   element: HTMLElement;
   userName: String = '';
   userRole: String = '';
@@ -71,6 +72,7 @@ export class HomeComponent implements OnInit {
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
   ngOnInit() {
   }
+
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router, private dataShare: DataSharedService) {
@@ -111,9 +113,7 @@ export class HomeComponent implements OnInit {
         window.open(this.aboutPageURL, "_blank");
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
-      }/* else if (item.iconName == 'datadictionary') {
-        window.open(item.route, "_blank");
-      }*/ else if (item.displayName == 'Logout') {
+      } else if (item.displayName == 'Logout') {
         this.logout();
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
