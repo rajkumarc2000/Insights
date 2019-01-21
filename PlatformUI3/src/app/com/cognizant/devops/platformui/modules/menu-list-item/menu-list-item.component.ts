@@ -34,25 +34,31 @@ import { HomeComponent } from '@insights/app/modules/home/home.component';
     ])
   ]
 })
-export class MenuListItemComponent {
+export class MenuListItemComponent implements OnInit {
   expanded: boolean;
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item: NavItem;
   @Input() depth: number;
   @Input() isExpanded: boolean = false;
-  @Input() selectedOrg:String;
-  @Input() showAdminTab:boolean=true;
-  
+  @Input() selectedOrg: String;
+  @Input() showAdminTab: boolean = true;
+  @Input() leftNavWidthpx: number;
+
+
   constructor(public router: Router, private homeController: HomeComponent) {
     if (this.depth === undefined) {
       this.depth = 0;
     }
   }
 
+  ngOnInit() {
+
+  }
+
   onItemSelected(item: NavItem) {
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
-    }else if (!item.children || !item.children.length) {
+    } else if (!item.children || !item.children.length) {
       this.homeController.onItemSelected(item);
     }
   }
