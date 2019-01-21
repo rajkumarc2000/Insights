@@ -19,7 +19,7 @@
     <ul>
         <li style="background-color: #FF8F1C;">Additional Details - {{detailType}}</li>
         <li (click)="closeShowDetailsDialog()" style="background-color: #FF8F1C;">
-            <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px'}">
+            <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px','padding-right':'24px'}">
             </mat-icon>
         </li>
     </ul>
@@ -32,22 +32,19 @@
 <div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="!checkResponseData">
     No data found
 </div>
+<div class="scrollData">
 <mat-dialog-content *ngIf="showContent" style="margin:0;padding: 0">
     <table mat-table [dataSource]="agentDetailedDatasource">
         <ng-container *ngFor="let header of finalHeaderToShow | keyvalue" matColumnDef="{{header.key}}">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" style="text-transform: capitalize">{{header.value}}</th>
-            <td mat-cell *matCellDef="let element"> {{ header.key=='inSightsTimeX' ? (element[header.key] | date:'yyyy-MM-dd HH:mm:ss') : element[header.key]}}</td>
+            <td mat-cell style="padding-top:2px;padding-bottom:2px;" *matCellDef="let element"> {{ header.key=='inSightsTimeX' ? (element[header.key] | date:'yyyy-MM-dd HH:mm:ss') : element[header.key]}}</td>
         </ng-container>
-
-        <ng-container matColumnDef="footer">
-            <td mat-footer-cell *matFooterCellDef [attr.colspan]="columnLength" class="tableFooterCss">
-                For detailed information please refer to the logs: <a style="color:#0033A0">{{pathName}}</a>
-            </td>
-        </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="headerArrayDisplay" class="tableHeaderCss"></tr>
         <tr mat-row *matRowDef="let row; columns: headerArrayDisplay;"></tr>
-        <tr mat-footer-row *matFooterRowDef="['footer'];sticky: true"></tr>
     </table>
     <!--<mat-paginator #paginator pageSize="8"> </mat-paginator>-->
 </mat-dialog-content>
+</div>
+<div style="padding-left:20px;font-size:14px;color:#FF8F1C">
+    For detailed information please refer to the logs: <a style="color:#0033A0;margin-bottom: 10px">{{pathName}}</a>
+</div>
