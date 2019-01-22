@@ -24,15 +24,15 @@
 
   <div class="searchBoxStyle"> 
   <div layout layout-align="left" class="searchTitleTxt">
-     Select Search Criterion (Please select <b>EITHER</b> Date Range <b>OR</b> Input Asset ID):
+     Select Search Criterion (Please select <b>either</b> Date Range <b>or</b> Input Asset ID):
   </div>
   <div class="dateRowStyle">
-    <mat-radio-group [(ngModel)]="selectedOption">
-      <mat-radio-button value="searchByDates" color="primary">
+    <mat-radio-group [(ngModel)]="selectedOption" >
+      <mat-radio-button value="searchByDates" color="primary" (change)="searchCriteriaChange($event)">
         <div class="dateElementStyle">
           <a>Start Date</a><a class="redFontStyle">*</a><a>:</a>
           <mat-form-field style="padding-left:10px;" required>
-            <input matInput id="startDateInput" [matDatepicker]="startDatePicker" required [max]="yesterday" placeholder="Choose a date"
+            <input matInput #startDateMatInput [matDatepicker]="startDatePicker" required [max]="yesterday" placeholder="Choose a date"
               disabled (dateChange)="getStartDate('change', $event)">
               <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
@@ -41,18 +41,18 @@
         <div class="dateElementStyle">
           <a>End Date</a><a class="redFontStyle">*</a><a>:</a>
           <mat-form-field style="padding-left:10px;" required>
-            <input matInput id="endDateInput" [matDatepicker]="endDatePicker" required [max]="yesterday" placeholder="Choose a date"
+            <input matInput #endDateMatInput [matDatepicker]="endDatePicker" required [max]="yesterday" placeholder="Choose a date"
               disabled (dateChange)="getEndDate('change', $event)">
               <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
           </mat-form-field>
         </div>
       </mat-radio-button>
-      <mat-radio-button value="searchByAssetId" color="primary">
+      <mat-radio-button value="searchByAssetId" color="primary" (change)="searchCriteriaChange($event)">
         <div class="dateElementStyle">
           <mat-form-field class="inputAssetIdStyle">
-            <input matInput #assetId type="text" (keyup.enter)="getAssetID(assetId.value)"
-                          (blur)="getAssetID(assetId.value)">
+            <input matInput #assetIdInput type="text" (keyup.enter)="getAssetID(assetIdInput.value)"
+                          (blur)="getAssetID(assetIdInput.value)">
             <mat-placeholder class="placeholder">Input Asset ID</mat-placeholder>
           </mat-form-field>
         </div>
@@ -78,6 +78,9 @@
         <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '30px', width: '23px'}">
         </mat-icon>
       </a>
+    </div>
+    <div  *ngIf="noSearchResultFlag">
+        {{searchResultNotFoundMsg}}
     </div>
 
     <table mat-table [dataSource]="dataSource" matSort>

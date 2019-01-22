@@ -21,9 +21,8 @@ import { BlockChainService } from '@insights/app/modules/grafana-dashboard/block
 import { DatePipe } from '@angular/common'
 import { BehaviorSubject } from 'rxjs';
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
+import { MatRadioChange, MatInput } from '@angular/material';
 
 export interface AssetData {
   assetID: string;
@@ -55,10 +54,17 @@ export class BlockChainComponent implements OnInit {
   selectedOption: string = "searchByDates";
   startDateFormatted: string;
   endDateFormatted: string;
-  assetID: string = "";  
-  startDateInput:Date;
-  endDateInput:Date;
-  searchCriteria:string ="";
+  assetID: string = "";
+  startDateInput: Date;
+  endDateInput: Date;
+  searchCriteria: string = "";
+  searchResultNotFoundMsg: string = "";
+  noSearchResultFlag: boolean = false;
+  @ViewChild('startDateMatInput', { read: MatInput }) startDateMatInput: MatInput;
+  @ViewChild('endDateMatInput', { read: MatInput }) endDateMatInput: MatInput;
+  @ViewChild('assetIdInput', { read: MatInput }) assetIdInput: MatInput;
+
+
 
   constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, private messageDialog: MessageDialogService) {
     this.yesterday.setDate(this.today.getDate() - 1);
@@ -69,57 +75,90 @@ export class BlockChainComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;    
+    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
   //Method gets invoked when search button is clicked
   searchAllAssets() {
-    this.searchCriteria ="";
+    this.searchCriteria = "";
     /*if (this.selectedOption === undefined) {      
       this.messageDialog.showApplicationsMessage("Please select a search criteria.","ERROR");
       return;
     }*/
-    if (this.selectedOption == "searchByDates") {      
+    if (this.selectedOption == "searchByDates") {
       if (this.startDateInput === undefined || this.endDateInput === undefined) {
-        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.","ERROR");
+        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.", "ERROR");
         return;
       }
-      let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);     
-      if (dateCompareResult == 1 ) {        
-        this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.","ERROR");
+      let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);
+      if (dateCompareResult == 1) {
+        this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.", "ERROR");
         return;
       }
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
-        .then((data) => {  
-          console.log("server response >>");        
-          console.log(data);        
-          this.dataSource.data = data.data;          
-          this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
-          this.showSearchResult = true;
-          this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;        
-          this.dataSource.sort = this.sort;          
-          this.dataSource.paginator = this.paginator;
+        .then((data) => {
+          if (data.status === "failure") {
+            this.noSearchResultFlag = true;
+            this.searchResultNotFoundMsg = data.message;
+          } else {
+            console.log("server response >>");
+            console.log(data);
+            this.dataSource.data = data.data;
+            this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+            this.showSearchResult = true;
+            this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+          }
+
         });
-    } else if (this.selectedOption == "searchByAssetId") {      
+    } else if (this.selectedOption == "searchByAssetId") {
       if (this.assetID === undefined || this.assetID === "") {
-        this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.","ERROR");
+        this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.", "ERROR");
         return;
       } else {
-         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
-        .then((data) => {   
-          console.log("server response >>");        
-          console.log(data);            
-          this.dataSource.data = data.data;                   
-          this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
-          this.showSearchResult = true;
-          this.searchCriteria = this.assetID;          
-          this.dataSource.sort = this.sort;          
-          this.dataSource.paginator = this.paginator;
-        }); 
-      }      
+        this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
+          .then((data) => {
+            if (data.status === "failure") {
+              this.noSearchResultFlag = true;
+              this.searchResultNotFoundMsg = data.message;
+            } else {
+              console.log("server response >>");
+              console.log(data);
+              this.dataSource.data = data.data;
+              this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+              this.showSearchResult = true;
+              this.searchCriteria = this.assetID;
+              this.dataSource.sort = this.sort;
+              this.dataSource.paginator = this.paginator;
+            }
+          });
+      }
     }
 
+  }
+
+  //When radio button selection changes to select search criteria
+  searchCriteriaChange($event: MatRadioChange) {
+    console.log($event.source.name, $event.value);
+    if ($event.value == "searchByDates") {
+      this.assetIdInput.value = '';
+      this.assetID = "";
+    } else if ($event.value == "searchByAssetId") {
+      this.startDateMatInput.value = '';
+      this.endDateMatInput.value = '';
+      this.startDateInput = undefined;
+      this.endDateInput = undefined;
+    }
+  }
+  //Checks whether start date is greater than end date and if yes throws error message
+  validateDateRange() {
+    let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);
+    if (dateCompareResult == 1) {
+      this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.", "ERROR");
+      return;
+    }
   }
 
   //Sets value in assetID property from user's input
@@ -133,14 +172,16 @@ export class BlockChainComponent implements OnInit {
 
   getStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.startDateInput = event.value;
-    this.startDate = this.datepipe.transform(this.startDateInput,'yyyy-MM-dd');
-    this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');    
+    this.startDate = this.datepipe.transform(this.startDateInput, 'yyyy-MM-dd');
+    this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');
+    this.validateDateRange();    
   }
 
   getEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.endDateInput = event.value;
-    this.endDate = this.datepipe.transform(this.endDateInput,'yyyy-MM-dd');
-    this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');    
+    this.endDate = this.datepipe.transform(this.endDateInput, 'yyyy-MM-dd');
+    this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');
+    this.validateDateRange();    
   }
 
   /* 
