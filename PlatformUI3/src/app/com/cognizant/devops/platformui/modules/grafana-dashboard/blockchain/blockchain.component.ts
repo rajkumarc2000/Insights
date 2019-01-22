@@ -100,6 +100,8 @@ export class BlockChainComponent implements OnInit {
         .then((data) => {
           if (data.status === "failure") {
             this.noSearchResultFlag = true;
+            this.showSearchResult = false;
+            this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;
             this.searchResultNotFoundMsg = data.message;
           } else {
             console.log("server response >>");
@@ -122,6 +124,8 @@ export class BlockChainComponent implements OnInit {
           .then((data) => {
             if (data.status === "failure") {
               this.noSearchResultFlag = true;
+              this.showSearchResult = false;
+              this.searchCriteria = this.assetID;
               this.searchResultNotFoundMsg = data.message;
             } else {
               console.log("server response >>");

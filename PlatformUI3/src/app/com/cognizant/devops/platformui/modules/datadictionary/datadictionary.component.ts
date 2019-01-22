@@ -58,8 +58,6 @@ export class DatadictionaryComponent implements OnInit {
     }
   }
   async loadAgent1Info(selectedAgent1) {
-    //console.log(selectedAgent1)
-    //console.log(usersResponseData.length)
     let usersResponseData1 = await this.dataDictionaryService.loadToolProperties(selectedAgent1.toolName,selectedAgent1.categoryName);
     //console.log(usersResponseData)
     this.agent1Tool=selectedAgent1.toolName;
