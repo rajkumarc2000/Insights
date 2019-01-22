@@ -133,6 +133,7 @@ export class BlockChainComponent implements OnInit {
               this.dataSource.data = data.data;
               this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
               this.showSearchResult = true;
+              this.noSearchResultFlag = false;
               this.searchCriteria = this.assetID;
               this.dataSource.sort = this.sort;
               this.dataSource.paginator = this.paginator;
@@ -144,8 +145,7 @@ export class BlockChainComponent implements OnInit {
   }
 
   //When radio button selection changes to select search criteria
-  searchCriteriaChange($event: MatRadioChange) {
-    console.log($event.source.name, $event.value);
+  searchCriteriaChange($event: MatRadioChange) {    
     if ($event.value == "searchByDates") {
       this.assetIdInput.value = '';
       this.assetID = "";
