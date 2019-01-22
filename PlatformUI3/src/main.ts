@@ -8,10 +8,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-if (environment.production) {
-  platformBrowserDynamic().bootstrapModule(InsightsAppModule)
-    .catch(err => console.error(err));
-} else {
-  platformBrowserDynamic().bootstrapModule(InsightsAppModule)
-    .catch(err => console.log(err));
-}
+platformBrowserDynamic().bootstrapModule(InsightsAppModule)
+  .catch(err => console.log(err));
+
