@@ -17,25 +17,26 @@
 
 <div class="container">
   <mat-sidenav-container class="sidenav-container" autosize fullscreen>
-    <mat-sidenav #sidenav class="sidenav" [style.width.%]="isExpanded ? leftNavWidthInPer:leftNavMinWidthInPer" height="50%"
-      mode="side" opened="true" autosize="true">
+    <mat-sidenav #sidenav class="sidenav" [style.height.%]="100" [style.width.%]="isExpanded ? leftNavWidthInPer:leftNavMinWidthInPer"
+      height="50%" mode="side" opened="true" autosize="true">
       <div class="logoSetting">
         <table style="border-spacing:2px; height:100%; width: 100%">
-          <tr>
+          <tr *ngIf="isExpanded">
             <td>
-              <!--style="height:28px"-->
-              <img mat-card-image *ngIf="isExpanded" align="left" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log"
-                style="margin:auto;display:block;margin-right:auto;margin-left:auto;" />
+              <img mat-card-image align="left" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log" style="margin:auto;display:table-row;margin-right:auto;margin-left:auto;"
+              />
             </td>
             <td>
-              <!--style="height:28px"-->
               <mat-icon (click)="isExpanded = !isExpanded" class="material-icons-menu">menu</mat-icon>
             </td>
+          </tr>
+          <tr *ngIf="!isExpanded" style="margin:auto;display:table-row;margin-right:auto;margin-left:auto;height:100%;">
+            <mat-icon (click)="isExpanded = !isExpanded" class="material-icons-menu">menu</mat-icon>
           </tr>
         </table>
       </div>
       <div class="headingPage">
-        <table style="border-spacing:2px; height:100%; width: 100%">
+        <table style="height:100%; width: 100%">
           <tr class="mat-line-heading" *ngIf="isExpanded">
             <td>
               <span title="{{userName}}"> Welcome: {{userName}} </span>
@@ -52,22 +53,21 @@
         </table>
       </div>
 
-      <mat-divider [style.height.%]="1"></mat-divider>
+      <mat-divider></mat-divider>
 
-      <div class="menu" [style.height.%]="58">
-        <!--[style.height.px]="framesize"-->
+      <div class="menu">
         <table class="navtable">
           <tbody>
             <tr>
               <mat-nav-list>
-                <app-menu-list-item *ngFor="let item of navItems" [item]="item" [depth]="depth" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg"
+                <app-menu-list-item *ngFor="let item of getNavItemsByFilter()" [item]="item" [depth]="depth" [isExpanded]="isExpanded" [selectedOrg]="selectedOrg"
                   [showAdminTab]="showAdminTab" [leftNavWidthpx]="leftNavWidthpx"></app-menu-list-item>
               </mat-nav-list>
             </tr>
         </table>
       </div>
-      <mat-divider [style.height.%]="1"></mat-divider>
-      <div style="height:15%" class="bottomnavg">
+      <mat-divider></mat-divider>
+      <div class="bottomnavg">
         <mat-nav-list>
           <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
             [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>

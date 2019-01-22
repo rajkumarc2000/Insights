@@ -20,8 +20,9 @@ export class NavItem {
   iconName: string;
   route?: string;
   children?: NavItem[];
-  isToolbarDisplay?:boolean=true;
-  showIcon?:boolean=false;
-  isAdminMenu?:boolean=true;
-  orgId?:number;
+  isToolbarDisplay?: boolean = true;
+  showIcon?: boolean = false;
+  isAdminMenu?: boolean = true;
+  orgId?: number;
+  showMenu?: boolean = true;
 }

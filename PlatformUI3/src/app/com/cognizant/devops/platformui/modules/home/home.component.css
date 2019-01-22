@@ -37,18 +37,6 @@
   font-family: inherit;
 }
 
-
-
-
-/* 
-.colouricon {
-    background-repeat: no-repeat;
-    display: inline-block;
-    fill: white !important;
-    height: 24px;
-    width: 24px;
-}
- */
 .mat-nav-list{
   color: white;
   opacity: 0.8;
@@ -60,11 +48,7 @@
 
 }
 
-.mat-divider{
-  border-top-color: white;
-  height: 2px;
-  margin-top:5px; 
-}
+
 
 .mat-list-item-ripple{
   height: 30px
@@ -214,26 +198,14 @@
   color: red; 
 }
 
-.bottomnavg {
-  flex-direction: column !important;
-  bottom: 0 !important;
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 16px; 
-  margin-left: 16px;
-}
+
 
 .navtable{
   table-layout: auto;
   width: 100%;
 }
 
-.menu{
-    width: 100%;
-    overflow-y: auto !important;
-    overflow-x: hidden !important
-}
+
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -260,19 +232,85 @@
   margin-left: 16px !important;
 }
 
-.logoSetting{
-  margin-left: 16px;
-  margin-right: 16px;
-  margin-top: 2px;
-  height: 10%;
+@media screen and (max-width : 1366px) and (min-width: 600px)
+{
+  .logoSetting{
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 2px;
+    height: 10%;
+  }
+
+  .headingPage{
+    margin-left: 16px;
+    margin-right: 16px;
+    height: 10%;
+  }
+
+  .bottomnavg {
+    flex-direction: column !important;
+    bottom: 0 !important;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 16px; 
+    margin-left: 16px;
+    height:15%;
+  }
+
+  .menu{
+    width: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 58%;
+  }
+
+  .mat-divider{
+    border-top-color: white;
+    margin-top:5px; 
+    height: 1%
+  }
 }
 
-.headingPage{
-  margin-left: 16px;
-  margin-right: 16px;
-  height: 10%;
-}
+@media screen and (max-width: 1920px) and (min-width: 1466px)
+{
+  .logoSetting{
+    margin-left: 30px;
+    margin-right: 26px;
+    margin-top: 2px;
+    height: 8%;
+  }
 
+  .headingPage{
+    margin-left: 16px;
+    margin-right: 16px;
+    height: 7%;
+  }
+
+  .bottomnavg {
+    flex-direction: column !important;
+    bottom: 0 !important;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 16px; 
+    margin-left: 16px;
+    height:15%;
+  }
+
+  .menu{
+    width: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 68%;
+  }
+
+  .mat-divider{
+    border-top-color: white;
+    margin-top:5px; 
+    height: 1%
+  }
+}
 .feviconIcon{
   margin:auto;
   display:block;

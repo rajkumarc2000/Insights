@@ -26,6 +26,6 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 
 export class InsightsAppComponent {
   title = 'PlatformUI3';
-  constructor(){
+  constructor() {
   }
 }

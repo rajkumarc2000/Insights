@@ -57,7 +57,13 @@ export class MenuListItemComponent implements OnInit {
 
   onItemSelected(item: NavItem) {
     if (item.children && item.children.length) {
+      /*if (item.iconName == 'grafana') {
+        console.log("If grafana item then open dashboard on click " + JSON.stringify(item));
+        this.homeController.onItemSelected(item);
+        this.expanded = !this.expanded;
+      } else {*/
       this.expanded = !this.expanded;
+      /* }*/
     } else if (!item.children || !item.children.length) {
       this.homeController.onItemSelected(item);
     }

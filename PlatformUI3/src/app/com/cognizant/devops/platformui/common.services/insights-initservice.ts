@@ -27,11 +27,10 @@ export class InsightsInitService {
 
     location: Location;
     static serviceHost: String;
-    static elasticSearchServiceHost: String;
-    static neo4jServiceHost: String;
     static grafanaHost: String;
     static agentsOsList = {};
     static configDesc = {};
+    static showAuditReporting = false;
 
     constructor(location: Location, private http: HttpClient,
         private cookieService: CookieService, private imageHandler: ImageHandlerService,
@@ -48,7 +47,6 @@ export class InsightsInitService {
         var self = this;
         var agentConfigJsonUrl = "config/configDesc.json"
         let gentConfigResponse = await this.getJSONUsingObservable(agentConfigJsonUrl).toPromise();
-        //this.logger.log(gentConfigResponse);
         InsightsInitService.configDesc = gentConfigResponse.desriptions;
 
     }
@@ -57,13 +55,21 @@ export class InsightsInitService {
         var self = this;
         var uiConfigJsonUrl = "config/uiConfig.json"
         let UIConfigResponse = await this.getJSONUsingObservable(uiConfigJsonUrl).toPromise();
-        //this.logger.log(UIConfigResponse)
-        InsightsInitService.serviceHost = UIConfigResponse.serviceHost;
-        InsightsInitService.elasticSearchServiceHost = UIConfigResponse.elasticSearchServiceHost;
-        InsightsInitService.neo4jServiceHost = UIConfigResponse.neo4jServiceHost;
-        InsightsInitService.grafanaHost = UIConfigResponse.grafanaHost;
+
+        if (UIConfigResponse.serviceHost == undefined && InsightsInitService.serviceHost == undefined) {
+            InsightsInitService.serviceHost = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+        } else {
+            InsightsInitService.serviceHost = UIConfigResponse.serviceHost;
+        }
+
+        if (UIConfigResponse.grafanaHost == undefined && InsightsInitService.grafanaHost == undefined) {
+            InsightsInitService.grafanaHost = window.location.protocol + "//" + window.location.hostname + ":3000";
+        } else {
+            InsightsInitService.grafanaHost = UIConfigResponse.grafanaHost;
+        }
+
         InsightsInitService.agentsOsList = UIConfigResponse.agentsOsList;
-        //console.log(InsightsInitService.agentsOsList);
+        InsightsInitService.showAuditReporting = UIConfigResponse.showAuditReporting;
     }
 
     private loadImageHandler() {
@@ -71,10 +77,7 @@ export class InsightsInitService {
         this.imageHandler.addPathIconRegistry();
     }
 
-    public getServiceHost(): String {
-        if (!InsightsInitService.serviceHost) {
-            InsightsInitService.serviceHost = location.protocol + "://" + location.host
-        }
+    public static getServiceHost(): String {
         return InsightsInitService.serviceHost;
     }
 
@@ -82,24 +85,7 @@ export class InsightsInitService {
         return InsightsInitService.configDesc;
     }
 
-    public getelasticSearchServiceHost(): String {
-        if (!InsightsInitService.elasticSearchServiceHost) {
-            InsightsInitService.elasticSearchServiceHost = location.protocol + "://" + location.host + ":9200";
-        }
-        return InsightsInitService.elasticSearchServiceHost;
-    }
-
-    public getNeo4jServiceHost(): String {
-        if (!InsightsInitService.neo4jServiceHost) {
-            InsightsInitService.neo4jServiceHost = location.protocol + "://" + location.host + ":7474";
-        }
-        return InsightsInitService.neo4jServiceHost;
-    }
-
     public getGrafanaHost(): String {
-        if (!InsightsInitService.grafanaHost) {
-            InsightsInitService.grafanaHost = location.protocol + "://" + location.host + ":3000";
-        }
         return InsightsInitService.grafanaHost;
     };
 
@@ -112,9 +98,8 @@ export class InsightsInitService {
         var resource;
         var authToken = this.cookieService.get('Authorization');
         var defaultHeader = { 'Authorization': authToken };
-        var restcallUrl = self.getServiceHost() + "/PlatformService/configure/grafanaEndPoint";
+        var restcallUrl = InsightsInitService.getServiceHost() + "/PlatformService/configure/grafanaEndPoint";
         return this.http.get(restcallUrl).toPromise();
-
     }
 
     public getJSONUsingObservable(url): Observable<any> {

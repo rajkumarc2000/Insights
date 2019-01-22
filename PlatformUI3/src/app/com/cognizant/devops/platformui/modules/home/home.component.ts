@@ -81,7 +81,6 @@ export class HomeComponent implements OnInit {
     public router: Router, private dataShare: DataSharedService) {
     router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
-    //console.log("In Home Component");
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -98,9 +97,7 @@ export class HomeComponent implements OnInit {
       }
     }
     var otherMenu = ((45 / 100) * this.framesize);
-    //console.log(otherMenu + " " + this.framesize);
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
-    //console.log(this.framesize);
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
     this.loadorganizations();
@@ -124,14 +121,17 @@ export class HomeComponent implements OnInit {
       } else {
         this.router.navigateByUrl(item.route, { skipLocationChange: true });
       }
-    }
+    } /*else {
+      if (item.displayName == 'grafana') {
+        console.log("in grafana");
+      }
+    }*/
   }
 
   public async getInformationFromGrafana() {
     let currentUserResponce: any;
     this.grafanaResponse = await this.grafanaService.getGrafanaCurrentOrgAndRole();
     let self = this;
-    //console.log(this.grafanaResponse);
     if (this.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
       this.showAdminTab = true;
     } else {
@@ -147,7 +147,6 @@ export class HomeComponent implements OnInit {
       this.userRole = this.grafanaResponse.grafanaCurrentOrgRole;
       this.userCurrentOrg = this.grafanaResponse.grafanaCurrentOrg;
       currentUserResponce = await this.grafanaService.getCurrentUserOrgs();
-      //console.log(currentUserResponce);
       if (currentUserResponce.data != undefined) {
         for (let orgData of currentUserResponce.data) {
           if (orgData.orgId == self.userCurrentOrg) {
@@ -157,7 +156,6 @@ export class HomeComponent implements OnInit {
       } else {
         this.router.navigate(['/login']);
       }
-      //console.log(this.selectedOrg);
     }
   }
 
@@ -165,15 +163,12 @@ export class HomeComponent implements OnInit {
     var self = this;
     let orgResponse = await this.grafanaService.getCurrentUserOrgs();
     let userResponse = await this.grafanaService.getUsers()
-    //console.log(orgResponse.data);
-    //console.log(userResponse.data);
 
     if (orgResponse.data != undefined) {
       var orgDataArray = orgResponse.data;
       this.orgList = orgDataArray;
       if (userResponse.data != undefined) {
         var grafanaOrgId = userResponse.data.orgId;
-        //console.log(grafanaOrgId);
       }
       for (var key in this.orgList) {
         var orgDtl = this.orgList[key];
@@ -189,33 +184,24 @@ export class HomeComponent implements OnInit {
       }
 
     }
-    //console.log(this.orgList);
     this.loadMenuItem();
   }
 
   public loadMenuItem() {
-    //console.log(" In load menu " + this.selectedOrg);
     this.navItems = [
       {
         displayName: 'Dashboards',
         iconName: 'feature',
         isAdminMenu: false,
+        showMenu: true,
         children: [
           {
             displayName: 'Grafana: ',
             iconName: 'grafana',
             isAdminMenu: false,
             isToolbarDisplay: false,
+            showMenu: true,
             children: this.navOrgList
-            /*children: [
-              {
-                displayName: 'Swithch Org',
-                iconName: 'switch_org',
-                isToolbarDisplay: false,
-                isAdminMenu: false,
-                children: this.navOrgList,
-              }
-            ]*/
           }/*,
           {
             displayName: 'ML Capabilities',
@@ -245,6 +231,7 @@ export class HomeComponent implements OnInit {
         iconName: 'feature',
         route: 'InSights/Home/blockchain',
         isToolbarDisplay: true,
+        showMenu: InsightsInitService.showAuditReporting,
         isAdminMenu: true
       },
       {
@@ -252,6 +239,7 @@ export class HomeComponent implements OnInit {
         iconName: 'feature',
         route: 'InSights/Home/playlist',
         isToolbarDisplay: false,
+        showMenu: true,
         isAdminMenu: false
       },
       {
@@ -259,6 +247,7 @@ export class HomeComponent implements OnInit {
         iconName: 'datadictionary',
         route: 'InSights/Home/datadictionary',
         isToolbarDisplay: true,
+        showMenu: true,
         isAdminMenu: false
       },
       {
@@ -266,6 +255,7 @@ export class HomeComponent implements OnInit {
         iconName: 'feature',
         route: 'InSights/Home/healthcheck',
         isToolbarDisplay: true,
+        showMenu: true,
         isAdminMenu: true
       },
       {
@@ -273,12 +263,14 @@ export class HomeComponent implements OnInit {
         iconName: 'admin',
         isToolbarDisplay: true,
         isAdminMenu: true,
+        showMenu: true,
         children: [
           {
             displayName: 'Agent Management',
             iconName: 'feature',
             route: 'InSights/Home/agentmanagement',
             isToolbarDisplay: true,
+            showMenu: true,
             isAdminMenu: true
           },
           /*{
@@ -293,6 +285,7 @@ export class HomeComponent implements OnInit {
             iconName: 'feature',
             route: 'InSights/Home/accessGroupManagement',
             isToolbarDisplay: true,
+            showMenu: true,
             isAdminMenu: true
           }/*,
           {
@@ -307,37 +300,11 @@ export class HomeComponent implements OnInit {
             iconName: 'feature',
             route: 'InSights/Home/dataarchiving',
             isToolbarDisplay: true,
+            showMenu: true,
             isAdminMenu: true
           }
-          /*{
-            displayName: 'Settings',
-            iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/1000',
-            isToolbarDisplay: true,
-            isAdminMenu: true,
-            children: [
-              
-
-            ]
-          }*/
         ]
-      }/*,
-      {
-        displayName: 'Help',
-        iconName: 'help',
-        route: 'InSights/Home/grafanadashboard/750',
-        isToolbarDisplay: true,
-        showIcon: true,
-        isAdminMenu: false
-      },
-      {
-        displayName: 'Logout',
-        iconName: 'logout',
-        route: 'login',
-        isToolbarDisplay: true,
-        showIcon: true,
-        isAdminMenu: false
-      }*/
+      }
     ];
     this.navItemsBottom = [
       {
@@ -362,6 +329,10 @@ export class HomeComponent implements OnInit {
       }
     ];
     //console.log(this.navItems);
+  }
+
+  getNavItemsByFilter() {
+    return this.navItems.filter(x => x.showMenu == true);
   }
 
   public logout(): void {

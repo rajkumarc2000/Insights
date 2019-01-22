@@ -1,14 +1,11 @@
 {
-	"showInsightsTab": false,
-	"showOptionsPanel": false,
 	"showBusinessMapping": true,
+	"showAuditReporting": true,
 	"agentsOsList": {
 		"Windows": "windows",
 		"RHEL/CentOS": "linux",
-		"Ubuntu":"Ubuntu"
+		"Ubuntu": "Ubuntu"
 	},
-	"serviceHost" : "http://localhost:8080",
-	"elasticSearchServiceHost" : "http://localhost:9200",
-	"neo4jServiceHost" : "http://localhost:7474",
-	"grafanaHost" : "http://localhost:3000"
+	"serviceHost": "http://localhost:8080",
+	"grafanaHost": "http://localhost:3000"
 }
