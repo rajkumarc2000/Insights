@@ -39,7 +39,7 @@
                     <table *ngIf="showDetail" style="margin-left: 3%;">
                         <tbody style="display:grid;max-height:50vh;overflow:auto;">
                             <tr class="dat-row" *ngFor="let element of agent1TableData">
-                                <td style="text-align:left;padding-left: 15px;">{{element}}</td>
+                                <td style="text-align:left;padding-left: 15px;padding-top: 8px;align-items: center;">{{element}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -60,7 +60,7 @@
                     <table *ngIf="showDetail2" style="margin-left: 4%;">
                         <tbody style="display:grid;max-height:50vh;overflow:auto;">
                             <tr  class="dat-row"  *ngFor="let element of agent2TableData">
-                                <td style="text-align:left;padding-left: 15px;">{{element}}</td>
+                                <td style="text-align:left;padding-left: 15px;padding-top: 8px;">{{element}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -99,8 +99,8 @@
                     <table *ngIf="relationPropertiesSize" style="border-spacing:10px;">
                         <thead >
                             <tr class="dat-header-row">
-                            <th style="text-align:left;padding-left: 15px;color:#00B140">Property Name</th>
-                            <th style="text-align:left;padding-left: 15px;color:#00B140">Property Value</th>
+                            <th style="text-align:left;color:#0033A0">Property Name</th>
+                            <th style="text-align:left;color:#0033A0">Property Value</th>
                             </tr>
                         </thead>
                         <tbody style="max-height:50vh;overflow:auto;">
