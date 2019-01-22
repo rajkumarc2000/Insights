@@ -65,6 +65,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('success1', "icons/others/success.png");
         this.addImage('success', "icons/svg/dialogBoxIcon/success.svg");
         this.addImage('error', "icons/svg/dialogBoxIcon/error.svg");
+        this.addImage('alert', "icons/svg/confirmBox/alert.svg");
     }
 
 

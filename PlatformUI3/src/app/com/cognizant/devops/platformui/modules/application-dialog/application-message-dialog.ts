@@ -37,7 +37,7 @@ export class ApplicationMessageDialog implements OnInit {
         } else if (data.type == 'WARN') {
             this.colorCode = "#000000"
             this.dialogTitle = "Warning";
-            this.svgCustomIcon = "";
+            this.svgCustomIcon = "warning";
         } else if (data.type == 'ERROR') {
             this.colorCode = "#000000";
             this.dialogTitle = "Error";

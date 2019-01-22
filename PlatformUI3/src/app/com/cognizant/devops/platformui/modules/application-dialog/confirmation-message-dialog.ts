@@ -24,8 +24,16 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 
 export class ConfirmationMessageDialog implements OnInit {
+    colorCode: String;
+    dialogTitle: String;
+    svgCustomIcon: String;
 
     constructor(public dialogRef: MatDialogRef<ConfirmationMessageDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
+
+        if (data.type == 'ALERT') {
+            this.colorCode = "#000000";
+            this.svgCustomIcon = "warning";
+        }
     }
 
     ngOnInit() {

@@ -101,7 +101,7 @@ export class UserOnboardingComponent implements OnInit {
       var self = this;
       var title = "Delete User";
       var dialogmessage = "Are you sure we want to delete this \" " + this.selectedUser.login + " \" user from organization ?";
-      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, "");
+      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT");
       dialogRef.afterClosed().subscribe(result => {
         //console.log(result);
         if (result == 'yes') {

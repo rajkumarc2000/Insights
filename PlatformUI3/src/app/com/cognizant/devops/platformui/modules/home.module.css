@@ -193,7 +193,7 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     color: white;
     padding-top: 10px;
     padding-bottom: 50px; 
-    padding-left: 160px; 
+    padding-left: 180px; 
 }
 
 .gridheadercenter{    
@@ -205,6 +205,7 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     color: white;
     padding-top: 10px;
     padding-bottom: 50px; 
+    padding-left: 70px;
 }
 
 .iframeCss {
@@ -248,16 +249,17 @@ tr.mat-header-row {
 .mat-dialog-actions-button{
     float: right;
     padding-right: 15px;
+    color: #5C068C;
 }
 .textPadding
 {
-  padding-left:100px ;
+  padding-left:70px ;
   height: 35%
 }
 
 .textPaddingConf
 {
-     padding-left:65px ;
+     padding-left:70px ;
      height: 50%
 }
 

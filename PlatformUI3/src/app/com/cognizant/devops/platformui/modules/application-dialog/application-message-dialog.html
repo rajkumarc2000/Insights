@@ -24,7 +24,7 @@
                 <span class="gridheaderleft">{{dialogTitle}}</span>
             </td>
             <td>
-                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
+                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding: 0px 15px">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
                         <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
                         </mat-icon>
@@ -34,9 +34,11 @@
         </tr>
     </table>
 </div>
+
 <mat-dialog-content class="textPadding">
     <div [style.color]="colorCode"> {{data.message}} </div>
 </mat-dialog-content>
+
 <mat-dialog-actions class="mat-dialog-actions-button">
     <button mat-raised-button (click)="onCloseClick()">OK</button>
 </mat-dialog-actions>
