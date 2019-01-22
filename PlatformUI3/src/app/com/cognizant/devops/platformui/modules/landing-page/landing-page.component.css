@@ -1,3 +1,10 @@
+.overflow1
+{
+  max-height: 98%;
+  
+  overflow-x: hidden;
+    overflow-y: hidden;
+}
 .headerdiv
 { 
    margin-top: 55px;
@@ -116,7 +123,8 @@
     font-size: 13pt;
     text-align: center;
     margin-top: -100px;
-    margin-bottom: 500px;
+    /* margin-bottom: 500px; */
+    overflow: hidden;
   }
    sup {
     vertical-align: super;
