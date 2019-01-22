@@ -1,5 +1,6 @@
 <a routerLinkActive=active *ngIf=" item.isAdminMenu ? showAdminTab : true" mat-list-item [ngStyle]="{'padding-left': (depth * 10) + 'px '}"
-  (click)="onItemSelected(item)" title="{{item.displayName}}" [ngClass]="{'active': (item.route && isExpanded) ? router.isActive(item.route, true): false, 'expanded': expanded}">
+  (click)="onItemSelected(item)" [attr.title]="item.iconName =='grafana' ? item.displayName + selectedOrg : item.displayName"
+  [ngClass]="{'active': (item.route && isExpanded) ? router.isActive(item.route, true): false, 'expanded': expanded}">
   <mat-icon *ngIf="item.showIcon && !isExpanded">{{item.iconName}}</mat-icon>
   <p matLine class="mat-line-child" *ngIf="isExpanded">{{item.displayName}}
     <span *ngIf="item.iconName =='grafana'"> {{selectedOrg}}  </span>
@@ -12,7 +13,7 @@
   </span>
   </a>
   <div *ngIf="expanded && isExpanded">
-    <app-menu-list-item style="max-width: 100%;" *ngFor="let child of item.children" [item]="child" [depth]="depth+1" [isExpanded]="isExpanded"
-      [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab">
+    <app-menu-list-item [style.width.px]="leftNavWidthpx" *ngFor="let child of item.children" [item]="child" [depth]="depth+1"
+      [isExpanded]="isExpanded" [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab" [leftNavWidthpx]="leftNavWidthpx">
       </app-menu-list-item>
   </div>

@@ -67,6 +67,9 @@ export class HomeComponent implements OnInit {
   selectedOrg: String;
   sidenavWidth: number = 14;
   framesize: any;
+  leftNavWidthInPer: number;
+  leftNavMinWidthInPer: number;
+  leftNavWidthpx: number;
   displayLandingPage: boolean = false;
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
@@ -85,6 +88,9 @@ export class HomeComponent implements OnInit {
     this.grafanaService.validateSession();
     this.isValidUser = true;
     this.framesize = window.frames.innerHeight;
+    this.leftNavWidthInPer = 20;
+    this.leftNavMinWidthInPer = 6;
+    this.leftNavWidthpx = (window.frames.innerWidth * this.leftNavWidthInPer) / 100;
     var receiveMessage = function (evt) {
       var height = parseInt(evt.data);
       if (!isNaN(height)) {
@@ -196,7 +202,7 @@ export class HomeComponent implements OnInit {
         isAdminMenu: false,
         children: [
           {
-            displayName: 'Grafana : ',
+            displayName: 'Grafana: ',
             iconName: 'grafana',
             isAdminMenu: false,
             isToolbarDisplay: false,

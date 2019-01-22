@@ -15,6 +15,7 @@ table {
 }
 .tableFooterCss {
     color: #FF8F1C;
+    margin-top: 30px;
 }
 
 tr:nth-child(odd) td {
@@ -70,6 +71,27 @@ li:last-child {
     padding-bottom:5px;
     padding-top: 5px;
     font-weight: bold;
+    border:3px solid #FF8F1C;
+}
+
+mat-dialog-content::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+mat-dialog-content::-webkit-scrollbar-track {
+    border-radius: 10px;
 }
 
 
@@ -81,3 +103,27 @@ li:last-child {
     display: unset;
 }
     
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+.scrollData{
+    max-height:82%;
+    overflow-y:auto;
+    padding-bottom: 10px;
+}

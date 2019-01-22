@@ -150,8 +150,6 @@
 
 .mat-drawer{
   background:#393838;
-  max-width: 20%;
-  min-width: 4%;
   overflow-x: hidden;
   /*bottom: -150px;*/
 }
