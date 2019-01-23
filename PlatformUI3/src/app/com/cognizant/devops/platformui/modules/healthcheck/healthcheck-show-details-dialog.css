@@ -123,7 +123,7 @@ mat-dialog-content::-webkit-scrollbar-track {
     border-radius: 10px;
 }
 .scrollData{
-    max-height:82%;
+    height:82%;
     overflow-y:auto;
     padding-bottom: 10px;
 }

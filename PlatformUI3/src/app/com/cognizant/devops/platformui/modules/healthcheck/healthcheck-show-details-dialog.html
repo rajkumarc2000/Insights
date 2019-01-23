@@ -29,10 +29,7 @@
     <mat-progress-spinner [color]="primmary" [mode]="indeterminate" [value]="50">
     </mat-progress-spinner>
 </div>
-<div style="margin-top: 30px;margin-left:45% ; margin-bottom: 30px;" *ngIf="!checkResponseData">
-    No data found
-</div>
-<div class="scrollData">
+<div *ngIf="checkResponseData" class="scrollData">
 <mat-dialog-content *ngIf="showContent" style="margin:0;padding: 0">
     <table mat-table [dataSource]="agentDetailedDatasource">
         <ng-container *ngFor="let header of finalHeaderToShow | keyvalue" matColumnDef="{{header.key}}">
@@ -45,6 +42,10 @@
     <!--<mat-paginator #paginator pageSize="8"> </mat-paginator>-->
 </mat-dialog-content>
 </div>
-<div style="padding-left:25px;padding-top: 10px;font-size:14px;color:#FF8F1C">
-    For detailed information please refer to the logs: <a style="color:#0033A0;margin-bottom: 10px">{{pathName}}</a>
+<div style="margin-top: 3%;margin-left:45% ;height: 72%; margin-bottom: 3%;" *ngIf="!checkResponseData">
+    No data found
 </div>
+<div style="bottom:0;padding-left:25px;padding-bottom: 5px;font-size:14px;color:#FF8F1C">
+    Details of all the logs are saved at: <a style="color:#0033A0;margin-bottom: 10px">{{pathName}}</a>
+</div>
+

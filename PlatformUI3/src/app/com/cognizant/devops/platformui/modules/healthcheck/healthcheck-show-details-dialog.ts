@@ -58,7 +58,7 @@ export class ShowDetailsDialog implements OnInit {
   }
 
   fillMasterHeaderData() {
-    this.masterHeader.set("execId", "Execution Id");
+    this.masterHeader.set("execId", "Execution ID");
     this.masterHeader.set("inSightsTimeX", "Execution Time");
     this.masterHeader.set("status", "Status");
     this.masterHeader.set("message", "Message");

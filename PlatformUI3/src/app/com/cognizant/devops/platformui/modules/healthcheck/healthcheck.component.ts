@@ -103,7 +103,7 @@ export class HealthCheckComponent implements OnInit {
     var rcategoryName=categoryName.replace(/ +/g, "");
     if (toolName=="-"){
       var filePath="${INSIGHTS_HOME}/logs/"+rcategoryName+"/"+rcategoryName+".log";
-      var detailType=rcategoryName;
+      var detailType=categoryName;
     }else {
       var rtoolName=toolName.charAt(0).toUpperCase() + toolName.slice(1).toLowerCase();
       var filePath="${INSIGHTS_HOME}/logs/PlatformAgent/log_"+rtoolName+"Agent.log";
