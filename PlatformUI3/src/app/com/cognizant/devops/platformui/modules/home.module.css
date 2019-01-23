@@ -260,7 +260,9 @@ tr.mat-header-row {
 .textPaddingConf
 {
      padding-left:70px ;
+     padding-right: 20px;
      height: 50%
+     
 }
 
 .dialogHeaderBackground{
