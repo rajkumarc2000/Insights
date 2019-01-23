@@ -95,7 +95,7 @@ export class AgentConfigurationComponent implements OnInit {
     if (this.receivedParam.type == "update") {
       this.btnValue = "Update";
       this.subTitleName = "Update an Agent"
-      this.subTitleInfoText = "(you may add.edit/delete agent from the main page)";
+      this.subTitleInfoText = "(You may add/edit/delete agent from the main page)";
       this.buttonDisableStatus = true;
       this.defaultConfigdata = {};
       if (this.receivedParam.detailedArr != null) {

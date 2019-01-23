@@ -365,6 +365,17 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     height: 30px;
 }
 
+/* .mat-button-focus-overlay {
+   background-color:unset !important;
+  }
+
+  .mat-icon-button:focus{
+    box-shadow: 0 0 unset !important;
+    transition:none !important;
+    background-color: unset !important;
+    -webkit-tap-highlight-color:unset !important;
+}*/
+
 
 
 

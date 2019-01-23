@@ -73,20 +73,6 @@
   
 }
 
-.material-icons-menu {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 35px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-}
-
 .mat-line{
   color: #bfbfbf !important;
   opacity: 0.8;
@@ -135,6 +121,7 @@
 .mat-drawer{
   background:#393838;
   overflow-x: hidden;
+  overflow-y: hidden;
   /*bottom: -150px;*/
 }
 
@@ -270,12 +257,26 @@
     margin-top:5px; 
     height: 1%
   }
+
+  .material-icons-menu {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 35px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}
 }
 
-@media screen and (max-width: 1920px) and (min-width: 1466px)
+@media screen and (max-width: 1920px) and (min-width: 1380px)
 {
   .logoSetting{
-    margin-left: 30px;
+    margin-left: 16px;
     margin-right: 26px;
     margin-top: 2px;
     height: 8%;
@@ -302,14 +303,29 @@
     width: 100%;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: 68%;
+    height: 64%;
   }
 
   .mat-divider{
     border-top-color: white;
-    margin-top:5px; 
+    margin-top:10px; 
     height: 1%
   }
+
+  .material-icons-menu {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 35px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    margin-left: 13px;
+}
 }
 .feviconIcon{
   margin:auto;

@@ -37,12 +37,12 @@
     <mat-icon svgIcon="lineInButton" class="mat-icon material-icons">
     </mat-icon>
   </button>
-    <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START'">
+    <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START' || runDisableStatus==''">
     <mat-icon title=" Start " class="mat-icon material-icons ">
       play_circle_filled
     </mat-icon>
   </button>
-    <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP'">
+    <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP' || runDisableStatus==''">
     <mat-icon title="Stop " class="mat-icon material-icons ">
       fiber_manual_record
     </mat-icon>

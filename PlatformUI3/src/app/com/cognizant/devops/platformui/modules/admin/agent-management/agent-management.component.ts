@@ -35,7 +35,7 @@ export class AgentManagementComponent implements OnInit {
   data = [];
   tableParams = [];
   buttonDisableStatus: boolean = true;
-  runDisableStatus: string;
+  runDisableStatus: string = "";
   agentListDatasource = [];
   displayedColumns: string[];
   selectedAgent: any;
@@ -155,7 +155,7 @@ export class AgentManagementComponent implements OnInit {
     var self = this;
     //console.log("uninstall agent " + JSON.stringify(this.selectedAgent));
     if (self.selectedAgent.agentStatus == 'STOP') {
-      var title = "Delete User";
+      var title = "Delete Agent";
       var dialogmessage = "Note: Uninstalling the Agent doesn't delete the data that has been collected. The agent could be re-registered again, and the data collection would be resumed from the last run time. <br> <br> Do you want to uninstall <b> " + self.selectedAgent.toolName + " </b> on <b>" + self.selectedAgent.osVersion + " </b> ? ";
       const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT");
 
