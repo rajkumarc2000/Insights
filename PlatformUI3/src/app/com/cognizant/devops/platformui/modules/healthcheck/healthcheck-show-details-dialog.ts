@@ -74,7 +74,7 @@ export class ShowDetailsDialog implements OnInit {
         this.showContent = !this.showThrobber;
         var dataArray = data.data.nodes;
         this.pathName = this.data.pathName;
-        if (dataArray.length === 0 && this.data.detailType != "PlatformService") {
+        if (dataArray.length === 0 && this.data.detailType != "Platform Service") {
           this.checkResponseData = false;
         }
         for (var key in dataArray) {
