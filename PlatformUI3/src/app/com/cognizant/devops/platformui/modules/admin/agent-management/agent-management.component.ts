@@ -53,12 +53,16 @@ export class AgentManagementComponent implements OnInit {
   ngOnInit() {
     //console.log(this.route.queryParams);
     this.route.queryParams.subscribe(params => {
-      //console.log(params["agentstatus"]);
+      console.log(params["agentstatus"]);
       if (params["agentstatus"] != undefined) {
         this.receivedParam = params["agentstatus"];
-        var agentConfigstatusCode = params["agentConfigstatusCode"]
-        this.showConfirmMessage = this.receivedParam;
-        this.messageDialog.showApplicationsMessage(this.receivedParam, agentConfigstatusCode);
+        var agentConfigstatusCode = params["agentConfigstatusCode"];
+        var showConfirmMessage = this.receivedParam;
+        console.log(agentConfigstatusCode + " " + showConfirmMessage);
+        if (agentConfigstatusCode == undefined) {
+          agentConfigstatusCode = 'WARN';
+        }
+        setTimeout(() => this.messageDialog.showApplicationsMessage(showConfirmMessage, agentConfigstatusCode));
       }
     });
   }

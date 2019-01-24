@@ -31,7 +31,7 @@ export class MessageDialogService {
             panelClass: 'DialogBox',
             width: '50%',
             height: '30%',
-
+            disableClose: true,
             data: {
                 title: "Message",
                 message: message,
@@ -46,6 +46,7 @@ export class MessageDialogService {
             panelClass: 'DialogBox',
             width: '40%',
             height: '40%',
+            disableClose: true,
             data: {
                 title: title,
                 message: message,

@@ -153,6 +153,7 @@ export class UserOnboardingComponent implements OnInit {
         panelClass: 'DialogBox',
         width: '50%',
         height: '50%',
+        disableClose: true,
         data: {
         }
       });
