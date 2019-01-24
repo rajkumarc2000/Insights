@@ -35,6 +35,8 @@ export class ImageHandlerService implements IImageHandlerService {
 
     public initializeImageIcons() {
         this.addImage('defaultLogo', "icons/svg/landingPage/OneDevOps_InsightsLOGO.svg");
+        this.addImage('InsightsLogo', "icons/svg/login/InsightsLogo.svg");
+        this.addImage('PoweredBy', "icons/svg/login/PoweredBy.svg");
         this.addImage('verticleLine', "icons/svg/login/Vertical_Line.svg");
         this.addImage('OrangeVerticalLine', "icons/svg/OrangeVerticalLine.svg");
         this.addImage('OrangeLine', "icons/svg/landingPage/OrangeLine.svg");

@@ -23,7 +23,8 @@
       <div class="blueStripCss"></div>
 
       <div class="column textPad">
-        <mat-icon svgIcon="defaultLogo" layout layout-align="center center" [ngStyle]="{'height':'120px', 'width':'300px', 'margin':'0 auto', 'display':'flex', 'justify-align':'center'}">
+
+        <mat-icon svgIcon="InsightsLogo" layout layout-align="center center" [ngStyle]="{'height':'75px', 'width':'215px', 'margin-left':'330px','margin-top':'7pt','display':'flex', 'justify-align':'center'}">
         </mat-icon>
 
         <div class="topTxtCss">
@@ -61,8 +62,8 @@
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
             &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text" formControlName="username"
-              />
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text"
+                formControlName="username" />
             </mat-form-field>
             <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt">Please enter a valid Username.</div>
@@ -71,11 +72,12 @@
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss" formControlName="password"
-                autocomplete="new-password" />
+              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss"
+                formControlName="password" autocomplete="new-password" />
             </mat-form-field>
             <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
-              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.</div>
+              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid
+                password.</div>
             </div>
             <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">
               {{logMsg}}
@@ -83,11 +85,15 @@
           </div>
           <mat-card-actions layout="row" class="buttonMar" layout-align="center center">
             <div flex="60" flex-offset="15" class="logOnBtnAlign">
-              <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" (click)="userAuthentication()">LOG ON</button>
+              <button mat-button class="md-raised md-primary sigBtnCss" [disabled]="loginForm.invalid" (click)="userAuthentication()">LOG
+                ON</button>
               <!--  <span ng-show="loginController.showThrobber" style="vertical-align: super;">  
                 <mat-progress-spinner style="display: inline;" diameter="30" mode="indeterminate"></mat-progress-spinner></span> -->
             </div>
           </mat-card-actions>
+
+          <mat-icon svgIcon="PoweredBy" layout layout-align="center center" [ngStyle]="{'height':'190px', 'width':'300px', 'margin-left':'18px','margin-top':'-60px','display':'flex', 'justify-align':'center'}">
+          </mat-icon>
           <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
             <mat-progress-spinner color="primary" mode="indeterminate">
             </mat-progress-spinner>
@@ -96,8 +102,11 @@
       </div>
 
     </div>
-    <div class="greenStripCss"></div>
-    <div class="copyRightCss">© 2019 Cognizant Technologies Solutions Limited. All rights reserved.</div>
-
+    <div class="shift">
+      <div class="greenStripCss"></div>
+    </div>
+    <div class="shift2">
+      <div class="copyRightCss">© 2019 Cognizant Technologies Solutions Limited. All rights reserved.</div>
+    </div>
   </div>
 </div>
