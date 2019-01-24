@@ -30,8 +30,10 @@ export class HealthCheckComponent implements OnInit {
   agentsStatusResposne: any;
   agentNodes = [];
   agentToolsIcon = {};
-  showContent: boolean = false;;
+  showContent: boolean = false;
   showThrobber: boolean = false;
+  showContentAgent: boolean = false;
+  showThrobberAgent: boolean = false;
   serverStatus = [];
   displayedAgentColumns: string[];
   dataComponentColumns: string[];
@@ -40,16 +42,48 @@ export class HealthCheckComponent implements OnInit {
   dataComponentDataSource = [];
   servicesDataSource = [];
   healthResponse: any;
+  agentResponse:any;
   agentBacktoTopFlag: boolean = false;
   dataBacktoTopFlag: boolean = false;
   servicesBacktoTopFlag: boolean = false;
 
 
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
+    this.loadAgentCheckInfo();
     this.loadAllHealthCheckInfo();
   }
 
   ngOnInit() { }
+
+  async loadAgentCheckInfo(){
+    try {
+      this.showThrobberAgent = true;
+      this.showContentAgent = !this.showThrobberAgent;
+      this.agentResponse = await this.healthCheckService.loadServerAgentConfiguration();
+      console.log(this.agentResponse);
+      if (this.agentResponse != null) {
+        this.showThrobberAgent = false;
+        this.showContentAgent = !this.showThrobberAgent;
+        for (var key in this.agentResponse) {
+          var element = this.agentResponse[key];
+          element.serverName = key;
+          if (element.type == 'Agents') {
+            this.agentNodes = element.agentNodes;
+            this.agentDataSource = this.agentNodes;
+          }
+        }
+        //Displays Back to Top button when Agent table contains more than 20 rows
+        if (this.agentDataSource.length > 20) {
+          this.agentBacktoTopFlag = true;
+        }
+        this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
+      }
+    }catch (error) {
+      this.showContentAgent = false;
+      console.log(error);
+    }
+
+  }
 
   async loadAllHealthCheckInfo() {
     try {
@@ -68,15 +102,9 @@ export class HealthCheckComponent implements OnInit {
             this.servicesDataSource.push(element);
           } else if (element.type == 'Database') {
             this.dataComponentDataSource.push(element);
-          } else if (element.type == 'Agents') {
-            this.agentNodes = element.agentNodes;
-            this.agentDataSource = this.agentNodes;
           }
         }
-        //Displays Back to Top button when Agent table contains more than 20 rows
-        if (this.agentDataSource.length > 20) {
-          this.agentBacktoTopFlag = true;
-        }
+       
         //Displays Back to Top button when Data Component table contains more than 20 rows
         if (this.dataComponentDataSource.length > 20) {
           this.dataBacktoTopFlag = true;
@@ -86,7 +114,6 @@ export class HealthCheckComponent implements OnInit {
           this.servicesBacktoTopFlag = true;
         }
 
-        this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
         this.dataComponentColumns = ['serverName', 'ipAddress', 'version', 'status'];
         this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
 
@@ -113,7 +140,6 @@ export class HealthCheckComponent implements OnInit {
       panelClass: 'healthcheck-show-details-dialog-container',
       height: '500px',
       width: '900px',
-      disableClose: true,
       data: { toolName: toolName, categoryName: categoryName, pathName:filePath,detailType:detailType },
     });
   }

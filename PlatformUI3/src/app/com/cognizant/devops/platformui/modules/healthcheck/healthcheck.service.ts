@@ -36,7 +36,10 @@ export class HealthCheckService implements IHealthCheckService {
         var restHandler = this.restCallHandlerService;
         return restHandler.get("INSIGHTS_COMP_STATUS");
     }
-
+    loadServerAgentConfiguration(): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("AGENT_COMP_STATUS");
+    }
     loadHealthConfigurations(toolName: string, toolCategory: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
         return restHandler.get("HEALTH_TOOL", { 'tool': toolName, 'category': toolCategory });

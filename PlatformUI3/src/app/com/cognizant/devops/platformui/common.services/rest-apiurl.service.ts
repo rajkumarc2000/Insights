@@ -96,18 +96,15 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_GET_CURRENT_USER_ORGS", '/PlatformService/accessGrpMgmt/getCurrentUserOrgs');
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_SWITCH_ORGS", '/PlatformService/accessGrpMgmt/switchUserOrg');
         this.addEndPoint("ACCESS_GROUP_MANAGEMENT_GET_USERS", '/PlatformService/accessGrpMgmt/getUser');
-        this.addEndPoint("ACCESS_GROUP_MANAGEMENT_EDIT_ORGS_UESRS", '/PlatformService/admin/userMgmt/editOrganizationUser');
-        this.addEndPoint("ACCESS_GROUP_MANAGEMENT_DELETE_ORGS_UESRS", '/PlatformService/admin/userMgmt/deleteOrganizationUser');
-
         this.addEndPoint("GET_GRAFANA_VERSION", "/PlatformService/accessGrpMgmt/getGrafanaVersion");
 
         //Business Mapping module under Admin section
         this.addEndPoint("GET_ALL_HIERARCHY_DETAILS", '/PlatformService/admin/businessmapping/getAllHierarchyDetails');
         this.addEndPoint("GET_HIERARCHY_PROPERTIES", '/PlatformService/admin/businessmapping/getHierarchyProperties');
-
+        
         this.addEndPoint("UPLOAD_HIERARCHY_DETAILS", '/PlatformService/admin/hierarchyDetails/uploadHierarchyDetails');
         this.addEndPoint("GET_METADATA", '/PlatformService/admin/hierarchyDetails/getMetaData');
-
+        
 
         this.addEndPoint("INSIGHTS_GET", '/PlatformService/insights/inferences');
 
@@ -130,9 +127,6 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("DATA_DICTIONARY_TOOL_PROPERTIES", '/PlatformService/datadictionary/getToolProperties');
         this.addEndPoint("DATA_DICTIONARY_TOOLS_RELATIONSHIPS", '/PlatformService/datadictionary/getToolsRelationshipAndProperties');
         this.addEndPoint("INSIGHTS_LOG", '/PlatformService/insights/log');
-        //Traceability 2.0 Dashboard
-        this.addEndPoint("GET_ALL_ASSETS", '/PlatformAuditService/traceability/getAllAssets');
-        this.addEndPoint("GET_ASSET_INFO", '/PlatformAuditService/traceability/getAssetInfo');
     }
 
     public addEndPoint(name: String, url: String) {
@@ -148,6 +142,7 @@ export class RestAPIurlService implements IRestAPIUrlService {
         if (!this.apiMap.has(moduleUrlKey)) {
             throw new Error("Url Mapping doesnt exist");
         }
+        //console.log(InsightsInitService.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString()));
         return InsightsInitService.serviceHost.toString().concat(this.apiMap.get(moduleUrlKey).toString());
     }
 }
