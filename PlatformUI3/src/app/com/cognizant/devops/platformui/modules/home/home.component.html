@@ -35,16 +35,16 @@
           </tr>
         </table>
       </div>
-      <div class="headingPage">
-        <table style="height:100%; width: 100%">
+      <div class="headingPage" [style.width.px]="leftNavWidthpx">
+        <table style="margin-left: 16px; height:100%; width: 100%">
           <tr class="mat-line-heading" *ngIf="isExpanded">
             <td>
               <span title="{{userName}}"> Welcome: {{userName}} </span>
             </td>
           </tr>
           <tr class="mat-line-heading" *ngIf="isExpanded">
-            <td>
-              Role: <span class="roleName"> {{userRole}} </span>
+            <td class="arrange-horizontally-roledetail" [style.width.px]="leftNavWidthpx">
+              Role: <span class="roleName" [attr.title]="userRole + ' (' + selectedOrg + ')'"> {{userRole}}  <span class="orgNameInRole"> ({{selectedOrg}}) </span></span>
             </td>
           </tr>
           <tr *ngIf="!isExpanded">
@@ -53,7 +53,7 @@
         </table>
       </div>
 
-      <mat-divider></mat-divider>
+      <!--<mat-divider></mat-divider>-->
 
       <div class="menu">
         <table class="navtable">

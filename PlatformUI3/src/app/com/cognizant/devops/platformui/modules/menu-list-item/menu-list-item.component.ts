@@ -15,7 +15,7 @@
  ******************************************************************************/
 
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { NavItem } from '@insights/common/nav-item';
+import { NavItem } from '@insights/app/modules/home/nav-item';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HomeComponent } from '@insights/app/modules/home/home.component';

@@ -97,8 +97,27 @@
 
 .roleName{
   color: white !important;
-  font-size: 18px!important;
+  font-size: 17px!important;
   font-weight: bold;
+  padding-left: 5px;
+}
+
+.arrange-horizontally-roledetail {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    white-space: nowrap;
+}
+
+.orgNameInRole{
+  color: white !important;
+  font-size: 15px!important;
+  font-weight: bold;
+  padding-left: 1px;
 }
 
 .mat-list-text{
@@ -108,8 +127,8 @@
 }
 
 .mat-list-item-content{
- height: 30px !important; 
- font-family: inherit;
+  height: 30px !important; 
+  font-family: inherit;
 }
 
 .mat-line-child{
@@ -229,9 +248,12 @@
   }
 
   .headingPage{
-    margin-left: 16px;
     margin-right: 16px;
     height: 10%;
+    margin-bottom:5px;
+    border-bottom-style:solid;
+    border-color:white;
+    border-bottom-width:1px;
   }
 
   .bottomnavg {
@@ -286,6 +308,9 @@
     margin-left: 16px;
     margin-right: 16px;
     height: 7%;
+    border-bottom-style:solid;
+    border-color:white;
+    border-bottom-width:1px;
   }
 
   .bottomnavg {
@@ -339,3 +364,4 @@
   padding-bottom: 0px;
   padding-left: 16px;
 }
+

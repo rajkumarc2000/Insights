@@ -68,10 +68,12 @@ export class UserOnboardingComponent implements OnInit {
           this.adminOrgDataArray.push(adminOrgsResponse.data[org]);
         }
       }
+      this.isSaveEnable = false;
     }
   }
 
   async loadUsersInfo(selectedAdminOrg) {
+    this.isSaveEnable = false;
     let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
     if (usersResponseData.data != undefined && usersResponseData.status == "success") {
       //console.log(usersResponseData.data);

@@ -19,7 +19,7 @@ import { GrafanaAuthenticationService } from '@insights/common/grafana-authentic
 import { CookieService } from 'ngx-cookie-service';
 import { InsightsInitService } from '@insights/common/insights-initservice';
 import { Router } from '@angular/router';
-import { NavItem } from '@insights/common/nav-item';
+import { NavItem } from '@insights/app/modules/home/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
 import { DataSharedService } from '@insights/common/data-shared-service';
@@ -71,14 +71,17 @@ export class HomeComponent implements OnInit {
   leftNavMinWidthInPer: number;
   leftNavWidthpx: number;
   displayLandingPage: boolean = false;
+  currentUserOrgs: any;
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
   ngOnInit() {
+    //console.log("in home on init ");
   }
 
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router, private dataShare: DataSharedService) {
+    //console.log("in home on constructor init ");
     router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
     if (this.depth === undefined) {
@@ -100,8 +103,80 @@ export class HomeComponent implements OnInit {
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
-    this.loadorganizations();
   }
+
+  public getInformationFromGrafana() {
+    let currentUserResponce: any;
+    setTimeout(() => {
+      //self.showThrobber = false;
+    }, 2000);
+    let self = this;
+    this.grafanaService.getGrafanaCurrentOrgAndRole().then(
+      function (data) {
+        self.grafanaResponse = data;
+        console.log("grafanaResponse " + JSON.stringify(self.grafanaResponse))
+
+        if (self.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
+          self.showAdminTab = true;
+        } else {
+          self.showAdminTab = false;
+        }
+        self.cookieService.set('grafanaRole', self.grafanaResponse.grafanaCurrentOrgRole);
+        self.cookieService.set('grafanaOrg', self.grafanaResponse.grafanaCurrentOrg);
+        if (self.grafanaResponse != undefined) {
+          if (self.grafanaResponse.userName != undefined) {
+            self.userName = self.grafanaResponse.userName.replace(/['"]+/g, '');
+            self.dataShare.changeUser(self.userName);
+          }
+          self.userRole = self.grafanaResponse.grafanaCurrentOrgRole;
+          self.userCurrentOrg = self.grafanaResponse.grafanaCurrentOrg;
+        }
+        self.loadorganizations();
+      });
+  }
+
+  public async loadorganizations() {
+    var self = this;
+
+    this.currentUserOrgs = await this.grafanaService.getCurrentUserOrgs();
+    console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
+    if (this.currentUserOrgs.data != undefined) {
+      for (let orgData of this.currentUserOrgs.data) {
+        if (orgData.orgId == self.userCurrentOrg) {
+          self.selectedOrg = orgData.name;
+        }
+      }
+    } else {
+      self.router.navigate(['/login']);
+    }
+
+    let userResponse = await this.grafanaService.getUsers()
+
+    if (this.currentUserOrgs.data != undefined) {
+      var orgDataArray = this.currentUserOrgs.data;
+      this.orgList = orgDataArray;
+      if (userResponse.data != undefined) {
+        var grafanaOrgId = userResponse.data.orgId;
+        console.log(grafanaOrgId);
+      }
+      for (var key in this.orgList) {
+        var orgDtl = this.orgList[key];
+        var navItemobj = new NavItem();
+        navItemobj.displayName = orgDtl.name;
+        navItemobj.iconName = 'grafanaOrg';
+        navItemobj.route = 'InSights/Home/grafanadashboard/' + orgDtl.orgId;
+        navItemobj.isToolbarDisplay = false;
+        navItemobj.showIcon = false;
+        navItemobj.isAdminMenu = false;
+        navItemobj.orgId = orgDtl.orgId;
+        navItemobj.title = orgDtl.name;
+        this.navOrgList.push(navItemobj);
+      }
+
+    }
+    this.loadMenuItem();
+  }
+
 
   onItemSelected(item: NavItem) {
     this.selectedItem = item;
@@ -128,73 +203,16 @@ export class HomeComponent implements OnInit {
     }*/
   }
 
-  public async getInformationFromGrafana() {
-    let currentUserResponce: any;
-    this.grafanaResponse = await this.grafanaService.getGrafanaCurrentOrgAndRole();
-    let self = this;
-    if (this.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
-      this.showAdminTab = true;
-    } else {
-      this.showAdminTab = false;
-    }
-    this.cookieService.set('grafanaRole', this.grafanaResponse.grafanaCurrentOrgRole);
-    this.cookieService.set('grafanaOrg', this.grafanaResponse.grafanaCurrentOrg);
-    if (this.grafanaResponse != undefined) {
-      if (this.grafanaResponse.userName != undefined) {
-        this.userName = this.grafanaResponse.userName.replace(/['"]+/g, '');
-        this.dataShare.changeUser(this.userName);
-      }
-      this.userRole = this.grafanaResponse.grafanaCurrentOrgRole;
-      this.userCurrentOrg = this.grafanaResponse.grafanaCurrentOrg;
-      currentUserResponce = await this.grafanaService.getCurrentUserOrgs();
-      if (currentUserResponce.data != undefined) {
-        for (let orgData of currentUserResponce.data) {
-          if (orgData.orgId == self.userCurrentOrg) {
-            this.selectedOrg = orgData.name;
-          }
-        }
-      } else {
-        this.router.navigate(['/login']);
-      }
-    }
-  }
-
-  public async loadorganizations() {
-    var self = this;
-    let orgResponse = await this.grafanaService.getCurrentUserOrgs();
-    let userResponse = await this.grafanaService.getUsers()
-
-    if (orgResponse.data != undefined) {
-      var orgDataArray = orgResponse.data;
-      this.orgList = orgDataArray;
-      if (userResponse.data != undefined) {
-        var grafanaOrgId = userResponse.data.orgId;
-      }
-      for (var key in this.orgList) {
-        var orgDtl = this.orgList[key];
-        var navItemobj = new NavItem();
-        navItemobj.displayName = orgDtl.name;
-        navItemobj.iconName = 'grafanaOrg';
-        navItemobj.route = 'InSights/Home/grafanadashboard/' + orgDtl.orgId;
-        navItemobj.isToolbarDisplay = false;
-        navItemobj.showIcon = false;
-        navItemobj.isAdminMenu = false;
-        navItemobj.orgId = orgDtl.orgId;
-        this.navOrgList.push(navItemobj);
-      }
-
-    }
-    this.loadMenuItem();
-  }
-
   public loadMenuItem() {
     this.navItems = [
       {
-        displayName: 'Dashboards',
+        displayName: 'Dashboard Groups',
         iconName: 'feature',
         isAdminMenu: false,
         showMenu: true,
-        children: [
+        title: "Click on Organization to see various Org's Dashboards",
+        children: this.navOrgList
+        /*[
           {
             displayName: 'Grafana: ',
             iconName: 'grafana',
@@ -202,7 +220,7 @@ export class HomeComponent implements OnInit {
             isToolbarDisplay: false,
             showMenu: true,
             children: this.navOrgList
-          }/*,
+          },
           {
             displayName: 'ML Capabilities',
             iconName: 'feature',
@@ -223,8 +241,8 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/grafanadashboard/300',
             isToolbarDisplay: true,
             isAdminMenu: true
-          }*/
-        ]
+          }
+        ]*/
       },
       {
         displayName: 'Audit Reporting',
@@ -232,6 +250,7 @@ export class HomeComponent implements OnInit {
         route: 'InSights/Home/blockchain',
         isToolbarDisplay: true,
         showMenu: InsightsInitService.showAuditReporting,
+        title: "Audit Reporting",
         isAdminMenu: true
       },
       {
@@ -240,6 +259,7 @@ export class HomeComponent implements OnInit {
         route: 'InSights/Home/playlist',
         isToolbarDisplay: false,
         showMenu: true,
+        title: "Playlist",
         isAdminMenu: false
       },
       {
@@ -248,6 +268,7 @@ export class HomeComponent implements OnInit {
         route: 'InSights/Home/datadictionary',
         isToolbarDisplay: true,
         showMenu: true,
+        title: "Data Dictionary",
         isAdminMenu: false
       },
       {
@@ -256,6 +277,7 @@ export class HomeComponent implements OnInit {
         route: 'InSights/Home/healthcheck',
         isToolbarDisplay: true,
         showMenu: true,
+        title: "Health Check",
         isAdminMenu: true
       },
       {
@@ -263,6 +285,7 @@ export class HomeComponent implements OnInit {
         iconName: 'admin',
         isToolbarDisplay: true,
         isAdminMenu: true,
+        title: "Configuration",
         showMenu: true,
         children: [
           {
@@ -271,6 +294,7 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/agentmanagement',
             isToolbarDisplay: true,
             showMenu: true,
+            title: "Agent Management",
             isAdminMenu: true
           },
           /*{
@@ -278,6 +302,7 @@ export class HomeComponent implements OnInit {
             iconName: 'feature',
             route: 'InSights/Home/businessmapping',
             isToolbarDisplay: true,
+            title:"Business Mapping",
             isAdminMenu: true
           },*/
           {
@@ -286,6 +311,7 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/accessGroupManagement',
             isToolbarDisplay: true,
             showMenu: true,
+            title: "Group & Users",
             isAdminMenu: true
           }/*,
           {
@@ -293,6 +319,7 @@ export class HomeComponent implements OnInit {
             iconName: 'feature',
             route: 'InSights/Home/grafanadashboard/900',
             isToolbarDisplay: true,
+            title:"Logo Setting",
             isAdminMenu: true
           }*/,
           {
@@ -301,6 +328,7 @@ export class HomeComponent implements OnInit {
             route: 'InSights/Home/dataarchiving',
             isToolbarDisplay: true,
             showMenu: true,
+            title: "Data Archival",
             isAdminMenu: true
           }
         ]
@@ -312,12 +340,14 @@ export class HomeComponent implements OnInit {
         iconName: 'info',
         isToolbarDisplay: true,
         showIcon: true,
+        title: "About",
         isAdminMenu: false
       }, {
         displayName: 'Help',
         iconName: 'help',
         isToolbarDisplay: true,
         showIcon: true,
+        title: "Help",
         isAdminMenu: false
       }, {
         displayName: 'Logout',
@@ -325,6 +355,7 @@ export class HomeComponent implements OnInit {
         route: 'login', //loggedout
         isToolbarDisplay: true,
         showIcon: true,
+        title: "Logout",
         isAdminMenu: false
       }
     ];
@@ -360,41 +391,35 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  async switchOrganizations(orgId) {
+  switchOrganizations(orgId) {
     var self = this;
+    console.log("In switch organization " + JSON.stringify(this.currentUserOrgs));
     self.defaultOrg = orgId;
-    var switchorgResponse = await self.grafanaService.switchUserOrg(orgId);
-    if (switchorgResponse != null && switchorgResponse.status === 'success') {
-      var currentroleandorg = await self.grafanaService.getGrafanaCurrentOrgAndRole();
-      if (currentroleandorg != null) {
-        //console.log("Role " + currentroleandorg.grafanaCurrentOrgRole);
-        if (currentroleandorg.grafanaCurrentOrgRole === 'Admin') {
-          this.showAdminTab = true;
+    self.grafanaService.switchUserOrg(orgId).then(function (switchorgResponseData) {
+      if (switchorgResponseData != null && switchorgResponseData.status === 'success') {
+        var grafanaCurrentOrgRole;
+        for (let orgData of self.currentUserOrgs.data) {
+          if (orgData.orgId == orgId) {
+            grafanaCurrentOrgRole = orgData.role;
+            self.userRole = orgData.role
+          }
+        }
+        console.log(" grafanaCurrentOrgRole " + grafanaCurrentOrgRole);
+        if (grafanaCurrentOrgRole === 'Admin') {
+          self.showAdminTab = true;
         } else {
-          this.showAdminTab = false;
+          self.showAdminTab = false;
         }
-
-        self.cookieService.set('grafanaRole', currentroleandorg.grafanaCurrentOrgRole);
-        self.cookieService.set('grafanaOrg', currentroleandorg.grafanaCurrentOrg);
-        this.userRole = currentroleandorg.grafanaCurrentOrgRole;
-
-        if (currentroleandorg.userName != undefined) {
-          this.userName = currentroleandorg.userName.replace(/['"]+/g, '');
-          this.dataShare.changeUser(this.userName);
-        }
-
+        self.cookieService.set('grafanaRole', grafanaCurrentOrgRole);
+        self.cookieService.set('grafanaOrg', orgId);
       }
-    }
+    });
   }
 
   deleteAllPreviousCookies(): void {
     let allCookies = this.cookieService.getAll();
-    //console.log(allCookies);
-
     for (let key of Object.keys(allCookies)) {
-      //console.log(key);
       this.cookieService.delete(key);
     }
   }
-
 }

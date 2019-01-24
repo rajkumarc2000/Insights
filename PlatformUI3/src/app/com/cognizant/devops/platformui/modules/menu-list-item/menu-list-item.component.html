@@ -1,6 +1,5 @@
 <a routerLinkActive=active *ngIf=" item.isAdminMenu ? showAdminTab : true" mat-list-item [ngStyle]="{'padding-left': (depth * 10) + 'px '}"
-  (click)="onItemSelected(item)" [attr.title]="item.iconName =='grafana' ? item.displayName + selectedOrg : item.displayName"
-  [ngClass]="{'active': (item.route && isExpanded) ? router.isActive(item.route, true): false, 'expanded': expanded}">
+  (click)="onItemSelected(item)" [attr.title]="item.title" [ngClass]="{'active': (item.route && isExpanded) ? router.isActive(item.route, true): false, 'expanded': expanded}">
   <mat-icon *ngIf="item.showIcon && !isExpanded">{{item.iconName}}</mat-icon>
   <p matLine class="mat-line-child" *ngIf="isExpanded">{{item.displayName}}
     <span *ngIf="item.iconName =='grafana'"> {{selectedOrg}}  </span>

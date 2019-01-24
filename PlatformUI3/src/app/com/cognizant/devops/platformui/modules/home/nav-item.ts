@@ -25,4 +25,5 @@ export class NavItem {
   isAdminMenu?: boolean = true;
   orgId?: number;
   showMenu?: boolean = true;
+  title?: string;
 }
