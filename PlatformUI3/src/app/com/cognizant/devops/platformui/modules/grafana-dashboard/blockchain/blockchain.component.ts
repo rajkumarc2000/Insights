@@ -98,17 +98,23 @@ export class BlockChainComponent implements OnInit {
       }
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
         .then((data) => {
+          console.log(" date range server response >>");
+          console.log(data.status);
+          console.log(data.message);
           if (data.status === "failure") {
+            console.log("inside failure loop");
             this.noSearchResultFlag = true;
             this.showSearchResult = false;
             this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;
             this.searchResultNotFoundMsg = data.message;
+            console.log("result not found msg>>" + this.searchResultNotFoundMsg);
           } else {
-            console.log("server response >>");
+            console.log(" success server response >>");
             console.log(data);
             this.dataSource.data = data.data;
             this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
             this.showSearchResult = true;
+            this.noSearchResultFlag = false;
             this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
@@ -122,11 +128,14 @@ export class BlockChainComponent implements OnInit {
       } else {
         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
           .then((data) => {
+            console.log(" assetId server response >>");
+            console.log(data);
             if (data.status === "failure") {
               this.noSearchResultFlag = true;
               this.showSearchResult = false;
               this.searchCriteria = this.assetID;
               this.searchResultNotFoundMsg = data.message;
+              console.log("result not found msg>>" + this.searchResultNotFoundMsg);
             } else {
               console.log("server response >>");
               console.log(data);
