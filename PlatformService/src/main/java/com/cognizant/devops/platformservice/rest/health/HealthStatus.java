@@ -122,7 +122,6 @@ public class HealthStatus {
 
 		String hostEndPoint = ServiceStatusConstants.Agents;
 		JsonObject servicesAgentsHealthStatus = new JsonObject();
-		String apiUrl = hostEndPoint;
 		JsonObject jsonAgentStatus = getComponentStatus("Agents","");
 		servicesAgentsHealthStatus.add(ServiceStatusConstants.Agents, jsonAgentStatus);
 		return servicesAgentsHealthStatus;	
