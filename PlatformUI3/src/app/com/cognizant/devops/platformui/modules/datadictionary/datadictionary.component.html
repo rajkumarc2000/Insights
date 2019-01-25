@@ -20,7 +20,7 @@
                     </mat-option>
                 </mat-select>
                 <div class="divider"></div>
-                <button [disabled]="(!selectedAgent1 || !selectedAgent2) " style="outline:none;" class="searchBtnStyle" (click)="getCorrelation(selectedAgent1,selectedAgent2)">Click to show Correlation</button>
+                <button [disabled]="(noShowDetail||noShowDetail2||!selectedAgent1 || !selectedAgent2) " style="outline:none;" class="searchBtnStyle" (click)="getCorrelation(selectedAgent1,selectedAgent2)">Click to show Correlation</button>
                 <h2 style="font-size:13px;display: inline-block;padding-left: 10px;color: black">(Please select Tool 1 and Tool 2 to see the Correlation)</h2>
             </div>
         </div>  
@@ -45,10 +45,10 @@
                     </table>
                     <table *ngIf="noShowDetail">
                         <tr>
-                            <td colspan="5" style="text-align: center;padding-top: 10px">{{startToolNullPropertiesMessage}} for selected tool</td>
+                            <td colspan="5" style="color:#0033A0;font-size: 18px;text-align: left;padding-top: 10px"><b>{{startToolNullPropertiesMessage}} for selected tool</b></td>
                         </tr>
                         <tr>
-                            <td colspan="5" style="text-align: center">({{agent1Category}}:{{agent1Tool}})</td>
+                            <td colspan="5" style="text-align: left;color:#00B140;padding-top: 10px">Label Information:<b>({{agent1Category}}:{{agent1Tool}})</b></td>
                         </tr>
                     </table>
                 </div>
@@ -66,10 +66,10 @@
                     </table>
                     <table *ngIf="noShowDetail2">
                         <tr>
-                            <td colspan="5" style="text-align: center;padding-top: 10px">{{endToolNullPropertiesMessage}} for selected tool</td>
+                            <td colspan="5" style="color:#0033A0;font-size: 18px;text-align: left;padding-top: 10px"><b>{{endToolNullPropertiesMessage}} for selected tool</b></td>
                         </tr>
                         <tr>
-                        <td colspan="5" style="text-align: center">({{agent2Category}}:{{agent2Tool}})</td>
+                            <td colspan="5" style="text-align: left;color:#00B140;padding-top: 10px">Label Information:<b>({{agent2Category}}:{{agent2Tool}})</b></td>
                         </tr>
                     </table>
                 </div>

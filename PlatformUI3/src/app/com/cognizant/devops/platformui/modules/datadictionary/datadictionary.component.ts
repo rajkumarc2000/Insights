@@ -72,7 +72,7 @@ export class DatadictionaryComponent implements OnInit {
       } else {
         this.noShowDetail = true;
         this.showDetail = false;
-        this.startToolNullPropertiesMessage="no properties found"
+        this.startToolNullPropertiesMessage="No properties found"
         //console.log(this.startToolNullPropertiesMessage)
       }
     }catch (error) {
@@ -93,7 +93,7 @@ export class DatadictionaryComponent implements OnInit {
       } else{
         this.noShowDetail2=true;
         this.showDetail2=false;
-        this.endToolNullPropertiesMessage="no properties found"
+        this.endToolNullPropertiesMessage="No properties found"
         //console.log(this.endToolNullPropertiesMessage)
       }
     }catch (error) {
