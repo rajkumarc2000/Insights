@@ -107,14 +107,11 @@ export class HomeComponent implements OnInit {
 
   public getInformationFromGrafana() {
     let currentUserResponce: any;
-    setTimeout(() => {
-      //self.showThrobber = false;
-    }, 2000);
     let self = this;
     this.grafanaService.getGrafanaCurrentOrgAndRole().then(
       function (data) {
         self.grafanaResponse = data;
-        console.log("grafanaResponse " + JSON.stringify(self.grafanaResponse))
+        //console.log("grafanaResponse " + JSON.stringify(self.grafanaResponse))
 
         if (self.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
           self.showAdminTab = true;
@@ -139,7 +136,7 @@ export class HomeComponent implements OnInit {
     var self = this;
 
     this.currentUserOrgs = await this.grafanaService.getCurrentUserOrgs();
-    console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
+    //console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
     if (this.currentUserOrgs.data != undefined) {
       for (let orgData of this.currentUserOrgs.data) {
         if (orgData.orgId == self.userCurrentOrg) {
@@ -147,6 +144,7 @@ export class HomeComponent implements OnInit {
         }
       }
     } else {
+      //console.log(" in else of this.currentUserOrgs.data != undefined ")
       self.router.navigate(['/login']);
     }
 
@@ -157,7 +155,7 @@ export class HomeComponent implements OnInit {
       this.orgList = orgDataArray;
       if (userResponse.data != undefined) {
         var grafanaOrgId = userResponse.data.orgId;
-        console.log(grafanaOrgId);
+        //console.log(grafanaOrgId);
       }
       for (var key in this.orgList) {
         var orgDtl = this.orgList[key];
@@ -393,7 +391,7 @@ export class HomeComponent implements OnInit {
 
   switchOrganizations(orgId) {
     var self = this;
-    console.log("In switch organization " + JSON.stringify(this.currentUserOrgs));
+    //console.log("In switch organization " + JSON.stringify(this.currentUserOrgs));
     self.defaultOrg = orgId;
     self.grafanaService.switchUserOrg(orgId).then(function (switchorgResponseData) {
       if (switchorgResponseData != null && switchorgResponseData.status === 'success') {
@@ -404,7 +402,7 @@ export class HomeComponent implements OnInit {
             self.userRole = orgData.role
           }
         }
-        console.log(" grafanaCurrentOrgRole " + grafanaCurrentOrgRole);
+        //console.log(" grafanaCurrentOrgRole " + grafanaCurrentOrgRole + " orgId " + orgId);
         if (grafanaCurrentOrgRole === 'Admin') {
           self.showAdminTab = true;
         } else {
