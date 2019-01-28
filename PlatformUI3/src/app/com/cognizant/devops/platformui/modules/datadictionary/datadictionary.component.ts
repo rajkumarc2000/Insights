@@ -26,6 +26,8 @@ export class DatadictionaryComponent implements OnInit {
   noShowDetailCorr:boolean = false;
   relationPropertiesSize:boolean=false;
   showNoToolsSelectedForCorrelation:boolean =false;
+  buttonOn:boolean= false;
+  clicked:boolean=false;
   startToolNullPropertiesMessage=""
   endToolNullPropertiesMessage=""
   agent1Tool:any;
@@ -59,6 +61,9 @@ export class DatadictionaryComponent implements OnInit {
   }
   async loadAgent1Info(selectedAgent1) {
     try{
+      this.noShowDetail = true;
+      this.clicked=false;
+      this.buttonOn=false;
       let usersResponseData1 = await this.dataDictionaryService.loadToolProperties(selectedAgent1.toolName,selectedAgent1.categoryName);
       //console.log(usersResponseData)
       this.agent1Tool=selectedAgent1.toolName;
@@ -81,6 +86,11 @@ export class DatadictionaryComponent implements OnInit {
   }
   async loadAgent1Info2(selectedAgent2) {
     try {
+      this.noShowDetail2=true;
+      this.noShowDetailCorr=false;
+      this.showDetail3=false;
+      this.buttonOn=false;
+      this.clicked=false;
       //console.log(selectedAgent2)
       let usersResponseData2 = await this.dataDictionaryService.loadToolProperties(selectedAgent2.toolName,selectedAgent2.categoryName);
       this.agent2Tool=selectedAgent2.toolName;
@@ -103,6 +113,10 @@ export class DatadictionaryComponent implements OnInit {
 
   async getCorrelation(data1,data2){
     try{
+      this.showDetail3=false;
+      this.noShowDetailCorr=false;
+      this.clicked=true;
+      this.buttonOn=true;
       this.showNoToolsSelectedForCorrelation=true
       //console.log(data1,data2);
       let usersResponseData3 = await this.dataDictionaryService.loadToolsRelationshipAndProperties(data1.toolName,data1.categoryName,data2.toolName,data2.categoryName);

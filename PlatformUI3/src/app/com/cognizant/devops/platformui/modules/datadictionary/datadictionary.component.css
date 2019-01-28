@@ -129,8 +129,9 @@ button[disabled]{
 }
 
 .dataDictionaryMessages{
-	color: black;
-    font-size: 15px;
     margin-top: 70px;
     text-align: center;
+    color:#0033A0;
+    font-size: 18px;
+    padding-top: 10px
 }
