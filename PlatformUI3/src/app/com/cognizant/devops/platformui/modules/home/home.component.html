@@ -15,32 +15,32 @@
  * the License.
  ****************************************************************************** -->
 
-<div class="container">
-  <mat-sidenav-container class="sidenav-container" autosize fullscreen>
+<div class="container col-md-6">
+  <mat-sidenav-container autosize fullscreen>
     <mat-sidenav #sidenav class="sidenav" [style.height.%]="100" [style.width.%]="isExpanded ? leftNavWidthInPer:leftNavMinWidthInPer"
       height="50%" mode="side" opened="true" autosize="true">
       <div class="logoSetting">
-        <table style="border-spacing:2px; height:100%; width: 100%">
+        <table class="logoTable">
           <tr *ngIf="isExpanded">
             <td>
-              <img mat-card-image align="left" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log" style="margin:auto;display:table-row;margin-right:auto;margin-left:auto;"
-              />
+              <img mat-card-image align="left" (click)="showLandingPage()" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log"
+                style="margin:auto;display:table-row;margin-right:auto;margin-left:auto;" />
             </td>
             <td>
               <mat-icon (click)="isExpanded = !isExpanded" class="material-icons-menu">menu</mat-icon>
             </td>
           </tr>
           <tr *ngIf="!isExpanded" style="margin:auto;display:table-row;margin-right:auto;margin-left:30px;height:100%;">
-            <mat-icon (click)="isExpanded = !isExpanded" class="material-icons-menu">menu</mat-icon>
+            <img mat-card-image (click)="isExpanded = !isExpanded" class="feviconIcon" height="40px" align="center" src='icons/svg/homePage/menu_white_36.png'
+            />
+            <!--<mat-icon class="material-icons-menu">menu</mat-icon>-->
           </tr>
         </table>
       </div>
-      <div class="headingPage" [style.width.px]="leftNavWidthpx">
-        <table style="margin-left: 16px; height:100%; width: 100%">
+      <div class="headingPage">
+        <table class="headingTable">
           <tr class="mat-line-heading" *ngIf="isExpanded">
-            <td>
-              <span title="{{userName}}"> Welcome: {{userName}} </span>
-            </td>
+            <span title="{{userName}}"> Welcome: {{userName}} </span>
           </tr>
           <tr class="mat-line-heading" *ngIf="isExpanded">
             <td class="arrange-horizontally-roledetail" [style.width.px]="leftNavWidthpx">
@@ -48,13 +48,11 @@
             </td>
           </tr>
           <tr *ngIf="!isExpanded">
-            <img mat-card-image class="feviconIcon" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg' />
+            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg'
+            />
           </tr>
         </table>
       </div>
-
-      <!--<mat-divider></mat-divider>-->
-
       <div class="menu">
         <table class="navtable">
           <tbody>
@@ -66,12 +64,27 @@
             </tr>
         </table>
       </div>
-      <mat-divider></mat-divider>
       <div class="bottomnavg">
-        <mat-nav-list>
-          <app-menu-list-item *ngFor="let itemBottom of navItemsBottom" [item]="itemBottom" [depth]="depth" [isExpanded]="isExpanded"
-            [selectedOrg]="selectedOrg" [showAdminTab]="showAdminTab"></app-menu-list-item>
-        </mat-nav-list>
+        <div class="bottomButton">
+          <mat-nav-list *ngIf="isExpanded" class="arrange-horizontally-bottombutton">
+            <ng-container *ngFor="let itemBottom of navItemsBottom">
+              <a mat-list-item class="mat-list-item-bottom" (click)="onItemSelected(itemBottom)">
+                <p matLine *ngIf="isExpanded" class="mat-line mat-list-text ">{{itemBottom.displayName}}</p>
+              </a>
+            </ng-container>
+          </mat-nav-list>
+          <mat-nav-list *ngIf="!isExpanded" class="navItemImageForCollpases">
+            <a *ngIf="!isExpanded" class="mat-list-item-bottom" (click)="logout()">
+              <mat-icon class="mat-icon ng-tns-c10-10 material-icons ng-star-inserted" *ngIf="!isExpanded">logout</mat-icon>
+            </a>
+          </mat-nav-list>
+        </div>
+        <div class="customerLogo" *ngIf="isExpanded">
+          <img mat-card-image align="left" height="67px" width="250px" class="customerLogoImage" [src]="insightsCustomerLogo" />
+        </div>
+        <div class="textCopyright" *ngIf="isExpanded">
+          © 2019 Cognizant Technologies Solutions Limited. <br> All rights reserved.
+        </div>
       </div>
       </mat-sidenav>
       <mat-sidenav-content class="mat-drawer-content">

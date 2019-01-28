@@ -87,12 +87,25 @@
   padding-top: 0px !important;
   padding-right: 5px !important;
   padding-bottom: 0px !important;
-  padding-left: 5px !important;
   margin-bottom: 15px!important;
   margin-top :15px !important;
   font-size: 16px;
   height: 30px !important;
-  
+}
+
+
+.headingTable{
+  height:100%; 
+  width: 100%;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.logoTable{
+  height:100%; 
+  width: 100%;
+  padding-left: 16px !important;
+  padding-right: 16px !important; 
 }
 
 .roleName{
@@ -112,6 +125,56 @@
     display: -webkit-flex;
     white-space: nowrap;
 }
+.arrange-horizontally-bottombutton{
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    white-space: nowrap !important;
+    padding-bottom: 10px !important;
+}
+.bottomButton{
+    border-bottom-style:solid;
+    border-bottom-color:#9e9a9a;
+    border-bottom-width:1px;
+    border-top-style: solid;
+    border-color:#9e9a9a;
+    border-top-width: 1px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    height: 21%;
+}
+.customerLogo{
+  height: 50%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 8px;
+  padding-right: 8px;
+  align-content: center;
+}
+
+.customerLogoImage{
+  display:flex;
+  margin:auto;
+  display:table-row;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+.textCopyright{
+  height: 19%;
+  border-top-style: solid;
+  border-top-color:#9e9a9a;
+  border-top-width: 1px;
+  padding-bottom: 10px;
+  color: #9e9a9a;
+  font-size: 10px;
+  padding-top: 10px;
+  padding-left: 16px;
+}
 
 .orgNameInRole{
   color: white !important;
@@ -129,6 +192,31 @@
 .mat-list-item-content{
   height: 30px !important; 
   font-family: inherit;
+  padding-top: 0px;
+  padding-right: 0px !important;
+  padding-bottom: 0px;
+  padding-left: 0px !important;
+}
+
+.mat-list-item-bottom{
+    padding-top: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 0px !important;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #9e9a9a;
+}
+
+
+.mat-list-item-bottom:last-child{
+    border-right-style: unset;
+    border-right-width: 0px;
+    border-right-color: #9e9a9a;
+}
+
+.bottomMenuLine{
+  border-right-style: solid;
 }
 
 .mat-line-child{
@@ -170,6 +258,7 @@
 .mat-card-image,.mat-card-image:first-child{
  align-items: center;
  width: auto;
+ margin-top: 0px;
 }
 
 .sidenav-content {
@@ -237,22 +326,22 @@
   margin-right: 16px !important;
   margin-left: 16px !important;
 }
+.navItemImageForCollpases{
+  margin-left: 30px;
+}
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
   .logoSetting{
-    margin-left: 16px;
-    margin-right: 16px;
     margin-top: 2px;
     height: 10%;
   }
 
   .headingPage{
-    margin-right: 16px;
     height: 10%;
-    margin-bottom:5px;
+    padding-bottom: 10px;
     border-bottom-style:solid;
-    border-color:white;
+    border-bottom-color:#9e9a9a;
     border-bottom-width:1px;
   }
 
@@ -262,20 +351,18 @@
     display: flex;
     width: 100%;
     overflow: hidden;
-    margin-top: 16px; 
-    margin-left: 16px;
-    height:15%;
+    height:30%;
   }
 
   .menu{
     width: 100%;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: 58%;
+    height: 48%;
   }
 
   .mat-divider{
-    border-top-color: white;
+    border-top-color: #9e9a9a;
     margin-top:5px; 
     height: 1%
   }
@@ -305,11 +392,9 @@
   }
 
   .headingPage{
-    margin-left: 16px;
-    margin-right: 16px;
     height: 7%;
     border-bottom-style:solid;
-    border-color:white;
+    border-color:#9e9a9a;
     border-bottom-width:1px;
   }
 
@@ -319,20 +404,18 @@
     display: flex;
     width: 100%;
     overflow: hidden;
-    margin-top: 16px; 
-    margin-left: 16px;
-    height:15%;
+    height:24%;
   }
 
   .menu{
     width: 100%;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: 64%;
+    height: 60%;
   }
 
   .mat-divider{
-    border-top-color: white;
+    border-top-color: #9e9a9a;
     margin-top:10px; 
     height: 1%
   }
@@ -358,10 +441,4 @@
   align-items: center;
 }
 
-.mat-list-item-content{
-  padding-top: 0px;
-  padding-right: 0px;
-  padding-bottom: 0px;
-  padding-left: 16px;
-}
 

@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
       } else {
-        this.imageSrc = 'icons/svg/landingPage/OneDevOps_InsightsLOGO.svg';
+        this.imageSrc = 'icons/svg/landingPage/Insights_Logo.png';
         this.imageAlt = 'Cognizant log';
       }
     } catch (error) {

@@ -36,6 +36,7 @@ export class ImageHandlerService implements IImageHandlerService {
     public initializeImageIcons() {
         this.addImage('defaultLogo', "icons/svg/landingPage/OneDevOps_InsightsLOGO.svg");
         this.addImage('InsightsLogo', "icons/svg/login/InsightsLogo.svg");
+        this.addImage('CustomerLogo', "icons/svg/login/Customer_Logo.png");
         this.addImage('PoweredBy', "icons/svg/login/PoweredBy.svg");
         this.addImage('verticleLine', "icons/svg/login/Vertical_Line.svg");
         this.addImage('OrangeVerticalLine', "icons/svg/OrangeVerticalLine.svg");
@@ -68,6 +69,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('success', "icons/svg/dialogBoxIcon/success.svg");
         this.addImage('error', "icons/svg/dialogBoxIcon/error.svg");
         this.addImage('alert', "icons/svg/confirmBox/alert.svg");
+        this.addImage('menuImage', "icons/svg/homePage/menu_white_36.png");
     }
 
 

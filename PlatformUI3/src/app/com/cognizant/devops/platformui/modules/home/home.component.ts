@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit {
   leftNavWidthpx: number;
   displayLandingPage: boolean = false;
   currentUserOrgs: any;
+  insightsCustomerLogo: any;
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
   ngOnInit() {
@@ -99,6 +100,7 @@ export class HomeComponent implements OnInit {
         this.framesize = (evt.data + 20);
       }
     }
+    this.insightsCustomerLogo = "icons/svg/homePage/Customer_Logo.png";
     var otherMenu = ((45 / 100) * this.framesize);
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
     window.addEventListener('message', receiveMessage, false);
@@ -337,14 +339,14 @@ export class HomeComponent implements OnInit {
         displayName: 'About',
         iconName: 'info',
         isToolbarDisplay: true,
-        showIcon: true,
+        showIcon: false,
         title: "About",
         isAdminMenu: false
       }, {
         displayName: 'Help',
         iconName: 'help',
         isToolbarDisplay: true,
-        showIcon: true,
+        showIcon: false,
         title: "Help",
         isAdminMenu: false
       }, {
@@ -419,5 +421,9 @@ export class HomeComponent implements OnInit {
     for (let key of Object.keys(allCookies)) {
       this.cookieService.delete(key);
     }
+  }
+
+  showLandingPage() {
+    this.router.navigate(['InSights/Home/landingPage'])
   }
 }
