@@ -76,7 +76,14 @@ export class HomeComponent implements OnInit {
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
   ngOnInit() {
-    //console.log("in home on init ");
+    //console.log("in home on init " + InsightsInitService.grafanaHost);
+    //console.log(this.dataShare.getCustomerLogo());
+    this.insightsCustomerLogo = this.dataShare.getCustomerLogo();
+    //console.log(this.insightsCustomerLogo);
+    if (this.insightsCustomerLogo == "DefaultLogo") {
+      //console.log("user default logo ");
+      this.insightsCustomerLogo = "icons/svg/homePage/Customer_Logo.png";
+    }
   }
 
   constructor(private grafanaService: GrafanaAuthenticationService,
@@ -100,7 +107,6 @@ export class HomeComponent implements OnInit {
         this.framesize = (evt.data + 20);
       }
     }
-    this.insightsCustomerLogo = "icons/svg/homePage/Customer_Logo.png";
     var otherMenu = ((45 / 100) * this.framesize);
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
     window.addEventListener('message', receiveMessage, false);
@@ -231,7 +237,7 @@ export class HomeComponent implements OnInit {
           {
             displayName: 'InSights',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/200',
+            route: 'InSights/Home/grafanadashboard/900',
             isToolbarDisplay: true,
             isAdminMenu: true
           },
@@ -313,15 +319,16 @@ export class HomeComponent implements OnInit {
             showMenu: true,
             title: "Group & Users",
             isAdminMenu: true
-          }/*,
+          },
           {
             displayName: 'Logo Setting',
             iconName: 'feature',
-            route: 'InSights/Home/grafanadashboard/900',
+            route: 'InSights/Home/logoSetting',
             isToolbarDisplay: true,
-            title:"Logo Setting",
+            showMenu: true,
+            title: "Logo Setting",
             isAdminMenu: true
-          }*/,
+          },
           {
             displayName: 'Data Archival',
             iconName: 'feature',

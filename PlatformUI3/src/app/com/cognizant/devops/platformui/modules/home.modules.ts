@@ -62,7 +62,8 @@ import { MessageDialogService } from '@insights/app/modules/application-dialog/m
 import { BlockChainService } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.service';
 import { DatePipe } from '@angular/common';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
-
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     LandingPageComponent,
     ConfirmationMessageDialog,
     ApplicationMessageDialog,
-    AddGroupMessageDialog
+    AddGroupMessageDialog,
+    LogoSettingComponent
   ],
   imports: [
     HomeRouting,
@@ -95,7 +97,8 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
     FormsModule,
     MaterialModule,
     SharedServices,
-    MatDatepickerModule
+    MatDatepickerModule,
+    StorageServiceModule
   ],
   entryComponents: [
     ShowDetailsDialog,

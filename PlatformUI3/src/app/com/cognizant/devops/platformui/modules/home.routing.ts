@@ -30,7 +30,7 @@ import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-m
 import { BlockChainComponent } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.component';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
-
+import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';
 
 const homeRoutes: Routes = [
   {
@@ -48,7 +48,8 @@ const homeRoutes: Routes = [
       { path: 'dataarchiving', component: DataArchivingComponent },
       { path: 'agentconfiguration', component: AgentConfigurationComponent },
       { path: 'accessGroupManagement', component: UserOnboardingComponent },
-      { path: 'landingPage', component: LandingPageComponent }
+      { path: 'landingPage', component: LandingPageComponent },
+      { path: 'logoSetting', component: LogoSettingComponent }
     ]
   }
 ];

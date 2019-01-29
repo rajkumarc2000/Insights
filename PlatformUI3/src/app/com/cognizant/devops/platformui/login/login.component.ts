@@ -24,6 +24,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LogService } from '@insights/common/log-service';
+import { DataSharedService } from '@insights/common/data-shared-service';
 
 export interface ILoginComponent {
   createAndValidateForm(): void;
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
 
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
     private restCallHandlerService: RestCallHandlerService, private cookieService: CookieService,
-    private router: Router, private logger: LogService) {
+    private router: Router, private logger: LogService, private dataShare: DataSharedService) {
     //console.log(" logging in login "); //this.logger.log
     this.getAsyncData();
 
@@ -75,12 +76,16 @@ export class LoginComponent implements OnInit, ILoginComponent {
     try {
       var restCallUrl = this.restAPIUrlService.getRestCallUrl("GET_LOGO_IMAGE");
       this.resourceImage = await this.restCallHandlerService.getJSON(restCallUrl);
+      console.log(this.resourceImage);
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
+        this.dataShare.uploadOrFetchLogo(this.imageSrc);
       } else {
         this.imageSrc = 'icons/svg/landingPage/Insights_Logo.png';
         this.imageAlt = 'Cognizant log';
+        this.dataShare.uploadOrFetchLogo("DefaultLogo");
       }
+
     } catch (error) {
       //console.log(error);
     }

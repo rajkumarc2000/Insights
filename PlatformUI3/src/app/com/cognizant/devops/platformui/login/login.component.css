@@ -231,3 +231,12 @@ md-icon {
   padding-top:50px;
   padding-left:80px;
 }
+
+.customerLogoImage{
+  height:67px; 
+  width:250px; 
+  margin-left:330px;
+  margin-top:7pt;
+  display:flex; 
+  vertical-align:center
+}
