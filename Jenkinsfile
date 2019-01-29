@@ -64,7 +64,7 @@ gitCommitID = sh (
 	try{
 	stage ('Insight_PUI3_Build') {
         
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install && npm link && mvn clean install -DskipTests=true'
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install && mvn clean install -DskipTests=true'
 	}
 	
 	stage ('Insight_PUI3_CodeAnalysis') {		
