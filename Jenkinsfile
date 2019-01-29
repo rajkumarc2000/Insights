@@ -1,4 +1,4 @@
-env.dockerimagename="devopsbasservice/buildonframework:insightsUI3"
+env.dockerimagename="devopsbasservice/buildonframework:insights-PUI3"
 node {
 
 //Parse commitID (E.g, buildon-abc1234 to abc1234)
