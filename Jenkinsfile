@@ -76,18 +76,18 @@ gitCommitID = sh (
 		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/version"		
 		pomversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI3/version").trim()   //Get version from pom.xml to form the nexus repo URL
 		
-		//Get project name from pom.xml file
-		sh "mvn -B help:evaluate -Dexpression=project.build.finalName | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile"
-        	projectName=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile').trim()
+		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.build.finalName | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile"
+        projectName=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile').trim()
+
+        sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.packaging | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile"
+        packaging=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile').trim()       	
 		
-		//Get package from pom.xml file
-        	sh "mvn -B help:evaluate -Dexpression=project.packaging | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile"
-        	packaging=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile').trim()	
-       			
 		if(pomversion.contains("SNAPSHOT")){		
-			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"					
+			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"			
+		
 		} else{		
 		    NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/InsightsRelease"		
+		
 		}		
 		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3'
 	 	sh "mvn deploy:deploy-file -Dfile=/var/jenkins/jobs/$commitID/workspace/PlatformUI3/target/${projectName}.${packaging} -DgroupId='com.cognizant.devops' -DartifactId=${projectName} -Dpackaging=${projectName} -Dversion=${pomversion} -DrepositoryId=nexus -Durl=${NEXUSREPO} -DskipTests=true"		
@@ -98,8 +98,7 @@ gitCommitID = sh (
 		
 		slackSend channel: '#insightsjenkins', color: 'good', message: "BuildFailed for commitID - *$gitCommitID*,Branch - *$branchName* \n Build Log can be found @ https://buildon.cogdevops.com/buildon/HistoricCIWebController?commitId=$gitCommitID", teamDomain: "insightscogdevops", token: slackToken
 		sh 'exit 1'
-		}
-	   
+		}	   
 	   // Platform UI3 Ends
 	   
 	   
