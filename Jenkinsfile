@@ -75,12 +75,12 @@ gitCommitID = sh (
 		//Framing Nexus URL for artifact uploaded to Nexus with unique timestamp													
 		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/version"		
 		pomversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI3/version").trim()   //Get version from pom.xml to form the nexus repo URL
-		
+		//Get project from pom file
 		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.build.finalName | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile"
-        projectName=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile').trim()
-
-        sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.packaging | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile"
-        packaging=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile').trim()       	
+        	projectName=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile').trim()
+		//Get package from pom file
+        	sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.packaging | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile"
+        	packaging=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile').trim()       	
 		
 		if(pomversion.contains("SNAPSHOT")){		
 			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"			
