@@ -24,25 +24,19 @@
 }
 .blueStripCss {
     background-color: #0033A0;
-    width: 985px;
+    width: 72.1%;
     height: 2px;
     margin: 0 auto;
 }
 
 .greenStripCss {
   background-color: #00B140;
-  width: 985px;
+  width: 72.1%;
   height: 4px;
   margin: 0 auto;
   margin-top: 0px;
   
 }
-
-.shift
-{
-  margin-top: -4%;
-}
-
 
 .shift2
 {
@@ -80,7 +74,6 @@
    color: #000000;
    font-size: 10px;
    margin-top:70px;
-   
    text-align:center;
 }
 .validCredTextCss{
@@ -130,17 +123,15 @@
   padding-top:50px;  
 }
 .topTxtCss{
-  margin-bottom:24px;
-  margin-top:50px;
-  display:flex;
+  display:-webkit-inline-box;
   justify-content: center;
-  padding-left: 140px;
+  padding-left: 26%;
 }
 
 .secondLineTxt {
-  display:flex;
+  display:-webkit-inline-box;
   justify-content: center;
-  padding-left: 140px;
+  padding-left: 26%;
 }
 .md-button.md-raised:not([disabled]) {
     box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);
@@ -154,7 +145,6 @@
   margin-top: 2px;
   margin-left: 335px;
 }
-
 .actvIcoCss{
   margin-left: -2px;
 }
@@ -228,15 +218,15 @@ md-icon {
   height: 100%;
 }
 .logOnBtnAlign {
-  padding-top:50px;
   padding-left:80px;
 }
 
 .customerLogoImage{
   height:67px; 
   width:250px; 
-  margin-left:330px;
+  margin-left:41%;
   margin-top:7pt;
   display:flex; 
-  vertical-align:center
+  vertical-align:center;
+  margin-bottom: 40px;
 }
