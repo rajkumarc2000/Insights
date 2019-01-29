@@ -41,7 +41,8 @@ gitCommitID = sh (
 	try{
 	
    stage ('Insight_PS_Build') {
-        sh 'mvn clean install -DskipTests'
+        sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install'
+	sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn clean install -DskipTests'
 	   }	
 	stage ('Insight_PS_CodeAnalysis') {
 		sh 'mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java'
@@ -64,7 +65,7 @@ gitCommitID = sh (
 	try{
 	stage ('Insight_PUI3_Build') {
         
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install -g && mvn clean install -DskipTests=true'
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install && mvn clean install -DskipTests'
 	}
 	
 	stage ('Insight_PUI3_CodeAnalysis') {		
