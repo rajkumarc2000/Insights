@@ -45,11 +45,11 @@ gitCommitID = sh (
 	sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn clean install -DskipTests'
 	   }	
 	stage ('Insight_PS_CodeAnalysis') {
-		sh 'mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java'
+		sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java'
 		
     }	
 	stage ('Insight_PS_NexusUpload') {		
-		sh 'mvn deploy -DskipTests=true'		
+		sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn deploy -DskipTests=true'		
 		}
 	
 	}
@@ -69,7 +69,7 @@ gitCommitID = sh (
 	}
 	
 	stage ('Insight_PUI3_CodeAnalysis') {		
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=app/src/modules -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=app/src -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
 	}
 	
 	stage ('Insight_PUI3_NexusUpload') {		
