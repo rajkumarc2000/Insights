@@ -100,7 +100,7 @@
             </div>
           </mat-card-actions>
 
-          <mat-icon svgIcon="PoweredBy" layout layout-align="center center" [ngStyle]="{'height':'190px', 'width':'300px', 'margin-left':'18px','margin-top':'-60px','display':'flex', 'justify-align':'center'}">
+          <mat-icon svgIcon="PoweredBy" layout layout-align="center center" class="powerByImage">
           </mat-icon>
           <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
             <mat-progress-spinner color="primary" mode="indeterminate">
@@ -110,10 +110,10 @@
       </div>
 
     </div>
-    <div>
+    <div class="greenStripDivCss">
       <div class="greenStripCss"></div>
     </div>
-    <div class="shift2">
+    <div class="copyRightDivCss">
       <div class="copyRightCss">© 2019 Cognizant Technologies Solutions Limited. All rights reserved.</div>
     </div>
   </div>

@@ -35,13 +35,16 @@
   height: 4px;
   margin: 0 auto;
   margin-top: 0px;
-  
 }
 
-.shift2
+.greenStripDivCss{
+  margin-top: 0px;
+}
+
+.copyRightDivCss
 {
   position: relative;
-  bottom: 40px;
+  bottom: 50px;
 }
 .verticalBorder {
   border-left: solid 1px #cfcfcf;
@@ -75,6 +78,9 @@
    font-size: 10px;
    margin-top:70px;
    text-align:center;
+}
+.mat-card-image:first-child{
+  margin-top: 0px;
 }
 .validCredTextCss{
   font-size: 17px;
@@ -120,7 +126,7 @@
 }
 .textPad{
   padding-left:50px;
-  padding-top:50px;  
+  padding-top:75px;  
 }
 .topTxtCss{
   display:-webkit-inline-box;
@@ -139,7 +145,7 @@
 .rgtPnlCss{
   width:482px;
   padding-left: 60px;  
-  margin-top: 50px;
+  margin-top: 75px;
 }
 .tckCss{
   margin-top: 2px;
@@ -202,7 +208,7 @@ md-icon {
 }
 .column-image {
     float:left;
-    margin-top: 50px;
+    margin-top: 75px;
 }
 .column-user {
   float: left;
@@ -225,8 +231,15 @@ md-icon {
   height:67px; 
   width:250px; 
   margin-left:41%;
-  margin-top:7pt;
   display:flex; 
   vertical-align:center;
   margin-bottom: 40px;
+}
+.powerByImage{
+  height:190px; 
+  width:300px; 
+  margin-left:5px;
+  margin-top:-60px;
+  display:flex; 
+  vertical-align:center;
 }
