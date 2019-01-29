@@ -45,11 +45,11 @@ gitCommitID = sh (
 	sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn clean install -DskipTests'
 	   }	
 	stage ('Insight_PS_CodeAnalysis') {
-		sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java'
+		sh 'mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java -pl !PlatformUI3'
 		
     }	
 	stage ('Insight_PS_NexusUpload') {		
-		sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn deploy -DskipTests=true'		
+		sh 'mvn deploy -DskipTests=true'		
 		}
 	
 	}
