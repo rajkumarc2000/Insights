@@ -1,4 +1,4 @@
-env.dockerimagename="devopsbasservice/buildonframework:insights"
+env.dockerimagename="devopsbasservice/buildonframework:insightsUI3"
 node {
 
 //Parse commitID (E.g, buildon-abc1234 to abc1234)
@@ -60,31 +60,37 @@ gitCommitID = sh (
 	// Platform Service Ends	
 	
 	
-	// Platform UI2.0 Starts
+	// Platform UI3 Starts
 	try{
-	stage ('Insight_PUI2.0_Build') {
+	stage ('Insight_PUI3_Build') {
         
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && bower install --allow-root && tsd install && npm install && grunt'
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install && ng build'
 	}
 	
-	stage ('Insight_PUI2.0_CodeAnalysis') {		
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=app/src/modules -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
+	stage ('Insight_PUI3_CodeAnalysis') {		
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=app/src/modules -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
 	}
 	
-	stage ('Insight_PUI2.0_NexusUpload') {		
+	stage ('Insight_PUI3_NexusUpload') {		
 		//Framing Nexus URL for artifact uploaded to Nexus with unique timestamp													
-		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version"
-       		pomversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version").trim()   //Get version from pom.xml to form the nexus repo URL
+		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/version"		
+		pomversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI3/version").trim()   //Get version from pom.xml to form the nexus repo URL
 		
+		//Get project name from pom.xml file
+		sh "mvn -B help:evaluate -Dexpression=project.build.finalName | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile"
+        	projectName=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/finalNameFile').trim()
+		
+		//Get package from pom.xml file
+        	sh "mvn -B help:evaluate -Dexpression=project.packaging | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile"
+        	packaging=readFile('/var/jenkins/jobs/$commitID/workspace/PlatformUI3/packagingFile').trim()	
+       			
 		if(pomversion.contains("SNAPSHOT")){		
-			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"			
-		
+			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"					
 		} else{		
 		    NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/InsightsRelease"		
-		
 		}		
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0  && zip -r app.zip app'
-	 	sh "mvn deploy:deploy-file -Dfile=/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/app.zip -DgroupId='com.cognizant.devops' -DartifactId='PlatformUI2.0' -Dpackaging=zip -Dversion=${pomversion} -DrepositoryId=nexus -Durl=${NEXUSREPO} -DskipTests=true"		
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3'
+	 	sh "mvn deploy:deploy-file -Dfile=/var/jenkins/jobs/$commitID/workspace/PlatformUI3/target/${projectName}.${packaging} -DgroupId='com.cognizant.devops' -DartifactId=${projectName} -Dpackaging=${projectName} -Dversion=${pomversion} -DrepositoryId=nexus -Durl=${NEXUSREPO} -DskipTests=true"		
 	     } 
 	   
 	   }
@@ -94,7 +100,7 @@ gitCommitID = sh (
 		sh 'exit 1'
 		}
 	   
-	   // Platform UI2.0 Ends
+	   // Platform UI3 Ends
 	   
 	   
         //Send Notification to Slack Channel
