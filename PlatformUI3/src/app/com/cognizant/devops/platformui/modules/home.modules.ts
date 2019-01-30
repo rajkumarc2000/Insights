@@ -65,6 +65,8 @@ import { UserOnboardingService } from '@insights/app/modules/user-onboarding/use
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';
 import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
+import { LogoSettingService } from '@insights/app/modules/logo-setting/logo-setting.service';
+
 
 @NgModule({
   declarations: [
@@ -121,6 +123,7 @@ import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-de
     BusinessHierarchyDatabase,
     UserOnboardingService,
     MessageDialogService,
+	LogoSettingService,
     BlockChainService,
     DatePipe
   ]

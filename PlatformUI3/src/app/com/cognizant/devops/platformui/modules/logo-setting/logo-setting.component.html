@@ -1,3 +1,31 @@
-<p>
-  logo-setting works!
-</p>
+<div class="mainDivContainer" >
+  <div layout layout-align="left" class="titleStyle">
+      <a>Configuration | <a class="greenTitleTxt">Logo Settings</a></a>
+  </div>
+  <div class="orangeStripCss"></div>
+  <div>
+    <div style="color:#0033A0;font-size: 16px"><b>Please follow the<a class="greenWord"> EXACT</a> instructions to upload your logo to avoid any <a class="greenWord">DISTORTION!</a></b></div>
+    <ul style="padding-left:0;list-style-position: inside;">
+      <li style="color:#0033A0"><a style="color:black;font-size: 14px">Please ENSURE that the logo edge to edge is<b> 276px * 73px<a style="color:#FF8F1C"> (any other size may distort the logo)</a></b>.Image size should be less than 1Mb.</a></li>
+      <li style="color:#0033A0"><a style="color:black;font-size: 14px">please EITHER use a <b>transparent.PNG.image</b> or<b> use a background color that suits</b> the <b>Login Page (#f0f0f0)</b> and the<b> Navigation Menu (#383737)</b></a></li>    </ul>
+  </div>
+  <div style="height:20vh;width:60vh;margin-left:20px;border-radius:10px;background-color:white;">
+    <div style="height:4vh;border-radius:10px 10px 0 0;background-color:#00B140;padding-top: 5px;padding-left: 10px;padding-bottom: 5px;color:white;font-size: 14px;"><b>Please select a LOGO to UPLOAD</b></div>
+    <div>
+      <input #fileInput style="margin-top:4vh;padding-left: 10px" type="file" accept="image/x-png,image/jpeg" />
+      <div style="float:right">
+        <button mat-icon-button (click)="uploadFile()">
+          <mat-icon style="font-size: 30px;" title="Upload File " class="mat-icon material-icons" >
+            cloud_upload
+          </mat-icon>
+        </button>
+        <button  mat-icon-button (click)="cancelFileUpload()">
+          <mat-icon style="font-size: 30px;" title="Cancel Upload " class="mat-icon material-icons" >
+            cancel
+          </mat-icon>
+        </button> 
+      </div>
+    </div>
+  </div>
+  
+</div>

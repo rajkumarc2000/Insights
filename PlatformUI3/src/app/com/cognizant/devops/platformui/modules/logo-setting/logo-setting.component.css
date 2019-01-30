@@ -1,0 +1,9 @@
+.mainDivContainer{
+    margin-left: 16px;
+    margin-right: 16px;
+    height:90vh;
+    overflow: hidden;
+}
+.greenWord{
+    color:#00B140;
+}
