@@ -52,7 +52,12 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     loadAssetDetailsInfo() {
-        alert("BasePrimeID: >>" + this.parentData.basePrimeID);
+        //alert("BasePrimeID: >>" + this.parentData.basePrimeID);
+    this.blockChainService.getAssetHistory(this.parentData.basePrimeID)
+      .then((data) => {
+            console.log("asset history respose>>>");
+            console.log(data);
+      });    
     }
 
     closeAssetDetailsDialog() {
