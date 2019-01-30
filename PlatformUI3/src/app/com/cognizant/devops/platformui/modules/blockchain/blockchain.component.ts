@@ -15,20 +15,22 @@
  *******************************************************************************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator,MatDialog } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { BlockChainService } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.service';
+import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
 import { DatePipe } from '@angular/common'
 import { BehaviorSubject } from 'rxjs';
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 import { MatRadioChange, MatInput } from '@angular/material';
+import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
 
 export interface AssetData {
   assetID: string;
   phase: string;
   toolStatus: string;
   toolName: string;
+  basePrimeID: string;
 }
 
 
@@ -36,10 +38,9 @@ export interface AssetData {
 @Component({
   selector: 'app-blockchain',
   templateUrl: './blockchain.component.html',
-  styleUrls: ['./blockchain.component.css', './../../home.module.css']
+  styleUrls: ['./blockchain.component.css', './../home.module.css']
 })
 export class BlockChainComponent implements OnInit {
-
   today = new Date();
   yesterday = new Date();
   maxDateValue: any;
@@ -63,10 +64,12 @@ export class BlockChainComponent implements OnInit {
   @ViewChild('startDateMatInput', { read: MatInput }) startDateMatInput: MatInput;
   @ViewChild('endDateMatInput', { read: MatInput }) endDateMatInput: MatInput;
   @ViewChild('assetIdInput', { read: MatInput }) assetIdInput: MatInput;
+  selectedBasePrimeID:string = "";
 
 
 
-  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, private messageDialog: MessageDialogService) {
+  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, 
+              private messageDialog: MessageDialogService,private dialog: MatDialog) {
     this.yesterday.setDate(this.today.getDate() - 1);
   }
 
@@ -221,6 +224,22 @@ export class BlockChainComponent implements OnInit {
 
     // Check if the first is less than second
     if (d1 < d2) return -1;
+  }
+
+  //Displays Asset Details Dialog box
+  showAssetDetailsDialog() {
+    alert("Selected AssetID>>"+ this.selectedBasePrimeID);
+    let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
+      panelClass: 'bc-asset-details-dialog-container',
+      height: '500px',
+      width: '900px',
+      data: { basePrimeID:this.selectedBasePrimeID},
+    });
+  }
+
+  populateBasePrimeID($event:MatRadioChange) {  
+    this.selectedBasePrimeID = $event.value;
+       
   }
 
 }
