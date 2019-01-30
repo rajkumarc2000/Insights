@@ -27,4 +27,4 @@ const appRoutes: Routes = [
   { path: 'Insights/Home', loadChildren: '@insights/app/modules/home.modules#HomeModules' }
 ];
 
-export const InsightsModuleRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes, { useHash: true });//{ useHash: true , enableTracing: true }
+export const InsightsModuleRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes, { useHash: true });//{ useHash: true  , onSameUrlNavigation: 'reload', enableTracing: true }

@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
   orgList = [];
   defaultOrg: number;
   selectedOrg: String;
+  selectedOrgName: String;
   sidenavWidth: number = 14;
   framesize: any;
   leftNavWidthInPer: number;
@@ -90,7 +91,7 @@ export class HomeComponent implements OnInit {
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router, private dataShare: DataSharedService) {
     //console.log("in home on constructor init ");
-    router.onSameUrlNavigation = 'reload';
+    //router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
     if (this.depth === undefined) {
       this.depth = 0;
@@ -140,6 +141,8 @@ export class HomeComponent implements OnInit {
       });
   }
 
+
+
   public async loadorganizations() {
     var self = this;
 
@@ -149,6 +152,7 @@ export class HomeComponent implements OnInit {
       for (let orgData of this.currentUserOrgs.data) {
         if (orgData.orgId == self.userCurrentOrg) {
           self.selectedOrg = orgData.name;
+          self.selectedOrgName = this.getSelectedOrgName(self.selectedOrg);
         }
       }
     } else {
@@ -191,8 +195,9 @@ export class HomeComponent implements OnInit {
     if (!item.children || !item.children.length) {
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
-        this.switchOrganizations(item.orgId);
-        this.router.navigateByUrl(item.route, { skipLocationChange: true });
+        this.selectedOrgName = this.getSelectedOrgName(this.selectedOrg);
+        this.switchOrganizations(item.orgId, item.route);
+
       } else if (item.displayName == 'About') {
         window.open(this.aboutPageURL, "_blank");
       } else if (item.displayName == 'Help') {
@@ -398,7 +403,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  switchOrganizations(orgId) {
+  switchOrganizations(orgId, route) {
     var self = this;
     //console.log("In switch organization " + JSON.stringify(this.currentUserOrgs));
     self.defaultOrg = orgId;
@@ -419,6 +424,8 @@ export class HomeComponent implements OnInit {
         }
         self.cookieService.set('grafanaRole', grafanaCurrentOrgRole);
         self.cookieService.set('grafanaOrg', orgId);
+
+        self.router.navigateByUrl(route, { skipLocationChange: true });
       }
     });
   }
@@ -431,6 +438,20 @@ export class HomeComponent implements OnInit {
   }
 
   showLandingPage() {
-    this.router.navigate(['InSights/Home/landingPage'])
+    // console.log("ByUrl " + this.router.url);
+    // console.log(this.router.isActive(this.router.url, true))
+    if (this.router.url != '/InSights/Home') {
+      this.router.navigate(['InSights/Home/landingPage'], { skipLocationChange: true });
+    }
+  }
+
+  getSelectedOrgName(orgSelectedName): String {
+    var orgName: String = "";
+    if (orgSelectedName != undefined && orgSelectedName.length > 16) {
+      orgName = (orgSelectedName.substring(0, 16)) + '..';
+    } else {
+      orgName = (orgSelectedName);
+    }
+    return orgName;
   }
 }

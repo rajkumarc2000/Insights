@@ -81,6 +81,14 @@
   font-family: inherit;
 }
 
+.mat-line-bottom{
+  color: #bfbfbf !important;
+  opacity: 0.8;
+  padding: 2px !important;
+  font-size: 14px !important;
+  font-family: inherit;
+}
+
 .mat-line-heading{
   color: #bfbfbf !important;
   opacity: 0.8;
@@ -151,7 +159,7 @@
   height: 50%;
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 8px;
+  padding-left: 10px;
   padding-right: 8px;
   align-content: center;
 }
@@ -186,6 +194,12 @@
 .mat-list-text{
   font-weight:500; 
   font-size: 16px;
+  font-family: inherit;
+}
+
+.mat-list-text-bottom{
+  font-weight:500; 
+  font-size: 13px;
   font-family: inherit;
 }
 
@@ -276,6 +290,7 @@
 
 .mat-icon{
   align-items: flex-end;
+  cursor: pointer;
 }
 
 .fill-remaining-space {
@@ -440,6 +455,14 @@
   margin:auto;
   display:block;
   align-items: center;
+  cursor: pointer;
+}
+.insightLogo{
+  margin:auto;
+  display:table-row;
+  margin-right:auto;
+  margin-left:auto;
+  cursor: pointer;
 }
 
 

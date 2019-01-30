@@ -24,15 +24,16 @@
           <tr *ngIf="isExpanded">
             <td>
               <img mat-card-image align="left" (click)="showLandingPage()" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log"
-                style="margin:auto;display:table-row;margin-right:auto;margin-left:auto;" />
+                class="insightLogo" />
             </td>
             <td>
               <mat-icon (click)="isExpanded = !isExpanded" class="material-icons-menu">menu</mat-icon>
             </td>
           </tr>
           <tr *ngIf="!isExpanded" style="margin:auto;display:table-row;margin-right:auto;margin-left:30px;height:100%;">
-            <img mat-card-image (click)="isExpanded = !isExpanded" class="feviconIcon" height="40px" align="center" src='icons/svg/homePage/menu_white_36.png'
-            />
+            <a (click)="isExpanded = !isExpanded">
+              <img mat-card-image class="feviconIcon" height="40px" align="center" src='icons/svg/homePage/menu_white_36.png' />
+            </a>
             <!--<mat-icon class="material-icons-menu">menu</mat-icon>-->
           </tr>
         </table>
@@ -44,7 +45,7 @@
           </tr>
           <tr class="mat-line-heading" *ngIf="isExpanded">
             <td class="arrange-horizontally-roledetail" [style.width.px]="leftNavWidthpx">
-              Role: <span class="roleName" [attr.title]="userRole + ' (' + selectedOrg + ')'"> {{userRole}}  <span class="orgNameInRole"> ({{selectedOrg}}) </span></span>
+              Role: <span class="roleName" title="You are the {{userRole}} for ({{selectedOrg}})."> {{userRole}}  <span class="orgNameInRole"> ({{selectedOrgName}}) </span></span>
             </td>
           </tr>
           <tr *ngIf="!isExpanded">
@@ -68,13 +69,13 @@
         <div class="bottomButton">
           <mat-nav-list *ngIf="isExpanded" class="arrange-horizontally-bottombutton">
             <ng-container *ngFor="let itemBottom of navItemsBottom">
-              <a mat-list-item class="mat-list-item-bottom" (click)="onItemSelected(itemBottom)">
-                <p matLine *ngIf="isExpanded" class="mat-line mat-list-text ">{{itemBottom.displayName}}</p>
+              <a [attr.title]="itemBottom.title" mat-list-item class="mat-list-item-bottom" (click)="onItemSelected(itemBottom)">
+                <p matLine *ngIf="isExpanded" class="mat-line-bottom mat-list-text-bottom ">{{itemBottom.displayName}}</p>
               </a>
             </ng-container>
           </mat-nav-list>
           <mat-nav-list *ngIf="!isExpanded" class="navItemImageForCollpases">
-            <a *ngIf="!isExpanded" class="mat-list-item-bottom" (click)="logout()">
+            <a *ngIf="!isExpanded" title="Logout" class="mat-list-item-bottom" (click)="logout()">
               <mat-icon class="mat-icon ng-tns-c10-10 material-icons ng-star-inserted" *ngIf="!isExpanded">logout</mat-icon>
             </a>
           </mat-nav-list>
