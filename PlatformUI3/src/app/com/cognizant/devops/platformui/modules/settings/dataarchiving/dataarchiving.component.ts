@@ -64,7 +64,7 @@ export class DataArchivingComponent implements OnInit {
 
   ngOnInit() {
     this.dataShare.currentUser.subscribe(user => this.currentUserName = user)
-    //console.log(this.currentUserName);
+    console.log(this.currentUserName);
     this.setInitailData();
   }
 
@@ -164,7 +164,7 @@ export class DataArchivingComponent implements OnInit {
         } else {
           self.showConfirmMessage = "Failed to save settings";
           self.showApplicationMessage = "Failed to save settings"
-        self.messageDialog.showApplicationsMessage("Failed to save settings", "ERROR");
+          self.messageDialog.showApplicationsMessage("Failed to save settings", "ERROR");
         }
         self.listData();
       })
