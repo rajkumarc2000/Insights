@@ -2,8 +2,8 @@
     background-color: #FF8F1C; 
     color:white !important;
     margin:0;
-    padding-bottom:5px;
-    padding-top: 5px;
+    /* padding-bottom:5px;
+    padding-top: 5px; */
     font-weight: bold;
     border:3px solid #FF8F1C;
 }
@@ -12,6 +12,24 @@
     margin: 0 !important;
     padding: 0 !important;
 }
+
+table {
+    width: 100%;
+}
+
+.tableHeaderCss {
+    background-color: grey;   
+    color: white;
+    font-size: 14px !important;
+    height: 40px !important;
+    margin: 0px;
+    padding:0px;
+    letter-spacing: .010em;
+    line-height: 1.2em;
+	text-align: center;
+}
+
+
 
 ul{
   position: relative;

@@ -14,16 +14,18 @@
  * the License.
  *******************************************************************************/
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
 
-export interface AssetData {
+export interface AssetHistoryData {
   assetID: string;
   phase: string;
-  toolStatus: string;
+  toolstatus: string;
   toolName: string;
   basePrimeID: string;
+  author:string;
+  timestamp:string;
 }
 
 @Component({
@@ -33,9 +35,11 @@ export interface AssetData {
 })
 export class AssetDetailsDialog implements OnInit {
     displayedColumns: string[] = ['select', 'phase', 'toolstatus', 'toolName', 'author','timestamp'];;
-    dataSource = new MatTableDataSource<AssetData>([]);
+    assetHistoryDataSource = new MatTableDataSource<AssetHistoryData>([]);
     MAX_ROWS_PER_TABLE = 5;
     assetID:string="";
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
@@ -48,7 +52,8 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     ngAfterViewInit() {
-
+        this.assetHistoryDataSource.sort = this.sort;
+        this.assetHistoryDataSource.paginator = this.paginator;
     }
 
     loadAssetDetailsInfo() {
@@ -57,6 +62,9 @@ export class AssetDetailsDialog implements OnInit {
       .then((data) => {
             console.log("asset history respose>>>");
             console.log(data);
+            this.assetHistoryDataSource.data = data.data;
+            this.assetHistoryDataSource.sort = this.sort;
+            this.assetHistoryDataSource.paginator = this.paginator;
       });    
     }
 
