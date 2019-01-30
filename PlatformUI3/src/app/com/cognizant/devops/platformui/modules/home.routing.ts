@@ -27,7 +27,7 @@ import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/da
 import { BusinessMappingComponent } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
-import { BlockChainComponent } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.component';
+import { BlockChainComponent } from '@insights/app/modules/blockchain/blockchain.component';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';

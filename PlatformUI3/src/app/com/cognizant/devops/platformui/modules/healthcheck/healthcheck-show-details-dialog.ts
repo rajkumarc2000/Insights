@@ -44,7 +44,7 @@ export class ShowDetailsDialog implements OnInit {
   constructor(public dialogRef: MatDialogRef<ShowDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private restCallHandlerService: RestCallHandlerService,
-    private healthCheckService: HealthCheckService, ) {
+    private healthCheckService: HealthCheckService) {
     this.fillMasterHeaderData();
   }
 

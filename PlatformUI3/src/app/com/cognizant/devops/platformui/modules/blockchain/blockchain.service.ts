@@ -19,9 +19,10 @@ import { Observable } from 'rxjs';
 
 
 export interface IBlockChainService {
-    
-    getAllAssets(startDate:string, endDate:string): Promise<any>;
-    getAssetInfo(assetID:string): Promise<any>;
+
+    getAllAssets(startDate: string, endDate: string): Promise<any>;
+    getAssetInfo(assetID: string): Promise<any>;
+    getAssetHistory(basePrimaryID: string): Promise<any>;
 }
 
 
@@ -29,18 +30,23 @@ export interface IBlockChainService {
 
 @Injectable()
 export class BlockChainService implements IBlockChainService {
-    
+
     constructor(private restCallHandlerService: RestCallHandlerService) {
     }
 
-    getAllAssets(startDate:string, endDate:string): Promise<any> {
+    getAllAssets(startDate: string, endDate: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ALL_ASSETS", { 'startDate': startDate, 'endDate': endDate});
+        return restHandler.get("GET_ALL_ASSETS", { 'startDate': startDate, 'endDate': endDate });
     }
 
-    getAssetInfo(assetID:string): Promise<any> {
+    getAssetInfo(assetID: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ASSET_INFO", {'assetId': assetID});
+        return restHandler.get("GET_ASSET_INFO", { 'assetId': assetID });
+    }
+
+    getAssetHistory(basePrimaryID: string): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("GET_ASSET_HISTORY", { 'primaryId': basePrimaryID });
     }
 
 }

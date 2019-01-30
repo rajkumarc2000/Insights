@@ -37,7 +37,7 @@ import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboa
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 import { HealthCheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
-import { BlockChainComponent } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.component';
+import { BlockChainComponent } from '@insights/app/modules/blockchain/blockchain.component';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
 import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchiving/dataarchiving.component';
@@ -59,11 +59,12 @@ import { ConfirmationMessageDialog } from '@insights/app/modules/application-dia
 import { ApplicationMessageDialog } from '@insights/app/modules/application-dialog/application-message-dialog';
 import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
-import { BlockChainService } from '@insights/app/modules/grafana-dashboard/blockchain/blockchain.service';
+import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
 import { DatePipe } from '@angular/common';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';
+import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-se
     ConfirmationMessageDialog,
     ApplicationMessageDialog,
     AddGroupMessageDialog,
-    LogoSettingComponent
+    LogoSettingComponent,
+    AssetDetailsDialog
   ],
   imports: [
     HomeRouting,
@@ -104,7 +106,8 @@ import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-se
     ShowDetailsDialog,
     ConfirmationMessageDialog,
     ApplicationMessageDialog,
-    AddGroupMessageDialog
+    AddGroupMessageDialog,
+    AssetDetailsDialog
   ],
 
   providers: [
