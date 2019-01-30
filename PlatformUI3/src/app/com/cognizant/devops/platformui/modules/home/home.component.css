@@ -210,7 +210,7 @@
 
 
 .mat-list-item-bottom:last-child{
-    border-right-style: unset;
+    border-right-style: solid;
     border-right-width: 0px;
     border-right-color: #9e9a9a;
 }
@@ -328,6 +328,7 @@
 }
 .navItemImageForCollpases{
   margin-left: 30px;
+  margin-top: 8px;
 }
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
