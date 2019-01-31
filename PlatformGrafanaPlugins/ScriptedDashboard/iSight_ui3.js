@@ -74,7 +74,7 @@ var addRouteChangeDetector = function () {
 			addRouteChangeDetector();
 		}, 300);
 	} else {
-		try {
+		/*try {
 			var $injector = document.getElementById("iSightIframe").contentWindow.angular.element(".grafana-app").injector();
 			console.log($injector);
 			$injector.invoke(function ($rootScope) {
@@ -86,7 +86,8 @@ var addRouteChangeDetector = function () {
 		}
 		finally {
 			addStyleTag();
-		}
+		} */
+		addStyleTag();
 		
 	}
 };
