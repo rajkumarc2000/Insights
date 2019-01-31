@@ -34,7 +34,7 @@ export interface AssetHistoryData {
     styleUrls: ['./bc-asset-details-dialog.css']
 })
 export class AssetDetailsDialog implements OnInit {
-    displayedColumns: string[] = ['select', 'phase', 'toolstatus', 'toolName', 'author','timestamp'];;
+    displayedColumns: string[] = ['select','assetID', 'phase', 'toolstatus', 'toolName', 'author','timestamp'];;
     assetHistoryDataSource = new MatTableDataSource<AssetHistoryData>([]);
     MAX_ROWS_PER_TABLE = 5;
     assetID:string="";
@@ -48,7 +48,7 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     ngOnInit() {
-       this.loadAssetDetailsInfo();
+       this.getAssetHistoryDetails();
     }
 
     ngAfterViewInit() {
@@ -56,11 +56,11 @@ export class AssetDetailsDialog implements OnInit {
         this.assetHistoryDataSource.paginator = this.paginator;
     }
 
-    loadAssetDetailsInfo() {
+    getAssetHistoryDetails() {
     this.blockChainService.getAssetHistory(this.parentData.basePrimeID)
       .then((data) => {
-            console.log("asset history respose>>>");
-            console.log(data);
+            //console.log("asset history respose>>>");
+            //console.log(data);
             this.assetHistoryDataSource.data = data.data;
             this.assetHistoryDataSource.sort = this.sort;
             this.assetHistoryDataSource.paginator = this.paginator;

@@ -75,3 +75,9 @@ li:last-child {
     top: 0;
     right: 0;
 }
+
+.paginationStyle {
+      font-family: Open Sans !important;
+      font-size: 14px !important; 
+      background-color: #DEDBDB;
+}
