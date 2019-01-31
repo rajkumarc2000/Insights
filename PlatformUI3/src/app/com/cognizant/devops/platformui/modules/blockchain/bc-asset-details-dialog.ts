@@ -31,7 +31,7 @@ export interface AssetHistoryData {
 @Component({
     selector: 'bc-asset-details-dialog',
     templateUrl: './bc-asset-details-dialog.html',
-    styleUrls: ['./bc-asset-details-dialog.css', './../home.module.css']
+    styleUrls: ['./bc-asset-details-dialog.css']
 })
 export class AssetDetailsDialog implements OnInit {
     displayedColumns: string[] = ['select', 'phase', 'toolstatus', 'toolName', 'author','timestamp'];;
@@ -57,7 +57,6 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     loadAssetDetailsInfo() {
-        //alert("BasePrimeID: >>" + this.parentData.basePrimeID);
     this.blockChainService.getAssetHistory(this.parentData.basePrimeID)
       .then((data) => {
             console.log("asset history respose>>>");

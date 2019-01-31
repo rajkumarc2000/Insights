@@ -227,10 +227,9 @@ export class BlockChainComponent implements OnInit {
   }
 
   //Displays Asset Details Dialog box
-  showAssetDetailsDialog() {
-    alert("Selected AssetID>>"+ this.selectedBasePrimeID);
+  showAssetDetailsDialog() {    
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
-      panelClass: 'bc-asset-details-dialog-container',
+      panelClass: 'AssetDetailsDialog',
       height: '500px',
       width: '900px',
       data: { basePrimeID:this.selectedBasePrimeID},
@@ -238,8 +237,7 @@ export class BlockChainComponent implements OnInit {
   }
 
   populateBasePrimeID($event:MatRadioChange) {  
-    this.selectedBasePrimeID = $event.value;
-       
+    this.selectedBasePrimeID = $event.value;       
   }
 
 }

@@ -36,6 +36,13 @@ body {
     padding-top: 2px;
 }
 
+.AssetDetailsDialog .mat-dialog-container {
+  padding: 0px !important;
+  margin: 0px !important;
+  border-radius:15px;
+  overflow: hidden;
+}
+
 
 .DialogBox  .mat-dialog-container{
       

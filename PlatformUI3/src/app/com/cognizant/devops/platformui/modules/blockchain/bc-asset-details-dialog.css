@@ -29,7 +29,31 @@ table {
 	text-align: center;
 }
 
+tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
 
+tr:nth-child(even) td {
+    background-color: #E1E3E7;
+}
+
+tr.mat-footer-row, tr.mat-row {
+    height: 30px !important;   
+    font-size: 12px !important;
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    width:200px !important;
+    height:30px !important; 
+    font-size: 12px !important;
+    letter-spacing: .010em;
+    line-height: 1.2em;
+	text-align: left;
+}
+
+.mat-table{
+    font-family: Open Sans;
+}
 
 ul{
   position: relative;
