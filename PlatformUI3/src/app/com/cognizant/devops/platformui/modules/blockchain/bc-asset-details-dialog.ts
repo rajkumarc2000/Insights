@@ -48,6 +48,7 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     ngOnInit() {
+       this.assetID = this.parentData.assetID;
        this.getAssetHistoryDetails();
     }
 

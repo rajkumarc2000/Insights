@@ -65,6 +65,8 @@ export class BlockChainComponent implements OnInit {
   @ViewChild('endDateMatInput', { read: MatInput }) endDateMatInput: MatInput;
   @ViewChild('assetIdInput', { read: MatInput }) assetIdInput: MatInput;
   selectedBasePrimeID:string = "";
+  selectedAssetID:string = "";
+
 
 
 
@@ -232,12 +234,13 @@ export class BlockChainComponent implements OnInit {
       panelClass: 'AssetDetailsDialog',
       height: '500px',
       width: '900px',
-      data: { basePrimeID:this.selectedBasePrimeID},
+      data: { basePrimeID:this.selectedBasePrimeID, assetID: this.selectedAssetID},
     });
   }
 
-  populateBasePrimeID($event:MatRadioChange) {  
-    this.selectedBasePrimeID = $event.value;       
+  populateBasePrimeID($event:MatRadioChange, assetID:string) {      
+    this.selectedBasePrimeID = $event.value;   
+    this.selectedAssetID = assetID;
   }
 
 }

@@ -2,8 +2,6 @@
     background-color: #FF8F1C; 
     color:white !important;
     margin:0;
-    /* padding-bottom:5px;
-    padding-top: 5px; */
     font-weight: bold;
     border:3px solid #FF8F1C;
 }
@@ -78,6 +76,5 @@ li:last-child {
 
 .paginationStyle {
       font-family: Open Sans !important;
-      font-size: 14px !important; 
-      background-color: #DEDBDB;
+      font-size: 14px !important;      
 }
