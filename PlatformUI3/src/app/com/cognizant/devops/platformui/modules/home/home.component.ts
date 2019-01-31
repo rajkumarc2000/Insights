@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
     //console.log(this.insightsCustomerLogo);
     if (this.insightsCustomerLogo == "DefaultLogo") {
       //console.log("user default logo ");
-      this.insightsCustomerLogo = "icons/svg/homePage/Customer_Logo.png";
+      this.insightsCustomerLogo = "";//icons/svg/homePage/Customer_Logo.png
     }
   }
 
