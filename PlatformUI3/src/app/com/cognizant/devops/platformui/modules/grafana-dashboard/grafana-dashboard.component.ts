@@ -69,19 +69,7 @@ export class GrafanaDashboardComponent implements OnInit {
             this.dashboards = undefined;
             this.dashboardTitle = undefined;
             this.selectedDashboardUrl = undefined;
-            var dashboardslist = await this.grafanadashboardservice.searchDashboard();
-            this.parseDashboards(dashboardslist);
-            //console.log(this.selectedDashboard);
-            if (this.selectedDashboard != undefined) {
-
-                this.selectedDashboard.iframeUrl = this.selectedDashboard.iframeUrl.replace("iSight.js", "iSight_ui3.js");
-                this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
-            } else {
-                this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
-                //console.log("No dashboard found,set default dashboardUrl");
-            }
-            //console.log(this.dashboardUrl);
-            this.setScrollBarPosition();
+            this.parseDashboards();
         });
     }
 
@@ -101,9 +89,11 @@ export class GrafanaDashboardComponent implements OnInit {
         }, 1000);
     }
 
-    async parseDashboards(dashboardslist) {
+    async parseDashboards() {
+        var dashboardslist = await this.grafanadashboardservice.searchDashboard();
         var self = this;
         var dataArray = dashboardslist.dashboards;
+        //console.log(dashboardslist);
         if (dashboardslist != undefined && dataArray != undefined) {
             if (dataArray.length > 0) {
                 var model = [];
@@ -119,18 +109,34 @@ export class GrafanaDashboardComponent implements OnInit {
                 if (self.selectedDashboard) {
                     self.dashboardTitle = self.selectedDashboard.title;
                 }
+                //console.log(self.dashboardTitle + "   " + self.selectedDashboard.title);
             } else {
                 console.log("No dashboard  Array found");
             }
         } else {
             console.log("No dashboard found");
         }
+        //console.log("parseDashboards complate 1")
+
+        //console.log(this.selectedDashboard);
+        if (this.selectedDashboard != undefined) {
+
+            this.selectedDashboard.iframeUrl = this.selectedDashboard.iframeUrl.replace("iSight.js", "iSight_ui3.js");
+            this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
+        } else {
+            this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
+            console.log("No dashboard found,set default dashboardUrl");
+        }
+        //console.log(this.dashboardUrl);
+        this.setScrollBarPosition();
+        //console.log("parseDashboards complate 11")
     }
 
     private setSelectedDashboard(dashboard) {
         var self = this;
         self.selectedDashboard = dashboard;
         self.dashboardTitle = dashboard.title;
+        //console.log(self.dashboardTitle);
         if (dashboard.dashboardUrl) {
             self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
             self.setScrollBarPosition();
