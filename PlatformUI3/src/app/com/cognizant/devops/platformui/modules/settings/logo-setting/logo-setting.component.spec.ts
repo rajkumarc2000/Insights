@@ -15,21 +15,21 @@
  ******************************************************************************/
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserOnboardingComponent } from './user-onboarding.component';
+import { LogoSettingComponent } from './logo-setting.component';
 
-describe('UserOnboardingComponent', () => {
-  let component: UserOnboardingComponent;
-  let fixture: ComponentFixture<UserOnboardingComponent>;
+describe('LogoSettingComponent', () => {
+  let component: LogoSettingComponent;
+  let fixture: ComponentFixture<LogoSettingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UserOnboardingComponent]
+      declarations: [LogoSettingComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserOnboardingComponent);
+    fixture = TestBed.createComponent(LogoSettingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

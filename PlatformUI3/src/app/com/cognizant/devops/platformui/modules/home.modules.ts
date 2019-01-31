@@ -63,9 +63,9 @@ import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.s
 import { DatePipe } from '@angular/common';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
 import { StorageServiceModule } from 'ngx-webstorage-service';
-import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';
+import { LogoSettingComponent } from '@insights/app/modules/settings/logo-setting/logo-setting.component';
 import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
-import { LogoSettingService } from '@insights/app/modules/logo-setting/logo-setting.service';
+import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/logo-setting.service';
 
 
 @NgModule({
@@ -123,7 +123,7 @@ import { LogoSettingService } from '@insights/app/modules/logo-setting/logo-sett
     BusinessHierarchyDatabase,
     UserOnboardingService,
     MessageDialogService,
-	LogoSettingService,
+    LogoSettingService,
     BlockChainService,
     DatePipe
   ]

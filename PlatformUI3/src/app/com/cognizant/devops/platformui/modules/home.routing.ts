@@ -30,7 +30,7 @@ import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-m
 import { BlockChainComponent } from '@insights/app/modules/blockchain/blockchain.component';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
-import { LogoSettingComponent } from '@insights/app/modules/logo-setting/logo-setting.component';
+import { LogoSettingComponent } from '@insights/app/modules/settings/logo-setting/logo-setting.component';
 
 const homeRoutes: Routes = [
   {
