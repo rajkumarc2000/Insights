@@ -18,7 +18,7 @@ import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/
 import { HttpClientModule, HttpHeaders, HttpClient } from '@angular/common/http';
 import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { CookieService } from 'ngx-cookie-service';
-import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
+import { Constructor } from '@angular/cdk/table';
 
 
 
@@ -32,43 +32,53 @@ export class LogoSettingComponent implements OnInit {
   @ViewChild('fileInput') myFileDiv: ElementRef;
   files: any;
   response: any;
-  imageUploadSuccessMessage: string = " ";
-  imageUploadErrorMessage: string = " ";
-  size: boolean = false;
-  uploadSuccess: boolean = false;
-  uploadFailure: boolean = false;
-  buttonEnable: boolean = false;
+  imageUploadSuccessMessage:string = " ";
+  imageUploadErrorMessage:string = " ";
+  size:boolean=false;
+  uploadSuccess:boolean=false;
+  uploadFailure:boolean=false;
+  buttonEnable:boolean=false;
+  url = '';
 
   constructor(private logoSettingService: LogoSettingService, private http: HttpClient, private restAPIUrlService: RestAPIurlService,
-    private cookieService: CookieService, public messageDialog: MessageDialogService) { }
+    private cookieService: CookieService) { }
 
   ngOnInit() {
   }
 
-  refresh() {
-    this.uploadSuccess = false;
-    this.uploadFailure = false;
-    this.buttonEnable = true;
-  }
 
+  onSelectFile(event) {
+    this.uploadSuccess=false;
+    this.uploadFailure=false;
+    this.buttonEnable=true;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event:any) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+      }
+    }
+  }
 
   uploadFile() {
     var restcallAPIUrl = this.restAPIUrlService.getRestCallUrl("UPLOAD_IMAGE");
     var file = this.myFileDiv.nativeElement.files[0];
     console.log(file)
-    var bytes = file["size"]
-    if (bytes > 1048576) {
-      this.size = true
-      this.uploadSuccess = false;
-      this.uploadFailure = true;
-      this.imageUploadErrorMessage = "Please select a of file size less than 1Mb"
+    var bytes=file["size"]
+    if(bytes > 1048576){
+      this.size=true
+      this.uploadSuccess=false;
+      this.uploadFailure=true;
+      this.imageUploadErrorMessage="Please select a of file size less than 1Mb"
     }
-    var testFileExt = this.checkFile(file, ".svg,.jpeg,.png");
+    var testFileExt = this.checkFile(file, ".png");
     console.log(testFileExt);
     if (!testFileExt) {
-      this.uploadSuccess = false;
-      this.uploadFailure = true;
-      this.imageUploadErrorMessage = "Please select a valid .SVG or .PNG or .JPEG file"
+      this.uploadSuccess=false;
+      this.uploadFailure=true;
+      this.imageUploadErrorMessage="Please select a valid .PNG file"
     }
     if (testFileExt && !this.size) {
       //console.log("jill")
@@ -80,20 +90,21 @@ export class LogoSettingComponent implements OnInit {
           'Authorization': authToken
         },
       }).subscribe(event => {
-        console.log(event);
+        console.log(event); 
       });
-      this.uploadSuccess = true;
-      this.uploadFailure = false;
-      this.imageUploadSuccessMessage = "Image file uploaded successfully"
-      console.log("Settings saved successfully")
-      this.messageDialog.showApplicationsMessage("Image file uploaded successfully", "SUCCESS");
+      var dummy= (<HTMLInputElement>document.getElementById("file"))
+      dummy.value="";
+      this.uploadSuccess=true;
+      this.uploadFailure=false;
+      this.buttonEnable=false;
+      this.imageUploadSuccessMessage="Image file uploaded successfully"
     }
   }
   checkFile(sender, validExts) {
     if (sender) {
       var fileExt = sender.name;
       fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-      fileExt = fileExt.toLowerCase();
+      fileExt=fileExt.toLowerCase();
       if (validExts.indexOf(fileExt) < 0 && fileExt != "") {
         console.log(validExts.indexOf(fileExt))
         return false;

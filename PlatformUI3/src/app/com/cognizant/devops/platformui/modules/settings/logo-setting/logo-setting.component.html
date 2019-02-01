@@ -35,10 +35,10 @@
         <li style="color:#0033A0"><a style="color:black;font-size: 14px">please EITHER use a <b>transparent.PNG. image</b> or<b> use a background color that suits</b> the <b>Login Page (#f0f0f0)</b> and the<b> Navigation Menu (#383737)</b></a></li>
       </ul>
     </div>
-    <div style="height:25vh;width:80vh;margin-left:20px;border-radius:10px;background-color:white;">
+    <div style="height:25vh;width:80vh;margin-left:20px;border-radius:10px;background-color:white;display: inline-block;vertical-align: top;">
       <div style="height:4vh;border-radius:10px 10px 0 0;background-color:#00B140;padding-top: 5px;padding-left: 10px;padding-bottom: 5px;color:white;font-size: 14px;"><b>Please select a LOGO to UPLOAD</b></div>
       <div>
-        <input #fileInput style="margin-top:4vh;padding-left: 10px" type="file" accept="image/x-png,image/jpeg" (click)="refresh()"/>
+        <input #fileInput style="margin-top:4vh;padding-left: 10px" id="file"  type="file" accept="image/x-png,image/jpeg" (change)="onSelectFile($event)"/>
         <div style="min-height:5vh">
           <div *ngIf="uploadSuccess" style="padding-top:20px;padding-left:5px;font-size:14px;color:#0033A0"><b>{{imageUploadSuccessMessage}}</b></div>
           <div *ngIf="uploadFailure" style="padding-top:20px;padding-left:5px;font-size:14px;color: #FF8F1C"><b>{{imageUploadErrorMessage}}</b></div>
@@ -56,6 +56,9 @@
         </button>
         </div>
       </div>
+    </div>
+    <div *ngIf="buttonEnable"  style="height:25vh;display: inline-block;margin-left:20px;vertical-align: top;" >
+      <img  [src]="url" style="height:73px;width:276px;border-radius:10px;"> <br/>
     </div>
   </div>
 </div>
