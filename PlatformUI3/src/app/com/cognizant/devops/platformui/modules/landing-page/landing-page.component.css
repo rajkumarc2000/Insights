@@ -12,11 +12,14 @@
 .landingpageCssExpand {
 	overflow-x: hidden;
 	overflow-y: hidden;
+	
 }
 
 .landingpageCssCollapse {
 	overflow-x: hidden;
 	overflow-y: hidden;
+	 margin-left: 100px;
+	 margin-right: 100px;
 }
 
 .textcenter {
