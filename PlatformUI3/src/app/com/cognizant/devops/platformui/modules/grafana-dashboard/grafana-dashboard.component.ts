@@ -35,7 +35,7 @@ import { HomeComponent } from '@insights/app/modules/home/home.component';
 export class GrafanaDashboardComponent implements OnInit {
     orgId: string;
     routeParameter: Observable<any>;
-    dashboardUrl: SafeResourceUrl;
+    dashboardUrl: SafeResourceUrl = 'http://localhost:3000/?orgId=1';
     iSightDashboards = [];
     dashboardTitle: string;
     selectedOrgUrl: string;
@@ -65,7 +65,7 @@ export class GrafanaDashboardComponent implements OnInit {
             this.orgId = params.get('id');
             //console.log("orgid works " + this.orgId);
             this.selectedDashboard = undefined;
-            this.dashboardUrl = undefined;
+            //this.dashboardUrl = undefined;
             this.dashboards = undefined;
             this.dashboardTitle = undefined;
             this.selectedDashboardUrl = undefined;
@@ -111,10 +111,10 @@ export class GrafanaDashboardComponent implements OnInit {
                 }
                 //console.log(self.dashboardTitle + "   " + self.selectedDashboard.title);
             } else {
-                console.log("No dashboard  Array found");
+                //console.log("No dashboard  Array found");
             }
         } else {
-            console.log("No dashboard found");
+            //console.log("No dashboard found");
         }
         //console.log("parseDashboards complate 1")
 
@@ -125,7 +125,7 @@ export class GrafanaDashboardComponent implements OnInit {
             this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
         } else {
             this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
-            console.log("No dashboard found,set default dashboardUrl");
+            //console.log("No dashboard found,set default dashboardUrl");
         }
         //console.log(this.dashboardUrl);
         this.setScrollBarPosition();
@@ -137,10 +137,11 @@ export class GrafanaDashboardComponent implements OnInit {
         self.selectedDashboard = dashboard;
         self.dashboardTitle = dashboard.title;
         //console.log(self.dashboardTitle);
-        if (dashboard.dashboardUrl) {
-            self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
-            self.setScrollBarPosition();
-        }
+        //if (dashboard.dashboardUrl) {
+        self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
+        self.setScrollBarPosition();
+        //}
+        //console.log(self.selectedDashboard.iframeUrl);
     };
 
 }
