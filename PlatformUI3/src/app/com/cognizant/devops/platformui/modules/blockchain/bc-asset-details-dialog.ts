@@ -36,7 +36,7 @@ export interface AssetHistoryData {
 export class AssetDetailsDialog implements OnInit {
     displayedColumns: string[] = ['select','assetID', 'phase', 'toolstatus', 'toolName', 'author','timestamp'];;
     assetHistoryDataSource = new MatTableDataSource<AssetHistoryData>([]);
-    MAX_ROWS_PER_TABLE = 5;
+    MAX_ROWS_PER_TABLE = 10;
     assetID:string="";
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
