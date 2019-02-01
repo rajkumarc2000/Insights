@@ -110,5 +110,16 @@ th[_ngcontent-c15]:last-child{
     color: #FF8F1C;
 }
 
+.contentBodyCss{
+    padding-left:50px ;
+    padding-right: 20px;
+}
+
+.textPaddingInfo
+{
+  padding-left:50px ;
+  height: 35%
+}
+
 
 

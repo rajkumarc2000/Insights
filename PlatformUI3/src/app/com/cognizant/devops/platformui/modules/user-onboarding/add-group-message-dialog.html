@@ -20,24 +20,24 @@
             <td>
                 <span class="dialogheader">Confirm Access Group Name</span>
             </td>
-            <!--<td>
+            <td>
                 <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
                         <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
                         </mat-icon>
                     </a>
                 </div>
-            </td>-->
+            </td>
         </tr>
     </table>
 </div>
 
-<mat-dialog-content style="padding-left: 15px;">
+<mat-dialog-content class="contentBodyCss">
     <label class="dialogText"> Access Group Name </label>
     <input [(ngModel)]="accessGroupName" name="accessGroupName" [style.height.px]="30" [style.width.%]="55" class="form-control"
         placeholder="Please input an Access Group Name" required>
         <br>
-        <div class="textPadding">
+        <div class="textPaddingInfo">
             <span class="messageText" *ngIf="message!=''">{{message}}</span>
             <span class="warningText">
             <br > Once the Access Group name is added you will not be able to RENAME or DELETE the

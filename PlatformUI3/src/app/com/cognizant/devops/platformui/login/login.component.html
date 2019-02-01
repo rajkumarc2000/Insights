@@ -102,8 +102,8 @@
 
           <mat-icon svgIcon="PoweredBy" layout layout-align="center center" class="powerByImage">
           </mat-icon>
-          <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
-            <mat-progress-spinner color="primary" mode="indeterminate">
+          <div *ngIf="showThrobber">
+            <mat-progress-spinner style="margin:0 auto;" color="primary" mode="indeterminate">
             </mat-progress-spinner>
           </div>
         </form>
