@@ -31,38 +31,75 @@ export class LogoSettingComponent implements OnInit {
   @ViewChild('fileInput') myFileDiv: ElementRef;
   files: any;
   response: any;
+  imageUploadSuccessMessage:string = " ";
+  imageUploadErrorMessage:string = " ";
+  size:boolean=false;
+  uploadSuccess:boolean=false;
+  uploadFailure:boolean=false;
+  buttonEnable:boolean=false;
 
   constructor(private logoSettingService: LogoSettingService, private http: HttpClient, private restAPIUrlService: RestAPIurlService,
     private cookieService: CookieService) { }
 
   ngOnInit() {
   }
+  
+  refresh(){
+    this.uploadSuccess=false;
+    this.uploadFailure=false;
+    this.buttonEnable=true;
+  }
+
 
   uploadFile() {
     var restcallAPIUrl = this.restAPIUrlService.getRestCallUrl("UPLOAD_IMAGE");
     var file = this.myFileDiv.nativeElement.files[0];
-    var fd = new FormData();
-    fd.append("file", file);
-    var authToken = this.cookieService.get('Authorization');
-    this.http.post(restcallAPIUrl, fd, {
-      headers: {
-        'Authorization': authToken
-      },
-    }).subscribe(event => {
-      //console.log(event); // handle event here
-    });
-    /* 
-     
-    this.trackingUploadedFileContentStr = "";
-    var uploadedFile = this.myFileDiv.nativeElement.files[0];
-    console.log(uploadedFile);
-    var restCallUrl = this.restAPIUrlService.getRestCallUrl("UPLOAD_IMAGE");
-     
-    this.http.post(restCallUrl, uploadedFile)
-    .subscribe(event => {
-      console.log(event); // handle event here
-    });
-    */
+    console.log(file)
+    var bytes=file["size"]
+    if(bytes > 1048576){
+      this.size=true
+      this.uploadSuccess=false;
+      this.uploadFailure=true;
+      this.imageUploadErrorMessage="Please select a of file size less than 1Mb"
+    }
+    var testFileExt = this.checkFile(file, ".svg,.jpeg,.png");
+    console.log(testFileExt);
+    if (!testFileExt) {
+      this.uploadSuccess=false;
+      this.uploadFailure=true;
+      this.imageUploadErrorMessage="Please select a valid .SVG or .PNG or .JPEG file"
+    }
+    if (testFileExt && !this.size) {
+      //console.log("jill")
+      var fd = new FormData();
+      fd.append("file", file);
+      var authToken = this.cookieService.get('Authorization');
+      this.http.post(restcallAPIUrl, fd, {
+        headers: {
+          'Authorization': authToken
+        },
+      }).subscribe(event => {
+        console.log(event); 
+      });
+      this.uploadSuccess=true;
+      this.uploadFailure=false;
+      this.imageUploadSuccessMessage="Image file uploaded successfully"
+    }
+  }
+  checkFile(sender, validExts) {
+    if (sender) {
+      var fileExt = sender.name;
+      fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+      fileExt=fileExt.toLowerCase();
+      if (validExts.indexOf(fileExt) < 0 && fileExt != "") {
+        console.log(validExts.indexOf(fileExt))
+        return false;
+      }
+      else {
+        console.log(validExts.indexOf(fileExt))
+        return true;
+      }
+    }
   }
   cancelFileUpload() {
 
