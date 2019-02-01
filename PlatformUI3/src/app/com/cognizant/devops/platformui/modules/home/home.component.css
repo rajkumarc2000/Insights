@@ -147,10 +147,10 @@
 .bottomButton{
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
-    border-bottom-width:1px;
+    border-bottom-width:2px;
     border-top-style: solid;
     border-color:#9e9a9a;
-    border-top-width: 1px;
+    border-top-width: 2px;
     padding-bottom: 5px;
     padding-top: 5px;
     height: 21%;
@@ -176,7 +176,7 @@
   height: 19%;
   border-top-style: solid;
   border-top-color:#9e9a9a;
-  border-top-width: 1px;
+  border-top-width: 2px;
   padding-bottom: 10px;
   color: #9e9a9a;
   font-size: 10px;
@@ -218,7 +218,7 @@
     padding-bottom: 0px !important;
     padding-left: 0px !important;
     border-right-style: solid;
-    border-right-width: 1px;
+    border-right-width: 2px;
     border-right-color: #9e9a9a;
 }
 
@@ -358,7 +358,7 @@
     padding-bottom: 10px;
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
-    border-bottom-width:1px;
+    border-bottom-width:2px;
   }
 
   .bottomnavg {
@@ -411,7 +411,7 @@
     height: 7%;
     border-bottom-style:solid;
     border-color:#9e9a9a;
-    border-bottom-width:1px;
+    border-bottom-width:2px;
   }
 
   .bottomnavg {
