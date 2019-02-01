@@ -140,6 +140,7 @@ export class HealthCheckComponent implements OnInit {
       panelClass: 'healthcheck-show-details-dialog-container',
       height: '500px',
       width: '900px',
+      disableClose: true,
       data: { toolName: toolName, categoryName: categoryName, pathName:filePath,detailType:detailType },
     });
   }

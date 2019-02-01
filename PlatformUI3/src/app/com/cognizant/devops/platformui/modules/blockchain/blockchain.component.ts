@@ -48,7 +48,7 @@ export class BlockChainComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[];
   dataSource = new MatTableDataSource<AssetData>([]);
-  MAX_ROWS_PER_TABLE = 5;
+  MAX_ROWS_PER_TABLE = 10;
   startDate: string;
   endDate: string;
   showSearchResult = false;
@@ -234,6 +234,7 @@ export class BlockChainComponent implements OnInit {
       panelClass: 'AssetDetailsDialog',
       height: '500px',
       width: '900px',
+      disableClose: true,
       data: { basePrimeID:this.selectedBasePrimeID, assetID: this.selectedAssetID},
     });
   }
