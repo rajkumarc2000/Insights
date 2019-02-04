@@ -23,8 +23,8 @@
         <table class="logoTable">
           <tr *ngIf="isExpanded">
             <td>
-              <img mat-card-image align="left" (click)="showLandingPage()" height="49px" src='icons/svg/homePage/Insights.png' alt="Cognizant Insights log"
-                class="insightLogo" />
+              <img mat-card-image align="left" (click)="showLandingPage()" height="44px" width="195px" src='icons/svg/homePage/Insights.png'
+                alt="Cognizant Insights log" class="insightLogo" />
             </td>
             <td>
               <mat-icon (click)="onMenuClick()" class="material-icons-menu">menu</mat-icon>
@@ -49,8 +49,9 @@
             </td>
           </tr>
           <tr *ngIf="!isExpanded">
-            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.svg'
+            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/IS_BETA.png'
             />
+            <!-- Insights_Fevicon.svg -->
           </tr>
         </table>
       </div>
@@ -81,7 +82,7 @@
           </mat-nav-list>
         </div>
         <div class="customerLogo" *ngIf="isExpanded">
-          <img mat-card-image align="left" height="67px" width="250px" class="customerLogoImage" [src]="insightsCustomerLogo" />
+          <img mat-card-image align="left" height="57px" width="250px" class="customerLogoImage" [src]="insightsCustomerLogo" />
         </div>
         <div class="textCopyright" *ngIf="isExpanded">
           © 2019 Cognizant Technologies Solutions Limited. <br> All rights reserved.
