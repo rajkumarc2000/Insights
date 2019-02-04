@@ -42,7 +42,7 @@ export class HealthCheckComponent implements OnInit {
   dataComponentDataSource = [];
   servicesDataSource = [];
   healthResponse: any;
-  agentResponse:any;
+  agentResponse: any;
   agentBacktoTopFlag: boolean = false;
   dataBacktoTopFlag: boolean = false;
   servicesBacktoTopFlag: boolean = false;
@@ -55,12 +55,12 @@ export class HealthCheckComponent implements OnInit {
 
   ngOnInit() { }
 
-  async loadAgentCheckInfo(){
+  async loadAgentCheckInfo() {
     try {
       this.showThrobberAgent = true;
       this.showContentAgent = !this.showThrobberAgent;
       this.agentResponse = await this.healthCheckService.loadServerAgentConfiguration();
-      console.log(this.agentResponse);
+      //console.log(this.agentResponse);
       if (this.agentResponse != null) {
         this.showThrobberAgent = false;
         this.showContentAgent = !this.showThrobberAgent;
@@ -78,7 +78,7 @@ export class HealthCheckComponent implements OnInit {
         }
         this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
       }
-    }catch (error) {
+    } catch (error) {
       this.showContentAgent = false;
       console.log(error);
     }
@@ -104,7 +104,7 @@ export class HealthCheckComponent implements OnInit {
             this.dataComponentDataSource.push(element);
           }
         }
-       
+
         //Displays Back to Top button when Data Component table contains more than 20 rows
         if (this.dataComponentDataSource.length > 20) {
           this.dataBacktoTopFlag = true;
@@ -126,22 +126,22 @@ export class HealthCheckComponent implements OnInit {
   }
 
   // Displays Show Details dialog box when Details column is clicked
-  showDetailsDialog(toolName: string, categoryName: string,pathName: string,detailType:string) {
-    var rcategoryName=categoryName.replace(/ +/g, "");
-    if (toolName=="-"){
-      var filePath="${INSIGHTS_HOME}/logs/"+rcategoryName+"/"+rcategoryName+".log";
-      var detailType=categoryName;
-    }else {
-      var rtoolName=toolName.charAt(0).toUpperCase() + toolName.slice(1).toLowerCase();
-      var filePath="${INSIGHTS_HOME}/logs/PlatformAgent/log_"+rtoolName+"Agent.log";
-      var detailType=rtoolName;
+  showDetailsDialog(toolName: string, categoryName: string, pathName: string, detailType: string) {
+    var rcategoryName = categoryName.replace(/ +/g, "");
+    if (toolName == "-") {
+      var filePath = "${INSIGHTS_HOME}/logs/" + rcategoryName + "/" + rcategoryName + ".log";
+      var detailType = categoryName;
+    } else {
+      var rtoolName = toolName.charAt(0).toUpperCase() + toolName.slice(1).toLowerCase();
+      var filePath = "${INSIGHTS_HOME}/logs/PlatformAgent/log_" + rtoolName + "Agent.log";
+      var detailType = rtoolName;
     }
     let showDetailsDialog = this.dialog.open(ShowDetailsDialog, {
       panelClass: 'healthcheck-show-details-dialog-container',
       height: '500px',
       width: '900px',
       disableClose: true,
-      data: { toolName: toolName, categoryName: categoryName, pathName:filePath,detailType:detailType },
+      data: { toolName: toolName, categoryName: categoryName, pathName: filePath, detailType: detailType },
     });
   }
 

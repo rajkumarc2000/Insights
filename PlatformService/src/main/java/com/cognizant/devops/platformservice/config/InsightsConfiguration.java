@@ -58,11 +58,7 @@ public final class InsightsConfiguration {
 		// updateLayouts();
 		updateDatasources();
 		//updateDashboards();
-		
-		System.getProperties().put("http.proxyHost", "proxy.cognizant.com");
-		System.getProperties().put("http.proxyPort", "6050");
-		System.getProperties().put("http.proxyUser", "SDevOpsJira");
-		System.getProperties().put("http.proxyPassword", "D111111");
+
 	}
 
 	private static void updateLayouts() {
