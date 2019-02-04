@@ -30,7 +30,7 @@
 }
 
 .mat-list-item {
-  color: white;
+  color: #bfbfbf;
   opacity: 0.8;
   font-size: 16px;
   height: 30px !important;
@@ -39,7 +39,7 @@
 
 .mat-nav-list{
   color: white;
-  opacity: 0.8;
+  opacity: 0.9;
   font-size: 16px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
@@ -48,36 +48,33 @@
 
 }
 
-
-
 .mat-list-item-ripple{
   height: 30px
 }
 
 .mat-list-item.active {
-  font-size: 17px !important;
+  font-size: 18px !important;
   font-weight:bolder !important;
-  color:white !important;
+  color:#bfbfbf !important;
   background-color: #0033A0;
   font-family: inherit;
 }
 
 .mat-line.active{
-  color: white !important;
+  color: #bfbfbf !important;
   font-weight:900 !important;
-  font-size: 17px !important;
+  font-size: inherit !important;
   opacity: 1.0 !important;
   filter: brightness(100%),contrast(100%) !important;
   background-color: #0033A0;
   font-family: inherit;
-  
 }
 
 .mat-line{
   color: #bfbfbf !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-size: 16px !important;
+  font-size: inherit !important;
   font-family: inherit;
 }
 
@@ -100,7 +97,6 @@
   font-size: 16px;
   height: 30px !important;
 }
-
 
 .headingTable{
   height:100%; 
@@ -240,7 +236,7 @@
 }
 
 .mat-drawer{
-  background:#393838;
+  background:#383737;
   overflow-x: hidden;
   overflow-y: hidden;
   /*bottom: -150px;*/
