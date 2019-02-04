@@ -15,10 +15,10 @@
  ******************************************************************************/
 import { Injectable } from '@angular/core';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
-
+import { Observable } from 'rxjs'
 
 export interface ILogoSettingService {
-    uploadLogo(): Promise<any>;
+    uploadLogo(imageFile:any): Observable<any>;
 }
 
 
@@ -30,10 +30,9 @@ export class LogoSettingService implements ILogoSettingService {
     constructor(private restCallHandlerService: RestCallHandlerService) {
     }
 
-    uploadLogo(): Promise<any> {
+    uploadLogo(imageFile:any): Observable<any> {
         var restHandler = this.restCallHandlerService;
-        console.log()
-        return restHandler.get("UPLOAD_IMAGE");
+        return restHandler.postWithImage("UPLOAD_IMAGE",imageFile);
     }
 }
 
