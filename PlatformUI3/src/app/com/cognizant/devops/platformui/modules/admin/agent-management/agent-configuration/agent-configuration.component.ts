@@ -491,7 +491,7 @@ export class AgentConfigurationComponent implements OnInit {
   cancelChange(actionType) {
     var title = "Cancel Agent";
     var dialogmessage = "Are you sure you want to discard your changes?";
-    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "40%");
+    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed  ' + result);
       if (result == 'yes') {

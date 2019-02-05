@@ -57,6 +57,25 @@ body {
     padding: 0px;
     color: rgba(0,0,0,.87);
 
+
+
+}
+
+.DialogBox1  .mat-dialog-container{
+      
+    border-radius: 10px !important ;
+    overflow: hidden;
+    outline: 0;
+    width: 100%;
+    height: 70%;
+    min-height: inherit;
+    max-height: inherit;
+    background: #fff;
+    padding: 0px;
+    color: rgba(0,0,0,.87);
+
+
+
 }
 
 

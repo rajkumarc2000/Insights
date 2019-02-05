@@ -51,7 +51,8 @@ export class MessageDialogService {
                 title: title,
                 message: message,
                 value: value,
-                type: type
+                type: type,
+                height: height
 
             }
         });
