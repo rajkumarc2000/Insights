@@ -37,7 +37,7 @@ export class ConfirmationMessageDialog implements OnInit {
         }
 
         var receivedHeight = data.height.slice(0, -1);
-        console.log(data.height + "  " + receivedHeight);
+        /* console.log(data.height + "  " + receivedHeight); */
         if (receivedHeight < 40) {
             this.contentHeight = 35;
         } else {
