@@ -102,7 +102,7 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   statusEdit(element) {
-    console.log("After radio check " + JSON.stringify(element) + "" + this.isSaveEnable);
+    //console.log("After radio check " + JSON.stringify(element) + "" + this.isSaveEnable);
     if (element != undefined) {
       this.oldSelectedUser = this.selectedUser;
       if (this.isSaveEnable) {
