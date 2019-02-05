@@ -37,6 +37,7 @@ export class UserOnboardingComponent implements OnInit {
   adminOrgDataArray = [];
   readOnlyOrg: boolean = false;
   selectedUser: any;
+  oldSelectedUser: any;
   userDataSource: any = [];
   displayedColumns = [];
   isbuttonenabled: boolean = false;
@@ -101,8 +102,23 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   statusEdit(element) {
+    console.log("After radio check " + JSON.stringify(element) + "" + this.isSaveEnable);
     if (element != undefined) {
-      this.isbuttonenabled = true;
+      this.oldSelectedUser = this.selectedUser;
+      if (this.isSaveEnable) {
+        var title = "Discard Changes";
+        var dialogmessage = "Are you sure you want to discard your changes?";
+        const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
+        dialogRef.afterClosed().subscribe(result => {
+          if (result == 'yes') {
+            this.loadUsersInfo(this.selectedAdminOrg);
+          } else {
+            this.selectedUser = this.oldSelectedUser;
+          }
+        });
+      } else {
+        this.isbuttonenabled = true;
+      }
     }
   }
 
