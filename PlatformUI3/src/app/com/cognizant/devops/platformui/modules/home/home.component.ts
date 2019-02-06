@@ -222,6 +222,7 @@ export class HomeComponent implements OnInit {
         isAdminMenu: false,
         showMenu: true,
         title: "Click on Organization to see various Org's Dashboards",
+        isToolbarDisplay: false,
         children: this.navOrgList
         /*[
           {
@@ -350,14 +351,14 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'About',
         iconName: 'info',
-        isToolbarDisplay: true,
+        isToolbarDisplay: false,
         showIcon: false,
         title: "About",
         isAdminMenu: false
       }, {
         displayName: 'Help',
         iconName: 'help',
-        isToolbarDisplay: true,
+        isToolbarDisplay: false,
         showIcon: false,
         title: "Help",
         isAdminMenu: false
@@ -365,7 +366,7 @@ export class HomeComponent implements OnInit {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login', //loggedout
-        isToolbarDisplay: true,
+        isToolbarDisplay: false,
         showIcon: true,
         title: "Logout",
         isAdminMenu: false
