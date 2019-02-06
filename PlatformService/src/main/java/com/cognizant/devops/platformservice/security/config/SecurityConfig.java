@@ -132,7 +132,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		public void configure(WebSecurity web) throws Exception {
 			web.ignoring().antMatchers("/settings/getLogoImage");
 			web.ignoring().antMatchers("/datasource/**");
-			web.ignoring().antMatchers("/insightsDataProcessor/**");
 		}
 		
 		@Bean

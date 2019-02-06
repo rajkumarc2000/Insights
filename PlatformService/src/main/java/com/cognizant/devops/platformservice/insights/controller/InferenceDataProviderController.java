@@ -38,7 +38,7 @@ import com.google.gson.JsonParser;
 
 
 @RestController
-@RequestMapping("/insightsDataProcessor")
+@RequestMapping("/datasource/inference")
 public class InferenceDataProviderController{
 
 	private static Logger LOG = LogManager.getLogger(InsightsInferenceController.class);
@@ -46,7 +46,7 @@ public class InferenceDataProviderController{
 	@Autowired
 	InsightsInferenceService insightsInferenceService;
 
-	@RequestMapping(value = "/inferenceData", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/data", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public JsonArray getInferenceData(HttpServletRequest request) {
 		String input = null;
 		try {
