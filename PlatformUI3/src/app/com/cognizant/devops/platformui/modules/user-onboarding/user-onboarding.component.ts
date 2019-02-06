@@ -34,6 +34,7 @@ export class UserOnboardingComponent implements OnInit {
   iframeStyleAdd = "{'height': 1500 +'px '+ '!important' }";
   userListUrl: SafeResourceUrl;
   framesize: any;
+  showThrobber: boolean = false;
   adminOrgDataArray = [];
   readOnlyOrg: boolean = false;
   selectedUser: any;
@@ -90,13 +91,16 @@ export class UserOnboardingComponent implements OnInit {
 
   async loadUsersInfo(selectedAdminOrg) {
     this.isSaveEnable = false;
+    this.showThrobber = true;
     let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
     if (usersResponseData.data != undefined && usersResponseData.status == "success") {
       //console.log(usersResponseData.data);
       this.showDetail = true;
+      this.showThrobber = false;
       this.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
       this.userDataSource = new MatTableDataSource(usersResponseData.data);
     } else {
+      this.showThrobber = false;
       this.messageDialog.showApplicationsMessage("Unable to load data", "WARN");
     }
   }
