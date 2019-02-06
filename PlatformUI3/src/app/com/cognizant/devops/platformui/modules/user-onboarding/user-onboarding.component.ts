@@ -106,7 +106,7 @@ export class UserOnboardingComponent implements OnInit {
     if (element != undefined) {
       this.oldSelectedUser = this.selectedUser;
       if (this.isSaveEnable) {
-        var title = "Discard Changes";
+        var title = "Cancel Changes";
         var dialogmessage = "Are you sure you want to discard your changes?";
         const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
         dialogRef.afterClosed().subscribe(result => {
