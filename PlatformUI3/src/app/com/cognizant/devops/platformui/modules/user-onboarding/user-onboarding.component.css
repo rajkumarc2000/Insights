@@ -29,6 +29,20 @@
     margin-left: 5px;
 }
 
+
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+ }
+
 .mainText{
     font-size: 14px;
     color:  #00b140;
