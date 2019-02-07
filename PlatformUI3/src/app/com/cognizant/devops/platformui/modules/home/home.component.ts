@@ -443,6 +443,7 @@ export class HomeComponent implements OnInit {
     // console.log(this.router.isActive(this.router.url, true))
     this.router.navigate(['InSights/Home'], { skipLocationChange: true });
     this.displayLandingPage = true;
+    this.isToolbarDisplay = true;
   }
 
   getSelectedOrgName(orgSelectedName): String {

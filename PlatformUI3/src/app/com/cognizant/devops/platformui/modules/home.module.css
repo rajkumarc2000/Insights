@@ -81,7 +81,7 @@ tr.mat-footer-row, tr.mat-row{
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
 mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card,
 mat-tab-link,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,
-select,mat-option,mat-raised-button,mat-table,mat-list-item,mat-list{
+select,mat-option,mat-raised-button,mat-table,mat-list-item,mat-list,mat-paginator{
     font-family: inherit;
     font-size: 18px;
 }
@@ -251,23 +251,29 @@ tr.mat-header-row {
     padding-right: 15px;
     color: #5C068C;
 }
-.textPadding
-{
+.textPadding{
   padding-left:70px ;
   height: 35%
 }
 
-.textPaddingConf
-{
+.textPaddingConf{
      padding-left:70px ;
      padding-right: 50px;
-    
-     
 }
 
 .dialogHeaderBackground{
     background:  #5C068C ;
     height: 50px;
+}
+
+.paginationStyle {
+    font-family: inherit !important;
+    font-size: 14px !important; 
+    background-color: #dedbdb;
+    margin-top: 10px;
+}
+.mat-paginator {
+    display: inline;
 }
 
 

@@ -76,7 +76,7 @@ export class AgentManagementComponent implements OnInit {
     self.runDisableStatus = "";
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
-      this.agentListDatasource = agentList.data;
+      this.agentListDatasource = agentList.data.sort((a, b) => a.toolName > b.toolName);
       //console.log(agentList);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
       setTimeout(() => {
