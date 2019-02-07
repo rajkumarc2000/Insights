@@ -13,13 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { DomSanitizer, BrowserModule, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { UserOnboardingService } from '@insights/app/modules/user-onboarding/user-onboarding-service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AddGroupMessageDialog } from '@insights/app/modules/user-onboarding/add-group-message-dialog';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
@@ -39,7 +38,10 @@ export class UserOnboardingComponent implements OnInit {
   readOnlyOrg: boolean = false;
   selectedUser: any;
   oldSelectedUser: any;
-  userDataSource: any = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  //userDataSource: any = [];
+  userDataSource = new MatTableDataSource<any>();
+  MAX_ROWS_PER_TABLE = 10;
   displayedColumns = [];
   isbuttonenabled: boolean = false;
   isSaveEnable: boolean = false;
@@ -75,6 +77,11 @@ export class UserOnboardingComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    console.log("In ngAfterViewInit")
+    this.userDataSource.paginator = this.paginator;
+  }
+
   async getApplicationDetail() {
     this.adminOrgDataArray = [];
 
@@ -89,20 +96,26 @@ export class UserOnboardingComponent implements OnInit {
     }
   }
 
-  async loadUsersInfo(selectedAdminOrg) {
+  loadUsersInfo(selectedAdminOrg) {
     this.isSaveEnable = false;
     this.showThrobber = true;
-    let usersResponseData = await this.userOnboardingService.getOrganizationUsers(selectedAdminOrg);
-    if (usersResponseData.data != undefined && usersResponseData.status == "success") {
-      //console.log(usersResponseData.data);
-      this.showDetail = true;
-      this.showThrobber = false;
-      this.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
-      this.userDataSource = new MatTableDataSource(usersResponseData.data);
-    } else {
-      this.showThrobber = true;
-      this.messageDialog.showApplicationsMessage("Unable to load data", "WARN");
-    }
+    var self = this;
+    self.userDataSource = new MatTableDataSource();
+    this.userOnboardingService.getOrganizationUsers(selectedAdminOrg).then(function (usersResponseData) {
+      if (usersResponseData.data != undefined && usersResponseData.status == "success") {
+        //console.log(usersResponseData.data);
+        self.showDetail = true;
+        self.showThrobber = false;
+        self.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
+        console.log(usersResponseData.data);
+        self.userDataSource.data = usersResponseData.data; //new MatTableDataSource( )
+        self.userDataSource.paginator = self.paginator;
+        console.log(self.userDataSource);
+        console.log(self.userDataSource.data);
+      } else {
+        self.messageDialog.showApplicationsMessage("Unable to load data", "WARN");
+      }
+    });
   }
 
   statusEdit(element) {
