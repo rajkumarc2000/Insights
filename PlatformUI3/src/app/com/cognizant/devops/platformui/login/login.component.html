@@ -50,7 +50,7 @@
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
             <p>
-              Measure the overall progress of
+              Measure the overall progress of <br>
               <span class="middleTextColr">DevOps Maturity </span>
             </p>
           </div>
@@ -58,7 +58,7 @@
       </div>
 
       <div class="column-image">
-        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '300px', width: '1px'}"></mat-icon>
+        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '285px', width: '1px'}"></mat-icon>
       </div>
 
       <div class="column-user rgtPnlCss" layout-align="center center" layout="column">
@@ -67,6 +67,7 @@
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
           <div layout="column" style="width: 360px;">
+
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
             &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
@@ -77,7 +78,9 @@
               <div class="wrnTxt">Please enter a valid Username.</div>
             </div>
             <br>
+
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
+
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
               <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss"
@@ -105,7 +108,7 @@
           </mat-icon>
           <div *ngIf="showThrobber">
             <div class="loading-indicator">
-              <mat-progress-spinner [diameter]="100" style="margin:0 auto;" color="primary" mode="indeterminate">
+              <mat-progress-spinner [diameter]="50" style="margin:0 auto;" color="primary" mode="indeterminate">
               </mat-progress-spinner>
             </div>
           </div>
