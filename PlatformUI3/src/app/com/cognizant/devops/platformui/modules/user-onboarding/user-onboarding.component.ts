@@ -78,7 +78,7 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log("In ngAfterViewInit")
+    //console.log("In ngAfterViewInit")
     this.userDataSource.paginator = this.paginator;
   }
 
@@ -107,11 +107,11 @@ export class UserOnboardingComponent implements OnInit {
         self.showDetail = true;
         self.showThrobber = false;
         self.displayedColumns = ['radio', 'Login', 'Email', 'Seen', 'Role'];
-        console.log(usersResponseData.data);
+        //console.log(usersResponseData.data);
         self.userDataSource.data = usersResponseData.data; //new MatTableDataSource( )
         self.userDataSource.paginator = self.paginator;
-        console.log(self.userDataSource);
-        console.log(self.userDataSource.data);
+        //console.log(self.userDataSource);
+        //console.log(self.userDataSource.data);
       } else {
         self.messageDialog.showApplicationsMessage("Unable to load data", "WARN");
       }
