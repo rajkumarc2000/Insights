@@ -232,8 +232,8 @@ export class BlockChainComponent implements OnInit {
   showAssetDetailsDialog() {    
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
       panelClass: 'AssetDetailsDialog',
-      height: '500px',
-      width: '900px',
+      height: '100%',
+      width: '100%',
       disableClose: true,
       data: { basePrimeID:this.selectedBasePrimeID, assetID: this.selectedAssetID},
     });
