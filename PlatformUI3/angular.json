@@ -23,7 +23,8 @@
               "src/favicon.png"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/mfonts/material-icons/material-icons.css"
             ],
             "scripts": []
           },
