@@ -77,7 +77,8 @@
           </mat-nav-list>
           <mat-nav-list *ngIf="!isExpanded" class="navItemImageForCollpases">
             <a *ngIf="!isExpanded" title="Logout" class="mat-list-item-bottom" (click)="logout()">
-              <mat-icon class="mat-icon ng-tns-c10-10 material-icons ng-star-inserted" *ngIf="!isExpanded">logout</mat-icon>
+              <img mat-card-image class="mat-icon ng-tns-c10-10 material-icons ng-star-inserted" height="24px" align="center" src='icons/svg/homePage/logout.png'
+              />
             </a>
           </mat-nav-list>
         </div>

@@ -128,6 +128,8 @@ export class UserOnboardingComponent implements OnInit {
         const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
         dialogRef.afterClosed().subscribe(result => {
           if (result == 'yes') {
+            this.selectedUser = undefined;
+            this.isSelectedUserId = -1;
             this.loadUsersInfo(this.selectedAdminOrg);
           } else {
             this.selectedUser = this.oldSelectedUser;
@@ -167,9 +169,6 @@ export class UserOnboardingComponent implements OnInit {
               }
             });
           self.loadUsersInfo(this.selectedAdminOrg);
-          setTimeout(() => {
-            self.showApplicationMessage = "";
-          }, 2000);
         }
         this.loadUsersInfo(this.selectedAdminOrg);
       });
@@ -186,9 +185,8 @@ export class UserOnboardingComponent implements OnInit {
       this.showApplicationMessage = "Unable to update user Data";
       this.messageDialog.showApplicationsMessage(editResponse.message, "WARN");
     }
-    setTimeout(() => {
-      this.showApplicationMessage = "";
-    }, 2000);
+    this.selectedUser = undefined;
+    this.isSelectedUserId = -1;
   }
 
   applyFilter(filterValue: string) {
