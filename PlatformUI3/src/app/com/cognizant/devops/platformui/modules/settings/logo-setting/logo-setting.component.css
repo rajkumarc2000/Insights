@@ -13,7 +13,8 @@
     background-color:white;
     display: inline-block;
     vertical-align: top;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    margin-top: 10px;
 }
 .subBlock1{
     height:4vh;
@@ -32,7 +33,8 @@
     vertical-align: top;
     border-radius:10px;
     background-color:white;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    margin-top: 10px;
 }
 .subBlock2{
     max-height:4vh;
