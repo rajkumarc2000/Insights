@@ -29,16 +29,16 @@
     </div>
   </div>
 
- <div class="loading-indicator">
+  <div class="loading-indicator">
     <mat-progress-spinner [diameter]="100" *ngIf="showThrobber" color="primary" mode="indeterminate">
     </mat-progress-spinner>
-  </div> 
+  </div>
 
   <div>
     <label class="mainText"> Current Access Group </label>
     <mat-select [(ngModel)]="selectedAdminOrg" [style.height.px]="20" [style.width.%]="20" (ngModelChange)="loadUsersInfo(selectedAdminOrg)"
       name="selectedAdminOrg" required placeholder="Select Orgnization" [ngClass]="{  'input-disabled' : readOnlyOrg ,  'form-control': !readOnlyOrg}">
-      <mat-option *ngFor="let record of adminOrgDataArray" [value]="record.orgId">
+      <mat-option *ngFor="let record of adminOrgDataArray" [value]="record">
         {{record.name}}
       </mat-option>
       </mat-select>

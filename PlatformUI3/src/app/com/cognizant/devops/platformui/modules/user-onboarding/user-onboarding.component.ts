@@ -86,6 +86,7 @@ export class UserOnboardingComponent implements OnInit {
     this.adminOrgDataArray = [];
 
     let adminOrgsResponse = await this.userOnboardingService.getCurrentUserOrgs();
+    //console.log(adminOrgsResponse);
     if (adminOrgsResponse.data != undefined && adminOrgsResponse.status == "success") {
       for (var org in adminOrgsResponse.data) {
         if ((adminOrgsResponse.data[org].role) === 'Admin') {
@@ -101,7 +102,7 @@ export class UserOnboardingComponent implements OnInit {
     this.showThrobber = true;
     var self = this;
     self.userDataSource = new MatTableDataSource();
-    this.userOnboardingService.getOrganizationUsers(selectedAdminOrg).then(function (usersResponseData) {
+    this.userOnboardingService.getOrganizationUsers(selectedAdminOrg.orgId).then(function (usersResponseData) {
       if (usersResponseData.data != undefined && usersResponseData.status == "success") {
         //console.log(usersResponseData.data);
         self.showDetail = true;
@@ -152,7 +153,7 @@ export class UserOnboardingComponent implements OnInit {
     if (this.selectedUser != undefined) {
       var self = this;
       var title = "Delete User";
-      var dialogmessage = "Are you sure we want to delete this \" " + this.selectedUser.login + " \" user from organization ?";
+      var dialogmessage = "Are you sure we want to delete this <b> " + this.selectedUser.login + " </b> user from organization ?";
       const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
       dialogRef.afterClosed().subscribe(result => {
         //console.log(result);
@@ -176,14 +177,16 @@ export class UserOnboardingComponent implements OnInit {
   }
 
   async saveData() {
+    //console.log(this.selectedUser);
+    //console.log(" Organization " + "  " + this.selectedAdminOrg)
     let editResponse = await this.userOnboardingService.editUserOrg(this.selectedUser.orgId, this.selectedUser.userId, this.selectedUser.role);
     if (editResponse.message = "Organization user updated") {
       this.isSaveEnable = false;
-      this.showApplicationMessage = editResponse.message;
-      this.messageDialog.showApplicationsMessage(editResponse.message, "SUCCESS");
+      this.showApplicationMessage = " Role of <b> " + this.selectedUser.login + " </b> have been updated successfully to <b> " + this.selectedUser.role + " </b> in <b> " + this.selectedAdminOrg.name + " </b>";
+      this.messageDialog.showApplicationsMessage(this.showApplicationMessage, "SUCCESS");
     } else {
       this.showApplicationMessage = "Unable to update user Data";
-      this.messageDialog.showApplicationsMessage(editResponse.message, "WARN");
+      this.messageDialog.showApplicationsMessage(this.showApplicationMessage, "WARN");
     }
     this.selectedUser = undefined;
     this.isSelectedUserId = -1;
@@ -214,7 +217,7 @@ export class UserOnboardingComponent implements OnInit {
                 self.showApplicationMessage = createOrgResponse.message;
                 self.messageDialog.showApplicationsMessage(createOrgResponse.message, "SUCCESS");
               } else {
-                self.showApplicationMessage = "Unable create";
+                self.showApplicationMessage = "Unable create Organization";
                 self.messageDialog.showApplicationsMessage("Unable to Create Organization", "WARN");
               }
             });
