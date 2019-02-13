@@ -1,6 +1,7 @@
 .mainDivContainer{
     height:90vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .greenWord{
     color:#00B140;
@@ -55,4 +56,39 @@
 .liGenearl{
     color:black;
     font-size: 14px
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+} 
+
+.arrange-horizontally {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+}
+
+.pageCss_logo{
+    margin-left: 16px;
+    margin-right: 16px;
 }
