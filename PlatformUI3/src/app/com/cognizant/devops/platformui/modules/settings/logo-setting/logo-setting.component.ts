@@ -21,40 +21,34 @@ import { CookieService } from 'ngx-cookie-service';
 import { Constructor } from '@angular/cdk/table';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
-
-
-
-
-
 @Component({
   selector: 'app-logo-setting',
   templateUrl: './logo-setting.component.html',
   styleUrls: ['./logo-setting.component.css', './../../home.module.css']
 })
+
 export class LogoSettingComponent implements OnInit {
   trackingUploadedFileContentStr: string = "";
   @ViewChild('fileInput') myFileDiv: ElementRef;
   files: any;
   response: any;
-  size:boolean=false;
-  buttonEnable:boolean=false;
+  size: boolean = false;
+  buttonEnable: boolean = false;
   url = '';
 
   constructor(private logoSettingService: LogoSettingService, private http: HttpClient, private restAPIUrlService: RestAPIurlService,
-    private cookieService: CookieService,public messageDialog: MessageDialogService ) { }
+    private cookieService: CookieService, public messageDialog: MessageDialogService) { }
 
   ngOnInit() {
   }
 
 
   onSelectFile(event) {
-    this.buttonEnable=true;
+    this.buttonEnable = true;
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event:any) => { // called once readAsDataURL is completed
+      reader.onload = (event: any) => { // called once readAsDataURL is completed Image
         this.url = event.target.result;
       }
     }
@@ -62,58 +56,52 @@ export class LogoSettingComponent implements OnInit {
 
   uploadFile() {
     var file = this.myFileDiv.nativeElement.files[0];
-    var bytes=file["size"]
-    if(bytes > 1048576){
-      this.size=true
-      //this.imageUploadErrorMessage="Please select a of file size less than 1Mb"
-      this.messageDialog.showApplicationsMessage("Please select a of file size less than 1Mb", "ERROR");
-      this.buttonEnable=false;
-      var dummy= (<HTMLInputElement>document.getElementById("file"))
-        dummy.value="";
-
-    }
+    console.log(file);
+    var dummy = (<HTMLInputElement>document.getElementById("file"))
+    var bytes = file["size"];
+    var fileName = file["name"];
     var testFileExt = this.checkFile(file, ".png");
-    if (!testFileExt) {
-      //this.imageUploadErrorMessage="Please select a valid .PNG file"
+    console.log(" file " + fileName)
+    if (bytes > 1048576) {
+      this.size = true
+      this.messageDialog.showApplicationsMessage("Please select a of file size less than 1Mb", "ERROR");
+      this.buttonEnable = false;
+      dummy.value = "";
+    } else if (!testFileExt) {
       this.messageDialog.showApplicationsMessage("Please select a valid .PNG file", "ERROR");
-      this.buttonEnable=false;
-      var dummy= (<HTMLInputElement>document.getElementById("file"))
-        dummy.value="";
-
-    }
-    if (testFileExt && !this.size) {
+      this.buttonEnable = false;
+      dummy.value = "";
+    } else if (testFileExt && !this.size) {
       this.logoSettingService.uploadLogo(file).subscribe(event => {
         console.log(event);
-        if (event.status=="success"){
-          var dummy= (<HTMLInputElement>document.getElementById("file"))
-          dummy.value="";
-          this.buttonEnable=false;
-          //this.imageUploadSuccessMessage="Image file uploaded successfully"
-          this.messageDialog.showApplicationsMessage("Image file uploaded successfully", "SUCCESS");
+        if (event.status == "success") {
+          dummy.value = "";
+          this.buttonEnable = false;
+          this.messageDialog.showApplicationsMessage("<b>" + fileName + "</b> uploaded successfully.<br> Please LOGOUT and LOGIN again in to the Insights Application to see the uploaded logo.", "SUCCESS");
         }
-
-       });
+      });
     }
   }
+
   checkFile(sender, validExts) {
     if (sender) {
       var fileExt = sender.name;
       fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-      fileExt=fileExt.toLowerCase();
+      fileExt = fileExt.toLowerCase();
       if (validExts.indexOf(fileExt) < 0 && fileExt != "") {
         console.log(validExts.indexOf(fileExt))
         return false;
-      }
-      else {
+      } else {
         console.log(validExts.indexOf(fileExt))
         return true;
       }
     }
   }
+
   cancelFileUpload() {
-    var dummy= (<HTMLInputElement>document.getElementById("file"))
-        dummy.value="";
-        this.buttonEnable=false;
+    var dummy = (<HTMLInputElement>document.getElementById("file"))
+    dummy.value = "";
+    this.buttonEnable = false;
   }
 
 
