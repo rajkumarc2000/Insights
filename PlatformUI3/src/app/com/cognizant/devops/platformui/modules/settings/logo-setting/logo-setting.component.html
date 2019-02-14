@@ -14,39 +14,45 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
-<div class="pageCss">
+<div class="pageCss_logo">
   <div class="mainDivContainer">
     <div layout layout-align="left" class="titleStyle">
       <a>Configuration | <a class="greenTitleTxt">Logo Settings</a></a>
     </div>
     <div class="orangeStripCss"></div>
-    <div style="min-height:40%;padding-top: 10px">
-      <div style="vertical-align: top;width: 48%;display: inline-block;">
-          <div style="color:#0033A0;font-size: 13px;"><b>Your “Logo” will appear in place of “Insights” logo on the Login Page</b></div>
-          <img mat-card-image align="left" height="260px" width="100%" style="padding-top:10px;" src='icons/svg/homePage/LoginPage.png'/>
-      </div>
-      <div  style="background-color:orange;height:260px;width:3px;margin-top: 27px;display: inline-block;margin-left: 25px"></div>
-      <div style="vertical-align: top;width: 47%;display: inline-block;margin-left: 25px">
-        <div style="color:#0033A0;font-size: 13px;"><b>Your “Logo” will appear in place of “Customer Logo” in Navigation Menu</b></div>
-        <img mat-card-image align="left" height="260px" style="padding-top:10px;" src='icons/svg/homePage/navigation.png'/>
+    <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
+      <div layout>&nbsp; Add Customer Logo
       </div>
     </div>
-    <div  style="background-color:orange;height:2px;width:80%;margin-top: 10px;margin-left: 10%;float:left"></div>
+    <!--<div class="arrange-horizontally">
+      <div>
+        <div style="color:#0033A0;font-size: 13px;"><b>Your “Logo” will appear in place of “Insights” logo on the Login Page</b></div>
+        <img mat-card-image align="left" height="260px" width="100%" style="padding-top:10px;" src='icons/svg/homePage/LoginPage.png'
+        />
+      </div>
+      <div style="background-color:orange;height:260px;width:3px;margin-top: 27px;display: inline-block;margin-left: 25px"></div>
+      <div>
+        <div style="color:#0033A0;font-size: 13px;"><b>Your “Logo” will appear in place of “Customer Logo” in Navigation Menu</b></div>
+        <img mat-card-image align="left" height="260px" style="padding-top:10px;" src='icons/svg/homePage/navigation.png' />
+      </div>
+    </div>
+    <div style="background-color:orange;height:2px;width:80%;margin-top: 10px;margin-left: 10%;float:left"></div>-->
     <div style="float:left;padding-top: 5px;">
       <!--
-        <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
-        <div layout>&nbsp; Add Customer Logo
-        </div>
-      </div>
+        
       -->
       <div>
-        <div style="color:#0033A0;font-size: 16px"><b>Please follow the<a class="greenWord"> EXACT</a> instructions to upload your logo to avoid any <a class="greenWord">DISTORTION!</a></b></div>
+        <div style="color:#0033A0;font-size: 16px"><b>Please follow the<a class="greenWord"> EXACT</a> instructions to
+            upload your logo to avoid any <a class="greenWord">DISTORTION!</a></b></div>
         <ul style="padding-left:0;list-style-position: inside;margin: 0">
-          <li style="color:#0033A0"><a class="liGenearl">Please ENSURE that the logo edge to edge is<b> 250px * 57px<a style="color:#FF8F1C"> (any other size may distort the logo)</a></b>.
-            Image size should be less than 1Mb.</a>
+          <li style="color:#0033A0"><a class="liGenearl">Please ENSURE that the logo edge to edge is<b> 250px * 57px<a
+                  style="color:#FF8F1C"> (any other size may distort the logo)</a></b>. Image size should be less than 1Mb.</a>
           </li>
-          <li style="color:#0033A0"><a class="liGenearl">Please EITHER use a <b>transparent.PNG. image  to suit the existing color palette</b> of <b>Login Page (#f0f0f0)</b> and the<b> Navigation Menu (#383737)</b></a></li>
-          <!--          <li style="color:#0033A0"><a class="liGenearl">Please <b>LOGOUT</b> and <b>LOGIN</b> again in to the <b>Insights Application</b> to see the uploaded logo</a><br><b><a style="color:#FF8F1C;padding-left: 23px"> (PS: Request you to use the exact dimension of 250px * 57px for logo size)</a></b></li>-->
+          <li style="color:#0033A0"><a class="liGenearl">Please use a <b>transparent.PNG. image to suit the
+                existing color palette</b> of <b>Login Page (#f0f0f0)</b> and the<b> Navigation Menu (#383737)</b></a></li>
+          <li style="color:#0033A0"><a class="liGenearl">Please <b>LOGOUT</b> and <b>LOGIN</b> again in to the <b>Insights
+                Application</b> to see the uploaded logo</a><br><b><a style="color:#FF8F1C;padding-left: 23px;font-size: 14px">
+                (PS: Request you to use the exact dimension of 250px * 57px for logo size)</a></b></li>
         </ul>
       </div>
       <div class="mainBlock1">
@@ -59,12 +65,12 @@
           <div style="margin-left:62vh;">
             <div>
               <button [disabled]="!buttonEnable" mat-icon-button (click)="uploadFile()">
-                <mat-icon style="font-size: 40px;padding-left: 0" title="Upload Image " class="mat-icon material-icons" >
+                <mat-icon style="font-size: 40px;padding-left: 0" title="Upload Image " class="mat-icon material-icons">
                   cloud_upload
                 </mat-icon>
-                </button>
+              </button>
               <button [disabled]="!buttonEnable" mat-icon-button style="margin-left:2vh" (click)="cancelFileUpload()">
-                <mat-icon style="font-size: 40px;padding-left:10px;margin-right: 5px" title="Cancel Upload " class="mat-icon material-icons" >
+                <mat-icon style="font-size: 40px;padding-left:10px;margin-right: 5px" title="Cancel Upload " class="mat-icon material-icons">
                   cancel
                 </mat-icon>
               </button>
@@ -74,8 +80,8 @@
       </div>
       <div *ngIf="buttonEnable" class="mainBlock2">
         <div class="subBlock2"><b>Preview</b></div>
-        <img [src]="url" class="subBlock3"> <br/>
+        <img [src]="url" class="subBlock3"> <br />
       </div>
     </div>
-  </div> 
+  </div>
 </div>

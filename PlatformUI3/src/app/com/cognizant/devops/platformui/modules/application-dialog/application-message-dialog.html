@@ -38,7 +38,7 @@
 </div>
 
 <mat-dialog-content class="textPadding">
-    <div [style.color]="colorCode"> {{data.message}} </div>
+    <div [style.color]="colorCode" [innerHTML]="data.message"> </div>
 </mat-dialog-content>
 
 <mat-dialog-actions class="mat-dialog-actions-button">
