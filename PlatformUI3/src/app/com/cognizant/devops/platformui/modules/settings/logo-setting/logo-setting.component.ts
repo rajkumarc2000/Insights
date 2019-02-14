@@ -56,12 +56,10 @@ export class LogoSettingComponent implements OnInit {
 
   uploadFile() {
     var file = this.myFileDiv.nativeElement.files[0];
-    console.log(file);
     var dummy = (<HTMLInputElement>document.getElementById("file"))
     var bytes = file["size"];
     var fileName = file["name"];
     var testFileExt = this.checkFile(file, ".png");
-    console.log(" file " + fileName)
     if (bytes > 1048576) {
       this.size = true
       this.messageDialog.showApplicationsMessage("Please select a of file size less than 1Mb", "ERROR");
@@ -73,7 +71,6 @@ export class LogoSettingComponent implements OnInit {
       dummy.value = "";
     } else if (testFileExt && !this.size) {
       this.logoSettingService.uploadLogo(file).subscribe(event => {
-        console.log(event);
         if (event.status == "success") {
           dummy.value = "";
           this.buttonEnable = false;
@@ -89,10 +86,8 @@ export class LogoSettingComponent implements OnInit {
       fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
       fileExt = fileExt.toLowerCase();
       if (validExts.indexOf(fileExt) < 0 && fileExt != "") {
-        console.log(validExts.indexOf(fileExt))
         return false;
       } else {
-        console.log(validExts.indexOf(fileExt))
         return true;
       }
     }
