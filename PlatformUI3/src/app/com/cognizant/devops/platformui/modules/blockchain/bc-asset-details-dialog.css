@@ -98,10 +98,36 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
     overflow: hidden;
     display: flex;
+    padding-left: 20px;
 }  
 
 .example-element-description {
-    padding: 16px;
+    padding: 10px;
 }
-  
+ 
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+.scrollData{
+    height:82%;
+    overflow-y:auto;
+    overflow-x:auto;
+    padding-bottom: 10px;
+}
  

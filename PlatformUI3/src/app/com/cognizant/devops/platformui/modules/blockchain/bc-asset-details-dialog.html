@@ -25,83 +25,83 @@
     </ul>
 </div>
 
-<div>
+    <div class="scrollData">
 
-    <table mat-table [dataSource]="assetHistoryDataSource" multiTemplateDataRows matSort>
-        <!-- 
-        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-            <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-        </ng-container> 
-        -->
+        <table mat-table [dataSource]="assetHistoryDataSource" multiTemplateDataRows matSort>
+            <!-- Expand/Collapse Column -->
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">
+                </th>
+                <td mat-cell *matCellDef="let row" style="width:30px !important">
+                    <a>
+                        <mat-icon svgIcon="{{expandedElement === row? 'minus_icon' : 'plus_icon' }}" [ngStyle]="{height: '20px', width: '20px'}"
+                            (click)="expandedElement = expandedElement === row ? null : row;">
+                        </mat-icon>
+                    </a>
+                </td>
+            </ng-container>
 
-        <!-- Expand/Collapse Column -->
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">
-            </th>
-            <td mat-cell *matCellDef="let row" style="width:30px !important">
-                <a>
-                    <mat-icon svgIcon="{{expandedElement === row? 'minus_icon' : 'plus_icon' }}" [ngStyle]="{height: '20px', width: '20px'}"
-                        (click)="expandedElement = expandedElement === row ? null : row;">
-                    </mat-icon>
-                </a>
-            </td>
-        </ng-container>
+            <!-- Asset ID Column -->
+            <ng-container matColumnDef="assetID">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header>Asset ID</th>
+                <td mat-cell *matCellDef="let element"> {{element.assetID}} </td>
+            </ng-container>
 
-        <!-- Asset ID Column -->
-        <ng-container matColumnDef="assetID">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header>Asset ID</th>
-            <td mat-cell *matCellDef="let element"> {{element.assetID}} </td>
-        </ng-container>
-
-        <!-- Phase Column -->
-        <ng-container matColumnDef="phase">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header>Phase</th>
-            <td mat-cell *matCellDef="let element"> {{element.phase}} </td>
-        </ng-container>
+            <!-- Phase Column -->
+            <ng-container matColumnDef="phase">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header>Phase</th>
+                <td mat-cell *matCellDef="let element"> {{element.phase}} </td>
+            </ng-container>
 
 
-        <!-- Status Column -->
-        <ng-container matColumnDef="toolstatus">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.toolstatus}} </td>
-        </ng-container>
+            <!-- Status Column -->
+            <ng-container matColumnDef="toolstatus">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.toolstatus}} </td>
+            </ng-container>
 
-        <!-- Tool Column -->
-        <ng-container matColumnDef="toolName">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Tool </th>
-            <td mat-cell *matCellDef="let element"> {{element.toolName}} </td>
-        </ng-container>
+            <!-- Tool Column -->
+            <ng-container matColumnDef="toolName">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Tool </th>
+                <td mat-cell *matCellDef="let element"> {{element.toolName}} </td>
+            </ng-container>
 
-        <!-- Owner Column -->
-        <ng-container matColumnDef="author">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Owner </th>
-            <td mat-cell *matCellDef="let element"> {{element.author}} </td>
-        </ng-container>
+            <!-- Owner Column -->
+            <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Owner </th>
+                <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+            </ng-container>
 
-        <!-- Time Stamp Column -->
-        <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header>Time Stamp</th>
-            <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
-        </ng-container>
+            <!-- Time Stamp Column -->
+            <ng-container matColumnDef="timestamp">
+                <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header>Time Stamp</th>
+                <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
+            </ng-container>
 
-        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-        <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-                    <div class="example-element-description" *ngFor="let column of headerArrayDisplay">
-                        {{column}} : {{element[column]}}
+                        <div class="example-element-description" *ngFor="let column of headerArrayDisplay">
+                            {{getLevel2Properties(column, element)}}
+                        </div>
                     </div>
-                </div>
-            </td>
-        </ng-container>
+                </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element">
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    </table>
-    <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
-
-</div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <div style="padding-top: 20px">
+            <a style="padding-left:20px; padding-top: 10px">
+                <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '35px', width: '35px'}" 
+                          matTooltip="Export to Pdf"
+                            (click)="exportToPdf()">
+                </mat-icon>
+            </a>
+            <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
+        </div>
+    </div>

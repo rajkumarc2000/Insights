@@ -23,6 +23,7 @@ export interface IBlockChainService {
     getAllAssets(startDate: string, endDate: string): Promise<any>;
     getAssetInfo(assetID: string): Promise<any>;
     getAssetHistory(basePrimaryID: string): Promise<any>;
+    exportToPdf(pdfData:any):Promise<any>;
 }
 
 
@@ -47,6 +48,11 @@ export class BlockChainService implements IBlockChainService {
     getAssetHistory(basePrimaryID: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
         return restHandler.get("GET_ASSET_HISTORY", { 'primaryId': basePrimaryID });
+    }
+
+    exportToPdf(pdfData:string):Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("EXPORT_TO_PDF", { 'pdfData': pdfData });
     }
 
 }

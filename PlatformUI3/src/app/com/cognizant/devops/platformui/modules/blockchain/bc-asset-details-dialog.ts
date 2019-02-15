@@ -54,7 +54,8 @@ export class AssetDetailsDialog implements OnInit {
     masterHeader = new Map<String, String>();
     finalHeaderToShow = new Map<String, String>();
     headerSet = new Set();
-   // accordian_icon = "plus_icon";
+    pdfData =[];
+   
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
@@ -88,21 +89,23 @@ export class AssetDetailsDialog implements OnInit {
             .then((data) => {
                 console.log("asset history respose>>>");
                 console.log(data);
-                this.assetHistoryDataSource.data = data.data;
-                var historyData = data.data;
+                var historyData = data.data;                
+                historyData.sort((value1,value2)=> {
+                    // Ascending order
+                    return(new Date(value1.timestamp).getTime() - new Date(value2.timestamp).getTime());
+                });
+                // Assign asset history details data sorted by timestamp in ascending order
+                this.assetHistoryDataSource.data = historyData;
+                this.pdfData = historyData;
                 for (var index in historyData) {
                     var eachObject = historyData[index];
                     for (var key in eachObject) {
                         if (!this.masterHeader.has(key)) {
                             this.headerSet.add(key);
                         }
-
                     }
-
                 }
-                ///console.log("header set size: >>"+ this.headerSet.size);
-                this.headerArrayDisplay = Array.from(this.headerSet);
-                //console.log("header array display size: >>"+ this.headerArrayDisplay.length);
+                this.headerArrayDisplay = Array.from(this.headerSet);                
                 this.assetHistoryDataSource.sort = this.sort;
                 this.assetHistoryDataSource.paginator = this.paginator;
             });
@@ -112,17 +115,25 @@ export class AssetDetailsDialog implements OnInit {
         this.dialogRef.close();
     }
 
-    /* toggleIcon(row: AssetHistoryData) {
-        console.log("selected row: >>");
-        console.log(row);
-        console.log("this.expandedElement :>>");
-        console.log(this.expandedElement);
-        if (this.expandedElement === row) {
-            this.accordian_icon = 'minus_icon';
-        } else {
-            this.accordian_icon = 'plus_icon';
-        }
-    } */
+    getLevel2Properties(key:string, data:AssetHistoryData) {
+        let value = data[key];
+        if (value != undefined && value !== null && value!= null && value !="null")  {
+            return key + ": " + value;
+        } 
+        return "";
+    }
+
+    exportToPdf() {
+        console.log("pdfData called");
+        console.log(this.pdfData);
+        /* this.blockChainService.getAssetHistory(this.pdfData)
+            .then((data) => {
+                console.log("pdf completed");
+            }); */        
+
+    }
+
+    
 
 
 }    
