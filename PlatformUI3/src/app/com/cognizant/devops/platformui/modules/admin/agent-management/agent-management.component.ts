@@ -132,7 +132,8 @@ export class AgentManagementComponent implements OnInit {
   }
 
   async addAgentData() {
-    this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
+    this.consolidatedArr(this.agentListDatasource);
+    this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': this.validationArr });
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
@@ -144,7 +145,6 @@ export class AgentManagementComponent implements OnInit {
   }
 
   async editAgent() {
-    this.consolidatedArr(this.selectedAgent);
     this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
