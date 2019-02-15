@@ -46,7 +46,7 @@ export class BlockChainComponent implements OnInit {
   maxDateValue: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[];
+  displayedColumns: string[] = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
   dataSource = new MatTableDataSource<AssetData>([]);
   MAX_ROWS_PER_TABLE = 10;
   startDate: string;
@@ -117,7 +117,7 @@ export class BlockChainComponent implements OnInit {
             console.log(" success server response >>");
             console.log(data);
             this.dataSource.data = data.data;
-            this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+            //this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
             this.showSearchResult = true;
             this.noSearchResultFlag = false;
             this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;
@@ -145,7 +145,7 @@ export class BlockChainComponent implements OnInit {
               console.log("server response >>");
               console.log(data);
               this.dataSource.data = data.data;
-              this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+             //this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
               this.showSearchResult = true;
               this.noSearchResultFlag = false;
               this.searchCriteria = this.assetID;
@@ -232,9 +232,10 @@ export class BlockChainComponent implements OnInit {
   showAssetDetailsDialog() {    
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
       panelClass: 'AssetDetailsDialog',
-      height: '100%',
-      width: '100%',
+      height: '900px',
+      width: '1200px',
       disableClose: true,
+      position: {top: '0px', left: '50px', right:'50px', bottom:'0px'},      
       data: { basePrimeID:this.selectedBasePrimeID, assetID: this.selectedAssetID},
     });
   }
