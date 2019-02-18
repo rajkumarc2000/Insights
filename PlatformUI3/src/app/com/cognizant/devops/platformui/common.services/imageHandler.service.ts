@@ -59,7 +59,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('ic_delete_icon', "icons/svg/actionIcons/Delete_icon_disabled.svg");
         this.addImage('search_icon', "icons/svg/ic_search_24px.svg");
         this.addImage('blockchain_show_details', "icons/svg/sharp-list_alt-24px.svg");
-        this.addImage('export_to_pdf_icon', "icons/svg/exportToPdf.svg");
+        this.addImage('export_to_pdf_icon', "icons/svg/auditReporting/PDF-Active.svg");
         this.addImage('addButton', "icons/svg/buttonIcon/Add.svg");
         this.addImage('startButton', "icons/svg/buttonIcon/sharp-play_circle.svg");
         this.addImage('stopButton', "icons/svg/buttonIcon/sharp-stop.svg");
@@ -70,6 +70,9 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('error', "icons/svg/dialogBoxIcon/error.svg");
         this.addImage('alert', "icons/svg/confirmBox/alert.svg");
         this.addImage('menuImage', "icons/svg/homePage/menu_white_36.png");
+        this.addImage('plus_icon', "icons/svg/auditReporting/Plus.svg");  
+        this.addImage('minus_icon', "icons/svg/auditReporting/minus.svg");  
+
     }
 
 

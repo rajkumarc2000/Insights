@@ -14,6 +14,20 @@
  * the License.
  ******************************************************************************/
 
+
+ .loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+ }
+ 
 .whiteBackground{
   background-color: #f0f0f0;
 }
@@ -55,7 +69,7 @@
   background-color: #00B140;
   width: 72.1%;
   height: 4px;
-  margin: 0 auto;
+  margin-left: 190px;
   margin-top: 0px;
 }
 
@@ -108,7 +122,7 @@
   font-size: 17px;
   color: #0033A0;
   margin-bottom: 20px;
-  margin-left: 5px;
+  /*  margin-left: 1px; */
 }
 .containerMargin {
     margin: 0px 0 !important;
@@ -168,6 +182,7 @@
   width:482px;
   padding-left: 60px;  
   margin-top: 75px;
+  margin-left: 50px;
 }
 .tckCss{
   margin-top: 2px;
@@ -175,6 +190,12 @@
 }
 .actvIcoCss{
   margin-left: -2px;
+  
+}
+
+.down
+{
+margin-top: 50px;
 }
 
 .iconCSS{
@@ -253,12 +274,13 @@ md-icon {
   height: 100%;
 }
 .logOnBtnAlign {
-  padding-left:80px;
+  /* margin-top: 35px; */
+  padding-left:160px;
 }
 
 .customerLogoImage{
-  height:67px; 
-  width:250px; 
+  height:57px; 
+  width:253px; 
   margin-left:41%;
   display:flex; 
   vertical-align:center;
@@ -267,8 +289,8 @@ md-icon {
 .powerByImage{
   height:190px; 
   width:300px; 
-  margin-left:5px;
-  margin-top:-60px;
+ /*  margin-left:5px; */
+  margin-top:-44px;
   display:flex; 
   vertical-align:center;
 }

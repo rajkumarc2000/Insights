@@ -72,7 +72,7 @@
 
       <!-- Displays Progress spinner and Error message for service failure-->
       <div *ngIf="showThrobberAgent" style="display: flex; justify-content: center; align-items: center;overflow: hidden;">
-        <mat-progress-spinner color="primary" mode="indeterminate">
+        <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
         </mat-progress-spinner>
       </div>
       <div *ngIf="!(showContentAgent || showThrobberAgent)" layout-align="center center" style="text-align: center;">
@@ -130,7 +130,7 @@
       </div>
       <!-- Displays Progress spinner and Error message for service failure-->
       <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center;overflow: hidden;">
-        <mat-progress-spinner color="primary" mode="indeterminate">
+        <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
         </mat-progress-spinner>
       </div>
       <div *ngIf="!(showContent || showThrobber)" layout-align="center center" style="text-align: center;">
@@ -194,7 +194,7 @@
       </div>
       <!-- Displays Progress spinner and Error message for service failure-->
       <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center;overflow: hidden;">
-        <mat-progress-spinner color="primary" mode="indeterminate">
+        <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
         </mat-progress-spinner>
       </div>
       <div *ngIf="!(showContent || showThrobber)" layout-align="center center" style="text-align: center;">

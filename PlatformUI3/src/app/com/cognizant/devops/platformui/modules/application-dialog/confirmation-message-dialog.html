@@ -35,7 +35,7 @@
     </table>
 </div>
 
-<mat-dialog-content class="textPaddingConf">
+<mat-dialog-content [(style.height.%)]="contentHeight" class="textPaddingConf">
     <div [innerHTML]="data.message">
     </div>
 </mat-dialog-content>

@@ -13,6 +13,22 @@ table {
     line-height: 1.2em;
 	text-align: center;
 }
+
+
+
+
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+ }
 .tableFooterCss {
     color: #FF8F1C;
     margin-top: 30px;
@@ -32,7 +48,6 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
-    width:200px !important;
     height:30px !important; 
     font-size: 12px !important;
     letter-spacing: .010em;
@@ -126,4 +141,42 @@ mat-dialog-content::-webkit-scrollbar-track {
     height:82%;
     overflow-y:auto;
     padding-bottom: 10px;
+}
+
+.tableDynamicHeaderCss {
+    background-color: grey;   
+    color: white;
+    font-size: 14px !important;
+    height: 40px !important;
+    margin: 0px;
+    padding:0px;
+    letter-spacing: .010em;
+    line-height: 1.2em;
+	text-align: center;
+    width:150px !important;
+}
+
+.tableMessageHeaderCss {
+    background-color: grey;   
+    color: white;
+    font-size: 14px !important;
+    height: 40px !important;
+    margin: 0px;
+    padding:0px;
+    letter-spacing: .010em;
+    line-height: 1.2em;
+	text-align: center;
+}
+
+.tableExceIdHeaderCss {
+    background-color: grey;   
+    color: white;
+    font-size: 14px !important;
+    height: 40px !important;
+    margin: 0px;
+    padding:0px;
+    letter-spacing: .010em;
+    line-height: 1.2em;
+	text-align: center;
+    width:250px !important;
 }

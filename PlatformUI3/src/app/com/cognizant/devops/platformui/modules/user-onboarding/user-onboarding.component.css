@@ -29,6 +29,20 @@
     margin-left: 5px;
 }
 
+
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+ }
+
 .mainText{
     font-size: 14px;
     color:  #00b140;
@@ -103,11 +117,22 @@ th[_ngcontent-c15]:last-child{
 
 .mat-dialog-actions-button{
     float: right;
-    padding-right: 15px;
+    padding-right: 25px;
 }
 
 .warningText{
     color: #FF8F1C;
+}
+
+.contentBodyCss{
+    padding-left:50px ;
+    padding-right: 20px;
+}
+
+.textPaddingInfo
+{
+  padding-left:50px ;
+  height: 35%
 }
 
 

@@ -82,6 +82,7 @@ export class AgentConfigurationComponent implements OnInit {
       this.receivedParam = JSON.parse(params["agentparameter"]);
       //this.toolVersionData = JSON.parse(params["versionAndToolInfo"]);
       //console.log(this.receivedParam);
+      //console.log(this.receivedParam.detailedArr);
       //console.log(this.toolVersionData);
       this.showThrobber = true;
       this.initializeVariable();
@@ -106,7 +107,7 @@ export class AgentConfigurationComponent implements OnInit {
         this.getDbAgentConfig();
         this.showTrackingJsonUploadButton = false;
       }
-    } else {
+    } else if (this.receivedParam.type == "new") {
       this.btnValue = "Add";//Register
       this.subTitleName = "Add an Agent"
       this.subTitleInfoText = "(You may edit the Agent from the main page after adding the agent)";
@@ -114,6 +115,10 @@ export class AgentConfigurationComponent implements OnInit {
       this.selectedVersion = undefined
       this.selectedTool = undefined;
       this.showTrackingJsonUploadButton = true;
+      if (this.receivedParam.detailedArr != null) {
+        this.validationArr = this.receivedParam.detailedArr;
+      }
+      //console.log(this.validationArr);
     }
   }
 
@@ -143,6 +148,7 @@ export class AgentConfigurationComponent implements OnInit {
       }
     } else {
       self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
+      self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
     }
     self.showThrobber = false;
   }
@@ -167,6 +173,7 @@ export class AgentConfigurationComponent implements OnInit {
         })
         .catch(function (vdata) {
           self.showMessage = "Something wrong with service, Please try again";
+          self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
         });
     } else {
       self.buttonDisableStatus = true;
@@ -206,11 +213,13 @@ export class AgentConfigurationComponent implements OnInit {
       } else {
         self.buttonDisableStatus = true;
         self.showMessage = "Something wrong with service, Please try again";
+        self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
       }
     } else {
       self.buttonDisableStatus = true;
       self.showConfig = false;
-      self.showMessage = toolName.charAt(0).toUpperCase() + toolName.slice(1) + " agent is already registered, Please select other tool.";
+      self.showMessage = " <b> " + toolName.charAt(0).toUpperCase() + toolName.slice(1) + " </b> agent is already registered, Please select other tool.";
+      self.messageDialog.showApplicationsMessage(self.showMessage, "WARN");
     }
   }
 
@@ -266,6 +275,7 @@ export class AgentConfigurationComponent implements OnInit {
       } else {
         self.showThrobber = false;
         self.showMessage = "Something wrong with service, Please try again";
+        self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
       }
     }
 
@@ -489,9 +499,9 @@ export class AgentConfigurationComponent implements OnInit {
   }
 
   cancelChange(actionType) {
-    var title = "Delete User";
+    var title = "Cancel Agent";
     var dialogmessage = "Are you sure you want to discard your changes?";
-    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT");
+    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed  ' + result);
       if (result == 'yes') {

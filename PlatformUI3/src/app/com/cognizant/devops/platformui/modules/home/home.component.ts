@@ -18,7 +18,7 @@ import { Component, ViewChild, HostBinding, Input, ElementRef, ViewEncapsulation
 import { GrafanaAuthenticationService } from '@insights/common/grafana-authentication-service';
 import { CookieService } from 'ngx-cookie-service';
 import { InsightsInitService } from '@insights/common/insights-initservice';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { NavItem } from '@insights/app/modules/home/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -77,12 +77,8 @@ export class HomeComponent implements OnInit {
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
   ngOnInit() {
-    //console.log("in home on init " + InsightsInitService.grafanaHost);
-    //console.log(this.dataShare.getCustomerLogo());
     this.insightsCustomerLogo = this.dataShare.getCustomerLogo();
-    //console.log(this.insightsCustomerLogo);
     if (this.insightsCustomerLogo == "DefaultLogo") {
-      //console.log("user default logo ");
       this.insightsCustomerLogo = "";//icons/svg/homePage/Customer_Logo.png
     }
   }
@@ -112,6 +108,10 @@ export class HomeComponent implements OnInit {
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
+  }
+
+  onMenuClick() {
+    this.isExpanded = !this.isExpanded
   }
 
   public getInformationFromGrafana() {
@@ -175,7 +175,7 @@ export class HomeComponent implements OnInit {
         navItemobj.displayName = orgDtl.name;
         navItemobj.iconName = 'grafanaOrg';
         navItemobj.route = 'InSights/Home/grafanadashboard/' + orgDtl.orgId;
-        navItemobj.isToolbarDisplay = false;
+        navItemobj.isToolbarDisplay = true;//false
         navItemobj.showIcon = false;
         navItemobj.isAdminMenu = false;
         navItemobj.orgId = orgDtl.orgId;
@@ -222,6 +222,7 @@ export class HomeComponent implements OnInit {
         isAdminMenu: false,
         showMenu: true,
         title: "Click on Organization to see various Org's Dashboards",
+        isToolbarDisplay: true,//false
         children: this.navOrgList
         /*[
           {
@@ -268,7 +269,7 @@ export class HomeComponent implements OnInit {
         displayName: 'Playlist',
         iconName: 'feature',
         route: 'InSights/Home/playlist',
-        isToolbarDisplay: false,
+        isToolbarDisplay: true,//false
         showMenu: true,
         title: "Playlist",
         isAdminMenu: false
@@ -350,14 +351,14 @@ export class HomeComponent implements OnInit {
       {
         displayName: 'About',
         iconName: 'info',
-        isToolbarDisplay: true,
+        isToolbarDisplay: false,
         showIcon: false,
         title: "About",
         isAdminMenu: false
       }, {
         displayName: 'Help',
         iconName: 'help',
-        isToolbarDisplay: true,
+        isToolbarDisplay: false,
         showIcon: false,
         title: "Help",
         isAdminMenu: false
@@ -365,7 +366,7 @@ export class HomeComponent implements OnInit {
         displayName: 'Logout',
         iconName: 'logout',
         route: 'login', //loggedout
-        isToolbarDisplay: true,
+        isToolbarDisplay: false,
         showIcon: true,
         title: "Logout",
         isAdminMenu: false
@@ -440,9 +441,9 @@ export class HomeComponent implements OnInit {
   showLandingPage() {
     // console.log("ByUrl " + this.router.url);
     // console.log(this.router.isActive(this.router.url, true))
-    if (this.router.url != '/InSights/Home') {
-      this.router.navigate(['InSights/Home/landingPage'], { skipLocationChange: true });
-    }
+    this.router.navigate(['InSights/Home'], { skipLocationChange: true });
+    this.displayLandingPage = true;
+    this.isToolbarDisplay = true;
   }
 
   getSelectedOrgName(orgSelectedName): String {

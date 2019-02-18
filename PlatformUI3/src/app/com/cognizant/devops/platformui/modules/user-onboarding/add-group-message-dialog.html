@@ -20,35 +20,35 @@
             <td>
                 <span class="dialogheader">Confirm Access Group Name</span>
             </td>
-            <!--<td>
-                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px;">
+            <td>
+                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding: 0px 10px;">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
                         <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
                         </mat-icon>
                     </a>
                 </div>
-            </td>-->
+            </td>
         </tr>
     </table>
 </div>
 
-<mat-dialog-content style="padding-left: 15px;">
+<mat-dialog-content class="contentBodyCss">
     <label class="dialogText"> Access Group Name </label>
     <input [(ngModel)]="accessGroupName" name="accessGroupName" [style.height.px]="30" [style.width.%]="55" class="form-control"
         placeholder="Please input an Access Group Name" required>
-        <br>
-        <div class="textPadding">
-            <span class="messageText" *ngIf="message!=''">{{message}}</span>
-            <span class="warningText">
-            <br > Once the Access Group name is added you will not be able to RENAME or DELETE the
+    <br>
+    <div class="textPaddingInfo">
+        <span class="messageText" *ngIf="message!=''">{{message}}</span>
+        <span class="warningText">
+            <br> Once the Access Group name is added you will not be able to RENAME or <br>DELETE the
             Access Group.
-            <br >Adding an Access Group cannot be REVERTED.
-            </span>
-            <br>
-            <span style="font-weight: bold;">
+            <br>Adding an Access Group cannot be REVERTED.
+        </span>
+        <br>
+        <span style="font-weight: bold;">
             <br> Are you sure you want to create New Access Group <b> {{accessGroupName}} </b>?
-            </span>
-        </div>
+        </span>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions class="mat-dialog-actions-button">

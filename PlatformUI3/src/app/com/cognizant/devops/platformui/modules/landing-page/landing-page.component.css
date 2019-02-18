@@ -12,6 +12,7 @@
 .landingpageCssExpand {
 	overflow-x: hidden;
 	overflow-y: hidden;
+	
 }
 
 .landingpageCssCollapse {
@@ -19,6 +20,8 @@
 	margin-right: 7%;
 	overflow-x: hidden;
 	overflow-y: hidden;
+	 margin-left: 100px;
+	 margin-right: 100px;
 }
 
 
@@ -173,7 +176,6 @@ td:before
 	margin-left: 55%;
 	display: flex;
 	justify-content: left;
-	top: 60%;
 }
 
 .topTxtCss {
@@ -194,7 +196,7 @@ td:before
 	text-align: left;
 	position: relative;
 	font-size: 1.2vmax;
-    margin-left: 4.5%;
+    margin-left: 7%;
   }
 
   .tableSection{
