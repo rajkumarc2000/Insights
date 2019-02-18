@@ -21,12 +21,10 @@
                 <mat-icon class="colouricon" [svgIcon]="svgCustomIcon" [ngStyle]="{height: '40px', width: '40px'}"></mat-icon>
             </td>
             <td>
-
                 <span class="gridheaderleft">{{dialogTitle}}</span>
-
             </td>
             <td>
-                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding: 0px 25px">
+                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding: 0px 15px">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
                         <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
                         </mat-icon>
@@ -38,7 +36,7 @@
 </div>
 
 <mat-dialog-content class="textPadding">
-    <div [style.color]="colorCode" [innerHTML]="data.message"> </div>
+    <div [style.color]="colorCode"> {{data.message}} </div>
 </mat-dialog-content>
 
 <mat-dialog-actions class="mat-dialog-actions-button">

@@ -35,7 +35,7 @@ import { HomeComponent } from '@insights/app/modules/home/home.component';
 export class GrafanaDashboardComponent implements OnInit {
     orgId: string;
     routeParameter: Observable<any>;
-    dashboardUrl: SafeResourceUrl = 'http://localhost:3000/?orgId=1';
+    dashboardUrl: SafeResourceUrl;
     iSightDashboards = [];
     dashboardTitle: string;
     selectedOrgUrl: string;
@@ -65,11 +65,23 @@ export class GrafanaDashboardComponent implements OnInit {
             this.orgId = params.get('id');
             //console.log("orgid works " + this.orgId);
             this.selectedDashboard = undefined;
-            //this.dashboardUrl = undefined;
+            this.dashboardUrl = undefined;
             this.dashboards = undefined;
             this.dashboardTitle = undefined;
             this.selectedDashboardUrl = undefined;
-            this.parseDashboards();
+            var dashboardslist = await this.grafanadashboardservice.searchDashboard();
+            this.parseDashboards(dashboardslist);
+            //console.log(this.selectedDashboard);
+            if (this.selectedDashboard != undefined) {
+
+                this.selectedDashboard.iframeUrl = this.selectedDashboard.iframeUrl.replace("iSight.js", "iSight_ui3.js");
+                this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
+            } else {
+                this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
+                //console.log("No dashboard found,set default dashboardUrl");
+            }
+            //console.log(this.dashboardUrl);
+            this.setScrollBarPosition();
         });
     }
 
@@ -89,11 +101,9 @@ export class GrafanaDashboardComponent implements OnInit {
         }, 1000);
     }
 
-    async parseDashboards() {
-        var dashboardslist = await this.grafanadashboardservice.searchDashboard();
+    async parseDashboards(dashboardslist) {
         var self = this;
         var dataArray = dashboardslist.dashboards;
-        //console.log(dashboardslist);
         if (dashboardslist != undefined && dataArray != undefined) {
             if (dataArray.length > 0) {
                 var model = [];
@@ -109,39 +119,22 @@ export class GrafanaDashboardComponent implements OnInit {
                 if (self.selectedDashboard) {
                     self.dashboardTitle = self.selectedDashboard.title;
                 }
-                //console.log(self.dashboardTitle + "   " + self.selectedDashboard.title);
             } else {
-                //console.log("No dashboard  Array found");
+                console.log("No dashboard  Array found");
             }
         } else {
-            //console.log("No dashboard found");
+            console.log("No dashboard found");
         }
-        //console.log("parseDashboards complate 1")
-
-        //console.log(this.selectedDashboard);
-        if (this.selectedDashboard != undefined) {
-
-            this.selectedDashboard.iframeUrl = this.selectedDashboard.iframeUrl.replace("iSight.js", "iSight_ui3.js");
-            this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedDashboard.iframeUrl);
-        } else {
-            this.dashboardUrl = this.sanitizer.bypassSecurityTrustResourceUrl(InsightsInitService.grafanaHost + '/dashboard/script/iSight_ui3.js?url=' + InsightsInitService.grafanaHost + '/?orgId=' + this.orgId);// 1/?orgId=3 3/d/DrPYuKJmz/dynatrace-data?orgId=
-            //console.log("No dashboard found,set default dashboardUrl");
-        }
-        //console.log(this.dashboardUrl);
-        this.setScrollBarPosition();
-        //console.log("parseDashboards complate 11")
     }
 
     private setSelectedDashboard(dashboard) {
         var self = this;
         self.selectedDashboard = dashboard;
         self.dashboardTitle = dashboard.title;
-        //console.log(self.dashboardTitle);
-        //if (dashboard.dashboardUrl) {
-        self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
-        self.setScrollBarPosition();
-        //}
-        //console.log(self.selectedDashboard.iframeUrl);
+        if (dashboard.dashboardUrl) {
+            self.selectedDashboard.iframeUrl = dashboard.iframeUrl;
+            self.setScrollBarPosition();
+        }
     };
 
 }

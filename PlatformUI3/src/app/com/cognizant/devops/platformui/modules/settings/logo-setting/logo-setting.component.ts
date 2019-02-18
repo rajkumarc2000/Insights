@@ -18,85 +18,54 @@ import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/
 import { HttpClientModule, HttpHeaders, HttpClient } from '@angular/common/http';
 import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { CookieService } from 'ngx-cookie-service';
-import { Constructor } from '@angular/cdk/table';
-import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
+
+
 
 @Component({
   selector: 'app-logo-setting',
   templateUrl: './logo-setting.component.html',
   styleUrls: ['./logo-setting.component.css', './../../home.module.css']
 })
-
 export class LogoSettingComponent implements OnInit {
   trackingUploadedFileContentStr: string = "";
   @ViewChild('fileInput') myFileDiv: ElementRef;
   files: any;
   response: any;
-  size: boolean = false;
-  buttonEnable: boolean = false;
-  url = '';
 
   constructor(private logoSettingService: LogoSettingService, private http: HttpClient, private restAPIUrlService: RestAPIurlService,
-    private cookieService: CookieService, public messageDialog: MessageDialogService) { }
+    private cookieService: CookieService) { }
 
   ngOnInit() {
   }
 
-
-  onSelectFile(event) {
-    this.buttonEnable = true;
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event: any) => { // called once readAsDataURL is completed Image
-        this.url = event.target.result;
-      }
-    }
-  }
-
   uploadFile() {
+    var restcallAPIUrl = this.restAPIUrlService.getRestCallUrl("UPLOAD_IMAGE");
     var file = this.myFileDiv.nativeElement.files[0];
-    var dummy = (<HTMLInputElement>document.getElementById("file"))
-    var bytes = file["size"];
-    var fileName = file["name"];
-    var testFileExt = this.checkFile(file, ".png");
-    if (bytes > 1048576) {
-      this.size = true
-      this.messageDialog.showApplicationsMessage("Please select a of file size less than 1Mb", "ERROR");
-      this.buttonEnable = false;
-      dummy.value = "";
-    } else if (!testFileExt) {
-      this.messageDialog.showApplicationsMessage("Please select a valid .PNG file", "ERROR");
-      this.buttonEnable = false;
-      dummy.value = "";
-    } else if (testFileExt && !this.size) {
-      this.logoSettingService.uploadLogo(file).subscribe(event => {
-        if (event.status == "success") {
-          dummy.value = "";
-          this.buttonEnable = false;
-          this.messageDialog.showApplicationsMessage("<b>" + fileName + "</b> uploaded successfully.<br> Please LOGOUT and LOGIN again in to the Insights Application to see the uploaded logo.", "SUCCESS");
-        }
-      });
-    }
+    var fd = new FormData();
+    fd.append("file", file);
+    var authToken = this.cookieService.get('Authorization');
+    this.http.post(restcallAPIUrl, fd, {
+      headers: {
+        'Authorization': authToken
+      },
+    }).subscribe(event => {
+      //console.log(event); // handle event here
+    });
+    /* 
+     
+    this.trackingUploadedFileContentStr = "";
+    var uploadedFile = this.myFileDiv.nativeElement.files[0];
+    console.log(uploadedFile);
+    var restCallUrl = this.restAPIUrlService.getRestCallUrl("UPLOAD_IMAGE");
+     
+    this.http.post(restCallUrl, uploadedFile)
+    .subscribe(event => {
+      console.log(event); // handle event here
+    });
+    */
   }
-
-  checkFile(sender, validExts) {
-    if (sender) {
-      var fileExt = sender.name;
-      fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-      fileExt = fileExt.toLowerCase();
-      if (validExts.indexOf(fileExt) < 0 && fileExt != "") {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
   cancelFileUpload() {
-    var dummy = (<HTMLInputElement>document.getElementById("file"))
-    dummy.value = "";
-    this.buttonEnable = false;
+
   }
 
 

@@ -53,12 +53,12 @@ export class AgentManagementComponent implements OnInit {
   ngOnInit() {
     //console.log(this.route.queryParams);
     this.route.queryParams.subscribe(params => {
-      //console.log(params["agentstatus"]);
+      console.log(params["agentstatus"]);
       if (params["agentstatus"] != undefined) {
         this.receivedParam = params["agentstatus"];
         var agentConfigstatusCode = params["agentConfigstatusCode"];
         var showConfirmMessage = this.receivedParam;
-        //console.log(agentConfigstatusCode + " " + showConfirmMessage);
+        console.log(agentConfigstatusCode + " " + showConfirmMessage);
         if (agentConfigstatusCode == undefined) {
           agentConfigstatusCode = 'WARN';
         }
@@ -76,7 +76,7 @@ export class AgentManagementComponent implements OnInit {
     self.runDisableStatus = "";
     let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (agentList != null && agentList.status == 'success') {
-      this.agentListDatasource = agentList.data.sort((a, b) => a.toolName > b.toolName);
+      this.agentListDatasource = agentList.data;
       //console.log(agentList);
       this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
       setTimeout(() => {
@@ -132,8 +132,7 @@ export class AgentManagementComponent implements OnInit {
   }
 
   async addAgentData() {
-    this.consolidatedArr(this.agentListDatasource);
-    this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': this.validationArr });
+    this.agentparameter = JSON.stringify({ 'type': 'new', 'detailedArr': {} });
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
       queryParams: {
@@ -145,6 +144,7 @@ export class AgentManagementComponent implements OnInit {
   }
 
   async editAgent() {
+    this.consolidatedArr(this.selectedAgent);
     this.agentparameter = JSON.stringify({ 'type': 'update', 'detailedArr': this.selectedAgent });
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true,
@@ -161,7 +161,7 @@ export class AgentManagementComponent implements OnInit {
     if (self.selectedAgent.agentStatus == 'STOP') {
       var title = "Delete Agent";
       var dialogmessage = "Note: Uninstalling the Agent doesn't delete the data that has been collected. The agent could be re-registered again, and the data collection would be resumed from the last run time. <br> <br> Do you want to uninstall <b> " + self.selectedAgent.toolName + " </b> on <b>" + self.selectedAgent.osVersion + " </b> ? ";
-      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT", "40%");
+      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT");
 
       dialogRef.afterClosed().subscribe(result => {
         //console.log('The dialog was closed  ' + result);

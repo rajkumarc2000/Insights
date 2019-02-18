@@ -73,33 +73,31 @@ export class ShowDetailsDialog implements OnInit {
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
         var dataArray = data.data.nodes;
-        if (dataArray != undefined) {
-          this.pathName = this.data.pathName;
-          if (dataArray.length === 0 && this.data.detailType != "Platform Service") {
-            this.checkResponseData = false;
-          }
-          for (var key in dataArray) {
-            var dataNodes = dataArray[key];
-            for (var node in dataNodes) {
-              if (node == "propertyMap") {
-                var obj = dataNodes[node];
-                if (typeof obj["message"] !== "undefined") {
-                  obj["message"] = obj["message"].slice(0, 100);
-                }
-                this.agentDetailedNode.push(obj);
-                for (var attr in obj) {
-                  // fill data array in set , Only those header which mention in masterHeader
-                  if (this.masterHeader.has(attr)) {
-                    this.headerSet.add(attr);
-                  }
+        this.pathName = this.data.pathName;
+        if (dataArray.length === 0 && this.data.detailType != "Platform Service") {
+          this.checkResponseData = false;
+        }
+        for (var key in dataArray) {
+          var dataNodes = dataArray[key];
+          for (var node in dataNodes) {
+            if (node == "propertyMap") {
+              var obj = dataNodes[node];
+              if (typeof obj["message"] !== "undefined") {
+                obj["message"] = obj["message"].slice(0, 100);
+              }
+              this.agentDetailedNode.push(obj);
+              for (var attr in obj) {
+                // fill data array in set , Only those header which mention in masterHeader
+                if (this.masterHeader.has(attr)) {
+                  this.headerSet.add(attr);
                 }
               }
             }
           }
-          this.agentDetailedDatasource.data = this.agentDetailedNode;
-          this.agentDetailedDatasource.paginator = this.paginator;
-          this.showSelectedField();
         }
+        this.agentDetailedDatasource.data = this.agentDetailedNode;
+        this.agentDetailedDatasource.paginator = this.paginator;
+        this.showSelectedField();
       });
 
   }

@@ -7,7 +7,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   bottom: 0;
   left: 0;
@@ -30,7 +30,7 @@
 }
 
 .mat-list-item {
-  color: #bfbfbf;
+  color: white;
   opacity: 0.8;
   font-size: 16px;
   height: 30px !important;
@@ -39,7 +39,7 @@
 
 .mat-nav-list{
   color: white;
-  opacity: 0.9;
+  opacity: 0.8;
   font-size: 16px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
@@ -48,33 +48,36 @@
 
 }
 
+
+
 .mat-list-item-ripple{
   height: 30px
 }
 
 .mat-list-item.active {
-  font-size: 18px !important;
+  font-size: 17px !important;
   font-weight:bolder !important;
-  color:#bfbfbf !important;
+  color:white !important;
   background-color: #0033A0;
   font-family: inherit;
 }
 
 .mat-line.active{
-  color: #bfbfbf !important;
+  color: white !important;
   font-weight:900 !important;
-  font-size: inherit !important;
+  font-size: 17px !important;
   opacity: 1.0 !important;
   filter: brightness(100%),contrast(100%) !important;
   background-color: #0033A0;
   font-family: inherit;
+  
 }
 
 .mat-line{
   color: #bfbfbf !important;
   opacity: 0.8;
   padding: 2px !important;
-  font-size: inherit !important;
+  font-size: 16px !important;
   font-family: inherit;
 }
 
@@ -97,6 +100,7 @@
   font-size: 16px;
   height: 30px !important;
 }
+
 
 .headingTable{
   height:100%; 
@@ -143,10 +147,10 @@
 .bottomButton{
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
-    border-bottom-width:2px;
+    border-bottom-width:1px;
     border-top-style: solid;
     border-color:#9e9a9a;
-    border-top-width: 2px;
+    border-top-width: 1px;
     padding-bottom: 5px;
     padding-top: 5px;
     height: 21%;
@@ -172,13 +176,12 @@
   height: 19%;
   border-top-style: solid;
   border-top-color:#9e9a9a;
-  border-top-width: 2px;
+  border-top-width: 1px;
   padding-bottom: 10px;
   color: #9e9a9a;
   font-size: 10px;
   padding-top: 10px;
-  text-align: center;
-  padding-left: 1
+  padding-left: 16px;
 }
 
 .orgNameInRole{
@@ -215,7 +218,7 @@
     padding-bottom: 0px !important;
     padding-left: 0px !important;
     border-right-style: solid;
-    border-right-width: 2px;
+    border-right-width: 1px;
     border-right-color: #9e9a9a;
 }
 
@@ -237,7 +240,7 @@
 }
 
 .mat-drawer{
-  background:#383737;
+  background:#393838;
   overflow-x: hidden;
   overflow-y: hidden;
   /*bottom: -150px;*/
@@ -256,7 +259,7 @@
 
 .mat-toolbar {
   opacity: 0.9;
-  background: #1e2028;
+  background: #18191b;
   color: white;
   padding-right: 25px;
   height:55px !important;
@@ -355,7 +358,15 @@
     padding-bottom: 10px;
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
-    border-bottom-width:2px;
+    border-bottom-width:1px;
+  }
+  .headingPage{
+    margin-right: 16px;
+    height: 10%;
+    margin-bottom:5px;
+    border-bottom-style:solid;
+    border-color:#f0f0f0;
+    border-bottom-width:1px;
   }
 
   .bottomnavg {
@@ -376,6 +387,11 @@
 
   .mat-divider{
     border-top-color: #9e9a9a;
+    margin-top:5px; 
+    height: 1%
+  }
+  .mat-divider{
+    border-top-color: #bdbdbd;
     margin-top:5px; 
     height: 1%
   }
@@ -408,7 +424,7 @@
     height: 7%;
     border-bottom-style:solid;
     border-color:#9e9a9a;
-    border-bottom-width:2px;
+    border-bottom-width:1px;
   }
 
   .bottomnavg {

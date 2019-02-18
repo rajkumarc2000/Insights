@@ -133,23 +133,6 @@ export class RestCallHandlerService {
 
   }
 
-  public postWithImage(url: string, imageFile:any): Observable<any> {
-
-    var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
-    var fd = new FormData();
-    fd.append("file", imageFile);
-    var authToken = this.cookieService.get('Authorization');
-    var dataresponse =this.http.post(restCallUrl, fd, {
-      headers: {
-        'Authorization': authToken
-      },
-    })
-    return dataresponse;
-
-  }
-
-
-
   private extend(obj: Object, src: Object) {
     for (var key in src) {
       if (src.hasOwnProperty(key)) obj[key] = src[key];

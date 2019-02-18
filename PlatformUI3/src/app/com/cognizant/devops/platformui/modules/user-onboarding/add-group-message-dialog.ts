@@ -43,7 +43,4 @@ export class AddGroupMessageDialog implements OnInit {
             this.message = "Please enter valid access Group Name";
         }
     }
-    closeShowDetailsDialog(): void {
-        this.dialogRef.close();
-    }
 }

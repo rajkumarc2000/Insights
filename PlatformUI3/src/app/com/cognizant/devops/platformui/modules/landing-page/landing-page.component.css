@@ -12,15 +12,15 @@
 .landingpageCssExpand {
 	overflow-x: hidden;
 	overflow-y: hidden;
-	
 }
 
 .landingpageCssCollapse {
+	margin-left: 7%;
+	margin-right: 7%;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	 margin-left: 100px;
-	 margin-right: 100px;
 }
+
 
 .textcenter {
 	text-align: center;
@@ -57,25 +57,26 @@ ul li::before {
 	display: inline-block;
 	width: 1em;
 	margin-left: -1em;
+	
 }
 
 .textCss {
 	color: #0033A0;
-	font-size: 25pt;
+	font-size: 3vmax;
 	width: 400px;
 	margin-top: -25px
 }
 
 .textCssSmall {
 	color: #0033A0;
-	font-size: 13pt;
+	font-size: 1.4vmax;
 	width: 400px;
 	margin-top: -25px
 }
 
 .BlackCss {
 	color: black;
-	font-size: 13pt;
+	font-size: 1.4vmax;
 	width: 400px;
 	margin-top: -25px
 }
@@ -83,19 +84,30 @@ ul li::before {
 .BlackCssColumn {
 	text-align: initial;
 	color: black;
-	font-size: 10.5pt;
-	width: 400px;
-	margin-top: -30pt;
+	font-size: 1vmax;
+	/* width: 400px; */
+	/* margin-top: -30pt; */
+}
+
+
+tr td{
+  padding: 0 !important;
+  
+}
+
+
+.table {
+ 
 }
 
 .heading1 {
 	color: #00B140;
-	font-size: 25pt;
+	font-size: 3vmax;
 }
 
 .heading2 {
 	color: #00B140;
-	font-size: 13pt;
+	font-size: 1.4vmax;
 }
 
 .middleTextExpand {
@@ -112,9 +124,9 @@ ul li::before {
 
 .bottomgreencode {
 	color: #00B140;
-	font-size: 13pt;
+	font-size: 1.3vmax;
 	text-align: center;
-	margin-top: -100px;
+	margin-top: 1%;
 	/* margin-bottom: 500px; */
 	overflow: hidden;
 }
@@ -126,25 +138,42 @@ sup {
 
 .BlueColumn1 {
 	color: #0033A0;
-	font-size: 11pt;
-	margin-left: 140px;
-	margin-bottom: 10px;
+	font-size: 1vmax;
+	 margin-left: 6%;
+	/*margin-bottom: 10px; */
 }
+
+td:before
+{
+	width: 65% !important;
+	
+}
+
+.nav.pull-left li a:focus, .nav.pull-left li a:hover {
+  background-color: transparent;
+}
+
+
+.tr{
+	 margin:0px !important;
+	
+   }
 
 .BlueColumn2 {
 	color: #0033A0;
-	font-size: 11pt;
-	margin-left: 292px;
-	margin-bottom: 10px;
+	font-size: 1vmax;
+	margin-left: 8%;
+	/*margin-bottom: 10px; */
 }
 
 .column-image {
 	position: absolute;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-left: 560px;
+	margin-bottom: 0;
+	margin-top: 0;
+	margin-left: 55%;
 	display: flex;
 	justify-content: left;
+	top: 60%;
 }
 
 .topTxtCss {
@@ -159,28 +188,20 @@ sup {
 	padding-left: 50px;
 }
 
-@media screen and (max-width : 1366px) and (min-width: 600px)
-{
+
   .table-text {
     color: #00B140;
-    text-align: left;
-    margin-left: 9%;
+	text-align: left;
+	position: relative;
+	font-size: 1.2vmax;
+    margin-left: 4.5%;
   }
 
   .tableSection{
     margin-left: -2%;
   }
-}
-
-@media screen and (max-width: 1920px) and (min-width: 1380px)
-{
-  .table-text {
-    color: #00B140;
-    text-align: left;
-    margin-left: 20.5%;
+  
+  .marginfortableheading
+  {
+	  margin-left: 10%;
   }
-
-  .tableSection{
-    margin-left: 12.5%;
-  }
-}

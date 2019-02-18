@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
 
   ngOnInit() {
     this.createAndValidateForm();
-    //this.deleteAllPreviousCookies();
+    this.deleteAllPreviousCookies();
   }
 
   public createAndValidateForm() {

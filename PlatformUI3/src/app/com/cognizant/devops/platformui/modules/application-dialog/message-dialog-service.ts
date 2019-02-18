@@ -41,18 +41,17 @@ export class MessageDialogService {
         return dialogRef;
     }
 
-    public showConfirmationMessage(title, message, value, type, height): MatDialogRef<ConfirmationMessageDialog> {
+    public showConfirmationMessage(title, message, value, type): MatDialogRef<ConfirmationMessageDialog> {
         const dialogRef = this.dialog.open(ConfirmationMessageDialog, {
             panelClass: 'DialogBox',
             width: '40%',
-            height: height,
+            height: '40%',
             disableClose: true,
             data: {
                 title: title,
                 message: message,
                 value: value,
-                type: type,
-                height: height
+                type: type
 
             }
         });

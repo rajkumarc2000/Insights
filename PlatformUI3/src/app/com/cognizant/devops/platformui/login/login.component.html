@@ -24,7 +24,7 @@
 
       <div class="column textPad">
         <div>
-          <img mat-card-image align="left" height="57px" width="250px" class="customerLogoImage" [src]="imageSrc" />
+          <img mat-card-image align="left" height="67px" width="250px" class="customerLogoImage" [src]="imageSrc" />
         </div>
         <div class="topTxtCss">
           <div layout class="bulletCss"></div>
@@ -50,7 +50,7 @@
           <div layout class="bulletCss"></div>
           <div layout class="textCss">
             <p>
-              Measure the overall progress of <br>
+              Measure the overall progress of
               <span class="middleTextColr">DevOps Maturity </span>
             </p>
           </div>
@@ -58,7 +58,7 @@
       </div>
 
       <div class="column-image">
-        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '285px', width: '1px'}"></mat-icon>
+        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '300px', width: '1px'}"></mat-icon>
       </div>
 
       <div class="column-user rgtPnlCss" layout-align="center center" layout="column">
@@ -67,28 +67,24 @@
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
           <div layout="column" style="width: 360px;">
-
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
             &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text"
-                formControlName="username" />
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text" formControlName="username"
+              />
             </mat-form-field>
             <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt">Please enter a valid Username.</div>
             </div>
             <br>
-
             <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
-
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss"
-                formControlName="password" autocomplete="new-password" />
+              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss" formControlName="password"
+                autocomplete="new-password" />
             </mat-form-field>
             <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
-              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid
-                password.
+              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.
               </div>
             </div>
             <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">
@@ -106,11 +102,9 @@
 
           <mat-icon svgIcon="PoweredBy" layout layout-align="center center" class="powerByImage">
           </mat-icon>
-          <div *ngIf="showThrobber">
-            <div class="loading-indicator">
-              <mat-progress-spinner [diameter]="50" style="margin:0 auto;" color="primary" mode="indeterminate">
-              </mat-progress-spinner>
-            </div>
+          <div *ngIf="showThrobber" style="display: flex; justify-content: center; align-items: center">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
           </div>
         </form>
       </div>
