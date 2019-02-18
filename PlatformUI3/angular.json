@@ -24,7 +24,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/mfonts/material-icons/material-icons.css"
+              "src/assets/mfonts/material-icons/material-icons.css",
 			  "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": ["node_modules/jquery/dist/jquery.min.js",
