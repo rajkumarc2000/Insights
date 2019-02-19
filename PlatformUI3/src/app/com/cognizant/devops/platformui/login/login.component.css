@@ -97,16 +97,16 @@
 }
 .textCss{
   color: #0033A0;
-  font-size: 20px;
-  width: 400px;
-  margin-top:-25px
+  font-size: 1.5vmax;
+   width: 93%;
+/* margin-top:-25px */
 }
 .middleTextColr{
   color: #00B140;
-  font-size: 20px;
+  font-size: 1.5vmax;
 }
 .inputGreyTextCss{
-  font-size: 17px;
+  font-size: 1.3vmax;
 }
 
 .copyRightCss {
@@ -119,7 +119,7 @@
   margin-top: 0px;
 }
 .validCredTextCss{
-  font-size: 17px;
+  font-size: 1.3vmax;
   color: #0033A0;
   margin-bottom: 20px;
   /*  margin-left: 1px; */
@@ -162,7 +162,7 @@
 }
 .textPad{
   padding-left:50px;
-  padding-top:75px;  
+  padding-top:7vmax;  
 }
 .topTxtCss{
   display:-webkit-inline-box;
@@ -181,7 +181,7 @@
 .rgtPnlCss{
   width:482px;
   padding-left: 60px;  
-  margin-top: 75px;
+   margin-top: 15vh; 
   margin-left: 50px;
 }
 .tckCss{
@@ -258,7 +258,9 @@ md-icon {
 }
 .column-image {
     float:left;
-    margin-top: 75px;
+    margin-top: 5vmax; 
+   /*  height: 100px; 
+    width: 1px; */
 }
 .column-user {
   float: left;
@@ -286,11 +288,25 @@ md-icon {
   vertical-align:center;
   margin-bottom: 40px;
 }
+
+
 .powerByImage{
   height:190px; 
   width:300px; 
  /*  margin-left:5px; */
-  margin-top:-44px;
+  /* margin-top:0.69em;  */
+  
+  
+   
   display:flex; 
   vertical-align:center;
+}
+@media only screen and (max-width: 1920px) {
+  .powerByImage {margin-top:0.69em;}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 1366px) {
+  .powerByImage {margin-top: -2em;
+  overflow: hidden;}
 }

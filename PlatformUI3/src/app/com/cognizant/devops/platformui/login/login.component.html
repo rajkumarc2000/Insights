@@ -58,7 +58,7 @@
       </div>
 
       <div class="column-image">
-        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '285px', width: '1px'}"></mat-icon>
+        <mat-icon svgIcon="verticleLine" [ngStyle]="{height: '50vh', width: '1px'}"></mat-icon>
       </div>
 
       <div class="column-user rgtPnlCss" layout-align="center center" layout="column">
@@ -66,9 +66,9 @@
         <form [formGroup]="loginForm">
 
           <div class="validCredTextCss" layout>Sign in with valid credentials</div>
-          <div layout="column" style="width: 360px;">
+          <div layout="column">
 
-            <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
+            <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '3vh', width: '2vw'}"></mat-icon>
             &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
               <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text"
@@ -79,7 +79,7 @@
             </div>
             <br>
 
-            <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '20px', width: '16px'}"></mat-icon>
+            <mat-icon svgIcon="password-icon-active" [ngStyle]="{height: '3vh', width: '2vw'}"></mat-icon>
 
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
@@ -104,7 +104,7 @@
             </div>
           </mat-card-actions>
 
-          <mat-icon svgIcon="PoweredBy" layout layout-align="center center" class="powerByImage">
+          <mat-icon svgIcon="PoweredBy" class="img-responsive" layout layout-align="center center" class="powerByImage">
           </mat-icon>
           <div *ngIf="showThrobber">
             <div class="loading-indicator">
