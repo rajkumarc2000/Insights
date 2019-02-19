@@ -68,9 +68,13 @@
 .greenStripCss {
   background-color: #00B140;
   width: 72.1%;
-  height: 4px;
-  margin-left: 190px;
-  margin-top: 0px;
+  height: 2px;
+ /*  margin-left: 190 */
+ /*  margin-top: 0px; */
+    
+    
+    
+    margin: 0 auto;
 }
 
 .greenStripDivCss{
@@ -92,7 +96,7 @@
   height: 8px;
   background-color: #a5a5a5;
   border-radius: 50%;
-  margin-top: 10px; 
+  margin-top: 3%; 
   margin-right: 30px;
 }
 .textCss{
@@ -111,7 +115,7 @@
 
 .copyRightCss {
    color: #000000;
-   font-size: 10px;
+   font-size: 0.7vmax;
    margin-top:70px;
    text-align:center;
 }
@@ -192,6 +196,7 @@
   margin-left: -2px;
   
 }
+
 
 .down
 {
@@ -291,7 +296,7 @@ md-icon {
 
 
 .powerByImage{
-  height:190px; 
+  height:200px; 
   width:300px; 
  /*  margin-left:5px; */
   /* margin-top:0.69em;  */
@@ -303,10 +308,23 @@ md-icon {
 }
 @media only screen and (max-width: 1920px) {
   .powerByImage {margin-top:0.69em;}
+
+  .shift{
+  margin-left: 5%;
+}
+.column-image{
+  margin-left: 5%;
+}
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 1366px) {
   .powerByImage {margin-top: -2em;
   overflow: hidden;}
+  .shift{
+  margin-left: 0;
+}
+.column-image{
+  margin-left: 5%;
+}
 }
