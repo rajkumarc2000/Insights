@@ -26,7 +26,9 @@
 </div>
 
     <div class="scrollData">
-
+        <mat-form-field style="margin-left: 25px;margin-top: 25px">
+            <input matInput (keyup)="applyAssetDetailsFilter($event.target.value)" placeholder="Filter Assets">
+        </mat-form-field>
         <table mat-table [dataSource]="assetHistoryDataSource" multiTemplateDataRows matSort>
             <!-- Expand/Collapse Column -->
             <ng-container matColumnDef="select">

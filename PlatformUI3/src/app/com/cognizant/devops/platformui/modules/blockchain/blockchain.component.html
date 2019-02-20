@@ -78,19 +78,19 @@
   </div>
 
   <div *ngIf="showSearchResult">
+    <mat-form-field>
+        <input matInput (keyup)="applyAssetFilter($event.target.value)" placeholder="Filter Assets">
+    </mat-form-field>
     <div layout layout-align="right" class="rightAlignStyle" style="vertical-align: middle;padding-bottom: 10px">
       <a>
-        <mat-icon svgIcon="blockchain_show_details" [ngStyle]="{color:'#5C068C',height: '35px', width: '35px'}"
-                  matTooltip="Show Details"
+        <mat-icon svgIcon="{{selectedAssetID === ''? 'inactive_show_details' : 'active_show_details' }}" 
+                    [ngStyle]="{color:'#5C068C',height: '35px', width: '35px'}"        
+                    matTooltip="Show Details"
                   (click)="showAssetDetailsDialog()">
         </mat-icon>
       </a>
-      <!-- <a style="padding-left:10px">
-        <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '30px', width: '23px'}">
-        </mat-icon>
-      </a> -->
     </div>
-
+    
 
     <table mat-table [dataSource]="dataSource" matSort>
 

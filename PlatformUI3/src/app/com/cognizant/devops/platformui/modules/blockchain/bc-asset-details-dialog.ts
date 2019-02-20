@@ -135,6 +135,10 @@ export class AssetDetailsDialog implements OnInit {
                 });              
     }
 
+    applyAssetDetailsFilter(filterValue: string) {
+        this.assetHistoryDataSource.filter = filterValue.trim().toLowerCase();
+    }
+
     
 
 
