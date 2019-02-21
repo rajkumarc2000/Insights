@@ -38,8 +38,8 @@
             <mat-form-field style="padding-left:10px;" required>
               <input matInput #startDateMatInput [matDatepicker]="startDatePicker" required [max]="yesterday" placeholder="Choose a date"
                 disabled (dateChange)="getStartDate('change', $event)">
-              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="dateElementStyle">
@@ -49,8 +49,8 @@
             <mat-form-field style="padding-left:10px;" required>
               <input matInput #endDateMatInput [matDatepicker]="endDatePicker" required [max]="yesterday" placeholder="Choose a date" disabled
                 (dateChange)="getEndDate('change', $event)">
-              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
         </mat-radio-button>
@@ -78,19 +78,21 @@
   </div>
 
   <div *ngIf="showSearchResult">
-    <mat-form-field>
-        <input matInput (keyup)="applyAssetFilter($event.target.value)" placeholder="Filter Assets">
-    </mat-form-field>
-    <div layout layout-align="right" class="rightAlignStyle" style="vertical-align: middle;padding-bottom: 10px">
-      <a>
-        <mat-icon svgIcon="{{selectedAssetID === ''? 'inactive_show_details' : 'active_show_details' }}" 
-                    [ngStyle]="{color:'#5C068C',height: '35px', width: '35px'}"        
-                    matTooltip="Show Details"
-                  (click)="showAssetDetailsDialog()">
-        </mat-icon>
-      </a>
+    <div class="rowContainer">
+      <div class="leftAlignStyle">
+        <mat-form-field>
+          <input matInput (keyup)="applyAssetFilter($event.target.value)" placeholder="Search for an Asset">
+        </mat-form-field>
+      </div>
+      <div layout layout-align="right" class="rightAlignStyle" style="vertical-align: middle;padding-bottom: 10px">
+        <a>
+          <mat-icon svgIcon="{{selectedAssetID === ''? 'inactive_show_details' : 'active_show_details' }}" [ngStyle]="{color:'#5C068C',height: '35px', width: '35px'}"
+            matTooltip="Show Details" (click)="showAssetDetailsDialog()">
+            </mat-icon>
+        </a>
+      </div>
     </div>
-    
+
 
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -99,7 +101,7 @@
         <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">
         </th>
         <td mat-cell *matCellDef="let row" style="width:40px !important;text-align: left">
-          <mat-radio-button value="{{row.basePrimeID}}" color="primary" (change)="populateBasePrimeID($event, row.assetID)" > </mat-radio-button>
+          <mat-radio-button value="{{row.basePrimeID}}" color="primary" (change)="populateBasePrimeID($event, row.assetID)"> </mat-radio-button>
         </td>
       </ng-container>
 

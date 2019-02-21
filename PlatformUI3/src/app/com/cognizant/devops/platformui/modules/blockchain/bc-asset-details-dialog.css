@@ -130,4 +130,17 @@ tr.example-element-row:not(.example-expanded-row):active {
     overflow-x:auto;
     padding-bottom: 10px;
 }
+
+.leftAlignStyle {
+    text-align: left;
+}
+
+.rowContainer {
+  display:flex;
+  flex-direction:row;                   
+}
+
+.rowContainer > div{
+  flex: 1 1 auto;  
+}
  
