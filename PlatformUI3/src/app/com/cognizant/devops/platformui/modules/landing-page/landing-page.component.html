@@ -38,9 +38,9 @@
         <tr>
 
           <th>
-            <!--  <div class="column-image">
-              <mat-icon svgIcon="OrangeLine" [ngStyle]="{height: '125px', width: '1px'}"></mat-icon>
-            </div> -->
+            <div [ngClass]="{ 'column-imageCollapse' : !isExpanded , 'column-imageExapnd': isExpanded}">
+              <mat-icon class="imagecss" svgIcon="OrangeLine"></mat-icon>
+            </div>
           </th>
         </tr>
       </thead>
@@ -140,7 +140,7 @@
             <ul>
               <div class="BlackCssColumn">
                 <li>
-                  Get real time notifications by integrating with Communication Channels
+                  Get real time notifications by integrating with <br> &nbsp;Communication Channels
                 </li>
               </div>
             </ul>
