@@ -228,6 +228,9 @@ export class BlockChainComponent implements OnInit {
 
   //Displays Asset Details Dialog box
   showAssetDetailsDialog() {
+    if (this.selectedAssetID =="" && this.selectedBasePrimeID =="") {
+      return;
+    }
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
       panelClass: 'AssetDetailsDialog',
       height: '900px',
