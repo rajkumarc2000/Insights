@@ -53,7 +53,7 @@
 }
 
 .mat-list-item.active {
-  font-size: 18px !important;
+  /* font-size: 18px !important; */
   font-weight:bolder !important;
   color:#bfbfbf !important;
   background-color: #0033A0;
@@ -348,6 +348,11 @@
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
+
+  .mat-list-item.active {
+  font-size: 18px !important; 
+  }
+
   .mat-list-item {
   color: #bfbfbf;
   opacity: 0.8;
@@ -424,7 +429,10 @@
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
 
-
+.mat-list-item.active
+{
+  font-size: 1.2vmax !important
+}
   
   .mat-list-item{
     font-size: 1.1vmax;
