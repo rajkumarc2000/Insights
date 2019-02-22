@@ -120,52 +120,63 @@ System.register(["app/plugins/sdk", "lodash", "app/core/time_series2", "app/core
 						this.uiResponseArr = [];
 						this.jsonArrtoStr = dataList;
 						this.singleVectorKpiDetails = [];
-						for (var i = 0; i < this.jsonArrtoStr.length; i++) {
-							this.arr = [];
-							this.vectorMap = {};
-							this.vectorMap["vectorName"] = this.jsonArrtoStr[i]["heading"];
-							this.jsonObjtoStr = this.jsonArrtoStr[i];
-							for (var vector in this.jsonObjtoStr["inferenceDetails"]) {
-								this.data = this.jsonObjtoStr["inferenceDetails"][vector];
-								this.vectorProperty = {};
-								this.googleChartData[this.data["kpiId"]] = this.data["resultSet"];
-								this.vectorProperty["kpi"] = this.data["kpi"];
-								this.vectorProperty["sentiment"] = this.data["sentiment"];
-								this.vectorProperty["kpiId"] = this.data["kpiId"];
-								this.vectorProperty["schedule"] = this.data["schedule"];
-								this.vectorProperty["trendline"] = this.data["trendline"];
-								this.vectorProperty["inference"] = this.data["inference"];
-								this.vectorMap["lastRun"] = this.data["lastRun"];
-								this.vectorMap["schedule"] = this.data["schedule"];
-								if (this.data["sentiment"] == "POSITIVE" && this.data["trendline"] == "High to Low") {
-									this.vectorProperty["color"] = "green";
-									this.vectorProperty["type"] = "increased";
-									this.googleChartData[this.data["kpiId"]].push("green");
-								} else if (this.data["sentiment"] == "POSITIVE" && this.data["trendline"] == "Low to High") {
-									this.vectorProperty["color"] = "green";
-									this.vectorProperty["type"] = "increased";
+						this.panel.showNoDataMessage = '';
+						this.textcolor = "green";
+						if (window['grafanaBootData'].user.lightTheme) {
+							this.textcolor = 'black';
+						} else {
+							this.textcolor = 'white';
+						}
+						if (this.jsonArrtoStr.length > 0) {
+							for (var i = 0; i < this.jsonArrtoStr.length; i++) {
+								this.arr = [];
+								this.vectorMap = {};
+								this.vectorMap["vectorName"] = this.jsonArrtoStr[i]["heading"];
+								this.jsonObjtoStr = this.jsonArrtoStr[i];
+								for (var vector in this.jsonObjtoStr["inferenceDetails"]) {
+									this.data = this.jsonObjtoStr["inferenceDetails"][vector];
+									this.vectorProperty = {};
+									this.googleChartData[this.data["kpiId"]] = this.data["resultSet"];
+									this.vectorProperty["kpi"] = this.data["kpi"];
+									this.vectorProperty["sentiment"] = this.data["sentiment"];
+									this.vectorProperty["kpiId"] = this.data["kpiId"];
+									this.vectorProperty["schedule"] = this.data["schedule"];
+									this.vectorProperty["trendline"] = this.data["trendline"];
+									this.vectorProperty["inference"] = this.data["inference"];
+									this.vectorMap["lastRun"] = this.data["lastRun"];
+									this.vectorMap["schedule"] = this.data["schedule"];
+									if (this.data["sentiment"] == "POSITIVE" && this.data["trendline"] == "High to Low") {
+										this.vectorProperty["color"] = "green";
+										this.vectorProperty["type"] = "increased";
+										this.googleChartData[this.data["kpiId"]].push("green");
+									} else if (this.data["sentiment"] == "POSITIVE" && this.data["trendline"] == "Low to High") {
+										this.vectorProperty["color"] = "green";
+										this.vectorProperty["type"] = "increased";
 
-									this.googleChartData[this.data["kpiId"]].push("green");
-								} else if (this.data["sentiment"] == "NEGATIVE" && this.data["trendline"] == "Low to High") {
-									this.vectorProperty["color"] = "red";
-									this.vectorProperty["type"] = "increased";
+										this.googleChartData[this.data["kpiId"]].push("green");
+									} else if (this.data["sentiment"] == "NEGATIVE" && this.data["trendline"] == "Low to High") {
+										this.vectorProperty["color"] = "red";
+										this.vectorProperty["type"] = "increased";
 
-									this.googleChartData[this.data["kpiId"]].push("red");
-								} else if (this.data["sentiment"] == "NEGATIVE" && this.data["trendline"] == "High to Low") {
-									this.vectorProperty["color"] = "red";
-									this.vectorProperty["type"] = "decreased";
+										this.googleChartData[this.data["kpiId"]].push("red");
+									} else if (this.data["sentiment"] == "NEGATIVE" && this.data["trendline"] == "High to Low") {
+										this.vectorProperty["color"] = "red";
+										this.vectorProperty["type"] = "decreased";
 
-									this.googleChartData[this.data["kpiId"]].push("red");
-								} else if (this.data["sentiment"] == "NEUTRAL") {
-									this.vectorProperty["color"] = "green";
-									this.vectorProperty["type"] = "same";
+										this.googleChartData[this.data["kpiId"]].push("red");
+									} else if (this.data["sentiment"] == "NEUTRAL") {
+										this.vectorProperty["color"] = "green";
+										this.vectorProperty["type"] = "same";
 
-									this.googleChartData[this.data["kpiId"]].push("green");
+										this.googleChartData[this.data["kpiId"]].push("green");
+									}
+									this.arr.push(this.vectorProperty);
 								}
-								this.arr.push(this.vectorProperty);
+								this.vectorMap["data"] = this.arr;
+								this.uiResponseArr.push(this.vectorMap);
 							}
-							this.vectorMap["data"] = this.arr;
-							this.uiResponseArr.push(this.vectorMap);
+						} else if (this.jsonArrtoStr.length == 0) {
+							this.panel.showNoDataMessage = "No Data Found";
 						}
 						this.onRender();
 					}
@@ -225,10 +236,10 @@ System.register(["app/plugins/sdk", "lodash", "app/core/time_series2", "app/core
 
 						google.charts.setOnLoadCallback(this.drawCharts.bind(this));
 						// Instantiate and draw the chart.
-
-						if (this.panel.targets[0].chartType == "LineChart") {
+						var chartType = this.panel.targets[0].chartType;
+						if (chartType == "LineChart") {
 							var chart = new google.visualization.LineChart(document.getElementById(this.panel.id));
-						} else if (this.panel.targets[0].chartType == "BarChart") {
+						} else if (chartType == "BarChart") {
 							var chart = new google.visualization.BarChart(document.getElementById(this.panel.id));
 						}
 						if (window['grafanaBootData'].user.lightTheme) {
