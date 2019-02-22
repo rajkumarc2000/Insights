@@ -73,6 +73,13 @@
     <div layout>Search result for : {{searchCriteria}}</div>
   </div>
 
+    <!-- Displays Progress spinner until we get server response to display result-->
+      <div *ngIf="displayProgressBar" class="progressBarStyle">
+        <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+
+
   <div *ngIf="noSearchResultFlag">
     {{searchResultNotFoundMsg}}
   </div>
