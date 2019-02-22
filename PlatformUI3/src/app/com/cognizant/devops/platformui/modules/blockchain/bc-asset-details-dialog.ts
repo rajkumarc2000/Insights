@@ -19,6 +19,7 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AssetData } from '@insights/app/modules/blockchain/blockchain.component';
+import {saveAs as importedSaveAs} from "file-saver"; 
 
 export interface AssetHistoryData {
     assetID: string;
@@ -54,7 +55,7 @@ export class AssetDetailsDialog implements OnInit {
     masterHeader = new Map<String, String>();
     finalHeaderToShow = new Map<String, String>();
     headerSet = new Set();
-    pdfData =[];
+    pdfData;
    
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
@@ -96,7 +97,7 @@ export class AssetDetailsDialog implements OnInit {
                 });
                 // Assign asset history details data sorted by timestamp in ascending order
                 this.assetHistoryDataSource.data = historyData;
-                this.pdfData = historyData;
+                this.pdfData = data;
                 for (var index in historyData) {
                     var eachObject = historyData[index];
                     for (var key in eachObject) {
@@ -123,14 +124,19 @@ export class AssetDetailsDialog implements OnInit {
         return "";
     }
 
-    exportToPdf() {
-        console.log("pdfData called");
-        console.log(this.pdfData);
-        /* this.blockChainService.getAssetHistory(this.pdfData)
-            .then((data) => {
-                console.log("pdf completed");
-            }); */        
+    exportToPdf() {        
+        this.blockChainService.exportToPdf(this.pdfData)
+            .subscribe((data) => {
+                var pdfFileName = 'Traceability_report.pdf';
+                importedSaveAs(data, pdfFileName);
+            },
+            error => {
+                console.log(error);
+                });              
+    }
 
+    applyAssetDetailsFilter(filterValue: string) {
+        this.assetHistoryDataSource.filter = filterValue.trim().toLowerCase();
     }
 
     
