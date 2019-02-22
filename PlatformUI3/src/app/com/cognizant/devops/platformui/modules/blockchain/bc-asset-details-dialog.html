@@ -28,12 +28,12 @@
 <div class="scrollData">
     <div class="rowContainer">
         <div class="leftAlignStyle">
-            <mat-form-field style="margin-left: 25px;margin-top: 25px">
+            <mat-form-field  class="inputAssetIdStyle">
                 <input matInput (keyup)="applyAssetDetailsFilter($event.target.value)" placeholder="Search for an Asset">
             </mat-form-field>
         </div>
-        <div class="rightAlignStyle">
-            <a style="padding-left:20px; padding-top: 10px">
+        <div layout layout-align="right" class="rightAlignStyle">
+            <a>
                 <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '35px', width: '35px'}" matTooltip="Export to Pdf" (click)="exportToPdf()">
                 </mat-icon>
             </a>

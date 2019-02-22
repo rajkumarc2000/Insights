@@ -80,7 +80,7 @@
   <div *ngIf="showSearchResult">
     <div class="rowContainer">
       <div class="leftAlignStyle">
-        <mat-form-field>
+        <mat-form-field  class="inputAssetIdStyle">
           <input matInput (keyup)="applyAssetFilter($event.target.value)" placeholder="Search for an Asset">
         </mat-form-field>
       </div>

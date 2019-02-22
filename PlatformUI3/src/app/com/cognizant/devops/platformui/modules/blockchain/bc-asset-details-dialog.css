@@ -133,6 +133,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .leftAlignStyle {
     text-align: left;
+    margin-left: 25px;
+    margin-top: 25px;
 }
 
 .rowContainer {
@@ -143,4 +145,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 .rowContainer > div{
   flex: 1 1 auto;  
 }
+
+.rightAlignStyle {
+    text-align: right;
+    padding-right: 16px; 
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
  
