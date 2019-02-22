@@ -66,6 +66,7 @@ export class BlockChainComponent implements OnInit {
   @ViewChild('assetIdInput', { read: MatInput }) assetIdInput: MatInput;
   selectedBasePrimeID: string = "";
   selectedAssetID: string = "";
+  displayProgressBar: boolean = false;
 
 
 
@@ -88,7 +89,7 @@ export class BlockChainComponent implements OnInit {
   searchAllAssets() {
     this.searchCriteria = "";
     this.selectedAssetID = "";
-    this.selectedBasePrimeID = "";
+    this.selectedBasePrimeID = "";    
     if (this.selectedOption == "searchByDates") {
       if (this.startDateInput === undefined || this.endDateInput === undefined) {
         this.messageDialog.showApplicationsMessage("Please select both start date and end date first.", "ERROR");
@@ -99,11 +100,10 @@ export class BlockChainComponent implements OnInit {
         this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.", "ERROR");
         return;
       }
+      this.displayProgressBar = true;
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
         .then((data) => {
-          console.log(" date range server response >>");
-          console.log(data.status);
-          console.log(data.message);
+          this.displayProgressBar = false;
           if (data.status === "failure") {
             console.log("inside failure loop");
             this.noSearchResultFlag = true;
@@ -129,10 +129,12 @@ export class BlockChainComponent implements OnInit {
         this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.", "ERROR");
         return;
       } else {
+        this.displayProgressBar = true;
         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
           .then((data) => {
             console.log(" assetId server response >>");
             console.log(data);
+            this.displayProgressBar = false;
             if (data.status === "failure") {
               this.noSearchResultFlag = true;
               this.showSearchResult = false;
@@ -228,6 +230,9 @@ export class BlockChainComponent implements OnInit {
 
   //Displays Asset Details Dialog box
   showAssetDetailsDialog() {
+    if (this.selectedAssetID =="" && this.selectedBasePrimeID =="") {
+      return;
+    }
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
       panelClass: 'AssetDetailsDialog',
       height: '900px',
