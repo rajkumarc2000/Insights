@@ -309,14 +309,14 @@ export class HomeComponent implements OnInit {
             title: "Agent Management",
             isAdminMenu: true
           },
-          /*{
+          {
             displayName: 'Business Mapping',
             iconName: 'feature',
             route: 'InSights/Home/businessmapping',
             isToolbarDisplay: true,
-            title:"Business Mapping",
+            title: "Business Mapping",
             isAdminMenu: true
-          },*/
+          },
           {
             displayName: 'Group & Users',
             iconName: 'feature',

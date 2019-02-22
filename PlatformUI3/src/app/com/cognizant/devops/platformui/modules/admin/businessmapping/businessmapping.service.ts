@@ -22,7 +22,7 @@ export interface IBusinessMappingService {
     //loadServerHealthConfiguration(): Promise<any>;
     //loadHealthConfigurations(toolName: string, toolCategory: string): Promise<any>;
     getAllHierarchyMappings(): Promise<any>;
-    getHierarchyProperties(level1:string,level2:string,level3:string,level4:string): Promise<any>;
+    getHierarchyProperties(level1: string, level2: string, level3: string, level4: string): Promise<any>;
 }
 
 
@@ -30,18 +30,28 @@ export interface IBusinessMappingService {
 
 @Injectable()
 export class BusinessMappingService implements IBusinessMappingService {
-    
+
     constructor(private restCallHandlerService: RestCallHandlerService) {
     }
 
-    getAllHierarchyMappings(): Promise<any> {        
+    getAllHierarchyMappings(): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ALL_HIERARCHY_DETAILS",{'Content-Type': 'application/x-www-form-urlencoded'});
+        return restHandler.get("GET_ALL_HIERARCHY_DETAILS", { 'Content-Type': 'application/x-www-form-urlencoded' });
     }
-    
-    getHierarchyProperties(level1:string,level2:string,level3:string,level4:string): Promise<any> {
+
+    getHierarchyProperties(level1: string, level2: string, level3: string, level4: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_HIERARCHY_PROPERTIES",{"level1":level1,"level2":level2,"level3":level3,"level4":level4},{'Content-Type': 'application/x-www-form-urlencoded'});
+        return restHandler.get("GET_HIERARCHY_PROPERTIES", { "level1": level1, "level2": level2, "level3": level3, "level4": level4 }, { 'Content-Type': 'application/x-www-form-urlencoded' });
+    }
+
+    loadToolsAndCategories(): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("DATA_DICTIONARY_TOOLS_AND_CATEGORY");
+    }
+
+    loadToolProperties(toolName: string, categoryName: string): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("DATA_DICTIONARY_TOOL_PROPERTIES", { 'toolName': toolName, 'categoryName': categoryName });
     }
 
 

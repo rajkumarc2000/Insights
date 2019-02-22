@@ -51,7 +51,6 @@ import { BusinessMappingService } from '@insights/app/modules/admin/businessmapp
 import { BusinessMappingComponent } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 import { DataArchivingService } from '@insights/app/modules/settings/dataarchiving/dataarchiving-service';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
-import { BusinessHierarchyDatabase } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
@@ -120,7 +119,6 @@ import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/
     DataDictionaryService,
     BusinessMappingService,
     DataArchivingService,
-    BusinessHierarchyDatabase,
     UserOnboardingService,
     MessageDialogService,
     LogoSettingService,
