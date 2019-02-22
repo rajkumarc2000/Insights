@@ -93,7 +93,7 @@ export class BusinessMappingComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  /** Selects all rows if they are not all selected; otherwise clear selection. readChange*/
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :

@@ -32,7 +32,7 @@
   <div class="arrange-horizontally">
     <label [style.height.px]="20" class="mainText"> Select Tool </label>
     <mat-select [(ngModel)]="selectedAgent" [style.height.px]="20" [style.width.%]="21" (ngModelChange)="loadAgentProperties(selectedAgent)"
-      name="selectedAgent" required placeholder="Select Tool 1" [ngClass]="{  'input-disabled' : readChange ,  'form-control': !readChange}">
+      name="selectedAgent" required placeholder="Select Tool 1" [ngClass]="{  'input-disabled' :false  ,  'form-control': true}">
       <mat-option *ngFor="let data of agentDataSource" [value]="data" style="color:#0033A0">
         {{data.toolName}}
       </mat-option>
