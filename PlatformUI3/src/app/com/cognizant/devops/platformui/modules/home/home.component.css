@@ -33,14 +33,14 @@
   color: #bfbfbf;
   opacity: 0.8;
   font-size: 16px;
-  height: 30px !important;
+  /* height: 30px !important; */
   font-family: inherit;
 }
 
 .mat-nav-list{
   color: white;
   opacity: 0.9;
-  font-size: 16px;
+  font-size: 20px;
   padding-top: 1px !important;
   padding-bottom: 1px !important;
   font-family:inherit;
@@ -89,6 +89,7 @@
 .mat-line-heading{
   color: #bfbfbf !important;
   opacity: 0.8;
+  padding-left: 2vmax !important;
   padding-top: 0px !important;
   padding-right: 5px !important;
   padding-bottom: 0px !important;
@@ -101,7 +102,7 @@
 .headingTable{
   height:100%; 
   width: 100%;
-  padding-left: 16px !important;
+  padding-left: 200px !important;
   padding-right: 16px !important;
 }
 
@@ -240,6 +241,7 @@
   background:#383737;
   overflow-x: hidden;
   overflow-y: hidden;
+  /* margin-left: 0px !important; */
   /*bottom: -150px;*/
 }
 
@@ -247,6 +249,7 @@
     z-index: 1;
     height: 100%;
     background-color: #dedbdb;
+    
 }
 
 .webkit-scrollbar {
@@ -345,6 +348,13 @@
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
+  .mat-list-item {
+  color: #bfbfbf;
+  opacity: 0.8;
+  font-size: 16px;
+   height: 30px !important; 
+  font-family: inherit;
+}
   .logoSetting{
     margin-top: 2px;
     height: 10%;
@@ -356,6 +366,7 @@
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
     border-bottom-width:2px;
+    margin-left: 2vmax;
   }
   .headingPage{
     margin-right: 16px;
@@ -380,6 +391,7 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
     height: 48%;
+    padding-left: 1vmax;
   }
 
   .mat-divider{
@@ -405,16 +417,45 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
+    width: 121px !important;
 }
 }
 
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
+
+
+  
+  .mat-list-item{
+    font-size: 1.1vmax;
+    /* height: 0px !important; */
+  }
+
+  .mat-nav-list
+  {
+    font-size: 1.1vmax;
+
+  }
+  .mat-line-heading
+  {
+    font-size: 1.1vmax;
+  }
+   .mat-line-heading
+   {
+     font-size: 1.1vmax;
+   }
+
+  .roleName{
+  
+  font-size: 1.2vmax !important;
+  
+}
+
   .logoSetting{
-    margin-left: 16px;
+    margin-left: -1vmax;
     margin-right: 26px;
     margin-top: 2px;
-    height: 8%;
+    height: 10%;
   }
 
   .headingPage{
@@ -422,6 +463,7 @@
     border-bottom-style:solid;
     border-color:#9e9a9a;
     border-bottom-width:2px;
+    margin-left: 1vmax;
   }
 
   .bottomnavg {
@@ -438,6 +480,7 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
     height: 60%;
+    padding-left: 0.2vmax;
   }
 
   .mat-divider{
@@ -458,7 +501,7 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    margin-left: 13px;
+    margin-left: 120px;
 }
 }
 .feviconIcon{
@@ -471,7 +514,7 @@
   margin:auto;
   display:table-row;
   margin-right:auto;
-  margin-left:auto;
+  margin-left:2vmax;
   cursor: pointer;
 }
 

@@ -45,12 +45,12 @@
           </tr>
           <tr class="mat-line-heading" *ngIf="isExpanded">
             <td class="arrange-horizontally-roledetail" [style.width.px]="leftNavWidthpx">
-              Role: <span class="roleName" title="You are the {{userRole}} for ({{selectedOrg}})"> {{userRole}}  <span class="orgNameInRole"> ({{selectedOrgName}}) </span></span>
-</td>
+              Role: <span class="roleName" title="You are the {{userRole}} for ({{selectedOrg}})"> {{userRole}} <span
+                  class="orgNameInRole"> ({{selectedOrgName}}) </span></span>
+            </td>
           </tr>
           <tr *ngIf="!isExpanded">
-            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/IS_BETA.png'
-            />
+            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/IS_BETA.png' />
             <!-- Insights_Fevicon.svg -->
           </tr>
         </table>
@@ -77,8 +77,8 @@
           </mat-nav-list>
           <mat-nav-list *ngIf="!isExpanded" class="navItemImageForCollpases">
             <a *ngIf="!isExpanded" title="Logout" class="mat-list-item-bottom" (click)="logout()">
-              <img mat-card-image class="mat-icon ng-tns-c10-10 material-icons ng-star-inserted" height="24px" align="center" src='icons/svg/homePage/logout.png'
-              />
+              <img mat-card-image class="mat-icon ng-tns-c10-10 material-icons ng-star-inserted" height="24px" align="center"
+                src='icons/svg/homePage/logout.png' />
             </a>
           </mat-nav-list>
         </div>
