@@ -26,6 +26,11 @@
 </div>
 
 <div class="scrollData">
+    <!-- Displays Progress spinner until we get server response to display result-->
+  <div *ngIf="displayProgressBar" class="progressBarStyle">
+    <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
     <div class="rowContainer">
         <div class="leftAlignStyle">
             <mat-form-field  class="inputAssetIdStyle">
@@ -34,7 +39,8 @@
         </div>
         <div layout layout-align="right" class="rightAlignStyle">
             <a>
-                <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '35px', width: '35px'}" matTooltip="Export to Pdf" (click)="exportToPdf()">
+                <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '35px', width: '35px'}" matTooltip="Export to Pdf" matTooltipPosition="above"
+                        (click)="exportToPdf()">
                 </mat-icon>
             </a>
         </div>

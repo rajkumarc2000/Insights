@@ -64,7 +64,8 @@
         </mat-radio-button>
       </mat-radio-group>
       <button class="searchBtnStyle" (click)="searchAllAssets()">
-        <mat-icon svgIcon="search_icon" [ngStyle]="{'height': '20px', 'width': '20px','text-align':'center'}">
+        <mat-icon svgIcon="search_icon" [ngStyle]="{'height': '20px', 'width': '20px','text-align':'center'}"
+                   matTooltip="Search"  matTooltipPosition="above">
         </mat-icon>
       </button>
     </div>
@@ -94,7 +95,7 @@
       <div layout layout-align="right" class="rightAlignStyle" style="vertical-align: middle;padding-bottom: 10px">
         <a>
           <mat-icon svgIcon="{{selectedAssetID === ''? 'inactive_show_details' : 'active_show_details' }}" [ngStyle]="{color:'#5C068C',height: '35px', width: '35px'}"
-            matTooltip="Show Details" (click)="showAssetDetailsDialog()">
+            matTooltip="Show Details"  matTooltipPosition="above" (click)="showAssetDetailsDialog()">
             </mat-icon>
         </a>
       </div>
