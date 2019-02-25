@@ -238,7 +238,7 @@ export class BlockChainComponent implements OnInit {
       height: '900px',
       width: '1200px',
       disableClose: true,
-      position: { top: '0px', left: '50px', right: '50px', bottom: '0px' },
+      position: { top: '0px', left: '100px', right: '0px', bottom: '0px' },
       data: { basePrimeID: this.selectedBasePrimeID, assetID: this.selectedAssetID },
     });
   }

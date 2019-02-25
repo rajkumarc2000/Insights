@@ -25,22 +25,24 @@
     </ul>
 </div>
 
-<div class="scrollData">
-    <!-- Displays Progress spinner until we get server response to display result-->
-  <div *ngIf="displayProgressBar" class="progressBarStyle">
+<!-- Displays Progress spinner until we get server response to display result-->
+<div *ngIf="displayProgressBar" class="progressBarStyle">
     <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
     </mat-progress-spinner>
-  </div>
+</div>
+
+
+<div class="scrollData" *ngIf="!displayProgressBar" >
     <div class="rowContainer">
         <div class="leftAlignStyle">
-            <mat-form-field  class="inputAssetIdStyle">
+            <mat-form-field class="inputAssetIdStyle">
                 <input matInput (keyup)="applyAssetDetailsFilter($event.target.value)" placeholder="Search for an Asset">
             </mat-form-field>
         </div>
         <div layout layout-align="right" class="rightAlignStyle">
             <a>
                 <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '35px', width: '35px'}" matTooltip="Export to Pdf" matTooltipPosition="above"
-                        (click)="exportToPdf()">
+                    (click)="exportToPdf()">
                 </mat-icon>
             </a>
         </div>
@@ -54,7 +56,7 @@
                 <a>
                     <mat-icon svgIcon="{{expandedElement === row? 'minus_icon' : 'plus_icon' }}" [ngStyle]="{height: '20px', width: '20px'}"
                         (click)="expandedElement = expandedElement === row ? null : row;">
-                        </mat-icon>
+                    </mat-icon>
                 </a>
             </td>
         </ng-container>
@@ -99,9 +101,9 @@
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
         <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="asset-details-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-                    <div class="example-element-description" *ngFor="let column of headerArrayDisplay">
+                    <div class="asset-details-element-description" *ngFor="let column of headerArrayDisplay">
                         {{getLevel2Properties(column, element)}}
                     </div>
                 </div>
@@ -109,9 +111,9 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element">
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="asset-details-element-row" [class.asset-details-expanded-row]="expandedElement === element">
         </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="asset-details-detail-row"></tr>
     </table>
     <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
 </div>
