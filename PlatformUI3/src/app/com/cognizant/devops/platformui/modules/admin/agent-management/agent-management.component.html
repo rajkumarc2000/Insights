@@ -31,32 +31,32 @@
 
   <div class="btnAlign">
     <button mat-icon-button (click)="addAgentData()">
-    <mat-icon title="Add Agent" class="mat-icon material-icons">
-      add_circle
-    </mat-icon>
-    <mat-icon svgIcon="lineInButton" class="mat-icon material-icons">
-    </mat-icon>
-  </button>
+      <mat-icon title="Add Agent" class="mat-icon material-icons">
+        add_circle
+      </mat-icon>
+      <mat-icon svgIcon="lineInButton" class="linealign mat-icon material-icons">
+      </mat-icon>
+    </button>
     <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START' || runDisableStatus==''">
-    <mat-icon title=" Start " class="mat-icon material-icons ">
-      play_circle_filled
-    </mat-icon>
-  </button>
+      <mat-icon title=" Start " class="mat-icon material-icons ">
+        play_circle_filled
+      </mat-icon>
+    </button>
     <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP' || runDisableStatus==''">
-    <mat-icon title="Stop " class="mat-icon material-icons ">
-      fiber_manual_record
-    </mat-icon>
-  </button>
+      <mat-icon title="Stop " class="mat-icon material-icons ">
+        fiber_manual_record
+      </mat-icon>
+    </button>
     <button mat-icon-button [disabled]="buttonDisableStatus" (click)="editAgent()">
-    <mat-icon title="Edit " class="mat-icon material-icons" >
-      edit
-    </mat-icon>
-  </button>
+      <mat-icon title="Edit " class="mat-icon material-icons">
+        edit
+      </mat-icon>
+    </button>
     <button mat-icon-button [disabled]="runDisableStatus!='STOP'" (click)="uninstallAgent()">
-    <mat-icon title="Delete " class="mat-icon material-icons" >
-      delete
-    </mat-icon>
-  </button>
+      <mat-icon title="Delete " class="mat-icon material-icons">
+        delete
+      </mat-icon>
+    </button>
   </div>
 
   <div>

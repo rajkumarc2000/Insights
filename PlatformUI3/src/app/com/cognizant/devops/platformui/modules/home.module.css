@@ -49,9 +49,9 @@
 .sectionHeadingStyleWithoutButton {
     background-color: #0033A0;   
     color: white;
-    font-size: 16px;
-    margin-top:16px; 
-    height: 30px;
+    font-size: 1.2vmax;
+    margin-top:1.2vmax; 
+    height: 3.2vmax;
     border: 1px solid #0033A0;
     border-radius: 10px 10px 10px 10px;   
     vertical-align:center;
@@ -167,7 +167,16 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 }
 
 .mat-icon-button{
-    color: #0033A0
+    color: #0033A0;
+    
+}
+.mat-icon{
+width: 65% !important;
+}
+
+.material-icons{
+    font-size: 2vmax !important;
+
 }
 
 .messageText{
@@ -187,6 +196,12 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     top:150px;
 }
 
+.mat-icon-button
+{
+    width: 3vmax !important;
+    margin-top: 0.5vmax !important;
+    margin-bottom: 0.5vmax !important;
+}
 
 .gridheaderleft{    
     text-align: center;

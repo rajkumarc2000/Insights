@@ -12,6 +12,8 @@
   bottom: 0;
   right: 0;
  }
+
+
  
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
@@ -163,6 +165,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 .btnAlign{
     margin-right: 7px; 
     float: right;
+    margin-top: -0.2vmax !important;
 }
 
 .mat-icon-message{
@@ -389,7 +392,20 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     background-color: unset !important;
     -webkit-tap-highlight-color:unset !important;
 }*/
-
+@media screen and (max-width: 1920px) and (min-width: 1380px)
+{
+ .linealign
+ {
+     padding-bottom: 10px;
+     height: 100% !important;
+ }
+ 
+.btnAlign{
+    margin-right: 7px; 
+    float: right;
+    margin-top: -0.2vmax !important;
+}
+}
 
 
 
