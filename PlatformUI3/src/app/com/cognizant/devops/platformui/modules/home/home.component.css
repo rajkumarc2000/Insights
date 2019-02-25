@@ -73,7 +73,7 @@
 .mat-line{
   color: #bfbfbf !important;
   opacity: 0.8;
-  padding: 2px !important;
+  padding: 2px !important; 
   font-size: inherit !important;
   font-family: inherit;
 }
@@ -90,7 +90,7 @@
   color: #bfbfbf !important;
   opacity: 0.8;
   padding-left: 2vmax !important;
-  padding-top: 0px !important;
+  padding-top: 20px !important;
   padding-right: 5px !important;
   padding-bottom: 0px !important;
   margin-bottom: 15px!important;
@@ -262,7 +262,7 @@
   background: #1e2028;
   color: white;
   padding-right: 25px;
-  height:55px !important;
+  height:4vmax !important;
 }
 
 .mat-toolbar-row, .mat-toolbar-single-row {
@@ -368,18 +368,26 @@
   .headingPage{
     height: 10%;
     padding-bottom: 10px;
+    
+    margin-left: 1.1vmax;
+    
+  }
+
+  .borderline
+  {
+    margin-top: 10px;
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
     border-bottom-width:2px;
-    margin-left: 2vmax;
+
   }
   .headingPage{
     margin-right: 16px;
     height: 10%;
     margin-bottom:5px;
-    border-bottom-style:solid;
+   /*  border-bottom-style:solid;
     border-color:#f0f0f0;
-    border-bottom-width:1px;
+    border-bottom-width:1px;  */
   }
 
   .bottomnavg {
@@ -396,7 +404,7 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
     height: 48%;
-    padding-left: 1vmax;
+    /* padding-left: 1vmax; */
   }
 
   .mat-divider{
@@ -424,10 +432,21 @@
     direction: ltr;
     width: 121px !important;
 }
+.insightLogo{
+  margin:auto;
+  display:table-row;
+  margin-right:auto;
+  margin-left:1.1vmax;
+  cursor: pointer;
+}
 }
 
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
+/* 
+  .mat-toolbar {
+    height: 
+  } */
 
 .mat-list-item.active
 {
@@ -453,7 +472,8 @@
      font-size: 1.1vmax;
    }
 
-  .roleName{
+  
+   .roleName{
   
   font-size: 1.2vmax !important;
   
@@ -468,10 +488,20 @@
 
   .headingPage{
     height: 7%;
-    border-bottom-style:solid;
+   /*  border-bottom-style:solid;
     border-color:#9e9a9a;
+    border-bottom-width:2px; */
+     margin-left: 1vmax; 
+    
+  }
+
+   .borderline
+  {
+    margin-top: 10px;
+    border-bottom-style:solid;
+    border-bottom-color:#9e9a9a;
     border-bottom-width:2px;
-    margin-left: 1vmax;
+
   }
 
   .bottomnavg {
@@ -519,18 +549,19 @@
 {
   font-size: 20px !important;
 }
-}
-.feviconIcon{
-  margin:auto;
-  display:block;
-  align-items: center;
-  cursor: pointer;
-}
 .insightLogo{
   margin:auto;
   display:table-row;
   margin-right:auto;
   margin-left:2vmax;
+  cursor: pointer;
+}
+
+}
+.feviconIcon{
+  margin:auto;
+  display:block;
+  align-items: center;
   cursor: pointer;
 }
 
