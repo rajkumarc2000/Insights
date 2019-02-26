@@ -26,13 +26,14 @@
 </div>
 
 <!-- Displays Progress spinner until we get server response to display result-->
+
 <div *ngIf="displayProgressBar" class="progressBarStyle">
     <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
     </mat-progress-spinner>
 </div>
 
 
-<div class="scrollData" *ngIf="!displayProgressBar" >
+<div class="scrollData" *ngIf="!displayProgressBar">
     <div class="rowContainer">
         <div class="leftAlignStyle">
             <mat-form-field class="inputAssetIdStyle">
@@ -47,6 +48,7 @@
             </a>
         </div>
     </div>
+
     <table mat-table [dataSource]="assetHistoryDataSource" multiTemplateDataRows matSort>
         <!-- Expand/Collapse Column -->
         <ng-container matColumnDef="select">
@@ -103,7 +105,7 @@
             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                 <div class="asset-details-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-                    <div class="asset-details-element-description" *ngFor="let column of headerArrayDisplay">
+                    <div class="asset-details-element-description scrollData" *ngFor="let column of headerArrayDisplay">
                         {{getLevel2Properties(column, element)}}
                     </div>
                 </div>
@@ -116,4 +118,5 @@
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="asset-details-detail-row"></tr>
     </table>
     <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
+
 </div>

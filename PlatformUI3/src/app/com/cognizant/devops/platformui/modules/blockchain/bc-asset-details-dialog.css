@@ -102,7 +102,13 @@ tr.asset-details-element-row:not(.asset-details-expanded-row):active {
 }  
 
 .asset-details-element-description {
+    /* overflow: hidden;
+    display: flex; */
     padding: 10px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display:inline-block;
+    white-space:nowrap;
 }
  
 ::-webkit-scrollbar {
@@ -158,6 +164,8 @@ tr.asset-details-element-row:not(.asset-details-expanded-row):active {
     justify-content: center; 
     align-items: center;
     overflow: hidden;
+    margin-top:100px;
+    padding-top: 100px;
 }
 
  

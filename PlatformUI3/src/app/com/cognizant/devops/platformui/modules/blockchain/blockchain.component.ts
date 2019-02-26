@@ -101,6 +101,8 @@ export class BlockChainComponent implements OnInit {
         return;
       }
       this.displayProgressBar = true;
+      this.noSearchResultFlag = false;
+      this.showSearchResult = false;
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
         .then((data) => {
           this.displayProgressBar = false;
@@ -130,6 +132,8 @@ export class BlockChainComponent implements OnInit {
         return;
       } else {
         this.displayProgressBar = true;
+        this.noSearchResultFlag = false;
+        this.showSearchResult = false;
         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
           .then((data) => {
             console.log(" assetId server response >>");
