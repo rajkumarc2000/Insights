@@ -33,22 +33,22 @@
     <div class="arrange-horizontally button-row">
       <div> <label class="mainText"> Select the Operating System </label> </div>
       <div>
-        <mat-select required [(ngModel)]="selectedOS" name="selectedOS" class="form-control" placeholder="Select OS"
-          (ngModelChange)="versionOnChange(selectedVersion, 'validate')" style="width:150px;">
+        <mat-select required [(ngModel)]="selectedOS" name="selectedOS" class="form-control adjustwidth" placeholder="Select OS"
+          (ngModelChange)="versionOnChange(selectedVersion, 'validate')">
           <mat-option *ngFor="let os of osLists | keyvalue" value="{{os.value}}">{{os.key}}</mat-option>
         </mat-select>
       </div>
       <div> <label class="mainText"> Version of the Agent </label> </div>
       <div>
-        <mat-select required [(ngModel)]="selectedVersion" name="selectedVersion" class="form-control" placeholder="Select Version"
-          (ngModelChange)="versionOnChange(selectedVersion, btnValue)" style="width:150px;">
+        <mat-select required [(ngModel)]="selectedVersion" name="selectedVersion" class="form-control adjustwidth"
+          placeholder="Select Version" (ngModelChange)="versionOnChange(selectedVersion, btnValue)">
           <mat-option *ngFor="let key of versionList" value="{{key}}">{{key}}</mat-option>
         </mat-select>
       </div>
       <div> <label class="mainText"> Tool </label> </div>
       <div>
-        <mat-select required [(ngModel)]="selectedTool" name="selectedTool" class="form-control" placeholder="Select Tool"
-          (ngModelChange)="getAgentConfig(selectedVersion, selectedTool)" style="width:150px;" [disabled]="btnValue == 'Update'">
+        <mat-select required [(ngModel)]="selectedTool" name="selectedTool" class="form-control adjustwidth"
+          placeholder="Select Tool" (ngModelChange)="getAgentConfig(selectedVersion, selectedTool)" [disabled]="btnValue == 'Update'">
           <mat-option *ngFor=" let tool of toolsArr | keyvalue" value="{{tool.value}}">{{tool.value}}</mat-option>
         </mat-select>
       </div>
