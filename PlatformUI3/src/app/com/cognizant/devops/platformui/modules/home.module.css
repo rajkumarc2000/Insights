@@ -172,10 +172,11 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
 }
 .mat-icon{
 width: 65% !important;
+
 }
 
 .material-icons{
-    font-size: 2vmax !important;
+    font-size: 3vmax !important;
 
 }
 

@@ -4,10 +4,10 @@
     overflow-y: auto;
 }
 .greenWord{
-    color:#00B140;
+    color:#00B140 !important;
 }
 .mainBlock1{
-    height:19vh;
+    height:25vh;
     width:80vh;
     margin-left:20px;
     border-radius:10px;
@@ -17,14 +17,19 @@
     padding-bottom: 15px;
     margin-top: 10px;
 }
+
+.matInput,input
+{
+    font-size: 1.4vmax !important;
+}
 .subBlock1{
-    height:4vh;
+    height:25%;
     border-radius:10px 10px 0 0;
     background-color:#00B140;
-    padding-top: 5px;
+    padding-top: 1vh;
     padding-left: 10px;
     color:white;
-    font-size: 14px;
+    font-size: 1.1vmax;
 }
 .mainBlock2{
     height:19vh;
@@ -54,13 +59,19 @@
     margin-top: 3vh;
 }
 .liGenearl{
-    color:black;
-    font-size: 14px
+    color:black !important;
+    font-size: 1.1vmax;
 }
 
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
+}
+
+
+.mat-icon{
+line-height: 105% !important;
+
 }
 
 ::-webkit-scrollbar-thumb {
