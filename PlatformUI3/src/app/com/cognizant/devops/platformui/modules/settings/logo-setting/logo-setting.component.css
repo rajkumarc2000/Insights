@@ -43,13 +43,13 @@
     margin-top: 10px;
 }
 .subBlock2{
-    max-height:4vh;
+    max-height:5vh;
     border-radius:10px 10px 0 0;
     background-color:#00B140;
     padding: 6px;
     padding-left: 10px;
     color:white;
-    font-size: 14px;
+    font-size: 1vmax;
 }
 .subBlock3{
     height:57px;
@@ -68,8 +68,12 @@
     height: 6px;
 }
 
+.material-icons{
+    font-size: 3vmax !important;
 
+}
 .mat-icon{
+    width: 50% !important;
 line-height: 105% !important;
 
 }

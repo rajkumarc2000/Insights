@@ -395,6 +395,8 @@ mat-tab-link,mat-tab-link,mat-tab,matInput,input,textarea,mat-table,mat-list,mat
     height: 30px;
 }
 
+
+
 /* .mat-button-focus-overlay {
    background-color:unset !important;
   }
@@ -413,6 +415,10 @@ mat-tab-link,mat-tab-link,mat-tab,matInput,input,textarea,mat-table,mat-list,mat
 
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
+
+    .material-icons{
+    font-size: 2vmax !important;
+}
 
     .inputBoxCont{
         font-size: 1vmax !important;
