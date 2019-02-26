@@ -33,7 +33,7 @@
 </div>
 
 
-<div class="scrollData" *ngIf="!displayProgressBar">
+<div class="scrollData" [hidden]="displayProgressBar">
     <div class="rowContainer">
         <div class="leftAlignStyle">
             <mat-form-field class="inputAssetIdStyle">

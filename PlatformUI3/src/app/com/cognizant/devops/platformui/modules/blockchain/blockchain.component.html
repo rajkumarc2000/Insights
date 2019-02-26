@@ -85,7 +85,7 @@
     {{searchResultNotFoundMsg}}
   </div>
 
-  <div *ngIf="showSearchResult">
+  <div [hidden]="!showSearchResult">
     <div class="rowContainer">
       <div class="leftAlignStyle">
         <mat-form-field class="inputAssetIdStyle">
