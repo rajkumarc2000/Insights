@@ -27,7 +27,7 @@
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
-    font-size: 15px;
+    font-size: 1.1vmax;
     height: 40px;
     margin: 0px;
     padding:0px;
@@ -292,6 +292,16 @@ tr.mat-header-row {
 }
 .mat-paginator {
     display: inline;
+}
+
+@media screen and (max-width: 1920px) and (min-width: 1380px)
+{
+    .tableHeaderCss {
+    background-color: #00B140;   
+    color: white;
+    font-size: 1.1vmax;
+    height: 60px;
+    }
 }
 
 

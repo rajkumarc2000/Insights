@@ -53,7 +53,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     background-color: #00B140;   
     color: white;
     font-size: 15px;
-    height: 40px;
+    height: 400px;
     margin: 0px;
     padding:0px;
     text-align: center;
@@ -276,6 +276,13 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     width: 25% !important;
 }
 
+
+.mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
+mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-radio-button,iframe,mat-card,
+mat-tab-link,mat-tab-link,mat-tab,matInput,input,textarea,mat-option,mat-table,mat-list-item,mat-list,mat-paginator
+{
+    font-size: 2vmax !important;
+}
 .inputBoxCont {
     border: 1px !important;
     border-style: solid !important;
@@ -363,12 +370,16 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     float: center;
 }
 
+.mat-cell, .mat-footer-cell {
+    font-size: 1vmax !important;
+}
+
 .mainText{
-    font-size: 15px;
+    font-size: 1.1vmax;
     color:  #00b140;
     font-weight:bold;
     vertical-align:sub;
-    width: 10%;
+   /*  width: 0%; */
     padding-left: 5px;
 }
 .input-file {
