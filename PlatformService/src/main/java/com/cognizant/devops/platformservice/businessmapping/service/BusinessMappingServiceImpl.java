@@ -17,6 +17,7 @@ package com.cognizant.devops.platformservice.businessmapping.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -33,10 +34,12 @@ import com.cognizant.devops.platformcommons.dal.neo4j.GraphResponse;
 import com.cognizant.devops.platformcommons.dal.neo4j.Neo4jDBHandler;
 import com.cognizant.devops.platformservice.businessmapping.constants.BusinessMappingConstants;
 import com.cognizant.devops.platformservice.businessmapping.model.Node;
+import com.cognizant.devops.platformservice.rest.datatagging.constants.DatataggingConstants;
 import com.cognizant.devops.platformservice.rest.util.PlatformServiceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Service("businessMappingService")
 public class BusinessMappingServiceImpl implements BusinessMappingService {
@@ -192,6 +195,55 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		String query = "MATCH (n " + queryLabels + "{" + props + "}" + ") return n";
 		GraphResponse response = dbHandler.executeCypherQuery(query);
 		return PlatformServiceUtil.buildSuccessResponseWithData(response.getNodes());
+	}
+
+	@Override
+	public JsonObject saveToolsMappingLabel(String agentMappingJson) {
+		List<JsonObject> nodeProperties = new ArrayList<>();
+		try {
+			Neo4jDBHandler dbHandler = new Neo4jDBHandler();
+			dbHandler.executeCypherQuery("CREATE CONSTRAINT ON (n:METADATA) ASSERT n.metadata_id  IS UNIQUE");
+			String query = "UNWIND {props} AS properties " + "CREATE (n:METADATA:BUSINESSMAPPING) " + "SET n = properties"; //DATATAGGING
+			JsonParser parser = new JsonParser(); 
+			JsonObject json = (JsonObject) parser.parse(agentMappingJson);
+			log.debug("arg0  "+json);
+			nodeProperties.add(json);
+			//String properties = json.get("properties").getAsString();//msg String
+			//log.debug("arg0 "+properties);
+			JsonObject graphResponse = dbHandler.bulkCreateNodes(nodeProperties, null, query);
+			if (graphResponse.get(DatataggingConstants.RESPONSE).getAsJsonObject().get(DatataggingConstants.ERRORS)
+					.getAsJsonArray().size() > 0) {
+				log.error(graphResponse);
+				//return "success";
+			}
+		} catch (GraphDBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return PlatformServiceUtil.buildFailureResponse(e.getMessage());
+		}
+		// TODO Auto-generated method stub
+		return PlatformServiceUtil.buildSuccessResponse();
+	}
+
+	@Override
+	public JsonObject getToolsMappingLabel(String agentName) {
+		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
+		String query = "MATCH (n:METADATA:BUSINESSMAPPING) where n.toolName ='"+agentName+"' return n"; // 'GIT'
+		GraphResponse response;
+		List<Map<String,String>> propertyList= new ArrayList<Map<String,String>>();
+		try {
+			response = dbHandler.executeCypherQuery(query);
+			int size = response.getNodes().size();
+			log.debug("arg0  size "+size);
+			for(int i=0;i<size ; i++) {
+				propertyList.add(response.getNodes().get(i).getPropertyMap());
+			}
+			//propertyList.forEach(s => {  System.out.println(s)  }); =
+		} catch (GraphDBException e) {
+			log.error(e);
+			return PlatformServiceUtil.buildFailureResponse(ErrorMessage.DB_INSERTION_FAILED);
+		}
+		return PlatformServiceUtil.buildSuccessResponseWithData(propertyList); //response.getNodes()
 	}
 
 }

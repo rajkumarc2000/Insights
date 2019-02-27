@@ -42,7 +42,6 @@ export interface AssetData {
 })
 export class BlockChainComponent implements OnInit {
   today = new Date();
-  yesterday = new Date();
   maxDateValue: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -73,7 +72,7 @@ export class BlockChainComponent implements OnInit {
 
   constructor(private blockChainService: BlockChainService, private datepipe: DatePipe,
     private messageDialog: MessageDialogService, private dialog: MatDialog) {
-    this.yesterday.setDate(this.today.getDate() - 1);
+    
   }
 
   ngOnInit() {
@@ -101,6 +100,8 @@ export class BlockChainComponent implements OnInit {
         return;
       }
       this.displayProgressBar = true;
+      this.noSearchResultFlag = false;
+      this.showSearchResult = false;
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
         .then((data) => {
           this.displayProgressBar = false;
@@ -130,6 +131,8 @@ export class BlockChainComponent implements OnInit {
         return;
       } else {
         this.displayProgressBar = true;
+        this.noSearchResultFlag = false;
+        this.showSearchResult = false;
         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
           .then((data) => {
             console.log(" assetId server response >>");
@@ -238,7 +241,7 @@ export class BlockChainComponent implements OnInit {
       height: '900px',
       width: '1200px',
       disableClose: true,
-      position: { top: '0px', left: '50px', right: '50px', bottom: '0px' },
+      position: { top: '0px', left: '100px', right: '0px', bottom: '0px' },
       data: { basePrimeID: this.selectedBasePrimeID, assetID: this.selectedAssetID },
     });
   }

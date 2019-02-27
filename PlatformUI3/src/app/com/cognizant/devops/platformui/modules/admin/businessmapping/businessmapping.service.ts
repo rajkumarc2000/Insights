@@ -30,30 +30,35 @@ export interface IBusinessMappingService {
 
 @Injectable()
 export class BusinessMappingService implements IBusinessMappingService {
-
+    restHandler: any;
     constructor(private restCallHandlerService: RestCallHandlerService) {
+        this.restHandler = this.restCallHandlerService;
     }
 
     getAllHierarchyMappings(): Promise<any> {
-        var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ALL_HIERARCHY_DETAILS", { 'Content-Type': 'application/x-www-form-urlencoded' });
+
+        return this.restHandler.get("GET_ALL_HIERARCHY_DETAILS", { 'Content-Type': 'application/x-www-form-urlencoded' });
     }
 
     getHierarchyProperties(level1: string, level2: string, level3: string, level4: string): Promise<any> {
-        var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_HIERARCHY_PROPERTIES", { "level1": level1, "level2": level2, "level3": level3, "level4": level4 }, { 'Content-Type': 'application/x-www-form-urlencoded' });
+        return this.restHandler.get("GET_HIERARCHY_PROPERTIES", { "level1": level1, "level2": level2, "level3": level3, "level4": level4 }, { 'Content-Type': 'application/x-www-form-urlencoded' });
     }
 
     loadToolsAndCategories(): Promise<any> {
-        var restHandler = this.restCallHandlerService;
-        return restHandler.get("DATA_DICTIONARY_TOOLS_AND_CATEGORY");
+        return this.restHandler.get("DATA_DICTIONARY_TOOLS_AND_CATEGORY");
     }
 
     loadToolProperties(toolName: string, categoryName: string): Promise<any> {
-        var restHandler = this.restCallHandlerService;
-        return restHandler.get("DATA_DICTIONARY_TOOL_PROPERTIES", { 'toolName': toolName, 'categoryName': categoryName });
+        return this.restHandler.get("DATA_DICTIONARY_TOOL_PROPERTIES", { 'toolName': toolName, 'categoryName': categoryName });
     }
 
+    saveToolMapping(agentMappingJson: String) {
+        return this.restHandler.postWithData("SAVE_TOOL_MAPPING", agentMappingJson, "", { 'Content-Type': 'application/json' }).toPromise();;
+    }
+
+    getToolMapping(agentName: String) {
+        return this.restHandler.get("GET_TOOL_MAPPING", { 'agentName': agentName }, { 'Content-Type': 'application/x-www-form-urlencoded' });
+    }
 
 }
 
