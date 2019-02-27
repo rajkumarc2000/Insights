@@ -168,4 +168,86 @@ tr.asset-details-element-row:not(.asset-details-expanded-row):active {
     padding-top: 100px;
 }
 
+/***
+**
+**svg pipeline css
+*/
+.PWGx-pipeline-node-terminal{
+	fill: #949393;
+}
+
+.PWGx-pipeline-connector {
+	stroke :#949393
+}
+
+.PWGx-svgResultStatusSolid{
+	transform: translateZ(0);
+}
+
+circle.halo{
+	stroke: white;
+	fill:none;
+}
+
+.PWGx-svgResultStatusSolid > circle.statusColor.success {
+	fill : #8cc04f;
+}
+
+.PWGx-result-status-glyph {
+	stroke: none;
+	fill:#fff;
+}
+
+.PWGx-svgResultStatusSolid > circle.statusColor.failure {
+		fill: #d54c53;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:not(svg), :not(foreignObject) > svg {
+    transform-origin: 0px 0px;
+}
+
+.letter-fix {
+	overflow: hidden;
+	overflow-wrap: break-word;
+	position: absolute;
+	width: 113px;
+	max-height: 35px;
+	text-align: center;
+	margin-left: -57px;
+	top: 15px;
+	font-size:13px;
+  }
+  
+.margin_auto {
+	 margin: auto;
+}
+
+.PWGx-pipeline-small-label{
+	font-size:65%;
+}
+
+.PWGx-PipelineGraph-container * {
+	box-sizing: border-box;
+}
+	
+tspan:nth-child(2n) {
+	display: block;
+}
+    
+.dialog-model {
+    position: absolute;
+    top: 10px;
+    margin: auto;
+    border: 1px solid blue;
+    width: auto;
+    right: 0;
+    left: 0;
+    box-shadow: 0px 0px 8px 0px black;
+    padding: 5px;
+}
+
  

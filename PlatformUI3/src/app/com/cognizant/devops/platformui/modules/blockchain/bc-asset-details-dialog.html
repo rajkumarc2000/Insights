@@ -15,6 +15,7 @@
  * the License.
  *******************************************************************************
 -->
+<div *ngIf="!pipeline">
 <div class="titleStyle">
     <ul>
         <li style="background-color: #FF8F1C;">Asset ID - {{assetID}}</li>
@@ -41,6 +42,11 @@
             </mat-form-field>
         </div>
         <div layout layout-align="right" class="rightAlignStyle">
+                <a>
+                    <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '45px', width: '35px'}" matTooltip="workflow" matTooltipPosition="above"
+                            (click)="workflow()">
+                    </mat-icon>
+                </a>
             <a>
                 <mat-icon svgIcon="export_to_pdf_icon" [ngStyle]="{height: '45px', width: '35px'}" matTooltip="Export to Pdf" matTooltipPosition="above"
                     (click)="exportToPdf()">
@@ -118,5 +124,138 @@
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="asset-details-detail-row"></tr>
     </table>
     <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
+
+</div>
+</div>
+<div *ngIf="pipeline">
+    <div class="titleStyle">
+        <ul>
+            <li style="background-color: #FF8F1C;">Workflow</li>
+            <li (click)="closeAssetDetailsDialog()" style="background-color: #FF8F1C;">
+                <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px','padding-right':'24px'}">
+                </mat-icon>
+            </li>
+        </ul>
+    </div>
+    <div class="PWGx-PipelineGraph" style="position: relative; overflow: visible;" *ngIf="list?.length > 0">
+        <svg width="3008" height="1000">
+
+
+            <!-- start -->
+            <g transform="translate(60,55)" class="PWGx-pipeline-node" *ngIf="list[0]?.child?.length == 0">
+                <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
+                <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none"></circle>
+            </g>
+            <!-- start -->
+            <g transform="translate(40,55)" class="PWGx-pipeline-node" *ngIf="list?.length > 1 && list[0]?.child?.length > 0">
+                <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
+                <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none"></circle>
+            </g>
+            <!-- start -->
+            <g transform="translate(60,55)" class="PWGx-pipeline-node" *ngIf="list?.length == 1 ">
+                <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
+                <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none"></circle>
+            </g>
+            <!-- end -->
+            <g [attr.transform]="'translate(' + (253.75 + ((list.length-1) * 120)) + ',55)'" class="PWGx-pipeline-node">
+                <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
+                <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none"></circle>
+            </g>
+
+            <!-- first lines -->
+            <line class="PWGx-pipeline-connector" *ngFor="let item of list; let i = index" stroke-width="3.5" x1="65.25" y1="55" x2="133.75"
+                y2="55"></line>
+            <!-- lines -->
+            <g *ngFor="let item of list; let i = index">
+                <line class="PWGx-pipeline-connector" stroke-width="3.5" [attr.x1]="154.25 + ((i)*120)" y1="55" [attr.x2]="253.75 + ((i)*120)"
+                    y2="55"></line>
+                <!-- left paths -->
+                <path class="PWGx-pipeline-connector" *ngFor="let item of item?.child | slice:1:item?.child?.length; let j = index;" stroke-width="3.5"
+                    [attr.d]="'M ' + (154.25 + ((i-1)*120)) + ' 55 l 49.75 0 c 12 0 12 12 12 12 l 0  ' + (46 + (j*70)) +' c 0 12 12 12 12 12 l 25.75 0'"
+                    fill="none"></path>
+                <!-- right paths -->
+                <path class="PWGx-pipeline-connector" *ngFor="let item of item?.child | slice:1:item?.child?.length; let j = index;" stroke-width="3.5"
+                    [attr.d]="'M ' + (154.75 + ((i)*120)) + ' '+ (125 + (j*70))  +' l 25.75 0 c 12 0 12 -12 12 -12 l 0  ' + (-46 - (j*70)) +' c 0 -12 12 -12 12 -12 l 49.75 0'"
+                    fill="none"></path>
+            </g>
+
+            <!-- points -->
+            <g *ngFor="let item of list; let i = index">
+                <!-- top points -->
+                <g [attr.transform]="'translate(' + (144 + (i*120)) + ', 55)'" class="PWGx-pipeline-node" (mouseover)="eventGet(i, item)"
+                    (mouseout)="eventLeave()">
+                    <g class="PWGx-svgResultStatusSolid">
+                        <circle cx="0" cy="0" r="12" class="halo" stroke-width="3.5"></circle>
+                        <circle cx="0" cy="0" r="12" class="statusColor circle-bg success"></circle>
+                        <g class="PWGx-result-status-glyph">
+                            <polygon points="-2.00 2.80 -4.80 0.00 -5.73 0.933 -2.00 4.67 6.00 -3.33 5.07 -4.27"></polygon>
+                        </g>
+                    </g>
+                    <g class="PWGx-svgResultStatusSolid" *ngIf="item?.child[0]?.point?.toolstatus == 'FAILURE'">
+                        <circle cx="0" cy="0" r="12" class="halo" stroke-width="3.5"></circle>
+                        <circle cx="0" cy="0" r="12" class="statusColor circle-bg failure"></circle>
+                        <g class="PWGx-result-status-glyph">
+                            <polygon points="4.67 -3.73 3.73 -4.67 0 -0.94 -3.73 -4.67 -4.67 -3.73 -0.94 0 -4.67 3.73 -3.73 4.67 0 0.94 3.73 4.67 4.67 3.73 0.94 0">
+                            </polygon>
+                        </g>
+                    </g>
+                    <title style="white-space: pre-wrap">
+                        {{item.child[0].point.toolstatus}}
+                    </title>
+                    <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none" cursor="pointer"></circle>
+                </g>
+                <!-- child points -->
+                <g [attr.transform]="'translate(' + (144 + (i*120)) + ',' + (125 + (j * 70)) + ')'" *ngFor="let item of item?.child | slice:1:item?.child?.length; let j = index;"
+                    class="PWGx-pipeline-node" (mouseover)="eventGet(i, item)" (mouseout)="eventLeave()">
+                    <g class="PWGx-svgResultStatusSolid" data-toggle="modal" data-target="#section-h-modal" id="section-h">
+                        <circle cx="0" cy="0" r="12" class="halo" stroke-width="3.5"></circle>
+                        <circle cx="0" cy="0" r="12" class="statusColor circle-bg success"></circle>
+                        <g class="PWGx-result-status-glyph">
+                            <polygon points="-2.00 2.80 -4.80 0.00 -5.73 0.933 -2.00 4.67 6.00 -3.33 5.07 -4.27"></polygon>
+                        </g>
+                    </g>
+                    <g class="PWGx-svgResultStatusSolid" *ngIf="item?.point?.toolstatus == 'FAILURE'">
+                        <circle cx="0" cy="0" r="12" class="halo" stroke-width="3.5"></circle>
+                        <circle cx="0" cy="0" r="12" class="statusColor circle-bg failure"></circle>
+                        <g class="PWGx-result-status-glyph">
+                            <polygon points="4.67 -3.73 3.73 -4.67 0 -0.94 -3.73 -4.67 -4.67 -3.73 -0.94 0 -4.67 3.73 -3.73 4.67 0 0.94 3.73 4.67 4.67 3.73 0.94 0">
+                            </polygon>
+                        </g>
+                    </g>
+                    <title>
+                        <tspan>Asset ID: {{item?.point?.assetID}} ,</tspan>
+                        <tspan>Property: {{item?.point?.property}} ,</tspan>
+                        <tspan>Phase: {{item?.point?.phase}} ,</tspan>
+                        <tspan>ToolName: {{item?.point?.toolName}} ,</tspan>
+                        <tspan>Toolstatus: {{item?.point?.toolstatus}} ,</tspan>
+                        <tspan>Author: {{item?.point?.author}} ,</tspan>
+                        <tspan>Timestamp: {{item?.point?.timestamp}} ,</tspan>
+                        <tspan>Branch: {{item?.point?.branch}}</tspan>
+                    </title>
+                    <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none" cursor="pointer"></circle>
+
+                </g>
+            </g>
+
+        </svg>
+        <!-- <div class="TruncatingLabel PWGx-pipeline-big-label" title="Start" style="overflow: hidden; overflow-wrap: break-word; position: absolute; width: 113px; max-height: 35px; text-align: center; margin-left: -57px; top: 15px; left: 60px;">Start</div> -->
+
+        <!-- point names -->
+        <div *ngFor="let item of list; let i = index">
+            <div class="TruncatingLabel PWGx-pipeline-big-label" [title]="item?.point" class="letter-fix" [ngStyle]="{'left': (144 + (i*120)) + 'px'}">{{item.point}}</div>
+            <div *ngFor="let ite of item?.child; let j = index" class="TruncatingLabel PWGx-pipeline-small-label" [title]="ite.point"
+                style="overflow: hidden; overflow-wrap: break-word; top: 70px; left: 219px; position: absolute; width: 89px; max-height: 39px; text-align: center;"
+                [style.top]="(70 * (j+1)) + 'px'" [style.left]="(94 + (i*120)) + 'px'">{{ite.point.toolstatus}}</div>
+            <div *ngIf="showModel">
+                <a (click)="showModel = false"> close</a>
+                <div class="dialog-model" style="top: 70px; left: 219px;" [style.top]="(70 * (j+1)) + 'px'" [style.left]="(94 + (i*120)) + 'px'">
+                    {{assets | json}}
+                </div>
+            </div>
+            <!-- <div class="TruncatingLabel PWGx-pipeline-big-label" title="End" style="overflow: hidden; overflow-wrap: break-word; position: absolute; width: 113px; max-height: 35px; text-align: center; margin-left: -57px; top: 15px; left: 948px;">End</div> -->
+        </div>
+
+    </div>
+
 
 </div>
