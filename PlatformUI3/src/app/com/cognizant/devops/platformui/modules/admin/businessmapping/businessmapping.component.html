@@ -58,7 +58,7 @@
           edit
         </mat-icon>
       </button>
-      <button mat-icon-button (click)="saveData()" [disabled]="isEditData || (selectedMappingAgent==undefined)">
+      <button mat-icon-button (click)="saveData()" [disabled]="isListView">
         <mat-icon title="Save " class="mat-icon material-icons">
           save
         </mat-icon>
@@ -67,7 +67,7 @@
 
     <div *ngIf="isListView">
       <mat-radio-group [(ngModel)]="selectedMappingAgent">
-        <table mat-table [dataSource]="agentDataSource " class="mat-elevation-z8 ">
+        <table mat-table [dataSource]="agentDataSource" class="mat-elevation-z8 ">
           <!-- Radio Button Column -->
           <ng-container matColumnDef="radio">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" style="width:10% !important "></th>
@@ -78,7 +78,7 @@
           <!-- OS Column -->
           <ng-container matColumnDef="mappinglabel">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Mapping Label</th>
-            <td mat-cell class="listTable" *matCellDef="let element" style="width:20% !important"> {{element.bmlabel}} </td>
+            <td mat-cell class="listTable" *matCellDef="let element" style="width:20% !important"> {{element.businessmappinglabel}} </td>
           </ng-container>
           <ng-container matColumnDef="properties">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Properties (Tool Property : Property Value)</th>
@@ -117,8 +117,16 @@
         <ng-container matColumnDef="propertyValue">
           <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Property Value </th>
           <td mat-cell *matCellDef="let element">
-            <input [(ngModel)]="element.value" name="{{element.value}}" [ngClass]="{ 'input-disabled' :false ,'form-control': true} "
+            <input [(ngModel)]="element.value" ref-value="ngModel" name="{{element.value}}" [ngClass]="{ 'input-disabled' :false ,'form-control': true} "
               required>
+              <div *ngIf="value.errors?.required && !value.pristine">
+                {{'Please provide property value '}}
+              </div>
+              <!-- <!--[pattern]="'[a-z]'"->
+              <div *ngIf="answer.errors?.pattern">
+                {{'Pattern is not match'}}
+              </div>-->
+
           </td>
         </ng-container>
 
