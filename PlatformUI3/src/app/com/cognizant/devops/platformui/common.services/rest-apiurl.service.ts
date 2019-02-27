@@ -105,6 +105,8 @@ export class RestAPIurlService implements IRestAPIUrlService {
         //Business Mapping module under Admin section
         this.addEndPoint("GET_ALL_HIERARCHY_DETAILS", '/PlatformService/admin/businessmapping/getAllHierarchyDetails');
         this.addEndPoint("GET_HIERARCHY_PROPERTIES", '/PlatformService/admin/businessmapping/getHierarchyProperties');
+        this.addEndPoint("SAVE_TOOL_MAPPING", '/PlatformService/admin/businessmapping/saveToolsMapping');
+        this.addEndPoint("GET_TOOL_MAPPING", '/PlatformService/admin/businessmapping/getToolsMapping');
 
         //this.addEndPoint("UPLOAD_HIERARCHY_DETAILS", '/PlatformService/admin/hierarchyDetails/uploadHierarchyDetails');
         this.addEndPoint("GET_METADATA", '/PlatformService/admin/hierarchyDetails/getMetaData');
@@ -134,7 +136,7 @@ export class RestAPIurlService implements IRestAPIUrlService {
         //Audit Reporting
         this.addEndPoint("GET_ALL_ASSETS", '/PlatformAuditService/traceability/getAllAssets');
         this.addEndPoint("GET_ASSET_INFO", '/PlatformAuditService/traceability/getAssetInfo');
-        this.addEndPoint("GET_ASSET_HISTORY", '/PlatformAuditService/traceability/getAssetHistory');        
+        this.addEndPoint("GET_ASSET_HISTORY", '/PlatformAuditService/traceability/getAssetHistory');
         this.addEndPoint("EXPORT_TO_PDF", '/PlatformAuditService/traceability/getAuditReport');
     }
 

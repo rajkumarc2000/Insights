@@ -21,6 +21,8 @@ import { BehaviorSubject } from 'rxjs';
 import { AgentMappingLabel } from '@insights/app/modules/admin/businessmapping/agentMappingLabel';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
+import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
+
 
 @Component({
   selector: 'app-businessmapping',
@@ -32,18 +34,31 @@ export class BusinessMappingComponent implements OnInit {
   selectedAgent: any;
   agentMappingLabels: AgentMappingLabel[] = [];
   agentDataSource: any = [];
+  agentList: any = [];
   agentPropertyDataSource: any = [];
+  displayedToolColumns: any = [];
   displayedColumns: any = [];
   selection: any = new SelectionModel(true, []);
   spans = [];
-  isEditData = true;
-  label: String = "";
+  isEditData = false;
+  isListView = false;
+  label: String = undefined;
+  agentPropertyList = {};
   selectedAgentMappingLabels: AgentMappingLabel[] = [];
-  constructor(private businessMappingService: BusinessMappingService) {
+  selectedMappingAgent: any = undefined;
+  subHeading: String = "";
+  now: any;
+  constructor(private businessMappingService: BusinessMappingService, public messageDialog: MessageDialogService) {
     this.gatToolInfo();
   }
 
   ngOnInit() {
+    console.log(" ngOnInit ");
+    this.selectedAgent = undefined;
+    this.isListView = false;
+    this.agentDataSource = [];
+    this.selectedMappingAgent = undefined;
+    this.now = new Date();//"yyyy-MM-dd'T'HH:mm:ss" 'Z'
   }
 
   // Loads Register Agent List
@@ -53,7 +68,7 @@ export class BusinessMappingComponent implements OnInit {
       console.log(dictResponse);
       if (dictResponse != null) {
         for (var key in dictResponse.data) {
-          this.agentDataSource.push(dictResponse.data[key]);
+          this.agentList.push(dictResponse.data[key]);
         }
       }
     } catch (error) {
@@ -61,11 +76,65 @@ export class BusinessMappingComponent implements OnInit {
     }
   }
 
-  async loadAgentProperties(selectedAgent1) {
+  async getAgentMappingDetail(selectedAgent) {
+    this.isEditData = false;
+    this.selectedAgent = selectedAgent;
+    let usersResponseData = await this.businessMappingService.getToolMapping(this.selectedAgent.toolName);
+    console.log(usersResponseData);
+
+    if (usersResponseData.status == "success") {
+      if (usersResponseData.data != undefined) {
+        /*var json = JSON.parse(JSON.stringify(usersResponseData.data));
+        delete json.type;
+        console.log(json);*/
+
+        var invalidKeyPatternArray = ['adminuser', 'inSightsTime', 'toolCategoryName',
+          'inSightsTimeX', 'toolName', 'deleted', 'id', 'type', 'bmlabel'];
+        usersResponseData.data = this.removeInvalidKeys(usersResponseData.data, invalidKeyPatternArray);
+        console.log(usersResponseData.data);
+        for (let data of usersResponseData.data) {
+          //var subData = data.map(({ adminuser, ...rest }) => rest);
+          //console.log(subData);
+          this.agentDataSource.push({ 'bmlabel': data.bmlabel, 'properties': data.propString });
+        }
+      }
+    }
+    this.displayedColumns = ['radio', 'mappinglabel', 'properties']
+    this.isListView = true;
+    this.subHeading = "Label List";
+    console.log(this.agentDataSource);
+    console.log(this.selectedMappingAgent);
+  }
+
+  removeInvalidKeys(jsonData, invalidKeyPatternArray) {
+    var length = jsonData.length;
+    for (let i = 0; i < length; i++) {
+      let propString = undefined;
+      console.log(Object.keys(jsonData[i]));
+      for (let key of Object.keys(jsonData[i])) {
+        if (invalidKeyPatternArray.indexOf(key) > -1) {
+          console.log(jsonData[i][key]);
+        } else {
+          if (propString == undefined) {
+            propString = key + " <span style='color:#FF8F1C;padding:2px' > : </span>" + jsonData[i][key];
+          } else {
+            propString += "" + "<br>" + key + " <span style='color:#FF8F1C;padding:2px' > : </span>" + jsonData[i][key];
+          }
+        }
+      }
+      jsonData[i]['propString'] = propString;
+      /*for (let prop of invalidKeyPatternArray) {
+        delete jsonData[i][prop];
+      }*/
+    }
+    return jsonData;
+  }
+
+  async loadAgentProperties(selectedAgent) {
     try {
-      let usersResponseData = await this.businessMappingService.loadToolProperties(selectedAgent1.toolName, selectedAgent1.categoryName);
+      let usersResponseData = await this.businessMappingService.loadToolProperties(this.selectedAgent.toolName, selectedAgent.categoryName);
       console.log(usersResponseData)
-      this.displayedColumns = ['checkbox', 'toolproperties', 'propertyValue', 'propertyLabel'];//, 'action' 
+      this.displayedToolColumns = ['checkbox', 'toolproperties', 'propertyValue', 'propertyLabel'];//, 'action' 
       if (usersResponseData.data != undefined && usersResponseData.status == "success") {
         for (var key in usersResponseData.data) {
           console.log(usersResponseData.data[key]);
@@ -84,6 +153,8 @@ export class BusinessMappingComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+
+    //this.getAgentMappingDetail(this.selectedAgent);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -102,6 +173,8 @@ export class BusinessMappingComponent implements OnInit {
 
   statusEdit(selectedElement) {
     console.log(selectedElement);
+    this.isListView = true;
+    this.isEditData = true;
   }
 
   cacheSpan(key, accessor) {
@@ -136,25 +209,69 @@ export class BusinessMappingComponent implements OnInit {
   }
 
   editData() {
+    console.log(this.selectedMappingAgent);
     const numSelected = this.selection.selected.length
     console.log(numSelected);
+    this.isListView = false;
+    this.loadAgentProperties(this.selectedAgent);
+    this.isEditData = false;
+    this.subHeading = "Edit Label for " + this.selectedMappingAgent.bmlabel;
+  }
 
+  addAgentLabelData() {
+    this.isListView = false;
+    this.loadAgentProperties(this.selectedAgent);
+    this.subHeading = "Add Label";
   }
 
   saveData() {
+    console.log(this.selectedAgent);
     console.log(this.selection);
     const numSelected = this.selection.selected.length
     console.log(numSelected);
-    var selectedData = this.selection.selected;
-    selectedData.forEach(
-      row => {
-        console.log(row);
-        let agentMappingLabelSelected = new AgentMappingLabel(row.id, row.key, row.value, this.label);
-        this.selectedAgentMappingLabels.push(agentMappingLabelSelected);
-      }
-    );
-    console.log(this.label);
-    console.log(this.selectedAgentMappingLabels);
+    if (numSelected == 0 || this.label == undefined) {
+      this.messageDialog.showApplicationsMessage("Please select atleast one Tool Property and label", "WARN");
+    } else {
+      var title = "Save Label";
+      var dialogmessage = "Are you sure you want to save your changes?";
+      const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
+      dialogRef.afterClosed().subscribe(result => {
+        //console.log('The dialog was closed  ' + result);
+        if (result == 'yes') {
+          var selectedData = this.selection.selected;
+          selectedData.forEach(
+            row => {
+              console.log(row);
+              let agentMappingLabelSelected = new AgentMappingLabel(row.id, row.key, row.value, this.label);
+              this.selectedAgentMappingLabels.push(agentMappingLabelSelected);
+              this.agentPropertyList[row.key] = row.value;
+            }
+          );
+          console.log(this.label);
+          console.log(this.selectedAgentMappingLabels);
+
+          this.agentPropertyList['toolName'] = this.selectedAgent.toolName;
+          this.agentPropertyList['toolCategoryName'] = this.selectedAgent.toolCategoryName;
+          this.agentPropertyList['bmlabel'] = this.label;
+          this.agentPropertyList['adminuser'] = 'admin';
+          this.agentPropertyList['inSightsTimeX'] = this.now;
+          this.agentPropertyList['inSightsTime'] = this.now.getTime();
+          var agentBMparameter = JSON.stringify(this.agentPropertyList
+          );//'properties'
+          console.log(agentBMparameter);
+          var saveResponse = this.businessMappingService.saveToolMapping(agentBMparameter);
+          if (saveResponse.status = "success") {
+            this.messageDialog.showApplicationsMessage("Label save Successfully ", "SUCCESS");
+          } else {
+            this.messageDialog.showApplicationsMessage("Unable to save label " + saveResponse.message, "ERROR");
+          }
+        } else {
+          this.selectedAgentMappingLabels = [];
+          this.label = undefined;
+        }
+        this.getAgentMappingDetail(this.selectedAgent);
+      });
+    }
   }
 
 
