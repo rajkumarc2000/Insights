@@ -6,11 +6,15 @@ table,mat-table {
 .tableHeaderCss {
     background-color: #00B140;   
     color: white;
-    font-size: 14px;
+    font-size: 2vmax;
     height: 30px;
     margin: 0px;
     flex: 0 0 10px;
     text-align: left;
+    height:40px;
+    border-radius: 10px 10px 0px 0px !important;
+    padding-left: 65px;
+    padding-right: 65px;
 }
 
 
@@ -35,21 +39,7 @@ tr.mat-footer-row, tr.mat-row {
     float: right;
 }
 
-.form-control {
-    display: block;
-    width: 60%;
-    padding: 6px 12px;
-    font-size: 13px;
-    background-color: white;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-}
+
 
 .mat-select-value{
     color: #9e9a9a;
@@ -72,34 +62,51 @@ tr.mat-footer-row, tr.mat-row {
 }
 
 .mainText{
-    font-size: 14px;
+    font-size: 1vmax;
     color:  #544646
 }
 
 .infoText{
-    font-size: 13px;
+    font-size: 0.9vmax;
     color: #FF8F1C;
     padding-left: 4px;
 }
 
 .nonEditableText{
-    font-size: 13px;
+    font-size: 1vmax;
     color: #9e9a9a;
     padding-left: 12px;
 }
 
 .mainHeaderText{
-    font-size: 15px;
+    font-size: 1.2vmax;
     color:  white;
+    padding-left: 65px;
     
 }
 
-.infoHeaderText{
-    font-size: 11px;
-    color: white;
-    padding-left: 4px;
-}
 
+
+
+@media screen and (max-width: 1366px) and (min-width: 600px)
+
+{
+.form-control {
+    display: block;
+    width: 60%;
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+    
 .input-disabled{
     color: rgba(0,0,0,.38);
     background-color:#e1e3e7;
@@ -115,6 +122,69 @@ tr.mat-footer-row, tr.mat-row {
     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+}
+
+@media screen and (max-width: 1920px) and (min-width: 1380px)
+{
+
+    .form-control {
+    display: block;
+    width: 60%;
+    padding: 6px 12px;
+    
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+    
+.mat-select-panel  {
+    font-size: 1vmax !important;
+    line-height: 3em !important;
+}
+
+.mat-option-text{
+     font-size: 1vmax !important;
+    line-height: 3em !important;
+}
+.mat-option
+{
+    font-size: 1vmax !important;
+    line-height: 3em !important; 
+}
+.mat-cell
+{
+    height: 60px !important;
+}
+.input-disabled{
+    color: rgba(0,0,0,.38);
+    background-color:#e1e3e7;
+    display: block;
+    width: 60%;
+    padding: 6px 12px;
+    
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+}
+
+.infoHeaderText{
+    font-size: 0.9vmax;
+    color: white;
+    padding-left: 4px;
 }
 
 .mat-select-disabled{
