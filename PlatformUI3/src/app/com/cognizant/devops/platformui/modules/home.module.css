@@ -225,15 +225,12 @@ width: 65% !important;
 }
 
 .gridheadercenter{    
-    margin-left: 50px; 
-    text-align: center;
     font-weight: bold;
-    font-size: 18pt;
+    font-size: 1.82vmax;
     text-decoration: none;
     color: white;
-    padding-top: 10px;
+    padding-top: 100px;
     padding-bottom: 50px; 
-    padding-left: 70px;
 }
 
 .iframeCss {
@@ -290,6 +287,7 @@ tr.mat-header-row {
 .textPaddingConf{
      padding-left:70px ;
      padding-right: 50px;
+     font-size: 1.2vmax;
 }
 
 .dialogHeaderBackground{
@@ -366,6 +364,17 @@ margin-left: 250px;
     margin-bottom: 10px;
 
 }
+.gridheadercenter
+{
+    margin-left: 120px;
+}
+.closeiconConf
+{
+     height:40px;
+    width: 40px;
+    text-align: right; 
+    color:white;
+}
 
 }
 
@@ -428,6 +437,18 @@ margin-left: 330px;
     margin-left: 230px;
     padding: 0px 20px;
 
+}
+.closeiconConf
+{
+     height:50px;
+    width: 50px;
+    text-align: right; 
+    color:white;
+    margin-left: 50%;
+}
+.gridheadercenter
+{
+    margin-left: 190px;
 }
 }
 

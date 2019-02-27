@@ -17,16 +17,18 @@
 <div class="dialogHeaderBackground">
     <table style="border-spacing:2px; height:100%; width: 100%">
         <tr>
-            <td>
-                <mat-icon class="colouricon" [svgIcon]="svgCustomIcon" [ngStyle]="{height: '40px', width: '40px'}"></mat-icon>
-            </td>
+            <div class="UpliftTheIcon">
+                <td>
+                    <mat-icon class="colouricon" [svgIcon]="svgCustomIcon"></mat-icon>
+                </td>
+            </div>
             <td>
                 <span class="gridheadercenter">{{data.title}}</span>
             </td>
             <td>
-                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding:0px 15px;">
+                <div>
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
-                        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
+                        <mat-icon class="closeiconConf" svgIcon="close_dialog">
                         </mat-icon>
                     </a>
                 </div>
