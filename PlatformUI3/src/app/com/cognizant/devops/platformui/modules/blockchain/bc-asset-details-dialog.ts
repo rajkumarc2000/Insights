@@ -57,7 +57,8 @@ export class AssetDetailsDialog implements OnInit {
     headerSet = new Set();
     pdfData;
     displayProgressBar:boolean = false;
-   
+    pipeline = false;
+    list = [];
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
@@ -120,9 +121,9 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     getLevel2Properties(key:string, data:AssetHistoryData) {
-        let value = data[key];
+        let value:string = data[key];
         if (value != undefined && value !== null && value!= null && value !="null")  {
-            return key + ": " + value;
+            return key + ": " + value.trim();
         } 
         return "";
     }
@@ -142,7 +143,51 @@ export class AssetDetailsDialog implements OnInit {
         this.assetHistoryDataSource.filter = filterValue.trim().toLowerCase();
     }
 
+
+    workflow(){
+        //this.pdfData
+        this.pipeline=true;
+        let custMap = {};
+        let fMap = {};
+        let fArray = [];
+        this.pdfData.data.map(x => {
+            x["moddate"] = new Date(x.timestamp);
+            if (custMap[x.toolName]) {
+                let list = [...custMap[x.toolName]];
+                list.push(x);
+                custMap[x.toolName] = this.sortArray(list);
+
+            } else {
+                let lst = []
+                lst.push(x)
+                custMap[x.toolName] = lst
+            }
+        });
+        console.log(custMap);
+
+        Object.keys(custMap).forEach(parent => {
+          let obj = {
+              point: parent,
+              child: []
+          }
+          custMap[parent].forEach(child =>{
+            obj.child.push({point: child})
+           })
+           console.log(this.list);
+           console.log(obj);
+           this.list.push(obj);
+        })
+        console.log('lists', this.list);
+    }
     
+    sortArray(list) {
+        debugger;
+        return list.sort((x, y) => {
+            return x.moddate - y.moddate;
+        })
+    }
+
+   
 
 
 }    
