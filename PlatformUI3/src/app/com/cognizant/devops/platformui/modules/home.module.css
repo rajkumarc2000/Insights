@@ -311,7 +311,7 @@ tr.mat-header-row {
 {
 
     
-.UpliftTheText{
+.appDialogLabel{
  padding-bottom: 15px;
 
 }
@@ -338,8 +338,14 @@ tr.mat-header-row {
 margin-left: 250px;
 }
 
-.UpliftTheText{
+.appDialogLabel{
     margin-top: -10px !important;
+
+}
+.cnfDialogLabel{
+    padding-bottom: 15px;
+    padding-left: 20%;
+   
 
 }
 
@@ -366,7 +372,7 @@ margin-left: 250px;
 }
 .gridheadercenter
 {
-    margin-left: 120px;
+    margin-bottom: 12% !important;
 }
 .closeiconConf
 {
@@ -374,6 +380,8 @@ margin-left: 250px;
     width: 40px;
     text-align: right; 
     color:white;
+    margin-left: 55%;
+    margin-bottom: 10%;
 }
 
 }
@@ -386,7 +394,7 @@ margin-left: 250px;
     margin-top: -8px !important;
 }
 
-.UpliftTheText{
+.appDialogLabel{
  padding-bottom: 12px;
 
 }
