@@ -121,6 +121,7 @@ table {
 .rowContainer > div{
   flex: 1 1 auto;  
 }
+
 .progressBarStyle {
     display: flex; 
     justify-content: center; 

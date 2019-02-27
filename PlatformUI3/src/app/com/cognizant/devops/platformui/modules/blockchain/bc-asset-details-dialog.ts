@@ -56,6 +56,7 @@ export class AssetDetailsDialog implements OnInit {
     finalHeaderToShow = new Map<String, String>();
     headerSet = new Set();
     pdfData;
+    displayProgressBar:boolean = false;
    
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
@@ -86,10 +87,12 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     getAssetHistoryDetails() {
+        this.displayProgressBar = true;
         this.blockChainService.getAssetHistory(this.parentData.basePrimeID)
             .then((data) => {
                 console.log("asset history respose>>>");
                 console.log(data);
+                this.displayProgressBar = false;
                 var historyData = data.data;                
                 historyData.sort((value1,value2)=> {
                     // Ascending order

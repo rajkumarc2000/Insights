@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +47,18 @@ public class InsightsBusinessMapping {
 	public JsonObject getHierarchyProperties(@RequestParam String level1, @RequestParam String level2,
 			@RequestParam String level3, @RequestParam String level4) throws GraphDBException {
 		return businessMappingService.getHierarchyProperties(level1, level2, level3, level4);
+	}
+	
+	@RequestMapping(value = "/saveToolsMapping", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public JsonObject saveToolsMappingLabel(@RequestBody String agentMappingJson) throws GraphDBException {
+		log.debug(" info mapping agent JOSN "+agentMappingJson);
+		return businessMappingService.saveToolsMappingLabel(agentMappingJson);
+	}
+	
+	@RequestMapping(value = "/getToolsMapping", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public JsonObject getToolsMappingLabel(@RequestParam String agentName) throws GraphDBException {
+		log.debug(" Tool Name "+agentName);
+		return businessMappingService.getToolsMappingLabel(agentName);
 	}
 
 }

@@ -36,10 +36,10 @@
             <a class="redFontStyle">*</a>
             <a>:</a>
             <mat-form-field style="padding-left:10px;" required>
-              <input matInput #startDateMatInput [matDatepicker]="startDatePicker" required [max]="yesterday" placeholder="Choose a date"
+              <input matInput #startDateMatInput [matDatepicker]="startDatePicker" required [max]="today" placeholder="Choose a date"
                 disabled (dateChange)="getStartDate('change', $event)">
-                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="dateElementStyle">
@@ -47,10 +47,10 @@
             <a class="redFontStyle">*</a>
             <a>:</a>
             <mat-form-field style="padding-left:10px;" required>
-              <input matInput #endDateMatInput [matDatepicker]="endDatePicker" required [max]="yesterday" placeholder="Choose a date" disabled
+              <input matInput #endDateMatInput [matDatepicker]="endDatePicker" required [max]="today" placeholder="Choose a date" disabled
                 (dateChange)="getEndDate('change', $event)">
-                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
+              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
         </mat-radio-button>
@@ -64,7 +64,8 @@
         </mat-radio-button>
       </mat-radio-group>
       <button class="searchBtnStyle" (click)="searchAllAssets()">
-        <mat-icon svgIcon="search_icon" [ngStyle]="{'height': '20px', 'width': '20px','text-align':'center'}">
+        <mat-icon svgIcon="search_icon" [ngStyle]="{'height': '20px', 'width': '20px','text-align':'center'}" matTooltip="Search"
+          matTooltipPosition="above">
         </mat-icon>
       </button>
     </div>
@@ -73,29 +74,29 @@
     <div layout>Search result for : {{searchCriteria}}</div>
   </div>
 
-    <!-- Displays Progress spinner until we get server response to display result-->
-      <div *ngIf="displayProgressBar" class="progressBarStyle">
-        <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
-        </mat-progress-spinner>
-      </div>
+  <!-- Displays Progress spinner until we get server response to display result-->
+  <div *ngIf="displayProgressBar" class="progressBarStyle">
+    <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
 
 
   <div *ngIf="noSearchResultFlag">
     {{searchResultNotFoundMsg}}
   </div>
 
-  <div *ngIf="showSearchResult">
+  <div [hidden]="!showSearchResult">
     <div class="rowContainer">
       <div class="leftAlignStyle">
-        <mat-form-field  class="inputAssetIdStyle">
+        <mat-form-field class="inputAssetIdStyle">
           <input matInput (keyup)="applyAssetFilter($event.target.value)" placeholder="Search for an Asset">
         </mat-form-field>
       </div>
       <div layout layout-align="right" class="rightAlignStyle" style="vertical-align: middle;padding-bottom: 10px">
         <a>
           <mat-icon svgIcon="{{selectedAssetID === ''? 'inactive_show_details' : 'active_show_details' }}" [ngStyle]="{color:'#5C068C',height: '35px', width: '35px'}"
-            matTooltip="Show Details" (click)="showAssetDetailsDialog()">
-            </mat-icon>
+            matTooltip="Show Details" matTooltipPosition="above" (click)="showAssetDetailsDialog()">
+          </mat-icon>
         </a>
       </div>
     </div>
@@ -143,5 +144,6 @@
       </tr>
     </table>
     <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
+
   </div>
 </div>

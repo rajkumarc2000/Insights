@@ -133,17 +133,53 @@ export class RestCallHandlerService {
 
   }
 
-  public postWithImage(url: string, imageFile:any): Observable<any> {
+  public postWithImage(url: string, imageFile: any): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
     var fd = new FormData();
     fd.append("file", imageFile);
     var authToken = this.cookieService.get('Authorization');
-    var dataresponse =this.http.post(restCallUrl, fd, {
+    var dataresponse = this.http.post(restCallUrl, fd, {
       headers: {
         'Authorization': authToken
       },
     })
+    return dataresponse;
+
+  }
+
+  public postWithData(url: string, data: String, requestParams?: Object, additionalheaders?: Object): Observable<any> {
+
+    var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
+    //console.log(restCallUrl);
+    var dataresponse;
+    let headers;
+    var authToken = this.cookieService.get('Authorization');
+
+    let params = new HttpParams();
+
+    for (var key in requestParams) {
+      // console.log(key + " " + requestParams[key]);
+      if (requestParams.hasOwnProperty(key)) {
+        params = params.set(key, requestParams[key]);
+      }
+    }
+
+    headers = new HttpHeaders();
+    headers = headers.set('Authorization', authToken);
+
+    for (var key in additionalheaders) {
+      //console.log(key + " " + additionalheaders[key]);
+      if (headers.hasOwnProperty(key)) {
+        headers = headers.set(key, additionalheaders[key]);
+      }
+    }
+    var httpOptions = {
+      headers: headers,
+      params: params
+    }
+    //console.log(httpOptions);
+    dataresponse = this.http.post(restCallUrl, data, httpOptions);
     return dataresponse;
 
   }
