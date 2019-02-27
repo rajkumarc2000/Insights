@@ -25,4 +25,8 @@ public interface BusinessMappingService {
 	public JsonObject getHierarchyProperties(String level1,String level2,
 			 String level3, String level4) throws GraphDBException;
 
+	public JsonObject saveToolsMappingLabel(String agentMappingJson);
+
+	public JsonObject getToolsMappingLabel(String agentName);
+
 }
