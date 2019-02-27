@@ -44,6 +44,16 @@ body {
   overflow: hidden;
 }
 
+/* .colouricon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: white !important;
+    height: 160px !important;
+    width: 160px !important;
+    padding-left: 30px;
+    padding-top: 2px;
+} */
+
 
 .DialogBox  .mat-dialog-container{
       
