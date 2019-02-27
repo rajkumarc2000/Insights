@@ -36,7 +36,7 @@
             <a class="redFontStyle">*</a>
             <a>:</a>
             <mat-form-field style="padding-left:10px;" required>
-              <input matInput #startDateMatInput [matDatepicker]="startDatePicker" required [max]="yesterday" placeholder="Choose a date"
+              <input matInput #startDateMatInput [matDatepicker]="startDatePicker" required [max]="today" placeholder="Choose a date"
                 disabled (dateChange)="getStartDate('change', $event)">
               <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
@@ -47,7 +47,7 @@
             <a class="redFontStyle">*</a>
             <a>:</a>
             <mat-form-field style="padding-left:10px;" required>
-              <input matInput #endDateMatInput [matDatepicker]="endDatePicker" required [max]="yesterday" placeholder="Choose a date" disabled
+              <input matInput #endDateMatInput [matDatepicker]="endDatePicker" required [max]="today" placeholder="Choose a date" disabled
                 (dateChange)="getEndDate('change', $event)">
               <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>

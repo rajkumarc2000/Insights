@@ -42,7 +42,6 @@ export interface AssetData {
 })
 export class BlockChainComponent implements OnInit {
   today = new Date();
-  yesterday = new Date();
   maxDateValue: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -73,7 +72,7 @@ export class BlockChainComponent implements OnInit {
 
   constructor(private blockChainService: BlockChainService, private datepipe: DatePipe,
     private messageDialog: MessageDialogService, private dialog: MatDialog) {
-    this.yesterday.setDate(this.today.getDate() - 1);
+    
   }
 
   ngOnInit() {

@@ -72,7 +72,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('minus_icon', "icons/svg/auditReporting/minus.svg");  
         this.addImage('active_show_details', "icons/svg/auditReporting/ShowDetails-active.svg");
         this.addImage('inactive_show_details', "icons/svg/auditReporting/ShowDetails-Inactive.svg");
-        this.addImage('export_to_pdf_icon', "icons/svg/auditReporting/PDF-Active.svg");
+        this.addImage('export_to_pdf_icon', "icons/svg/auditReporting/PDFIcon.svg");
 
     }
 
