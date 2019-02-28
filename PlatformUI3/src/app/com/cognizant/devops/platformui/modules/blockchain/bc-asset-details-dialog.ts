@@ -59,6 +59,7 @@ export class AssetDetailsDialog implements OnInit {
     displayProgressBar:boolean = false;
     pipeline = false;
     list = [];
+    showModel = null;
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
@@ -141,7 +142,7 @@ export class AssetDetailsDialog implements OnInit {
 
     applyAssetDetailsFilter(filterValue: string) {
         this.assetHistoryDataSource.filter = filterValue.trim().toLowerCase();
-    }
+    }  
 
 
     workflow(){
@@ -181,10 +182,18 @@ export class AssetDetailsDialog implements OnInit {
     }
     
     sortArray(list) {
-        debugger;
         return list.sort((x, y) => {
             return x.moddate - y.moddate;
         })
+    } 
+
+    eventGet(index) {
+        console.log(index);
+        this.showModel = index;
+    }
+
+    eventLeave() {
+        this.showModel = null;
     }
 
    
