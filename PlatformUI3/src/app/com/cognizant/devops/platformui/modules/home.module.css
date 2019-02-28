@@ -310,6 +310,12 @@ tr.mat-header-row {
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
 
+    .ConfDialogTableCss{
+    border-spacing:2px; 
+    height:100%; 
+    width: 0%;
+
+}
     
 .appDialogLabel{
  padding-bottom: 15px;
@@ -343,8 +349,8 @@ margin-left: 250px;
 
 }
 .cnfDialogLabel{
-    padding-bottom: 15px;
-    padding-left: 20%;
+    padding-bottom: 45px;
+    padding-left: 70px;
    
 
 }
@@ -372,23 +378,27 @@ margin-left: 250px;
 }
 .gridheadercenter
 {
-    margin-bottom: 12% !important;
+    margin-left: 170px;
 }
 .closeiconConf
 {
-     height:40px;
-    width: 40px;
+      height:50px;
+    width: 50px;
     text-align: right; 
     color:white;
-    margin-left: 55%;
-    margin-bottom: 10%;
+    margin-left: 50%;
 }
 
 }
 
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
+.ConfDialogTableCss{
+    border-spacing:2px; 
+    height:100%; 
+    width: 0%;
 
+}
        .UpliftTheIcon
 {
     margin-top: -8px !important;
@@ -456,7 +466,7 @@ margin-left: 330px;
 }
 .gridheadercenter
 {
-    margin-left: 190px;
+    margin-left: 170px;
 }
 }
 
