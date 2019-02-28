@@ -60,5 +60,11 @@ public class InsightsBusinessMapping {
 		log.debug(" Tool Name "+agentName);
 		return businessMappingService.getToolsMappingLabel(agentName);
 	}
+	
+	@RequestMapping(value = "/editToolsMapping", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public JsonObject editToolsMappingLabel(@RequestBody String agentMappingJson) throws GraphDBException {
+		log.debug(" Edit info mapping agent JOSN "+agentMappingJson);
+		return businessMappingService.editToolsMappingLabel(agentMappingJson);
+	}
 
 }

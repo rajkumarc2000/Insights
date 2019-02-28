@@ -60,5 +60,9 @@ export class BusinessMappingService implements IBusinessMappingService {
         return this.restHandler.get("GET_TOOL_MAPPING", { 'agentName': agentName }, { 'Content-Type': 'application/x-www-form-urlencoded' });
     }
 
+    editToolMapping(agentMappingJson: String) {
+        return this.restHandler.postWithData("EDIT_TOOL_MAPPING", agentMappingJson, "", { 'Content-Type': 'application/json' }).toPromise();;
+    }
+
 }
 
