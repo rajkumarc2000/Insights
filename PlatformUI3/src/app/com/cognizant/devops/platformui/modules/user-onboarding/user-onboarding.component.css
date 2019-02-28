@@ -16,6 +16,8 @@
 
 
 
+
+
 .loading-indicator {
   position: fixed;
   z-index: 999;
@@ -91,13 +93,16 @@ th[_ngcontent-c15]:last-child{
     padding-bottom: 50px; 
     padding-left: 15px
 }
-
+.accessgroupCss{
+    height: 55px;
+    width: 50%;
+}
 .dialogText{
-    font-size: 14px;
+    font-size: 1.1vmax;
     color:  #00b140;
     font-weight:bold;
     vertical-align: middle;
-    width: 10%;
+    /* width: 20%; */
     padding-left: inherit;
 }
 
@@ -118,12 +123,34 @@ th[_ngcontent-c15]:last-child{
 .textPaddingInfo
 {
   padding-left:50px ;
-  height: 35%
+  height: 35%;
+  font-size: 1vmax !important;
 }
 
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
+    .form-controlAdd{
+    
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 20px;
+    margin-bottom: 5px;
+    margin-top: -20px;
+    width: 40%;
+    height: 50%;
+
+}
+
 .input-disabled{
     color: rgba(0,0,0,.38);
     background-color:#e1e3e7;
@@ -138,9 +165,39 @@ th[_ngcontent-c15]:last-child{
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     margin-left: 5px;
-}}
+}
+
+.mat-dialog-actions-buttonAdd{
+        padding-top: 7vh !important;
+        padding-left: 460px !important;
+        
+    }
+
+    .closeIconCss
+    {
+        width: 10px;
+        height: 10px;
+        color:white;
+        margin:0px;
+        padding: 0px 10px;
+    }
+}
 @media screen and (max-width: 1920px) and (min-width: 1380px)
-{.input-disabled{
+{
+      .closeIconCss
+    {
+        width: 50px;
+        height: 50px;
+        color:white;
+        margin-left: 380px;
+        
+    }
+    .mat-dialog-actions-buttonAdd{
+        padding-top: 13vh !important;
+        padding-left: 740px !important;
+        
+    }
+    .input-disabled{
     color: rgba(0,0,0,.38);
     background-color:#e1e3e7;
     padding: 6px 12px;
@@ -154,6 +211,26 @@ th[_ngcontent-c15]:last-child{
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     margin-left: 5px;
+}
+.form-controlAdd{
+    
+    padding: 6px 12px;
+    font-size: 1vmax;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 20px;
+    margin-bottom: 5px;
+   /*  margin-top: -20px; */
+    width: 50%;
+    height: 50%;
+
 }
 
 }

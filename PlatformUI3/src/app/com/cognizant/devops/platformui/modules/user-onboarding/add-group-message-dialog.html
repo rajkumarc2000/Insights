@@ -21,9 +21,9 @@
                 <span class="dialogheader">Confirm Access Group Name</span>
             </td>
             <td>
-                <div layout layout-align="right" style="height:30px;text-align: right; color:white;margin:0px;padding: 0px 10px;">
+                <div layout layout-align="right">
                     <a (click)="closeShowDetailsDialog()" style="text-align: right;">
-                        <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '30px', 'height': '30px'}">
+                        <mat-icon class="closeIconCss" svgIcon="close_dialog">
                         </mat-icon>
                     </a>
                 </div>
@@ -34,9 +34,9 @@
 
 <mat-dialog-content class="contentBodyCss">
     <label class="dialogText"> Access Group Name </label>
-    <input [(ngModel)]="accessGroupName" name="accessGroupName" [style.height.px]="30" [style.width.%]="55" class="form-control"
+    <input class="accessgroupCss" [(ngModel)]="accessGroupName" name="accessGroupName" class="form-controlAdd"
         placeholder="Please input an Access Group Name" required>
-    <br>
+
     <div class="textPaddingInfo">
         <span class="messageText" *ngIf="message!=''">{{message}}</span>
         <span class="warningText">
@@ -51,7 +51,7 @@
     </div>
 </mat-dialog-content>
 
-<mat-dialog-actions class="mat-dialog-actions-button">
+<mat-dialog-actions class="mat-dialog-actions-buttonAdd">
     <button mat-raised-button (click)="dialogRef.close('no')">NO</button>
     <button mat-raised-button (click)="onYesClick()">YES</button>
 </mat-dialog-actions>
