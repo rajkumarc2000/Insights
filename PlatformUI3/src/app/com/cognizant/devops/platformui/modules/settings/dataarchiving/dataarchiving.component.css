@@ -78,12 +78,6 @@ tr.mat-footer-row, tr.mat-row {
     padding-left: 12px;
 }
 
-.mainHeaderText{
-    font-size: 1.2vmax;
-    color:  white;
-    padding-left: 65px;
-    
-}
 
 
 
@@ -91,6 +85,13 @@ tr.mat-footer-row, tr.mat-row {
 @media screen and (max-width: 1366px) and (min-width: 600px)
 
 {
+    
+.mainHeaderText{
+    font-size: 1.2vmax;
+    color:  white;
+    padding-left: 65px;
+    
+}
 .form-control {
     display: block;
     width: 60%;
@@ -129,6 +130,12 @@ tr.mat-footer-row, tr.mat-row {
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
 
+.mainHeaderText{
+    font-size: 1.2vmax;
+    color:  white;
+    padding-left: 62px;
+    
+}
     .form-control {
     display: block;
     width: 60%;

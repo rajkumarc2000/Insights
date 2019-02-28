@@ -65,12 +65,12 @@ table tr:last-child td:last-child {
     border-bottom-right-radius: 0px;
 }
 .mainText{
-    font-size: 14px;
+    font-size: 1vmax;
     color:  #0033A0;
     font-weight:bold;
-    vertical-align: sub;
-    width: 10%;
-    overflow: auto; 
+   /*  vertical-align: sub;
+    /* width: 10%; 
+    overflow: auto;  */
 }
 
 
