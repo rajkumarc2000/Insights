@@ -1,8 +1,8 @@
 table {
     width: 100%;  
-    border: 1px solid #00B140;
-    border-radius: 10px 10px 10px 10px;
-    font-size: 14px;
+  /*   border: 1px solid #00B140;
+    border-radius: 10px 10px 10px 10px !important; */
+    font-size: 1.14vmax;
     text-align: left;
     vertical-align: middle;
 }
@@ -21,14 +21,25 @@ tr:nth-child(even) td {
   background-color: #E1E3E7;
 }
 
+/* .StausCss
+{
+    padding-left: 3vmax;
+} */
+
 .mat-table {  
-    font-size: 14px;
+    font-size: 1.1vmax;
     text-align: left;
     vertical-align: middle;
+} 
+
+.mat-table,tr.mat-row
+{
+       height: 15vmax !important;
 }
 
+
 tr.mat-footer-row, tr.mat-row {
-    height: 40px !important;
+    height: 200vmax !important;
     font-size: 14px;
     text-align: left !important;
     vertical-align: middle;
@@ -60,7 +71,7 @@ tr.mat-footer-row, tr.mat-row {
  ::ng-deep .healthcheck-tab-style .mat-tab-label {     
      background-color: transparent;
      color: #0033A0;
-     font-size: 18px;
+     font-size: 1.3vmax;
      font-family: inherit;
      opacity: 1.0;
  }
@@ -69,7 +80,7 @@ tr.mat-footer-row, tr.mat-row {
  ::ng-deep .healthcheck-tab-style .mat-tab-label-active {
     color: #00B140;
     font-weight:bold;
-    font-size: 18px;    
+    font-size: 1.3vmax;    
     background-color: transparent;
     font-family: inherit;
  }
@@ -81,6 +92,13 @@ tr.mat-footer-row, tr.mat-row {
  
  /* Styles for the ink bar */
  ::ng-deep .healthcheck-tab-style .mat-ink-bar {
+     margin-top: 115px;
      background-color: #00B140 !important;
 
  }  
+
+ .mat-cell, .mat-footer-cell {
+  
+
+    font-size: 1.1vmax !important;
+}

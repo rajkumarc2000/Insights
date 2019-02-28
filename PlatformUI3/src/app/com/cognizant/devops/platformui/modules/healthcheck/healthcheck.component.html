@@ -15,8 +15,8 @@
  * the License.
  ****************************************************************************** -->
 <div class="pageCss">
-  <div layout layout-align="left" class="heading">
-    <div id="healthCheckTitle">Health Check </div>
+  <div layout layout-align="left" class="titleStyle">
+    <a>Health Check</a>
   </div>
 
   <div class="orangeStripCss"></div>
@@ -98,28 +98,28 @@
           <!-- Server Column -->
           <ng-container matColumnDef="serverName">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Name</th>
-            <td mat-cell *matCellDef="let key" style="width:200px !important"> {{key.serverName}} </td>
+            <td mat-cell *matCellDef="let key" style="width:15vmax !important"> {{key.serverName}} </td>
           </ng-container>
 
           <!-- IP Address:Port Column -->
           <ng-container matColumnDef="ipAddress">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">IP Address:Port</th>
-            <td mat-cell *matCellDef="let key"> {{key.endPoint}} </td>
+            <td mat-cell *matCellDef="let key" style="width:20vmax !important"> {{key.endPoint}} </td>
           </ng-container>
 
           <!-- Version Column -->
           <ng-container matColumnDef="version">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
-            <td mat-cell *matCellDef="let key"> {{key.version}} </td>
+            <td mat-cell *matCellDef="let key" style="width:35vmax !important"> {{key.version}} </td>
           </ng-container>
 
           <!-- Status Column -->
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
             <td mat-cell *matCellDef="let key">
-              <mat-icon svgIcon="healthcheck_success_status" *ngIf="key.status =='success'" [ngStyle]="{color: '#00B140', height: '20px', width: '20px'}">
+              <mat-icon svgIcon="healthcheck_success_status" *ngIf="key.status =='success'" [ngStyle]="{color: '#00B140', height: '1.8vmax', width: '20px'}">
               </mat-icon>
-              <mat-icon svgIcon="healthcheck_failure_status" *ngIf="key.status =='failure'" [ngStyle]="{color: '#FF8F1C', height: '20px', width: '20px'}">
+              <mat-icon svgIcon="healthcheck_failure_status" *ngIf="key.status =='failure'" [ngStyle]="{color: '#FF8F1C', height: '1.8vmax', width: '20px'}">
               </mat-icon>
             </td>
           </ng-container>
@@ -156,25 +156,25 @@
           <!-- Server Column -->
           <ng-container matColumnDef="serverName">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Name</th>
-            <td mat-cell *matCellDef="let key" style="width:200px !important"> {{key.serverName}} </td>
+            <td mat-cell *matCellDef="let key" style="width:20vmax !important"> {{key.serverName}} </td>
           </ng-container>
           <!-- IP Address:Port Column -->
           <ng-container matColumnDef="ipAddress">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">IP Address:Port</th>
-            <td mat-cell *matCellDef="let key"> {{key.endPoint}} </td>
+            <td mat-cell *matCellDef="let key" style="width:27vmax !important"> {{key.endPoint}} </td>
           </ng-container>
           <!-- Version Column -->
           <ng-container matColumnDef="version" class="tableHeaderCss">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
-            <td mat-cell *matCellDef="let key"> {{key.version}} </td>
+            <td mat-cell *matCellDef="let key" style="width:15vmax !important"> {{key.version}} </td>
           </ng-container>
           <!-- Status Column -->
           <ng-container matColumnDef="status" class="tableHeaderCss">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
             <td mat-cell *matCellDef="let key">
-              <mat-icon svgIcon="healthcheck_success_status" *ngIf="key.status =='success'" [ngStyle]="{color: '#00B140', height: '20px', width: '20px'}">
+              <mat-icon svgIcon="healthcheck_success_status" *ngIf="key.status =='success'" [ngStyle]="{color: '#00B140', height: '1.8vmax', width: '20px'}">
               </mat-icon>
-              <mat-icon svgIcon="healthcheck_failure_status" *ngIf="key.status =='failure'" [ngStyle]="{color: '#FF8F1C', height: '20px', width: '20px'}">
+              <mat-icon svgIcon="healthcheck_failure_status" *ngIf="key.status =='failure'" [ngStyle]="{color: '#FF8F1C', height: '1.8vmax', width: '20px'}">
               </mat-icon>
             </td>
           </ng-container>
@@ -183,7 +183,7 @@
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Details</th>
             <td mat-cell *matCellDef="let key">
               <a (click)="showDetailsDialog('-',key.serverName)">
-                <mat-icon svgIcon="healthcheck_show_details" [ngStyle]="{color:'#5C068C', height: '20px', width: '20px'}">
+                <mat-icon svgIcon="healthcheck_show_details" [ngStyle]="{color:'#5C068C', height: '1.8vmax', width: '20px'}">
                 </mat-icon>
               </a>
             </td>
