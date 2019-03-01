@@ -439,6 +439,13 @@
   margin-left:1.1vmax;
   cursor: pointer;
 }
+.feviconIconMenu{
+  margin:auto;
+  display:block;
+  align-items: center;
+  cursor: pointer;
+}
+
 }
 
 @media screen and (max-width: 1920px) and (min-width: 1380px)
@@ -447,6 +454,12 @@
   .mat-toolbar {
     height: 
   } */
+.feviconIconMenu{
+  margin-left: 60px;
+  display:block;
+  align-items: center;
+  cursor: pointer;
+}
 
 .mat-list-item.active
 {
