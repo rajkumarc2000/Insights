@@ -29,4 +29,6 @@ public interface BusinessMappingService {
 
 	public JsonObject getToolsMappingLabel(String agentName);
 
+	public JsonObject editToolsMappingLabel(String agentMappingJson);
+
 }

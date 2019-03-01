@@ -183,6 +183,15 @@ td.mat-cell{
   padding-top: 5px;
 }
 
-.mat-checkbox-checked.mat-accent .mat-checkbox-background{
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background{
     background-color: #5c068c !important;
+}
+
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
+    background-color: #5c068c !important;
+}
+
+.wrnTxt{
+  color: #ff8f1c !important;
+  font-size: 13px !important;
 }
