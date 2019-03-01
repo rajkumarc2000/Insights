@@ -87,6 +87,7 @@ export class BusinessMappingComponent implements OnInit {
     this.masterToolPropertiesData = undefined;
     this.selectedAgent = selectedAgent;
     var self = this;
+    console.log(this.selectedAgent)
     this.businessMappingService.loadToolProperties(this.selectedAgent.toolName, selectedAgent.categoryName)
       .then(function (data) {
         console.log(data);
@@ -247,7 +248,7 @@ export class BusinessMappingComponent implements OnInit {
     this.actionType = "edit"
     this.loadAgentProperties(this.selectedAgent);
     this.isEditData = false;
-    this.subHeading = "Edit Label for " + this.selectedMappingAgent.bmlabel;
+    this.subHeading = "Edit Label for " + this.selectedMappingAgent.businessmappinglabel;
   }
 
   addAgentLabelData() {
@@ -285,7 +286,7 @@ export class BusinessMappingComponent implements OnInit {
         if (result == 'yes') {
           if (this.actionType == "add") {
             this.agentPropertyList['toolName'] = this.selectedAgent.toolName;
-            this.agentPropertyList['categoryName'] = this.selectedAgent.toolCategoryName;
+            this.agentPropertyList['categoryName'] = this.selectedAgent.categoryName;
             this.agentPropertyList['businessmappinglabel'] = this.label;
             this.agentPropertyList['adminuser'] = 'admin';
             this.agentPropertyList['inSightsTimeX'] = this.now;
