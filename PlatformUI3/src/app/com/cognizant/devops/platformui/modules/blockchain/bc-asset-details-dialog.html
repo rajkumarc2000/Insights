@@ -43,7 +43,7 @@
             </mat-form-field>
         </div>
         <div layout layout-align="right" class="rightAlignStyle">
-                <a>
+                <a style="padding-right: 10px;">
                     <mat-icon svgIcon="view_pipe_line" [ngStyle]="{height: '45px', width: '35px'}" matTooltip="Pipeline View" matTooltipPosition="above"
                             (click)="workflow()">
                     </mat-icon>
@@ -140,10 +140,9 @@
             </li>
         </ul>
     </div>
-    <!--125 + (12 * 70)-->
-    <!--253.75 + ((list.length) * 120)-->
-<div class="PWGx-PipelineGraph" style="position: relative; overflow: auto;height:600px;" *ngIf="list?.length > 0">
-        <svg style="height: 600px;overflow: auto;" >
+    
+<div class="PWGx-PipelineGraph" style="position: relative; overflow: auto;height:621px;" *ngIf="list?.length > 0">
+        <svg  [attr.width.px]="(253.75 + ((list.length) * 120))" [attr.height.px]="125 + (pipeheight * 70)">
       
           <g transform="translate(40,55)" class="PWGx-pipeline-node" *ngIf="list[0]?.child?.length >= 2">
             <circle r="7" class="PWGx-pipeline-node-terminal"></circle>

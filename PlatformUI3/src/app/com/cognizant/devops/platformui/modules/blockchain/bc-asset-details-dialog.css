@@ -131,7 +131,7 @@ tr.asset-details-element-row:not(.asset-details-expanded-row):active {
     border-radius: 10px;
 }
 .scrollData{
-    height:600px;
+    max-height: 82vh;
     overflow-y:auto;
     overflow-x:auto;
     padding-bottom: 10px;
