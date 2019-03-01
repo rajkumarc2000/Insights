@@ -1,22 +1,10 @@
-.form-control {
-    padding: 6px 12px;
-    font-size: 13px;
-    background-color: white;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    margin-left: 5px;
-    margin-bottom: 5px;
+
+
+.mat-cell{
+    font-size: 1.1vmax !important;
+    height: 3.5vmax;
 }
-
-
-
-
+ 
 
 .loading-indicator {
   position: fixed;
@@ -130,6 +118,23 @@ th[_ngcontent-c15]:last-child{
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
+
+    .form-control {
+    padding: 6px 12px;
+    font-size: 13px;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
     .form-controlAdd{
     
     padding: 6px 12px;
@@ -181,6 +186,25 @@ th[_ngcontent-c15]:last-child{
         margin:0px;
         padding: 0px 10px;
     }
+
+    .form-controlBox{
+    padding: 6px 12px;
+    font-size: 12px !important;
+    color: rgba(0,0,0,.38);
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    height: 30px !important;
+    
+
+}
 }
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
@@ -201,7 +225,7 @@ th[_ngcontent-c15]:last-child{
     color: rgba(0,0,0,.38);
     background-color:#e1e3e7;
     padding: 6px 12px;
-    font-size: 1.2vmax !important;
+    /* font-size: 1.2vmax !important; */
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -211,6 +235,22 @@ th[_ngcontent-c15]:last-child{
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     margin-left: 5px;
+}
+
+.form-control {
+    padding: 6px 12px;
+    color: rgba(0,0,0,.38);
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    
 }
 .form-controlAdd{
     
@@ -230,6 +270,23 @@ th[_ngcontent-c15]:last-child{
    /*  margin-top: -20px; */
     width: 50%;
     height: 50%;
+
+}
+
+.form-controlBox{
+    padding: 6px 12px;
+    color: rgba(0,0,0,.38);
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    height: 30px !important;
 
 }
 
