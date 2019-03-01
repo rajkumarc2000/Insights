@@ -246,4 +246,46 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		return PlatformServiceUtil.buildSuccessResponseWithData(propertyList); //response.getNodes()
 	}
 
+	@Override
+	public JsonObject editToolsMappingLabel(String agentMappingJson) {
+		List<JsonObject> nodeProperties = new ArrayList<>();
+		try {
+			Neo4jDBHandler dbHandler = new Neo4jDBHandler();
+			
+			//dbHandler.executeCypherQuery("CREATE CONSTRAINT ON (n:METADATA) ASSERT n.metadata_id  IS UNIQUE");
+			//String query = "UNWIND {props} AS properties " + "CREATE (n:METADATA:BUSINESSMAPPING) " + "SET n = properties"; //DATATAGGING
+			JsonParser parser = new JsonParser(); 
+			JsonObject json = (JsonObject) parser.parse(agentMappingJson);
+			String uuid= json.get("uuid").getAsString();
+			log.debug("arg0 uuid  "+uuid);
+			JsonArray asJsonArray = getCurrentRecords(uuid,dbHandler);
+			log.debug("arg0  "+asJsonArray);
+			//nodeProperties.add(json);
+			//String properties = json.get("properties").getAsString();//msg String
+			//log.debug("arg0 "+properties);
+			/*JsonObject graphResponse = dbHandler.bulkCreateNodes(nodeProperties, null, query);
+			if (graphResponse.get(DatataggingConstants.RESPONSE).getAsJsonObject().get(DatataggingConstants.ERRORS)
+					.getAsJsonArray().size() > 0) {
+				log.error(graphResponse);
+				//return "success";
+			}*/
+		} catch (Exception e) {
+			// TODO Auto-generated catch block  GraphDB
+			e.printStackTrace();
+			return PlatformServiceUtil.buildFailureResponse(e.getMessage());
+		}
+		// TODO Auto-generated method stub
+		return PlatformServiceUtil.buildSuccessResponse();
+	}
+	
+	private JsonArray getCurrentRecords(String uuid, Neo4jDBHandler dbHandler) throws GraphDBException {
+		String cypherQuery = " MATCH (n :METADATA:BUSINESSMAPPING) WHERE n.uuid='"+uuid+"'  RETURN n";
+		GraphResponse graphResponse = dbHandler.executeCypherQuery(cypherQuery);
+		JsonArray rows = graphResponse.getJson().get("results").getAsJsonArray().get(0).getAsJsonObject().get("data")
+				.getAsJsonArray();
+		JsonArray asJsonArray = rows.getAsJsonArray();
+		return asJsonArray;
+		/*buildExistingBuToolCombinationList(combo, asJsonArray);DATATAGGING*/
+	}
+
 }

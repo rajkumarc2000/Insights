@@ -19,18 +19,24 @@ export class AgentMappingLabel {
     key: string;
     value: any;
     label: string;
+    editProperties?: boolean = true;
 
 
-    public setData(id, key, value, label): void {
+    public setData(id, key, value, label, editProperties): void {
         this.id = id;
         this.key = key;
         this.value = value;
         this.label = label;
+        this.editProperties = editProperties;
     }
-    constructor(id, key, value, label) {
+    constructor(id, key, value, label, editProperties) {
         this.id = id;
         this.key = key;
         this.value = value;
         this.label = label;
+        this.editProperties = editProperties;
+    }
+    public setValue(value) {
+        this.value = value;
     }
 }
