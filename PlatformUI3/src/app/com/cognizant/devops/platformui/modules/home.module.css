@@ -206,6 +206,7 @@ width: 65% !important;
     top:150px;
 }
 
+
 .mat-icon-button
 {
     width: 3vmax !important;
@@ -322,7 +323,7 @@ tr.mat-header-row {
 
 }
 
-    .UpliftTheIcon
+    .ConfDialogIconCss
 {
     margin-top: -10px !important;
 }
@@ -400,7 +401,7 @@ margin-left: 250px;
     width: 0%;
 
 }
-       .UpliftTheIcon
+       .ConfDialogIconCss
 {
     margin-top: -8px !important;
 }
