@@ -84,7 +84,7 @@ tr.mat-footer-row, tr.mat-row{
 .mat-table,mat-row,mat-cell,mat-footer-cell,mat-header-cell,mat-list-item,mat-line,
 mat-tab-group,mat-tab-label,mat-tab-link,mat-tab-label-content,mat-select,mat-radio-button,iframe,mat-card,
 mat-tab-link,mat-tab-link,mat-tab,matInput,input,mat-select-value,button,textarea,
-select,mat-option,mat-raised-button,mat-table,mat-list-item,mat-list,mat-paginator,mat-checkbox{
+select,mat-option,mat-raised-button,mat-table,mat-list-item,mat-list,mat-paginator,mat-checkbox,mat-dialog-title{
     font-family: inherit;
     font-size: 18px;
 }
@@ -228,9 +228,10 @@ width: 65% !important;
     font-weight: bold;
     font-size: 1.82vmax;
     text-decoration: none;
-    color: white;
-    padding-top: 100px;
-    padding-bottom: 50px; 
+    color: white; 
+    width: 120%;
+    text-align: center;
+    padding-top: 5px;
 }
 
 .iframeCss {
@@ -292,7 +293,7 @@ tr.mat-header-row {
 
 .dialogHeaderBackground{
     background:  #5C068C ;
-    height: 50px;
+    height: 50px !important;
 }
 
 .paginationStyle {
@@ -309,165 +310,160 @@ tr.mat-header-row {
 
 @media screen and (max-width : 1366px) and (min-width: 600px)
 {
-
     .ConfDialogTableCss{
-    border-spacing:2px; 
-    height:100%; 
-    width: 0%;
+        border-spacing:2px; 
+        height:inherit !important; 
+        width: 0%;
+    }
+        
+    .appDialogLabel{
+        padding-bottom: 15px;
+    }
 
-}
-    
-.appDialogLabel{
- padding-bottom: 15px;
-
-}
-
-    .UpliftTheIcon
-{
-    margin-top: -10px !important;
-}
-    
+    .UpliftTheIcon{
+        margin-top: -10px !important;
+    }
+        
     .mat-dialog-actions-button{
-   
-    padding-top: 1vh !important;
-    padding-right: 20px !important;
-}
+        padding-top: 1vh !important;
+        padding-right: 20px !important;
+    }
 
- /* .colouricon {
-    
-    height: 40px !important;
-    width: 40px !important;
-   
-}  */
+    .gridheaderleft{    
+    margin-left: 250px;
+    }
 
-.gridheaderleft{    
-margin-left: 250px;
-}
+    .appDialogLabel{
+        margin-top: -10px !important;
 
-.appDialogLabel{
-    margin-top: -10px !important;
+    }
+    .cnfDialogLabel{
+        padding-bottom: 45px;
+        padding-left: 20px;
+        width: 70%;
+    }
 
-}
-.cnfDialogLabel{
-    padding-bottom: 45px;
-    padding-left: 70px;
-   
+    .closeIconCss{
+        padding-right: 20px;
+        width: 20%
+    }
 
-}
+    .colouricon {
+        background-repeat: no-repeat;
+        display: inline-block;
+        fill: white !important;
+        height: 70px !important;
+        width: 70px !important; 
+        padding-left: 30px;
+        padding-top: -20px !important;
+    }
 
-.colouricon {
-    background-repeat: no-repeat;
-    display: inline-block;
-    fill: white !important;
-    height: 70px !important;
-    width: 70px !important; 
-    padding-left: 30px;
-    padding-top: -20px !important;
-    /* margin-bottom: 20px; */
-}
+    .closeicon{
+        height:40px;
+        width: 40px;
+        text-align: right; 
+        color:white;
+        margin-left: 140px;
+        padding: 0px 25px;
+        margin-bottom: 10px;
 
-.closeicon{
-    height:40px;
-    width: 40px;
-    text-align: right; 
-    color:white;
-    margin-left: 140px;
-    padding: 0px 25px;
-    margin-bottom: 10px;
-
-}
-.gridheadercenter
-{
-    margin-left: 170px;
-}
-.closeiconConf
-{
-      height:50px;
-    width: 50px;
-    text-align: right; 
-    color:white;
-    margin-left: 50%;
-}
+    }
+    /*.gridheadercenter{
+        margin-left: 170px;
+    }*/
+    .closeiconConf{
+        height:50px;
+        width: 50px;
+        text-align: right; 
+        color:white;
+        margin-left: 50%;
+    }
 
 }
 
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
-.ConfDialogTableCss{
-    border-spacing:2px; 
-    height:100%; 
-    width: 0%;
+    .ConfDialogTableCss{
+        border-spacing:2px; 
+        height:100%; 
+        width: 0%;
+    }
+
+    .UpliftTheIcon{
+        margin-top: -8px !important;
+    }
+
+    .cnfDialogLabel{
+        padding-bottom: 45px;
+        padding-left: 70px;
+    }
+
+    .appDialogLabel{
+    padding-bottom: 12px;
+    }
+     
+    .dialogHeaderBackground{
+        height: 70px;
+    }
+    .gridheaderleft{    
+        margin-left: 330px;
+    }
+
+    .tableHeaderCss {
+        background-color: #00B140;   
+        color: white;
+        font-size: 1.1vmax;
+        height: 60px;
+    }
+
+    .mat-dialog-actions-button{
+        padding-top: 5vh !important;
+    }
+
+    .colouricon {
+        background-repeat: no-repeat;
+        display: inline-block;
+        fill: white !important;
+        height: 80px !important;
+        width: 80px !important; 
+        padding-left: 30px;
+        padding-top: 2px;
+    }
+
+    .closeicon{
+        height:50px;
+        width: 50px;
+        text-align: right; 
+        color:white;
+        margin-left: 230px;
+        padding: 0px 20px;
+    }
+
+    .closeiconConf{
+        height:50px;
+        width: 50px;
+        text-align: right; 
+        color:white;
+        margin-left: 50%;
+    }
+
+    /*.gridheadercenter{
+        margin-left: 170px;
+    }*/
 
 }
-       .UpliftTheIcon
-{
-    margin-top: -8px !important;
-}
 
-.appDialogLabel{
- padding-bottom: 12px;
-
-}
-  
-    
-.dialogHeaderBackground{
-    height: 70px;
-}
- /* 
-.colouricon {
-    
-    height: 60px !important;
-    width: 60px !important;
-    
-}  */
-
-
-.gridheaderleft{    
-margin-left: 330px;
-}
-
-.tableHeaderCss {
-    background-color: #00B140;   
-    color: white;
-    font-size: 1.1vmax;
-    height: 60px;
-}
-
-
-.mat-dialog-actions-button{
-    padding-top: 5vh !important;
-}
-.colouricon {
-    background-repeat: no-repeat;
-    display: inline-block;
-    fill: white !important;
-    height: 80px !important;
-    width: 80px !important; 
-    padding-left: 30px;
-    padding-top: 2px;
-}
-
-.closeicon{
-    height:50px;
-    width: 50px;
-    text-align: right; 
-    color:white;
-    margin-left: 230px;
-    padding: 0px 20px;
-
-}
-.closeiconConf
-{
-     height:50px;
-    width: 50px;
-    text-align: right; 
-    color:white;
-    margin-left: 50%;
-}
-.gridheadercenter
-{
-    margin-left: 170px;
-}
+.arrange-horizontally-Dialog {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    height: 25%;
+    width: 100%;
+    background:  #5C068C ;
 }
 
 

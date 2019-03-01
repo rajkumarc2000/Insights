@@ -14,7 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ****************************************************************************** -->
-<div class="dialogHeaderBackground">
+<!--<div class="dialogHeaderBackground">
     <table style="border-spacing:2px; height:100%; width: 100%">
 
         <tr>
@@ -42,6 +42,21 @@
         </tr>
 
     </table>
+</div>-->
+
+<div class="arrange-horizontally-Dialog">
+    <div width="25%" class="UpliftTheIcon">
+        <mat-icon class="colouricon" [svgIcon]="svgCustomIcon"></mat-icon>
+    </div>
+    <div class="gridheadercenter">
+        {{dialogTitle}}
+    </div>
+    <div class="closeIconCss">
+        <a (click)="closeShowDetailsDialog()">
+            <mat-icon class="closeiconConf" svgIcon="close_dialog">
+            </mat-icon>
+        </a>
+    </div>
 </div>
 
 <mat-dialog-content class="textPadding">
