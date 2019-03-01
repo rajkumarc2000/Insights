@@ -186,6 +186,23 @@ th[_ngcontent-c15]:last-child{
         margin:0px;
         padding: 0px 10px;
     }
+
+    .form-controlBox{
+    padding: 6px 12px;
+    color: rgba(0,0,0,.38);
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    
+
+}
 }
 @media screen and (max-width: 1920px) and (min-width: 1380px)
 {
@@ -251,6 +268,23 @@ th[_ngcontent-c15]:last-child{
    /*  margin-top: -20px; */
     width: 50%;
     height: 50%;
+
+}
+
+.form-controlBox{
+    padding: 6px 12px;
+    color: rgba(0,0,0,.38);
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-left: 5px;
+    height: 20px !important;
 
 }
 
