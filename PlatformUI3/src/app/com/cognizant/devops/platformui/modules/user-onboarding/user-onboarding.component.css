@@ -15,7 +15,9 @@
 }
 
 
-
+.mat-cell{
+    font-size: 1vmax !important;
+}
 
 
 .loading-indicator {
