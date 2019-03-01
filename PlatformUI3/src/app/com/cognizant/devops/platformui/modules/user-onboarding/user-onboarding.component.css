@@ -189,6 +189,7 @@ th[_ngcontent-c15]:last-child{
 
     .form-controlBox{
     padding: 6px 12px;
+    font-size: 12px !important;
     color: rgba(0,0,0,.38);
     background-color: white;
     background-image: none;
@@ -200,6 +201,7 @@ th[_ngcontent-c15]:last-child{
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     margin-left: 5px;
+    height: 30px !important;
     
 
 }
@@ -284,7 +286,7 @@ th[_ngcontent-c15]:last-child{
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     margin-left: 5px;
-    height: 20px !important;
+    height: 30px !important;
 
 }
 
