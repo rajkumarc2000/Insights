@@ -20,23 +20,25 @@
     <mat-sidenav #sidenav class="sidenav" [style.height.%]="100" [style.width.%]="isExpanded ? leftNavWidthInPer:leftNavMinWidthInPer"
       height="50%" mode="side" opened="true" autosize="true">
       <div class="logoSetting">
-        <table class="logoTable">
-          <tr *ngIf="isExpanded">
-            <td>
-              <img mat-card-image align="left" (click)="showLandingPage()" height="44px" width="195px" src='icons/svg/homePage/Insights.png'
-                alt="Cognizant Insights log" class="insightLogo" />
-            </td>
-            <td>
-              <mat-icon (click)="onMenuClick()" class="material-icons-menu">menu</mat-icon>
-            </td>
-          </tr>
-          <tr *ngIf="!isExpanded" style="margin:auto;display:table-row;margin-right:auto;margin-left:30px;height:100%;">
-            <a (click)="onMenuClick()">
-              <img mat-card-image class="feviconIconMenu" height="40px" align="center" src='icons/svg/homePage/menu_white_36.png' />
-            </a>
-            <!--<mat-icon class="material-icons-menu">menu</mat-icon>-->
-          </tr>
-        </table>
+        <div class="table-responsive">
+          <table class="logoTable">
+            <tr *ngIf="isExpanded">
+              <td>
+                <img mat-card-image align="left" (click)="showLandingPage()" height="44px" width="195px" src='icons/svg/homePage/Insights.png'
+                  alt="Cognizant Insights log" class="insightLogo" />
+              </td>
+              <td>
+                <mat-icon (click)="onMenuClick()" class="material-icons-menu">menu</mat-icon>
+              </td>
+            </tr>
+            <tr *ngIf="!isExpanded" style="margin:auto;display:table-row;margin-right:auto;margin-left:30px;height:100%;">
+              <a (click)="onMenuClick()">
+                <img mat-card-image class="feviconIconMenu" height="40px" align="center" src='icons/svg/homePage/menu_white_36.png' />
+              </a>
+              <!--<mat-icon class="material-icons-menu">menu</mat-icon>-->
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="headingPage">
         <table class="headingTable">
