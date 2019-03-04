@@ -119,14 +119,14 @@ export class HomeComponent implements OnInit {
     let currentUserResponce: any;
     let self = this;
     this.userResponse = await this.grafanaService.getUsers()
-    console.log(" In user response " + JSON.stringify(this.userResponse));
+    //console.log(" In user response " + JSON.stringify(this.userResponse));
     if (this.userResponse.data != undefined) {
       self.userName = self.userResponse.data.name != undefined ? self.userResponse.data.name.replace(/['"]+/g, '') : "";
       self.userCurrentOrg = self.userResponse.data.orgId;
       self.dataShare.setUserName(self.userName);
     }
     this.currentUserOrgs = await this.grafanaService.getCurrentUserOrgs();
-    console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
+    //console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
     if (this.currentUserOrgs.data != undefined) {
       for (let orgData of this.currentUserOrgs.data) {
         if (orgData.orgId == self.userCurrentOrg) {
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
         }
       }
       self.dataShare.setOrgAndRole(self.selectedOrg, self.userCurrentOrg, self.userRole);
-      console.log(self.userRole.toString() + "   " + self.userCurrentOrg);
+      //console.log(self.userRole.toString() + "   " + self.userCurrentOrg);
       self.cookieService.set('grafanaRole', self.userRole.toString());
       self.cookieService.set('grafanaOrg', self.userCurrentOrg);
     } else {
