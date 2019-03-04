@@ -28,5 +28,22 @@ export class DataSharedService {
     return this.storage.get("customerLogo");
   }
 
+  public setUserName(userName: String) {
+    this.storage.set("userName", userName);
+  }
+
+  public setOrgAndRole(orgName: String, orgId: any, role: String) {
+    this.storage.set("userRole", role);
+    this.storage.set("orgName", orgName);
+    this.storage.set("orgId", orgId);
+  }
+
+  public getUserName() {
+    return this.storage.get("userName");
+  }
+
+  public getStorageService(): StorageService {
+    return this.storage;
+  }
 
 }

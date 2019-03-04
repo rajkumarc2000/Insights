@@ -22,7 +22,7 @@ import { AgentMappingLabel } from '@insights/app/modules/admin/businessmapping/a
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
-
+import { DataSharedService } from '@insights/common/data-shared-service';
 
 @Component({
   selector: 'app-businessmapping',
@@ -48,6 +48,7 @@ export class BusinessMappingComponent implements OnInit {
   selectedMappingAgent: any = undefined;
   subHeading: String = "";
   now: any;
+  currentUserName: String;
   masterToolPropertiesData: any;
   actionType: any;
   extraKeyPatternArray = ['adminuser', 'inSightsTime', 'categoryName',
@@ -55,7 +56,8 @@ export class BusinessMappingComponent implements OnInit {
   additionalProperties = ['inSightsTime', 'categoryName', 'inSightsTimeX', 'toolName',
     'uuid', 'type', 'businessmappinglabel', 'propertiesString', 'id', 'deleted', 'adminuser'];
   unwantedLabel = ['businessmappinglabel', 'propertiesString', 'id', 'type', 'deleted']
-  constructor(private businessMappingService: BusinessMappingService, public messageDialog: MessageDialogService) {
+  constructor(private businessMappingService: BusinessMappingService, public messageDialog: MessageDialogService,
+    private dataShare: DataSharedService, ) {
     this.gatToolInfo();
   }
 
@@ -66,6 +68,8 @@ export class BusinessMappingComponent implements OnInit {
     this.agentDataSource = [];
     this.selectedMappingAgent = undefined;
     this.now = new Date();
+    this.currentUserName = this.dataShare.getUserName();
+    console.log(this.currentUserName);
   }
 
   // Loads Register Agent List
@@ -288,7 +292,7 @@ export class BusinessMappingComponent implements OnInit {
             this.agentPropertyList['toolName'] = this.selectedAgent.toolName;
             this.agentPropertyList['categoryName'] = this.selectedAgent.categoryName;
             this.agentPropertyList['businessmappinglabel'] = this.label;
-            this.agentPropertyList['adminuser'] = 'admin';
+            this.agentPropertyList['adminuser'] = this.currentUserName;//'admin'
             this.agentPropertyList['inSightsTimeX'] = this.now;
             this.agentPropertyList['inSightsTime'] = this.now.getTime();
             agentBMparameter = JSON.stringify(this.agentPropertyList);

@@ -63,12 +63,13 @@ export class DataArchivingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataShare.currentUser.subscribe(user => this.currentUserName = user)
+    //this.dataShare.currentUser.subscribe(user => this.currentUserName = user)
+    this.currentUserName = this.dataShare.getUserName();
     console.log(this.currentUserName);
     this.setInitailData();
   }
 
-  async  listData() {
+  async listData() {
 
     this.setInitailData();
     this.serviceResponseForList = await this.dataArchivingService.listDatapurgingdata("DATAPURGING");

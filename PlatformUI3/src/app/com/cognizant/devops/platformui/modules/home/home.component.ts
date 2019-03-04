@@ -73,6 +73,7 @@ export class HomeComponent implements OnInit {
   leftNavWidthpx: number;
   displayLandingPage: boolean = false;
   currentUserOrgs: any;
+  userResponse: any;
   insightsCustomerLogo: any;
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
@@ -114,31 +115,36 @@ export class HomeComponent implements OnInit {
     this.isExpanded = !this.isExpanded
   }
 
-  public getInformationFromGrafana() {
+  public async getInformationFromGrafana() {
     let currentUserResponce: any;
     let self = this;
-    this.grafanaService.getGrafanaCurrentOrgAndRole().then(
-      function (data) {
-        self.grafanaResponse = data;
-        //console.log("grafanaResponse " + JSON.stringify(self.grafanaResponse))
-
-        if (self.grafanaResponse.grafanaCurrentOrgRole === 'Admin') {
-          self.showAdminTab = true;
-        } else {
-          self.showAdminTab = false;
+    this.userResponse = await this.grafanaService.getUsers()
+    console.log(" In user response " + JSON.stringify(this.userResponse));
+    if (this.userResponse.data != undefined) {
+      self.userName = self.userResponse.data.name != undefined ? self.userResponse.data.name.replace(/['"]+/g, '') : "";
+      self.userCurrentOrg = self.userResponse.data.orgId;
+      self.dataShare.setUserName(self.userName);
+    }
+    this.currentUserOrgs = await this.grafanaService.getCurrentUserOrgs();
+    console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
+    if (this.currentUserOrgs.data != undefined) {
+      for (let orgData of this.currentUserOrgs.data) {
+        if (orgData.orgId == self.userCurrentOrg) {
+          self.selectedOrg = orgData.name;
+          self.userRole = orgData.role;
+          self.selectedOrgName = this.getSelectedOrgName(self.selectedOrg);
         }
-        self.cookieService.set('grafanaRole', self.grafanaResponse.grafanaCurrentOrgRole);
-        self.cookieService.set('grafanaOrg', self.grafanaResponse.grafanaCurrentOrg);
-        if (self.grafanaResponse != undefined) {
-          if (self.grafanaResponse.userName != undefined) {
-            self.userName = self.grafanaResponse.userName.replace(/['"]+/g, '');
-            self.dataShare.changeUser(self.userName);
-          }
-          self.userRole = self.grafanaResponse.grafanaCurrentOrgRole;
-          self.userCurrentOrg = self.grafanaResponse.grafanaCurrentOrg;
-        }
-        self.loadorganizations();
-      });
+      }
+      self.dataShare.setOrgAndRole(self.selectedOrg, self.userCurrentOrg, self.userRole);
+      console.log(self.userRole.toString() + "   " + self.userCurrentOrg);
+      self.cookieService.set('grafanaRole', self.userRole.toString());
+      self.cookieService.set('grafanaOrg', self.userCurrentOrg);
+    } else {
+      //console.log(" in else of this.currentUserOrgs.data != undefined ")
+      self.router.navigate(['/login']);
+    }
+    this.loadorganizations();
+    this.loadMenuItem();
   }
 
 
@@ -146,27 +152,11 @@ export class HomeComponent implements OnInit {
   public async loadorganizations() {
     var self = this;
 
-    this.currentUserOrgs = await this.grafanaService.getCurrentUserOrgs();
-    //console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
-    if (this.currentUserOrgs.data != undefined) {
-      for (let orgData of this.currentUserOrgs.data) {
-        if (orgData.orgId == self.userCurrentOrg) {
-          self.selectedOrg = orgData.name;
-          self.selectedOrgName = this.getSelectedOrgName(self.selectedOrg);
-        }
-      }
-    } else {
-      //console.log(" in else of this.currentUserOrgs.data != undefined ")
-      self.router.navigate(['/login']);
-    }
-
-    let userResponse = await this.grafanaService.getUsers()
-
     if (this.currentUserOrgs.data != undefined) {
       var orgDataArray = this.currentUserOrgs.data;
       this.orgList = orgDataArray;
-      if (userResponse.data != undefined) {
-        var grafanaOrgId = userResponse.data.orgId;
+      if (this.userResponse.data != undefined) {
+        var grafanaOrgId = this.userResponse.data.orgId;
         //console.log(grafanaOrgId);
       }
       for (var key in this.orgList) {
@@ -182,9 +172,7 @@ export class HomeComponent implements OnInit {
         navItemobj.title = orgDtl.name;
         this.navOrgList.push(navItemobj);
       }
-
     }
-    this.loadMenuItem();
   }
 
 
@@ -196,8 +184,7 @@ export class HomeComponent implements OnInit {
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.selectedOrgName = this.getSelectedOrgName(this.selectedOrg);
-        this.switchOrganizations(item.orgId, item.route);
-
+        this.switchOrganizations(item.orgId, item.route, this.selectedOrgName);
       } else if (item.displayName == 'About') {
         window.open(this.aboutPageURL, "_blank");
       } else if (item.displayName == 'Help') {
@@ -404,7 +391,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  switchOrganizations(orgId, route) {
+  switchOrganizations(orgId, route, orgName) {
     var self = this;
     //console.log("In switch organization " + JSON.stringify(this.currentUserOrgs));
     self.defaultOrg = orgId;
@@ -423,6 +410,7 @@ export class HomeComponent implements OnInit {
         } else {
           self.showAdminTab = false;
         }
+        self.dataShare.setOrgAndRole(orgName, orgId, self.userRole);
         self.cookieService.set('grafanaRole', grafanaCurrentOrgRole);
         self.cookieService.set('grafanaOrg', orgId);
 
