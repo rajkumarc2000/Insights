@@ -109,4 +109,23 @@ table {
     vertical-align: middle;
 }
 
+.leftAlignStyle {
+    text-align: left;
+}
+
+.rowContainer {
+  display:flex;
+  flex-direction:row;                   
+}
+
+.rowContainer > div{
+  flex: 1 1 auto;  
+}
+
+.progressBarStyle {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    overflow: hidden;
+}
 

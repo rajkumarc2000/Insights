@@ -18,6 +18,7 @@ import { NgModule } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {
     MatButtonModule,
     MatMenuModule,
@@ -59,7 +60,8 @@ import {
         MatTabsModule,
         MatTreeModule,
         MatPaginatorModule,
-        MatSortModule        
+        MatSortModule,
+        MatTooltipModule        
     ],
     declarations: []
 })

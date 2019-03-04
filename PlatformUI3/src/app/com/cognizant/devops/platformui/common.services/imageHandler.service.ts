@@ -58,8 +58,6 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('ic_report_problem', "icons/svg/ic_report_problem_24px.svg");
         this.addImage('ic_delete_icon', "icons/svg/actionIcons/Delete_icon_disabled.svg");
         this.addImage('search_icon', "icons/svg/ic_search_24px.svg");
-        this.addImage('blockchain_show_details', "icons/svg/sharp-list_alt-24px.svg");
-        this.addImage('export_to_pdf_icon', "icons/svg/exportToPdf.svg");
         this.addImage('addButton', "icons/svg/buttonIcon/Add.svg");
         this.addImage('startButton', "icons/svg/buttonIcon/sharp-play_circle.svg");
         this.addImage('stopButton', "icons/svg/buttonIcon/sharp-stop.svg");
@@ -72,6 +70,10 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('menuImage', "icons/svg/homePage/menu_white_36.png");
         this.addImage('plus_icon', "icons/svg/auditReporting/Plus.svg");  
         this.addImage('minus_icon', "icons/svg/auditReporting/minus.svg");  
+        this.addImage('active_show_details', "icons/svg/auditReporting/ShowDetails-active.svg");
+        this.addImage('inactive_show_details', "icons/svg/auditReporting/ShowDetails-Inactive.svg");
+        this.addImage('export_to_pdf_icon', "icons/svg/auditReporting/PDFIcon.svg");
+        this.addImage('view_pipe_line', "icons/svg/auditReporting/ViewPipeLine-GREEN.svg");
 
     }
 

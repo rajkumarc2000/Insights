@@ -15,7 +15,7 @@
  *******************************************************************************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatSort, MatPaginator,MatDialog } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
 import { DatePipe } from '@angular/common'
@@ -42,11 +42,10 @@ export interface AssetData {
 })
 export class BlockChainComponent implements OnInit {
   today = new Date();
-  yesterday = new Date();
   maxDateValue: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[];
+  displayedColumns: string[] = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
   dataSource = new MatTableDataSource<AssetData>([]);
   MAX_ROWS_PER_TABLE = 10;
   startDate: string;
@@ -64,15 +63,16 @@ export class BlockChainComponent implements OnInit {
   @ViewChild('startDateMatInput', { read: MatInput }) startDateMatInput: MatInput;
   @ViewChild('endDateMatInput', { read: MatInput }) endDateMatInput: MatInput;
   @ViewChild('assetIdInput', { read: MatInput }) assetIdInput: MatInput;
-  selectedBasePrimeID:string = "";
-  selectedAssetID:string = "";
+  selectedBasePrimeID: string = "";
+  selectedAssetID: string = "";
+  displayProgressBar: boolean = false;
 
 
 
 
-  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe, 
-              private messageDialog: MessageDialogService,private dialog: MatDialog) {
-    this.yesterday.setDate(this.today.getDate() - 1);
+  constructor(private blockChainService: BlockChainService, private datepipe: DatePipe,
+    private messageDialog: MessageDialogService, private dialog: MatDialog) {
+    
   }
 
   ngOnInit() {
@@ -87,10 +87,8 @@ export class BlockChainComponent implements OnInit {
   //Method gets invoked when search button is clicked
   searchAllAssets() {
     this.searchCriteria = "";
-    /*if (this.selectedOption === undefined) {      
-      this.messageDialog.showApplicationsMessage("Please select a search criteria.","ERROR");
-      return;
-    }*/
+    this.selectedAssetID = "";
+    this.selectedBasePrimeID = "";    
     if (this.selectedOption == "searchByDates") {
       if (this.startDateInput === undefined || this.endDateInput === undefined) {
         this.messageDialog.showApplicationsMessage("Please select both start date and end date first.", "ERROR");
@@ -101,11 +99,12 @@ export class BlockChainComponent implements OnInit {
         this.messageDialog.showApplicationsMessage("Start date cannot be greater than end date.", "ERROR");
         return;
       }
+      this.displayProgressBar = true;
+      this.noSearchResultFlag = false;
+      this.showSearchResult = false;
       this.blockChainService.getAllAssets(this.startDate, this.endDate)
         .then((data) => {
-          console.log(" date range server response >>");
-          console.log(data.status);
-          console.log(data.message);
+          this.displayProgressBar = false;
           if (data.status === "failure") {
             console.log("inside failure loop");
             this.noSearchResultFlag = true;
@@ -117,7 +116,7 @@ export class BlockChainComponent implements OnInit {
             console.log(" success server response >>");
             console.log(data);
             this.dataSource.data = data.data;
-            this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+            //this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
             this.showSearchResult = true;
             this.noSearchResultFlag = false;
             this.searchCriteria = this.startDateFormatted + " to " + this.endDateFormatted;
@@ -131,10 +130,14 @@ export class BlockChainComponent implements OnInit {
         this.messageDialog.showApplicationsMessage("Please provide Input Asset ID.", "ERROR");
         return;
       } else {
+        this.displayProgressBar = true;
+        this.noSearchResultFlag = false;
+        this.showSearchResult = false;
         this.blockChainService.getAssetInfo(encodeURIComponent(this.assetID))
           .then((data) => {
             console.log(" assetId server response >>");
             console.log(data);
+            this.displayProgressBar = false;
             if (data.status === "failure") {
               this.noSearchResultFlag = true;
               this.showSearchResult = false;
@@ -145,7 +148,7 @@ export class BlockChainComponent implements OnInit {
               console.log("server response >>");
               console.log(data);
               this.dataSource.data = data.data;
-              this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+              //this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
               this.showSearchResult = true;
               this.noSearchResultFlag = false;
               this.searchCriteria = this.assetID;
@@ -159,7 +162,7 @@ export class BlockChainComponent implements OnInit {
   }
 
   //When radio button selection changes to select search criteria
-  searchCriteriaChange($event: MatRadioChange) {    
+  searchCriteriaChange($event: MatRadioChange) {
     if ($event.value == "searchByDates") {
       this.assetIdInput.value = '';
       this.assetID = "";
@@ -192,14 +195,14 @@ export class BlockChainComponent implements OnInit {
     this.startDateInput = event.value;
     this.startDate = this.datepipe.transform(this.startDateInput, 'yyyy-MM-dd');
     this.startDateFormatted = this.datepipe.transform(this.startDateInput, 'MM/dd/yyyy');
-    this.validateDateRange();    
+    this.validateDateRange();
   }
 
   getEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.endDateInput = event.value;
     this.endDate = this.datepipe.transform(this.endDateInput, 'yyyy-MM-dd');
     this.endDateFormatted = this.datepipe.transform(this.endDateInput, 'MM/dd/yyyy');
-    this.validateDateRange();    
+    this.validateDateRange();
   }
 
   /* 
@@ -229,19 +232,27 @@ export class BlockChainComponent implements OnInit {
   }
 
   //Displays Asset Details Dialog box
-  showAssetDetailsDialog() {    
+  showAssetDetailsDialog() {
+    if (this.selectedAssetID =="" && this.selectedBasePrimeID =="") {
+      return;
+    }
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
       panelClass: 'AssetDetailsDialog',
-      height: '100%',
-      width: '100%',
+      height: '900px',
+      width: '1200px',
       disableClose: true,
-      data: { basePrimeID:this.selectedBasePrimeID, assetID: this.selectedAssetID},
+      position: { top: '0px', left: '100px', right: '0px', bottom: '0px' },
+      data: { basePrimeID: this.selectedBasePrimeID, assetID: this.selectedAssetID },
     });
   }
 
-  populateBasePrimeID($event:MatRadioChange, assetID:string) {      
-    this.selectedBasePrimeID = $event.value;   
+  populateBasePrimeID($event: MatRadioChange, assetID: string) {
+    this.selectedBasePrimeID = $event.value;
     this.selectedAssetID = assetID;
+  }
+
+  applyAssetFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

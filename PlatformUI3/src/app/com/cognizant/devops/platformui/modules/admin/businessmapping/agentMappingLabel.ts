@@ -14,13 +14,29 @@
  * the License.
  ******************************************************************************/
 
-package com.cognizant.devops.platformservice.rest.datadictionary.service;
+export class AgentMappingLabel {
+    id: number;
+    key: string;
+    value: any;
+    label: string;
+    editProperties?: boolean = true;
 
-public interface DataDictionaryConstants {
 
-	String GET_TOOL_PROPERTIES_QUERY = "MATCH(n:__CategoryName__:__ToolName__:DATA) return keys(n) order by n.inSightsTime desc limit 1";
-	String GET_TOOLS_RELATIONSHIP_QUERY = "MATCH (n:__StartToolCategory__:__StartToolName__)-[r]->"
-			+ "(m:__EndToolCategory__:__EndToolName__) return type(r),r LIMIT 1";
-	String UUID = "uuid";
-	String EXEC_ID = "execId";
+    public setData(id, key, value, label, editProperties): void {
+        this.id = id;
+        this.key = key;
+        this.value = value;
+        this.label = label;
+        this.editProperties = editProperties;
+    }
+    constructor(id, key, value, label, editProperties) {
+        this.id = id;
+        this.key = key;
+        this.value = value;
+        this.label = label;
+        this.editProperties = editProperties;
+    }
+    public setValue(value) {
+        this.value = value;
+    }
 }

@@ -72,7 +72,7 @@ public class InferenceDataProviderController{
 		}
 		return result;
 	}
-	@RequestMapping(value = "/inferenceData/testDataSource", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/data/testDataSource", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public JsonObject checkInferenceDS() {
 		JsonObject result = new JsonObject();
 		result.addProperty("result", "success");

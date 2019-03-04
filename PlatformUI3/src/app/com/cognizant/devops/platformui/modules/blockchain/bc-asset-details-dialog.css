@@ -79,29 +79,209 @@ li:last-child {
       font-size: 14px !important;      
 }
 
-tr.example-detail-row  {
+tr.asset-details-detail-row  {
     height: 0px !important;
 }
   
-tr.example-element-row:not(.example-expanded-row):hover {
+tr.asset-details-element-row:not(.asset-details-expanded-row):hover {
     background: #f5f5f5;
 }
 
-tr.example-element-row:not(.example-expanded-row):active {
+tr.asset-details-element-row:not(.asset-details-expanded-row):active {
     background: #efefef;
 }
 
-.example-element-row td {
+.asset-details-element-row td {
     border-bottom-width: 0;
 }
 
-.example-element-detail {
+.asset-details-element-detail {
     overflow: hidden;
     display: flex;
+    padding-left: 20px;
 }  
 
-.example-element-description {
-    padding: 16px;
+.asset-details-element-description {
+    /* overflow: hidden;
+    display: flex; */
+    padding: 10px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display:inline-block;
+    white-space:nowrap;
+}
+ 
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+.scrollData{
+    max-height: 82vh;
+    overflow-y:auto;
+    overflow-x:auto;
+    padding-bottom: 10px;
+}
+
+.leftAlignStyle {
+    text-align: left;
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.rowContainer {
+  display:flex;
+  flex-direction:row;                   
+}
+
+.rowContainer > div{
+  flex: 1 1 auto;  
+}
+
+.rightAlignStyle {
+    text-align: right;
+    padding-right: 16px; 
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.progressBarStyle {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    overflow: hidden;
+    margin-top:100px;
+    padding-top: 100px;
+}
+
+/***
+**
+**svg pipeline css
+*/
+
+.PWGx-pipeline-node-terminal{
+	fill: #949393;
+}
+
+.PWGx-pipeline-connector {
+	stroke :#949393
+}
+
+.PWGx-svgResultStatusSolid{
+	transform: translateZ(0);
+}
+
+circle.halo{
+	stroke: white;
+	fill:none;
+}
+
+.PWGx-svgResultStatusSolid > circle.statusColor.success {
+	fill : #8cc04f;
+}
+
+.PWGx-result-status-glyph {
+	stroke: none;
+	fill:#fff;
+}
+
+.PWGx-svgResultStatusSolid > circle.statusColor.failure {
+		fill: #d54c53;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:not(svg), :not(foreignObject) > svg {
+    transform-origin: 0px 0px;
+}
+
+.letter-fix {
+	/* overflow: hidden; */
+	overflow-wrap: break-word;
+	position: absolute;
+	width: 113px;
+	max-height: 35px;
+	text-align: center;
+	margin-left: -57px;
+	top: 15px;
+	font-size:13px;
 }
   
+.model-position {
+    /* overflow: hidden; */
+    overflow-wrap: break-word;
+    top: 70px;
+    left: 94px;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    text-align: left;
+    z-index: 999;
+    background-color: #ffffff;
+}
+.margin_auto {
+	 margin: auto;
+}
+
+.PWGx-pipeline-small-label{
+	font-size:65%;
+}
+
+.PWGx-PipelineGraph-container * {
+	box-sizing: border-box;
+}
+
+	
+.dialog-model {
+    position: absolute;
+    top: 10px;
+    margin: auto;
+    border: 3px solid #2a1de8;
+    width: auto;
+    right: 0;
+    left: 0;
+    box-shadow: 0px 0px 8px 0px black;
+    border-radius: 5px; 
+    font-size: 12px;
+}
+
+.dialog-model h4 {
+  background: blue;
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+}
+
+.dialog-model h4 span {
+  /* float: right; */
+  cursor: pointer;
+  font-size: 12px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.dialog-model .body-content {
+  padding: 10px;
+}
+
+
+
+
  

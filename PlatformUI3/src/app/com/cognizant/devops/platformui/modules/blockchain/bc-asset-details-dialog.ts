@@ -19,6 +19,7 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AssetData } from '@insights/app/modules/blockchain/blockchain.component';
+import {saveAs as importedSaveAs} from "file-saver"; 
 
 export interface AssetHistoryData {
     assetID: string;
@@ -36,9 +37,10 @@ export interface AssetHistoryData {
     styleUrls: ['./bc-asset-details-dialog.css'],
     animations: [
         trigger('detailExpand', [
-            state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+            state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
             state('expanded', style({ height: '*' })),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+            transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
         ]),
     ]
 })
@@ -54,7 +56,12 @@ export class AssetDetailsDialog implements OnInit {
     masterHeader = new Map<String, String>();
     finalHeaderToShow = new Map<String, String>();
     headerSet = new Set();
-   // accordian_icon = "plus_icon";
+    pdfData;
+    displayProgressBar:boolean = false;
+    pipeline = false;
+    list = [];
+    showModel = null;
+    pipeheight=0;
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
@@ -84,25 +91,29 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     getAssetHistoryDetails() {
+        this.displayProgressBar = true;
         this.blockChainService.getAssetHistory(this.parentData.basePrimeID)
             .then((data) => {
                 console.log("asset history respose>>>");
                 console.log(data);
-                this.assetHistoryDataSource.data = data.data;
-                var historyData = data.data;
+                this.displayProgressBar = false;
+                var historyData = data.data;                
+                historyData.sort((value1,value2)=> {
+                    // Ascending order
+                    return(new Date(value1.timestamp).getTime() - new Date(value2.timestamp).getTime());
+                });
+                // Assign asset history details data sorted by timestamp in ascending order
+                this.assetHistoryDataSource.data = historyData;
+                this.pdfData = data;
                 for (var index in historyData) {
                     var eachObject = historyData[index];
                     for (var key in eachObject) {
                         if (!this.masterHeader.has(key)) {
                             this.headerSet.add(key);
                         }
-
                     }
-
                 }
-                ///console.log("header set size: >>"+ this.headerSet.size);
-                this.headerArrayDisplay = Array.from(this.headerSet);
-                //console.log("header array display size: >>"+ this.headerArrayDisplay.length);
+                this.headerArrayDisplay = Array.from(this.headerSet);                
                 this.assetHistoryDataSource.sort = this.sort;
                 this.assetHistoryDataSource.paginator = this.paginator;
             });
@@ -112,17 +123,92 @@ export class AssetDetailsDialog implements OnInit {
         this.dialogRef.close();
     }
 
-    /* toggleIcon(row: AssetHistoryData) {
-        console.log("selected row: >>");
-        console.log(row);
-        console.log("this.expandedElement :>>");
-        console.log(this.expandedElement);
-        if (this.expandedElement === row) {
-            this.accordian_icon = 'minus_icon';
-        } else {
-            this.accordian_icon = 'plus_icon';
-        }
-    } */
+    getLevel2Properties(key:string, data:AssetHistoryData) {
+        let value:string = data[key];
+        if (value != undefined && value !== null && value!= null && value !="null")  {
+            return key + ": " + value.trim();
+        } 
+        return "";
+    }
+
+    exportToPdf() {        
+        this.blockChainService.exportToPdf(this.pdfData)
+            .subscribe((data) => {
+                var pdfFileName = 'Traceability_report.pdf';
+                importedSaveAs(data, pdfFileName);
+            },
+            error => {
+                console.log(error);
+                });              
+    }
+
+    applyAssetDetailsFilter(filterValue: string) {
+        this.assetHistoryDataSource.filter = filterValue.trim().toLowerCase();
+    }  
+
+
+    workflow(){
+        //this.pdfData
+        this.pipeline=true;
+        let custMap = {};
+        let fMap = {};
+        let fArray = [];
+        this.pdfData.data.map(x => {
+            x["moddate"] = new Date(x.timestamp);
+            if (custMap[x.toolName]) {
+                let list = [...custMap[x.toolName]];
+                list.push(x);
+                custMap[x.toolName] = this.sortArray(list);
+
+            } else {
+                let lst = []
+                lst.push(x)
+                custMap[x.toolName] = lst
+            }
+        });
+        console.log(custMap);
+
+        let processorder = ["JIRA","GIT","JENKINS","NEXUS"];
+        processorder.forEach(tool => {
+        let obj = Object.keys(custMap).filter(f => f.toLowerCase() === tool.toLowerCase());
+        if (obj.length > 0) {
+            let val = {
+              point: tool,
+              child: []
+            }
+            custMap[tool].forEach(child => {
+             val.child.push({ point: child })
+          })
+          this.list.push(val);
+          }
+        });
+        console.log("lists :",this.list);
+        
+        this.list.map((l) => {
+          this.pipeheight = this.pipeheight < l.child.length ? l.child.length : this.pipeheight;
+        })
+        console.log('pipeheight', this.pipeheight);
+        console.log('lists', this.list);
+
+    }
+    
+    sortArray(list) {
+        return list.sort((x, y) => {
+            return x.moddate - y.moddate;
+        })
+    } 
+
+    eventGet(index) {
+        console.log(index);
+        this.showModel = index;
+    }
+
+    eventLeave() {
+        this.showModel = null;
+    }
+    
+
+   
 
 
 }    

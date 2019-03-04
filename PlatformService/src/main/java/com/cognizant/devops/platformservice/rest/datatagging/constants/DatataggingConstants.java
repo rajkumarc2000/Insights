@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.cognizant.devops.platformservice.rest.datatagging.constants;
 
-@Deprecated
+
 public final class DatataggingConstants {
 
 	public static final String VALUE = "value";
