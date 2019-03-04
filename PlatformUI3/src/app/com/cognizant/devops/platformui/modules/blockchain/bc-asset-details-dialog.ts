@@ -37,9 +37,10 @@ export interface AssetHistoryData {
     styleUrls: ['./bc-asset-details-dialog.css'],
     animations: [
         trigger('detailExpand', [
-            state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+            state('collapsed, void', style({ height: '0px', minHeight: '0', display: 'none' })),
             state('expanded', style({ height: '*' })),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+            transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
         ]),
     ]
 })
@@ -60,6 +61,7 @@ export class AssetDetailsDialog implements OnInit {
     pipeline = false;
     list = [];
     showModel = null;
+    pipeheight=0;
 
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
@@ -166,19 +168,28 @@ export class AssetDetailsDialog implements OnInit {
         });
         console.log(custMap);
 
-        Object.keys(custMap).forEach(parent => {
-          let obj = {
-              point: parent,
+        let processorder = ["JIRA","GIT","JENKINS","NEXUS"];
+        processorder.forEach(tool => {
+        let obj = Object.keys(custMap).filter(f => f.toLowerCase() === tool.toLowerCase());
+        if (obj.length > 0) {
+            let val = {
+              point: tool,
               child: []
+            }
+            custMap[tool].forEach(child => {
+             val.child.push({ point: child })
+          })
+          this.list.push(val);
           }
-          custMap[parent].forEach(child =>{
-            obj.child.push({point: child})
-           })
-           console.log(this.list);
-           console.log(obj);
-           this.list.push(obj);
+        });
+        console.log("lists :",this.list);
+        
+        this.list.map((l) => {
+          this.pipeheight = this.pipeheight < l.child.length ? l.child.length : this.pipeheight;
         })
+        console.log('pipeheight', this.pipeheight);
         console.log('lists', this.list);
+
     }
     
     sortArray(list) {
@@ -195,6 +206,7 @@ export class AssetDetailsDialog implements OnInit {
     eventLeave() {
         this.showModel = null;
     }
+    
 
    
 

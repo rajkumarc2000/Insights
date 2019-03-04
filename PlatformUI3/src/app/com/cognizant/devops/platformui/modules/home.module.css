@@ -196,7 +196,7 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     padding-left: 180px; 
 }
 
-.gridheadercenter{    
+/* .gridheadercenter{    
     margin-left: 50px; 
     text-align: center;
     font-weight: bold;
@@ -207,7 +207,18 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     padding-bottom: 50px; 
     padding-left: 70px;
 }
+ */
 
+
+ .gridheadercenter{    
+    font-weight: bold;
+    font-size: 1.82vmax;
+    text-decoration: none;
+    color: white; 
+    width: 120%;
+    text-align: center;
+    padding-top: 5px;
+}
 .iframeCss {
     overflow-y:auto !important;
     overflow-x: hidden !important;
@@ -274,6 +285,46 @@ tr.mat-header-row {
 }
 .mat-paginator {
     display: inline;
+}
+.closeIconCss{
+        padding-right: 20px;
+        width: 20%
+    }
+
+    .closeiconConf{
+        height:50px;
+        width: 40px;
+        text-align: right; 
+        color:white;
+        margin-left: 50%;
+    }
+
+    .colouricon {
+        background-repeat: no-repeat;
+        display: inline-block;
+        fill: white !important;
+        height: 70px !important;
+        width: 40px !important; 
+        padding-left: 30px;
+        padding-top: -20px !important;
+    }
+
+
+
+    .AppDialogIconCss{
+        margin-top: -10px !important;
+    }
+.arrange-horizontally-Dialog {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    height: 25%;
+    width: 100%;
+    background:  #5C068C ;
 }
 
 

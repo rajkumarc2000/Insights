@@ -43,7 +43,7 @@
             </mat-form-field>
         </div>
         <div layout layout-align="right" class="rightAlignStyle">
-                <a>
+                <a style="padding-right: 10px;">
                     <mat-icon svgIcon="view_pipe_line" [ngStyle]="{height: '45px', width: '35px'}" matTooltip="Pipeline View" matTooltipPosition="above"
                             (click)="workflow()">
                     </mat-icon>
@@ -110,7 +110,8 @@
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
         <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                <div class="asset-details-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="asset-details-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+                      [style.height]="element.expanded ? 'unset' : '0 !important'">
 
                     <div class="asset-details-element-description scrollData" *ngFor="let column of headerArrayDisplay">
                         {{getLevel2Properties(column, element)}}
@@ -140,10 +141,9 @@
             </li>
         </ul>
     </div>
-    <!--125 + (12 * 70)-->
-    <!--253.75 + ((list.length) * 120)-->
-<div class="PWGx-PipelineGraph" style="position: relative; overflow: auto;height:600px;" *ngIf="list?.length > 0">
-        <svg style="height: 600px;overflow: auto;" >
+    
+<div class="PWGx-PipelineGraph" style="position: relative; overflow: auto;height:621px;" *ngIf="list?.length > 0">
+        <svg  [attr.width.px]="(253.75 + ((list.length) * 120))" [attr.height.px]="125 + (pipeheight * 70)">
       
           <g transform="translate(40,55)" class="PWGx-pipeline-node" *ngIf="list[0]?.child?.length >= 2">
             <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
