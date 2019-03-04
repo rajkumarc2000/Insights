@@ -29,8 +29,8 @@ export class MessageDialogService {
     public showApplicationsMessage(message, type): MatDialogRef<ApplicationMessageDialog> {
         const dialogRef = this.dialog.open(ApplicationMessageDialog, {
             panelClass: 'DialogBox',
-            width: '50%',
-            height: '30%',
+            width: '40%',
+            height: '32%',
             disableClose: true,
             data: {
                 title: "Message",

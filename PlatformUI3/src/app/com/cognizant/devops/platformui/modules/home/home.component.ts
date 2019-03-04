@@ -143,6 +143,11 @@ export class HomeComponent implements OnInit {
       //console.log(" in else of this.currentUserOrgs.data != undefined ")
       self.router.navigate(['/login']);
     }
+    if (self.userRole === 'Admin') {
+      self.showAdminTab = true;
+    } else {
+      self.showAdminTab = false;
+    }
     this.loadorganizations();
     this.loadMenuItem();
   }

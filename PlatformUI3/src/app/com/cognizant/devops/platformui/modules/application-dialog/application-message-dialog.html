@@ -38,8 +38,8 @@
 </div> -->
 
 
-<div class="arrange-horizontally-Dialog">
-    <div width="25%" class="AppDialogIconCss">
+<div [style.height.%]="25" class="arrange-horizontally-Dialog">
+    <div width="30%" class="AppDialogIconCss">
         <mat-icon class="colouricon" [svgIcon]="svgCustomIcon"></mat-icon>
     </div>
     <div class="gridheadercenter">
@@ -52,7 +52,6 @@
         </a>
     </div>
 </div>
-
 
 <mat-dialog-content class="textPadding">
     <div [style.color]="colorCode" [innerHTML]="data.message"> </div>
