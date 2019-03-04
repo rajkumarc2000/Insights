@@ -104,6 +104,7 @@
   width: 100%;
   padding-left: 200px !important;
   padding-right: 16px !important;
+  table-layout: auto;
 }
 
 .logoTable{
@@ -111,6 +112,9 @@
   width: 100%;
   padding-left: 16px !important;
   padding-right: 16px !important; 
+  table-layout: auto;
+   margin-right: 26px;
+  
 }
 
 .roleName{
@@ -142,9 +146,7 @@
     padding-bottom: 10px !important;
 }
 .bottomButton{
-    border-bottom-style:solid;
-    border-bottom-color:#9e9a9a;
-    border-bottom-width:2px;
+   
     border-top-style: solid;
     border-color:#9e9a9a;
     border-top-width: 2px;
@@ -152,6 +154,14 @@
     padding-top: 5px;
     height: 21%;
 }
+
+.bottomSeperator{
+    border-bottom-style:solid;
+    border-bottom-color:#9e9a9a;
+    border-bottom-width:2px;
+    display: list-item;
+} 
+
 .customerLogo{
   height: 50%;
   padding-top: 15px;
@@ -287,6 +297,7 @@
 .toolbar {
     z-index: 1;
 }
+
 
 .mat-icon{
   align-items: flex-end;
@@ -444,6 +455,7 @@
   display:block;
   align-items: center;
   cursor: pointer;
+  margin-top: 12px !important;
 }
 
 }
@@ -459,6 +471,7 @@
   display:block;
   align-items: center;
   cursor: pointer;
+  margin-top: 12px !important;
 }
 
 .mat-list-item.active
@@ -494,7 +507,7 @@
 
   .logoSetting{
     margin-left: -1vmax;
-    margin-right: 26px;
+   
     margin-top: 2px;
     height: 10%;
   }
@@ -552,12 +565,12 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    margin-left: 120px;
+    /* margin-left: 120px; */
 }
-
+/* 
 .bottomButton{
   height: 25%;
-}
+} */
 .mat-list-text-bottom
 {
   font-size: 20px !important;
@@ -576,6 +589,8 @@
   display:block;
   align-items: center;
   cursor: pointer;
+  margin-top: 12px !important
+  
 }
 
 
