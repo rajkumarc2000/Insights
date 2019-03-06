@@ -288,11 +288,11 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		try {
 		/*JsonObject json = (JsonObject) parser.parse(agentMappingJson);
 		String uuid= json.get("uuid").getAsString();  your changes*/
-		log.debug("arg0 uuid  "+uuid);
+		//log.debug("arg0 uuid  "+uuid);
 		String cypherQuery = "MATCH (n:METADATA:BUSINESSMAPPING) where n.uuid= '"+uuid+"'  detach delete n";
-		log.debug(cypherQuery);
+		//log.debug(cypherQuery);
 		graphresponce=  dbHandler.executeCypherQuery(cypherQuery);
-		log.debug(graphresponce);
+		//log.debug(graphresponce);
 	} catch (Exception e) {
 		// TODO Auto-generated catch block  GraphDB
 		e.printStackTrace();

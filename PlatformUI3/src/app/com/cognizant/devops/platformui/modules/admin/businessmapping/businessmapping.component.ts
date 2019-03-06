@@ -341,6 +341,12 @@ export class BusinessMappingComponent implements OnInit {
 
   public validateData(): any {
     let validationMessage = '';
+    var labelArray = this.label.split(":");
+    //console.log(labelArray)
+    if (labelArray.indexOf("") > -1) {
+      //console.log("blank space in label");
+      validationMessage = "Please check label,No black space allowed, It should be like Label1:Label2:Label3 ";
+    }
     if (this.actionType == "add") {
       for (let data of this.agentDataSource.data) {
         if (data.businessmappinglabel == this.label) {

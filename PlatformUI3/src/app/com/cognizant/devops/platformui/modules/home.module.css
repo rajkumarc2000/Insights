@@ -262,16 +262,18 @@ tr.mat-header-row {
     float: right;
     padding-right: 30px;
     color: #5C068C;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
+    padding-top: 0px;
+    padding-bottom: 21px
 }
 .textPadding{
-  padding-left:70px ;
+  padding-left:30px ;
   height: 35%;
   padding-right:30px;
 }
 
 .textPaddingConf{
-     padding-left:70px ;
+     padding-left:30px ;
      padding-right: 50px;
 }
 
@@ -306,14 +308,13 @@ tr.mat-header-row {
     background-repeat: no-repeat;
     display: inline-block;
     fill: white !important;
-    height: 70px !important;
+    height: 50px !important;
     width: 40px !important; 
     padding-left: 30px;
-    padding-top: -20px !important;
 }
-.AppDialogIconCss{
+/*.AppDialogIconCss{
     margin-top: -10px !important;
-}
+}*/
 .arrange-horizontally-Dialog {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
