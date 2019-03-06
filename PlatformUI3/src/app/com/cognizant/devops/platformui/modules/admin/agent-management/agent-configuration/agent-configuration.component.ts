@@ -147,7 +147,7 @@ export class AgentConfigurationComponent implements OnInit {
         }
       }
     } else {
-      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
+      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again.";
       self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
     }
     self.showThrobber = false;

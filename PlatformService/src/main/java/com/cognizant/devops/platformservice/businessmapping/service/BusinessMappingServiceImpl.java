@@ -22,11 +22,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cognizant.devops.platformcommons.constants.ErrorMessage;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
@@ -251,9 +247,6 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		List<JsonObject> nodeProperties = new ArrayList<>();
 		try {
 			Neo4jDBHandler dbHandler = new Neo4jDBHandler();
-			
-			//dbHandler.executeCypherQuery("CREATE CONSTRAINT ON (n:METADATA) ASSERT n.metadata_id  IS UNIQUE");
-			//String query = "UNWIND {props} AS properties " + "CREATE (n:METADATA:BUSINESSMAPPING) " + "SET n = properties"; //DATATAGGING
 			JsonParser parser = new JsonParser(); 
 			JsonObject json = (JsonObject) parser.parse(agentMappingJson);
 			String uuid= json.get("uuid").getAsString();
@@ -286,6 +279,27 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 		JsonArray asJsonArray = rows.getAsJsonArray();
 		return asJsonArray;
 		/*buildExistingBuToolCombinationList(combo, asJsonArray);DATATAGGING*/
+	}
+
+	@Override
+	public JsonObject deleteToolsMappingLabel(String uuid) {
+		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
+		GraphResponse graphresponce=new GraphResponse();
+		try {
+		/*JsonObject json = (JsonObject) parser.parse(agentMappingJson);
+		String uuid= json.get("uuid").getAsString();  your changes*/
+		log.debug("arg0 uuid  "+uuid);
+		String cypherQuery = "MATCH (n:METADATA:BUSINESSMAPPING) where n.uuid= '"+uuid+"'  detach delete n";
+		log.debug(cypherQuery);
+		graphresponce=  dbHandler.executeCypherQuery(cypherQuery);
+		log.debug(graphresponce);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block  GraphDB
+		e.printStackTrace();
+		return PlatformServiceUtil.buildFailureResponse(e.getMessage());
+	}
+	// TODO Auto-generated method stub
+	return PlatformServiceUtil.buildSuccessResponseWithData(graphresponce);
 	}
 
 }

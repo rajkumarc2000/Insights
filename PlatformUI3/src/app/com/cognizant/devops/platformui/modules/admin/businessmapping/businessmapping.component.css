@@ -195,3 +195,8 @@ td.mat-cell{
   color: #ff8f1c !important;
   font-size: 13px !important;
 }
+
+.propertiesLabel{
+  color:#FF8F1C;
+  padding:2px
+}

@@ -218,6 +218,7 @@ mat-radio-button.mat-accent .mat-radio-inner-circle {
     width: 120%;
     text-align: center;
     padding-top: 5px;
+    margin-right: 30px;
 }
 .iframeCss {
     overflow-y:auto !important;
@@ -265,7 +266,8 @@ tr.mat-header-row {
 }
 .textPadding{
   padding-left:70px ;
-  height: 35%
+  height: 35%;
+  padding-right:30px;
 }
 
 .textPaddingConf{

@@ -63,6 +63,11 @@
           save
         </mat-icon>
       </button>
+      <button mat-icon-button [disabled]="!isEditData || (selectedMappingAgent==undefined)" (click)="deleteMapping()">
+        <mat-icon title="Delete " class="mat-icon material-icons" >
+          delete
+        </mat-icon>
+     </button>
     </div>
 
     <div *ngIf="isListView">
@@ -92,6 +97,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
         </table>
       </mat-radio-group>
+      <div *ngIf="agentDataSource.length === 0">No records found</div>
     </div>
 
     <div *ngIf="!isListView">
@@ -152,7 +158,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedToolColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedToolColumns;">
+        <tr mat-row showRow *matRowDef="let row; columns: displayedToolColumns;">
         </tr>
       </table>
     </div>

@@ -64,5 +64,10 @@ export class BusinessMappingService implements IBusinessMappingService {
         return this.restHandler.postWithData("EDIT_TOOL_MAPPING", agentMappingJson, "", { 'Content-Type': 'application/json' }).toPromise();;
     }
 
+    deleteToolMapping(uuid: string) {
+        return this.restHandler.postWithParameter("DELETE_TOOL_MAPPING", { 'uuid': uuid }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+
+    }
+
 }
 

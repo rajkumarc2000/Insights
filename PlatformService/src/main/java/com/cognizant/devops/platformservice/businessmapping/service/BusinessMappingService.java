@@ -31,4 +31,6 @@ public interface BusinessMappingService {
 
 	public JsonObject editToolsMappingLabel(String agentMappingJson);
 
+	public JsonObject deleteToolsMappingLabel(String uuid);
+
 }

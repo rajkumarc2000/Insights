@@ -66,5 +66,11 @@ public class InsightsBusinessMapping {
 		log.debug(" Edit info mapping agent JOSN "+agentMappingJson);
 		return businessMappingService.editToolsMappingLabel(agentMappingJson);
 	}
+	
+	@RequestMapping(value = "/deleteToolsMapping", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public JsonObject deleteToolsMappingLabel(@RequestParam String uuid) throws GraphDBException {
+		log.debug(" delete info mapping agent JOSN "+uuid);
+		return businessMappingService.deleteToolsMappingLabel(uuid);
+	}
 
 }
