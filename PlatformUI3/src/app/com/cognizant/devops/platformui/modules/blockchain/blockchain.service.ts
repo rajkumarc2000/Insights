@@ -55,8 +55,8 @@ export class BlockChainService implements IBlockChainService {
 
     exportToPdf(pdfData):Observable<Blob> {
         var authToken = this.cookieService.get('Authorization');
-        var headers_object = new HttpHeaders();   
-        var EXPORT_TO_PDF = "/PlatformAuditService/traceability/getAuditReport";     
+        var EXPORT_TO_PDF = "/PlatformAuditService/traceability/getAuditReport";
+        var headers_object = new HttpHeaders();                
         headers_object = headers_object.append("Content-Type", "application/json");
         headers_object = headers_object.append("Authorization", authToken);
         return this.httpClient.post(EXPORT_TO_PDF, pdfData, {headers:headers_object, responseType: 'blob'});
