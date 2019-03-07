@@ -65,6 +65,8 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 import { LogoSettingComponent } from '@insights/app/modules/settings/logo-setting/logo-setting.component';
 import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
 import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/logo-setting.service';
+import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
+
 
 
 @NgModule({
@@ -89,7 +91,8 @@ import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/
     ApplicationMessageDialog,
     AddGroupMessageDialog,
     LogoSettingComponent,
-    AssetDetailsDialog
+    AssetDetailsDialog,
+    AssetPipe
   ],
   imports: [
     HomeRouting,
