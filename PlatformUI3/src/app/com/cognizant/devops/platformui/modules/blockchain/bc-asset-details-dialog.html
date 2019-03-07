@@ -29,10 +29,9 @@
 <!-- Displays Progress spinner until we get server response to display result-->
 
 <div *ngIf="displayProgressBar" class="progressBarStyle">
-    <mat-progress-spinner [diameter]="100" color="primary" mode="indeterminate">
-    </mat-progress-spinner>
+     <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner> 
 </div>
-
 
 <div class="scrollData" [hidden]="displayProgressBar">
     <div class="rowContainer">
@@ -132,7 +131,7 @@
 
 <div  class="hide" [class.block]="list?.length > 0 && pipeline">
     <div class="PWGx-PipelineGraph" style="position: relative; overflow: auto;">
-      <svg  [attr.width.px]="(253.75 + ((list.length) * 120))" [attr.height.px]="125 + (pipeheight * 70)">
+      <svg  [attr.width.px]="(253.75 + ((list.length) * 120))" [attr.height.px]="125 + (pipeheight * 70) + 300">
     
         <g transform="translate(40,55)" class="PWGx-pipeline-node" *ngIf="list[0]?.child?.length >= 2">
           <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
@@ -253,7 +252,7 @@
           </div>
         </div>
     
-        <div *ngFor="let ite of item?.child; let j = index">
+        <div *ngFor="let ite of item?.child | slice:1:item?.child?.length; let j = index">
           <div *ngIf="showModel == (i+'-'+j)" class="TruncatingLabel model-position PWGx-pipeline-small-label modal-view"
             [title]="ite.point" [style.top]="(70 * (j+1)) + 'px'" [style.left]="(94 + (i*120)) + 'px'">
             {{ite.point.toolstatus}}
