@@ -97,7 +97,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
         </table>
       </mat-radio-group>
-      <div *ngIf="agentDataSource.length === 0">No records found</div>
+      <div *ngIf="agentDataSource.length == 0">No records found</div>
     </div>
 
     <div *ngIf="!isListView">
