@@ -57,12 +57,12 @@ export class AssetDetailsDialog implements OnInit {
     finalHeaderToShow = new Map<String, String>();
     headerSet = new Set();
     pdfData;
-    displayProgressBar:boolean = false;
+    displayProgressBar = false;
     pipeline = false;
     list = [];
     showModel = null;
     pipeheight=0;
-
+    searchInput = '';
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
         private blockChainService: BlockChainService) {
@@ -123,14 +123,6 @@ export class AssetDetailsDialog implements OnInit {
         this.dialogRef.close();
     }
 
-    getLevel2Properties(key:string, data:AssetHistoryData) {
-        let value:string = data[key];
-        if (value != undefined && value !== null && value!= null && value !="null")  {
-            return key + ": " + value.trim();
-        } 
-        return "";
-    }
-
     exportToPdf() {        
         this.blockChainService.exportToPdf(this.pdfData)
             .subscribe((data) => {
@@ -142,17 +134,19 @@ export class AssetDetailsDialog implements OnInit {
                 });              
     }
 
-    applyAssetDetailsFilter(filterValue: string) {
-        this.assetHistoryDataSource.filter = filterValue.trim().toLowerCase();
+    applyAssetDetailsFilter() {
+        this.assetHistoryDataSource.filter = this.searchInput.trim().toLowerCase();
     }  
 
 
     workflow(){
-        //this.pdfData
-        this.pipeline=true;
+        this.pipeline = !this.pipeline;
+        this.drawPipe();
+    }
+
+    drawPipe() {
+        this.list = [];
         let custMap = {};
-        let fMap = {};
-        let fArray = [];
         this.pdfData.data.map(x => {
             x["moddate"] = new Date(x.timestamp);
             if (custMap[x.toolName]) {
@@ -168,24 +162,24 @@ export class AssetDetailsDialog implements OnInit {
         });
         console.log(custMap);
 
-        let processorder = ["JIRA","GIT","JENKINS","NEXUS"];
+        let processorder = ["JIRA", "GIT", "JENKINS", "NEXUS"];
         processorder.forEach(tool => {
-        let obj = Object.keys(custMap).filter(f => f.toLowerCase() === tool.toLowerCase());
-        if (obj.length > 0) {
-            let val = {
-              point: tool,
-              child: []
+            let obj = Object.keys(custMap).filter(f => f.toLowerCase() === tool.toLowerCase());
+            if (obj.length > 0) {
+                let val = {
+                    point: tool,
+                    child: []
+                }
+                custMap[tool].forEach(child => {
+                    val.child.push({ point: child })
+                })
+                this.list.push(val);
             }
-            custMap[tool].forEach(child => {
-             val.child.push({ point: child })
-          })
-          this.list.push(val);
-          }
         });
-        console.log("lists :",this.list);
-        
+        console.log("lists :", this.list);
+
         this.list.map((l) => {
-          this.pipeheight = this.pipeheight < l.child.length ? l.child.length : this.pipeheight;
+            this.pipeheight = this.pipeheight < l.child.length ? l.child.length : this.pipeheight;
         })
         console.log('pipeheight', this.pipeheight);
         console.log('lists', this.list);
@@ -206,9 +200,4 @@ export class AssetDetailsDialog implements OnInit {
     eventLeave() {
         this.showModel = null;
     }
-    
-
-   
-
-
 }    
