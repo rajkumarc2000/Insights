@@ -1,0 +1,96 @@
+{
+	"mqConfig" : {
+		"user" : "iSight",
+		"password" : "iSight",
+		"host" : "127.0.0.1", 
+		"exchange" : "iSight",
+		"agentControlXchg":"iAgent"
+	},
+	"subscribe" : {
+		"config" : "SCM.GIT.config"
+	},
+	"publish" : {
+		"data" : "SCM.GIT.DATA",
+		"health" : "SCM.GIT.HEALTH"
+	},
+	"communication":{
+		"type" : "REST",
+    	"sslVerify": true,
+    	"responseType": "JSON" 
+	},
+	"dynamicTemplate": {
+		"timeFieldMapping" : {
+			"startDate" : "%Y-%m-%d"
+		},
+		"responseTemplate" : {
+			"sha": "commitId",
+			"commit" : {
+				"message": "message",
+				"author" : {
+					"name": "authorName",
+					"date": "commitTime"
+				}
+			}
+		},
+		"pullReqResponseTemplate": {
+			"number": "pullReqId",
+			"state": "pullReqState",
+			"head": {
+				"ref": "originBranch",
+				"repo": {
+					"fork": "isForked"
+				}
+			},
+			"base": {
+				"ref": "baseBranch"
+			},
+			"isMerged": "isMerged"
+		},
+		"metaData": {
+			"branches": {
+				"labels": [
+					"GIT_LATEST"
+				],
+				"dataUpdateSupported" : true,
+				"uniqueKey" : [
+					"repoName",
+					"gitType"
+				]
+			},
+			"commits": {
+				"labels": [
+					"GIT_LATEST"
+				],
+				"dataUpdateSupported": true,
+				"uniqueKey": [
+					"repoName",
+					"commitId"
+				]
+			}
+		}
+	},
+	"enableBranches" : true,
+	"enableOptimizedDataRetrieval": false,
+	"enableBrancheDeletion" : false,
+	"enableDataValidation": true,	
+	"toolCategory" : "SCM",
+	"toolsTimeZone" : "GMT",
+	"insightsTimeZone" : "Asia/Kolkata",
+	"enableValueArray": false,
+	"useResponseTemplate" : true,
+	"auth" : "base64",
+	"runSchedule" : 30,
+	"timeStampField":"commitTime",
+	"timeStampFormat":"%Y-%m-%dT%H:%M:%SZ",
+	"isEpochTimeFormat" : false,
+	"startFrom" : "2017-10-01 00:00:01",
+	"accessToken": "accessToken",
+	"getRepos":"https://api.github.com/users/<USER_NAME>/repos",
+	"commitsBaseEndPoint":"https://api.github.com/repos/<REPO_NAME>/",
+	"isDebugAllowed" : false,
+	"loggingSetting" : {
+		"logLevel" : "WARN",
+		"maxBytes" : 5000000,
+		"backupCount" : 1000
+	}
+}
