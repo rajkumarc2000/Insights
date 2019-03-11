@@ -106,6 +106,7 @@ tr.asset-details-element-row:not(.asset-details-expanded-row):active {
     right: 0px;
     left: 0px;
     line-height: 0.25rem;
+    margin-block-end: 15px;
 }  
 
 .asset-details-element-description {
@@ -285,6 +286,10 @@ circle.halo{
   position: absolute;
   right: 5px;
   top: 5px;
+}
+
+.dialog-model .body-content {
+    padding: 10px;
 }
 
 dd.dd {

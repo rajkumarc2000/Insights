@@ -11,7 +11,9 @@ export class AssetPipe implements PipeTransform {
       const key = f[0].toUpperCase() + f.substring(1);
       if (key === 'Moddate' || key === 'TxID') {
         return;
-      } else {
+      }else if(val[f].startsWith("http")){
+        data += `<b>${key}</b><span> : <a href="${val[f]}">${val[f]}</a></span><br/>`;
+      }else {
         data += `<b>${key}</b><span> : ${(val[f] === 'null' || val[f] === '') ? 'N/A' : val[f]}</span><br/>`;
       }
     })

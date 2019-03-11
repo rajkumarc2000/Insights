@@ -114,7 +114,10 @@
                     <div *ngFor="let column of headerArrayDisplay">
                       <div class="asset-details-element-description">
                         <!-- <div [innerHTML]="getLevel2Properties(column, element)"></div> -->
-                        <dt class="dt">{{column}}</dt><dd class="dd"> : {{element[column]}} </dd>
+                        <dt class="dt">{{column}}</dt>
+                        
+                        <!-- <dd class="dd" *ngIf="element[column].startsWith('http')"> : <a routerLink="">{{element[column]}}</a></dd> -->
+                        <dd class="dd">{{element[column]}}</dd>
                       </div><br/>
                     </div>
                 </div>
@@ -141,6 +144,11 @@
           <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
           <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none"></circle>
         </g>
+
+        <g transform="translate(60,55)" class="PWGx-pipeline-node" *ngIf="list?.length > 1 && list[0]?.child?.length == 1">
+            <circle r="7" class="PWGx-pipeline-node-terminal"></circle>
+            <circle r="19" class="PWGx-pipeline-node-hittarget" fill-opacity="0" stroke="none"></circle>
+          </g>
     
         <!-- end -->
         <g [attr.transform]="'translate(' + (253.75 + ((list.length-1) * 120)) + ',55)'" class="PWGx-pipeline-node">

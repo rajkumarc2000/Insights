@@ -162,21 +162,43 @@ export class AssetDetailsDialog implements OnInit {
         });
         console.log(custMap);
 
-        let processorder = ["JIRA", "GIT", "JENKINS", "NEXUS"];
-        processorder.forEach(tool => {
-            let obj = Object.keys(custMap).filter(f => f.toLowerCase() === tool.toLowerCase());
-            if (obj.length > 0) {
-                let val = {
-                    point: tool,
-                    child: []
-                }
-                custMap[tool].forEach(child => {
-                    val.child.push({ point: child })
-                })
-                this.list.push(val);
+        let orderlst = [];
+        let clst = custMap;
+        Object.keys(clst).forEach((s) => {
+            let obj = {
+                point: s,
+                child: []
             }
-        });
-        console.log("lists :", this.list);
+            orderlst.push(obj);
+        })
+        orderlst.forEach((a) => {
+            clst[a.point].forEach((s) => {
+                if (a.child.length === 0) {
+                    a.child.push({ point: s });
+                } else {
+                    let fil = a.child.filter(c => c.point.assetID === s.assetID);
+                    if (fil.length > 0) {
+                        a.child.push({ point: s });
+                    } else {
+                        let obj = {
+                            point: a.point,
+                            child: [{ point: s }]
+                        }
+                        orderlst.push(obj);
+                    }
+                }
+            })
+        })
+
+        console.log(orderlst);
+        let processorder = ["JIRA", "GIT", "JENKINS", "NEXUS"];
+        processorder.forEach(p => {
+            orderlst.forEach(a => {
+                if (p === a.point) {
+                    this.list.push(a);
+                }
+            })
+        })
 
         this.list.map((l) => {
             this.pipeheight = this.pipeheight < l.child.length ? l.child.length : this.pipeheight;
