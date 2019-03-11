@@ -115,9 +115,8 @@
                       <div class="asset-details-element-description">
                         <!-- <div [innerHTML]="getLevel2Properties(column, element)"></div> -->
                         <dt class="dt">{{column}}</dt>
-                        
-                        <!-- <dd class="dd" *ngIf="element[column].startsWith('http')"> : <a routerLink="">{{element[column]}}</a></dd> -->
-                        <dd class="dd">{{element[column]}}</dd>
+                        <dd class="dd" *ngIf="element[column]?.startsWith('http')"> : <span><a href="{{element[column]}}">{{element[column]}}</a></span></dd>
+                        <dd *ngIf="!element[column]?.startsWith('http')" class="dd"> : {{element[column]}}</dd>
                       </div><br/>
                     </div>
                 </div>

@@ -53,11 +53,23 @@
               <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
+          <div class="dateElementStyle">
+            <a>Tool</a>
+            <a class="redFontStyle">*</a>
+            <a>:</a>
+            <mat-form-field style="padding-left:10px;" required>
+              <mat-select style="font-size:14px;" placeholder="Choose a tool" [formControl]="toolname">
+                <mat-option *ngFor="let tl of tools" [value]="tl">
+                  {{tl}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </mat-radio-button>
         <mat-radio-button value="searchByAssetId" color="primary" (change)="searchCriteriaChange($event)">
           <div class="dateElementStyle">
             <mat-form-field class="inputAssetIdStyle">
-              <input matInput #assetIdInput type="text" (keyup.enter)="getAssetID(assetIdInput.value)" (blur)="getAssetID(assetIdInput.value)">
+              <input matInput #assetIdInput type="text" (click)="getAssetID(assetIdInput.value)" (keyup.enter)="getAssetID(assetIdInput.value)" (blur)="getAssetID(assetIdInput.value)">
               <mat-placeholder class="placeholder">Input Asset ID</mat-placeholder>
             </mat-form-field>
           </div>
