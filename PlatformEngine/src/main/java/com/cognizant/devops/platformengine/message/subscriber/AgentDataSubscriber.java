@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +37,7 @@ import com.cognizant.devops.platformcommons.dal.neo4j.Neo4jFieldIndexRegistry;
 import com.cognizant.devops.platformcommons.dal.neo4j.NodeData;
 import com.cognizant.devops.platformengine.message.core.AgentDataConstants;
 import com.cognizant.devops.platformengine.message.factory.EngineSubscriberResponseHandler;
+import com.cognizant.devops.platformengine.modules.aggregator.BusinessMappingData;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -54,21 +56,31 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 	private String uniqueKey;
 	private String category;
 	private String toolName;
+	List<BusinessMappingData> businessMappingList = new ArrayList<BusinessMappingData>(0);
 	
-	public AgentDataSubscriber(String routingKey, boolean dataUpdateSupported, String uniqueKey, String category, String toolName) throws Exception {
+	public AgentDataSubscriber(String routingKey, boolean dataUpdateSupported, String uniqueKey, String category,
+			String toolName, List<BusinessMappingData> businessMappingList) throws Exception {
 		super(routingKey);
 		this.dataUpdateSupported = dataUpdateSupported;
 		this.uniqueKey = uniqueKey;
 		this.category = category;
-		this.toolName = toolName.toUpperCase();
+		this.toolName = toolName;
+		this.businessMappingList = businessMappingList;
+	}
+	
+	public void setMappingData(List<BusinessMappingData> businessMappingList) {
+		this.businessMappingList = businessMappingList;
 	}
 
+	@Override
 	public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body) throws IOException{
 		ApplicationConfigProvider.performSystemCheck();
 		boolean enableOnlineDatatagging = ApplicationConfigProvider.getInstance().isEnableOnlineDatatagging();
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
 		String message = new String(body, MessageConstants.MESSAGE_ENCODING);
+		log.info(" Received message ==== "+message);
 		String routingKey = envelope.getRoutingKey();
+		/* log.info(" routingKey   arg0   ====="+routingKey); */
 		List<String> labels = new ArrayList<String>();
 		labels.add("RAW");
 		labels.addAll(Arrays.asList(routingKey.split(MessageConstants.ROUTING_KEY_SEPERATOR)));
@@ -112,7 +124,9 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 		Map<String,Map<String,NodeData>> metaDataMap=new HashMap<String,Map<String,NodeData>>();
 		Gson gson = new Gson();
 		if(enableOnlineDatatagging){
-			metaDataMap= getMetaData(dbHandler);
+
+			// log.info(" Mapping data " + businessMappingList);
+			// metaDataMap= getMetaData(dbHandler);
 		}
 		
 		if(json.isJsonArray()){
@@ -120,13 +134,17 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 			for(JsonElement e : asJsonArray){
 				if(e.isJsonObject()){
 					if(enableOnlineDatatagging){
-						NodeData nodeData = applyDataTagging(e.getAsJsonObject(),metaDataMap);
+						// NodeData nodeData = applyDataTagging(e.getAsJsonObject(),metaDataMap);
 
-						if(nodeData != null){
-							String nodeJsonStr = gson.toJson(nodeData.getPropertyMap());
-							JsonObject finalJson = mergeProperty(e,nodeJsonStr);
-							finalJson.remove("uuid"); 
-							dataList.add(finalJson);
+						JsonObject jsonWithLabel = applyDataTagging(e.getAsJsonObject());
+
+						if (jsonWithLabel != null) {
+							/*
+							 * String nodeJsonStr = gson.toJson(nodeData.getPropertyMap()); JsonObject
+							 * finalJson = mergeProperty(e,nodeJsonStr); finalJson.remove("uuid");
+							 */
+							log.info("arg0 Final Json With label info ====== " + jsonWithLabel);// finalJson
+							dataList.add(jsonWithLabel);// finalJson
 
 						} else {
 							dataList.add(e.getAsJsonObject());
@@ -151,6 +169,7 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 				}else{
 					cypherQuery = "UNWIND {props} AS properties CREATE (n"+queryLabel+") set n=properties return count(n)";
 				}
+				log.info(" Data add cypherQuery ======= "+cypherQuery);
 				List<List<JsonObject>> partitionList = partitionList(dataList, 1000);
 				for(List<JsonObject> chunk : partitionList){
 					JsonObject graphResponse = dbHandler.bulkCreateNodes(chunk, labels, cypherQuery);
@@ -179,34 +198,69 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 		return finalJson;
 	}
 
+	private JsonObject applyDataTagging(JsonObject asJsonObject) { // , Map<String, Map<String, NodeData>> metaDataMap
+																	// NodeData
 
-	private  NodeData applyDataTagging(JsonObject asJsonObject, Map<String, Map<String, NodeData>> metaDataMap) {
+		/*
+		 * NodeData nodeData = null ; StringBuilder sb=null;
+		 */
+		log.info("received asJsonObject   " + asJsonObject);
+		List<String> selectedBusinessMapping = new ArrayList<String>(0);
+		List<String> labelMappingArray = new ArrayList<String>(0);
+		log.info(" businessMappingList While applying " + businessMappingList);
+		/*
+		 * for (String key : metaDataMap.keySet()){ StringTokenizer token = new
+		 * StringTokenizer(key,AgentDataConstants.COLON); sb= new StringBuilder();
+		 * 
+		 * while (token.hasMoreElements()) { String
+		 * agentJsonkey=token.nextElement().toString();
+		 * 
+		 * if(asJsonObject.has(agentJsonkey)){
+		 * sb.append(asJsonObject.get(agentJsonkey).getAsString());
+		 * sb.append(AgentDataConstants.COLON); } }
+		 * 
+		 * Map<String ,NodeData> innerMap = metaDataMap.get(key);
+		 * 
+		 * String innerKey=StringUtils.stripEnd(sb.toString(),AgentDataConstants.COLON);
+		 * if(innerMap.containsKey(innerKey)){
+		 * 
+		 * nodeData = innerMap.get(innerKey); } }
+		 */
 
-		NodeData nodeData = null ;
-		StringBuilder sb=null;
-
-		for (String key : metaDataMap.keySet()){
-			StringTokenizer token = new StringTokenizer(key,AgentDataConstants.COLON);
-			sb= new StringBuilder();
-
-			while (token.hasMoreElements()) {
-				String agentJsonkey=token.nextElement().toString();
-
-				if(asJsonObject.has(agentJsonkey)){
-					sb.append(asJsonObject.get(agentJsonkey).getAsString());
-					sb.append(AgentDataConstants.COLON);
+		outerloop: {
+			for (BusinessMappingData businessMappingData : businessMappingList) {
+				Map<String, String> map = businessMappingData.getPropertyMap();
+				for (Entry<String, String> mapValue : map.entrySet()) {
+					log.info(" arg0 mapValue " + mapValue + "   mapValue.getKey()  " + mapValue.getKey() + "  "
+							+ asJsonObject.has(mapValue.getKey()));
+					if (asJsonObject.has(mapValue.getKey())) {
+						String jsonValue = asJsonObject.get(mapValue.getKey()).getAsString();
+						log.info(" value ==== " + jsonValue + " mapping value  " + mapValue.getValue());
+						if (jsonValue.equalsIgnoreCase(mapValue.getValue())) {
+							log.info(" keay and value match , increase count  == " + mapValue.getValue());
+							selectedBusinessMapping.add(businessMappingData.getBusinessMappingLabel());
+							StringTokenizer sk = new StringTokenizer(businessMappingData.getBusinessMappingLabel(),
+									":");
+							while (sk.hasMoreTokens()) {
+								String token = sk.nextToken();
+								if (!labelMappingArray.contains(token)) {
+								labelMappingArray.add(token);
+								}
+							}
+							break outerloop;
+						}
+					}
 				}
-			}  
-
-			Map<String ,NodeData> innerMap = metaDataMap.get(key);
-
-			String innerKey=StringUtils.stripEnd(sb.toString(),AgentDataConstants.COLON);
-			if(innerMap.containsKey(innerKey)){
-
-				nodeData = innerMap.get(innerKey);
 			}
 		}
-		return nodeData;
+		log.info(" apply label set Array  " + labelMappingArray);
+		if (!labelMappingArray.isEmpty()) { // countTotal == matchLabelCount
+			log.info("arg0 Apply Business Mapping Label ");
+			for (int i = 0; i < labelMappingArray.size(); i++) {
+				asJsonObject.addProperty("label" + (i + 1), labelMappingArray.get(i));
+			}
+		}
+		return asJsonObject; // nodeData
 	}
 
 	private  Map<String, Map<String, NodeData>> getMetaData(Neo4jDBHandler dbHandler) {
@@ -268,9 +322,6 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 	    List<List<T>> parts = new ArrayList<List<T>>();
 	    final int N = list.size();
 	    for (int i = 0; i < N; i += size) {
-	       /* parts.add(new ArrayList<T>(
-	            list.subList(i, Math.min(N, i + size)))
-	        );*/
 	    	parts.add(getPartitionSubList(list,i,size,N));                 
 	    }
 	    return parts;

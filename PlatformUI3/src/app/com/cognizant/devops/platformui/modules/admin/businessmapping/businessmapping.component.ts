@@ -129,10 +129,10 @@ export class BusinessMappingComponent implements OnInit {
       var length = jsonData.length;
       for (let i = 0; i < length; i++) {
         let propString = undefined;
-        console.log(Object.keys(jsonData[i]));
+        //console.log(Object.keys(jsonData[i]));
         for (let key of Object.keys(jsonData[i])) {
           if (this.extraKeyPatternArray.indexOf(key) > -1) {
-            console.log(jsonData[i][key]);
+            //console.log(jsonData[i][key]);
           } else {
             if (propString == undefined) {
               propString = key + " <span class='propertiesLabel' > : </span>" + jsonData[i][key];
@@ -170,7 +170,7 @@ export class BusinessMappingComponent implements OnInit {
         if (this.actionType == 'edit') {
           var existingKeys = Object.keys(this.selectedMappingAgent);
           for (let key of existingKeys) {
-            console.log(this.masterToolPropertiesData.data[key]);
+            //console.log(this.masterToolPropertiesData.data[key]);
             let agentMappingLabel;
             if (this.unwantedLabel.indexOf(key) == -1) {
               if (this.additionalProperties.indexOf(key) > -1) {
@@ -182,7 +182,7 @@ export class BusinessMappingComponent implements OnInit {
             }
           }
           for (let masterData of this.masterToolPropertiesData.data) {
-            console.log(masterData);
+            //console.log(masterData);
             if (existingKeys.indexOf(masterData) == -1) {
               let agentMappingLabel = new AgentMappingLabel(masterData, masterData, "", "a", true);
               this.agentMappingLabels.push(agentMappingLabel);
