@@ -253,6 +253,11 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 			log.debug("arg0 uuid  "+uuid);
 			JsonArray asJsonArray = getCurrentRecords(uuid,dbHandler);
 			log.debug("arg0  "+asJsonArray);
+			String replaceString=agentMappingJson.replaceAll("\\\"(\\w+)\\\"\\:","$1:");
+			String updateCypherQuery = " MATCH (n :METADATA:BUSINESSMAPPING {uuid:'"+uuid+"'})SET n ="+replaceString+" RETURN n";
+			log.debug("to replace"+updateCypherQuery);
+			GraphResponse updateGraphResponse = dbHandler.executeCypherQuery(updateCypherQuery);
+			log.debug(updateGraphResponse);
 			//nodeProperties.add(json);
 			//String properties = json.get("properties").getAsString();//msg String
 			//log.debug("arg0 "+properties);
