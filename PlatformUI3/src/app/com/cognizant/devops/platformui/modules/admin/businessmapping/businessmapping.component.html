@@ -41,7 +41,9 @@
   </div>
 
   <div class="subHeadingStyle" *ngIf="subHeading!='' ">
-    <div class="subLabelInfo">{{subHeading}}</div>
+    <div class="subLabelInfo">{{subHeading}}
+      <span class="sectionSubHeading"> ( Note : Multiple Label match at the time of data collection, then the first match label will be applied ) </span>
+    </div>
   </div>
 
   <div *ngIf="(selectedAgent!=undefined)">
@@ -123,16 +125,16 @@
         <ng-container matColumnDef="propertyValue">
           <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> {{selectedAgent.toolName}} Property Value </th>
           <td mat-cell *matCellDef="let element">
-            <input [(ngModel)]="element.value" ref-value="ngModel" pattern="'[a-zA-Z0-9_\-:]'" name="{{element.value}}" [ngClass]="{ 'input-disabled' : !element.editProperties  ,'form-control': element.editProperties} "
+            <input [(ngModel)]="element.value" ref-value="ngModel" name="{{element.value}}" [ngClass]="{ 'input-disabled' : !element.editProperties  ,'form-control': element.editProperties} "
               required>
-              <div *ngIf="value.errors?.pattern && !value.pristine">
+              <!-- pattern="'[a-zA-Z0-9_\-:]'" <div *ngIf="value.errors?.pattern && !value.pristine">
                 <div class="wrnTxt" *ngIf="value.errors?.required && !value.pristine">
                   {{'Please provide property value '}}
                 </div>
                 <!--<div *ngIf="value.errors?.pattern">
                   {{'Pattern is not match'}}
-                </div> true -->
-              </div>
+                </div> true ->
+                </div>-->
 
           </td>
         </ng-container>
@@ -148,12 +150,12 @@
                 <li>only '_' , '-' special characters are allowed</li> 
               </ol>   
             </span>
-            <input [(ngModel)]="label" #labelText="ngModel" name="label" pattern="'[a-zA-Z0-9_\-:]'" [ngClass]="{ 'input-disabled-label' :false ,'form-control-label': true} "
+            <input [(ngModel)]="label" #labelText="ngModel" name="label" [ngClass]="{ 'input-disabled-label' :false ,'form-control-label': true} "
               required>
-              <div *ngIf="labelText.errors?.pattern && !labelText.pristine">
+              <!-- pattern="'[a-zA-Z0-9_\-:]'" <div *ngIf="labelText.errors?.pattern && !labelText.pristine">
                 <div class="wrnTxt" [hidden]="!labelText.invalid">Please enter correct Label.
                 </div>
-              </div>
+              </div>-->
           </td>
         </ng-container>
 

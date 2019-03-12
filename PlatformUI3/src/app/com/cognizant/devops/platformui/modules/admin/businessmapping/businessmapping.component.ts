@@ -376,7 +376,7 @@ export class BusinessMappingComponent implements OnInit {
     var title = this.actionType == "add" ? "Save Label" : " Edit Label";
     var dialogmessage = this.actionType == "add" ? "Are you sure you want to save your changes?"
       : "Note: Edit Label should not applied to the data that has been collected. It applied from next data collecation. <br> Are you sure you want to save your changes?";
-    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
+    const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "32%");
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'yes') {
         if (this.actionType == "add") {
