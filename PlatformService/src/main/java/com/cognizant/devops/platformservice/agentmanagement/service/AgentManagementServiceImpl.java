@@ -117,7 +117,6 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 			String fileName = toolName + FILETYPE;
 			sendAgentPackage(data, AGENTACTION.REGISTER.name(), fileName, agentId, toolName, osversion);
-			//performAgentAction(agentId, AGENTACTION.START.name());
 
 			// Delete tracking.json
 			if (!trackingDetails.isEmpty()) {
@@ -154,9 +153,13 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	}
 
 	@Override
-	public String startStopAgent(String agentId, String action) throws InsightsCustomException {
+	public String startStopAgent(String agentId, String toolName, String osversion, String action) throws InsightsCustomException {
 		try {
-			performAgentAction(agentId, action);
+			
+			//Push START/STOP option to Daemon queue
+			performAgentAction(agentId, toolName, osversion, action);
+			
+			//Update status in DB
 			AgentConfigDAL agentConfigDAL = new AgentConfigDAL();
 			agentConfigDAL.updateAgentRunningStatus(agentId, AGENTACTION.valueOf(action));
 
@@ -551,14 +554,16 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		publishAgentAction(agentDaemonQueueName, action.getBytes(), props);
 	}
 
-	private void performAgentAction(String agentId, String action) throws TimeoutException, IOException {
+	private void performAgentAction(String agentId, String toolName, String osversion, String action) throws TimeoutException, IOException {
 		Map<String, Object> headers = new HashMap<>();
+		headers.put("osType", osversion);
+		headers.put("agentToolName", toolName);
 		headers.put("agentId", agentId);
+		headers.put("action", action);
 
 		BasicProperties props = getBasicProperties(headers);
-		// agentId will be queue id. Agent code will connect to MQ based on agentId
-		// present in config.json
-		publishAgentAction(agentId, action.getBytes(), props);
+		String agentDaemonQueueName = ApplicationConfigProvider.getInstance().getAgentDetails().getAgentPkgQueue();
+		publishAgentAction(agentDaemonQueueName, action.getBytes(), props);
 	}
 
 	private void publishAgentAction(String routingKey, byte[] data, BasicProperties props)
