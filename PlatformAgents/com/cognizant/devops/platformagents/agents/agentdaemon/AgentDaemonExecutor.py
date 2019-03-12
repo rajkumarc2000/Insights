@@ -150,7 +150,6 @@ class AgentDaemonExecutor:
                  agentServiceFileName = h.get('agentServiceFileName')
                  action = h.get('action')
                  #Code for handling subscribed messages
-                 ch.basic_ack(delivery_tag = method.delivery_tag)
                  basePath = self.config.get('baseExtractionPath')
                  scriptPath = basePath + os.path.sep + agentToolName + os.path.sep + agentId
                  installagentFilePath = os.environ['INSIGHTS_AGENT_HOME'] + os.path.sep + 'AgentDaemon'
@@ -186,6 +185,7 @@ class AgentDaemonExecutor:
                          p = subprocess.Popen([scriptFile +' '+osType+' '+action+' '+agentId],cwd=installagentFilePath,shell=True)
                          #stdout, stderr = p.communicate()
                          print('Process id - '+ str(p.returncode))
+                 ch.basic_ack(delivery_tag = method.delivery_tag)
             except Exception as ex:
                 self.publishDaemonHealthData(self.generateHealthData(ex))
                 #ch.basic_ack(delivery_tag = method.delivery_tag)

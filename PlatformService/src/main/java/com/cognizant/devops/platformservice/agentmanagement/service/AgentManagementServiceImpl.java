@@ -115,7 +115,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			Path agentZipPath = updateAgentConfig(toolName, json,agentId);
 			byte[] data = Files.readAllBytes(agentZipPath);
 
-			String fileName = toolName + FILETYPE;
+			String fileName = agentId + FILETYPE;
 			sendAgentPackage(data, AGENTACTION.REGISTER.name(), fileName, agentId, toolName, osversion);
 
 			// Delete tracking.json
@@ -190,7 +190,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 			byte[] data = Files.readAllBytes(agentZipPath);
 
-			String fileName = toolName + FILETYPE;
+			String fileName = agentId + FILETYPE;
 
 			sendAgentPackage(data, AGENTACTION.UPDATE.name(), fileName, agentId, toolName, osversion);
 
@@ -379,7 +379,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private void setupAgentInstanceCreation(String toolName, String osversion, String agentId) throws IOException {
 
 		Path toolUnzipPath = Paths.get(filePath + File.separator + toolName);
-		File instanceDir = new File(toolUnzipPath + File.separator + agentId);
+		File instanceDir = new File(filePath + File.separator + agentId);
 
 	    if (!instanceDir.exists()) {
 	    	instanceDir.mkdir();
@@ -393,7 +393,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private void copyServiceFileToInstanceFolder(String toolName, String agentId, String osversion) throws IOException {
 		
 		Path sourceFilePath = Paths.get(filePath + File.separator + toolName);
-		Path destinationFilePath = Paths.get(filePath + File.separator + toolName + File.separator + agentId);
+		Path destinationFilePath = Paths.get(filePath + File.separator + agentId);
 		
 		if("Windows".equalsIgnoreCase(osversion)) {
 			Path destinationFile = destinationFilePath.resolve(agentId + ".bat");
@@ -418,11 +418,11 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private void copyPythonCodeToInstanceFolder(String toolName, String agentId) throws IOException {
 		
 		Path sourcePath = Paths.get(filePath + File.separator + toolName);
-		Path destinationPath = Paths.get(filePath + File.separator + toolName + File.separator + agentId);
+		Path destinationPath = Paths.get(filePath + File.separator + agentId);
 		
 		//Copy __init__.py to agent instance folder, otherwise python code wont work
 		Files.copy(Paths.get(filePath + File.separator + toolName  + File.separator + "com"+ File.separator + "__init__.py"),
-					Paths.get(filePath + File.separator + toolName + File.separator + agentId + File.separator + "__init__.py"), REPLACE_EXISTING);
+					Paths.get(filePath + File.separator + agentId + File.separator + "__init__.py"), REPLACE_EXISTING);
 		
 		Files.move(sourcePath.resolve("com"),destinationPath.resolve("com"),REPLACE_EXISTING);
 		
@@ -439,7 +439,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	}
 	
 	private Path updateAgentConfig(String toolName, JsonObject json, String agentId) throws IOException {
-		String configFilePath = filePath + File.separator + toolName + File.separator + agentId;
+		String configFilePath = filePath + File.separator + agentId;
 		File configFile = null;
 		// Writing json to file
 		Path dir = Paths.get(configFilePath);
@@ -457,9 +457,9 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			throw e;
 		}
 		Path sourceFolderPath = Paths.get(ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath(),
-				toolName);
+				agentId);
 		Path zipPath = Paths.get(ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath(),
-				toolName + ".zip");
+				agentId + ".zip");
 		Path agentZipPath = null;
 		try {
 			agentZipPath = AgentManagementUtil.getInstance().getAgentZipFolder(sourceFolderPath, zipPath);
