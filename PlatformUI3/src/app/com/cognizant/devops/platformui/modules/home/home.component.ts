@@ -23,6 +23,10 @@ import { NavItem } from '@insights/app/modules/home/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
 import { DataSharedService } from '@insights/common/data-shared-service';
+import { AboutDialog } from '@insights/app/modules/about/about-show-popup';
+//import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 
 
 @Component({
@@ -86,7 +90,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
-    public router: Router, private dataShare: DataSharedService) {
+    public router: Router, private dataShare: DataSharedService, private dialog: MatDialog) {
     //console.log("in home on constructor init ");
     //router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
@@ -185,13 +189,23 @@ export class HomeComponent implements OnInit {
     this.selectedItem = item;
     this.displayLandingPage = false;
     this.isToolbarDisplay = item.isToolbarDisplay
+    
     if (!item.children || !item.children.length) {
+       //let ShowDetailsDialog:any;
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.selectedOrgName = this.getSelectedOrgName(this.selectedOrg);
         this.switchOrganizations(item.orgId, item.route, this.selectedOrgName);
       } else if (item.displayName == 'About') {
-        window.open(this.aboutPageURL, "_blank");
+       // window.open(this.aboutPageURL, "_blank");
+      
+       let showDetailsDialog = this.dialog.open(AboutDialog, {
+      panelClass: 'healthcheck-show-details-dialog-container',
+      height: '350px',
+      width: '450px',
+      disableClose: true,
+      
+    });
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
       } else if (item.displayName == 'Logout') {

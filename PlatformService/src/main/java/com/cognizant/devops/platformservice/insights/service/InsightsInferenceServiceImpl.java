@@ -180,7 +180,7 @@ public class InsightsInferenceServiceImpl implements InsightsInferenceService {
 	private List<InferenceResult> getInferenceData(String inputSchedule) throws Exception {
 		String esQuery = getQuery();
 
-		esQuery = getUpdatedQueryWithDate(esQuery, inputSchedule, 5); // Since
+		esQuery = getUpdatedQueryWithDate(esQuery, inputSchedule, 5000); // Since
 																		// should
 																		// come
 																		// from

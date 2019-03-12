@@ -74,6 +74,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('inactive_show_details', "icons/svg/auditReporting/ShowDetails-Inactive.svg");
         this.addImage('export_to_pdf_icon', "icons/svg/auditReporting/PDFIcon.svg");
         this.addImage('view_pipe_line', "icons/svg/auditReporting/ViewPipeLine-GREEN.svg");
+        this.addImage('ic_about_logo', "icons/svg/ic_about_logo.svg");
 
     }
 
