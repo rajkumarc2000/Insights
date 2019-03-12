@@ -48,7 +48,7 @@
 
   <div *ngIf="(selectedAgent!=undefined)">
     <div class="btnAlign">
-      <button mat-icon-button (click)="addAgentLabelData()" [disabled]="(selectedAgent==undefined)">
+      <button mat-icon-button (click)="addAgentLabelData()" [disabled]="!isListView || (selectedAgent==undefined)">
         <mat-icon title="Add Agent Label " class="mat-icon material-icons">
           add_circle
         </mat-icon>
@@ -60,7 +60,7 @@
           edit
         </mat-icon>
       </button>
-      <button mat-icon-button (click)="saveData()" [disabled]="isListView">
+      <button mat-icon-button (click)="saveData()" [disabled]="isListView || isSaveDisable">
         <mat-icon title="Save " class="mat-icon material-icons">
           save
         </mat-icon>

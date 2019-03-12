@@ -43,6 +43,7 @@ export class BusinessMappingComponent implements OnInit {
   spans = [];
   isEditData = false;
   isListView = false;
+  isSaveDisable = true;
   label: String = undefined;
   agentPropertyList = {};
   selectedAgentMappingLabels: AgentMappingLabel[] = [];
@@ -52,8 +53,6 @@ export class BusinessMappingComponent implements OnInit {
   currentUserName: String;
   masterToolPropertiesData: any;
   actionType: any;
-  extraKeyPatternArray = ['adminuser', 'inSightsTime', 'categoryName',
-    'inSightsTimeX', 'toolName', 'deleted', 'id', 'type', 'businessmappinglabel', 'uuid', 'propertiesString '];
   additionalProperties = ['inSightsTime', 'categoryName', 'inSightsTimeX', 'toolName',
     'uuid', 'type', 'businessmappinglabel', 'propertiesString', 'id', 'deleted', 'adminuser'];
   unwantedLabel = ['businessmappinglabel', 'propertiesString', 'id', 'type', 'deleted']
@@ -117,6 +116,7 @@ export class BusinessMappingComponent implements OnInit {
         self.displayedColumns = ['radio', 'mappinglabel', 'properties']
         self.isListView = true;
         self.subHeading = "Label List";
+        self.isSaveDisable = true;
         self.agentDataSource = new MatTableDataSource(agentDataSourceArray);
         console.log(self.agentDataSource);
         console.log(self.selectedMappingAgent);
@@ -131,7 +131,7 @@ export class BusinessMappingComponent implements OnInit {
         let propString = undefined;
         //console.log(Object.keys(jsonData[i]));
         for (let key of Object.keys(jsonData[i])) {
-          if (this.extraKeyPatternArray.indexOf(key) > -1) {
+          if (this.additionalProperties.indexOf(key) > -1) {
             //console.log(jsonData[i][key]);
           } else {
             if (propString == undefined) {
@@ -146,8 +146,8 @@ export class BusinessMappingComponent implements OnInit {
     } else {
       let propString = undefined;
       for (let key of Object.keys(jsonData)) {
-        if (this.extraKeyPatternArray.indexOf(key) > -1) {
-          console.log(jsonData[key]);
+        if (this.additionalProperties.indexOf(key) > -1) {
+          //console.log(jsonData[key]);
         } else {
           if (propString == undefined) {
             propString = key + " <span class='propertiesLabel' > : </span>" + jsonData[key];
@@ -158,6 +158,7 @@ export class BusinessMappingComponent implements OnInit {
       }
       jsonData['propertiesString'] = propString;
     }
+    console.log(jsonData);
     return jsonData;
   }
 
@@ -266,6 +267,7 @@ export class BusinessMappingComponent implements OnInit {
     this.actionType = "edit"
     this.loadAgentProperties(this.selectedAgent);
     this.isEditData = false;
+    this.isSaveDisable = false;
     this.subHeading = "Edit Label for " + this.selectedMappingAgent.businessmappinglabel;
   }
 
@@ -274,6 +276,7 @@ export class BusinessMappingComponent implements OnInit {
     this.actionType = "add"
     this.subHeading = "Add Label";
     this.label = undefined;
+    this.isSaveDisable = false;
     this.loadAgentProperties(this.selectedAgent);
 
   }
@@ -336,6 +339,7 @@ export class BusinessMappingComponent implements OnInit {
           this.callEditOrSaveDataAPI(agentBMparameter);
         }
       } else {
+        this.isSaveDisable = true;
         this.messageDialog.showApplicationsMessage(validationMessage, "ERROR");
       }
     }
@@ -343,6 +347,10 @@ export class BusinessMappingComponent implements OnInit {
 
   public validateData(): any {
     let validationMessage = '';
+    console.log(this.agentPropertyList);
+    console.log(this.label);
+    console.log(this.agentDataSource.data);
+    console.log(this.agentPropertyList['propertiesString']);
     var labelArray = this.label.split(":");
     console.log(labelArray)
     if (labelArray.indexOf("") > -1) {
@@ -405,6 +413,7 @@ export class BusinessMappingComponent implements OnInit {
         this.selectedAgentMappingLabels = [];
         this.label = undefined;
         this.displayAgentMappingDetail();
+        this.selection.clear();
       }
     });
   }
@@ -431,6 +440,7 @@ export class BusinessMappingComponent implements OnInit {
           this.selectedAgentMappingLabels = [];
           this.label = undefined;
           this.displayAgentMappingDetail();
+          this.selection.clear();
         }
       });
     } else {
