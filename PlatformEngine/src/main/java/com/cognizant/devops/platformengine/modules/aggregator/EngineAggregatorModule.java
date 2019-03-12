@@ -62,32 +62,17 @@ public class EngineAggregatorModule implements Job {
 		Neo4jDBHandler graphDBHandler = new Neo4jDBHandler();
 		AgentConfigDAL agentConfigDal = new AgentConfigDAL();
 		List<AgentConfig> allAgentConfigurations = agentConfigDal.getAllAgentConfigurations();
-		Map<String, List<BusinessMappingData>> businessMappinMap = new HashMap<String, List<BusinessMappingData>>();
-		Gson gson = new Gson();
-		businessMappinMap = getMetaData(graphDBHandler);
-		/*
-		 * for (Entry<String, List<BusinessMappingData>> sdata :
-		 * businessMappinMap.entrySet()) { log.info(" arg0 Entry data " +
-		 * gson.toJson(sdata)); }
-		 */
+		boolean enableOnlineDatatagging = ApplicationConfigProvider.getInstance().isEnableOnlineDatatagging();
+		Map<String, List<BusinessMappingData>> businessMappinMap = new HashMap<String, List<BusinessMappingData>>(0);
+		if (enableOnlineDatatagging) {
+			businessMappinMap = getMetaData(graphDBHandler);
+		}
 		for (AgentConfig agentConfig : allAgentConfigurations) {
 			registerAggragators(agentConfig, graphDBHandler, businessMappinMap);
-			// publishAgentConfig(agentConfig);
 		}
-		// EngineStatusLogger.getInstance().createEngineStatusNode("Engine Aggregator
-		// Module (Data Collection ) run successfully
-		// ",PlatformServiceConstants.SUCCESS);
-		// agentConfigDal.updateAgentSubscriberConfigurations(allAgentConfigurations);
 	}
 
-	/*
-	 * private void publishAgentConfig(AgentConfig agentConfig){ JsonObject config =
-	 * AgentUtils.buildAgentConfig((JsonObject)new
-	 * JsonParser().parse(agentConfig.getAgentJson())); String routingKey =
-	 * config.get("subscribe").getAsJsonObject().get("config").getAsString(); try {
-	 * MessagePublisherFactory.publish(routingKey, config); } catch (Exception e) {
-	 * log.error(e); } }
-	 */
+
 	private void registerAggragators(AgentConfig agentConfig, Neo4jDBHandler graphDBHandler,
 			Map<String, List<BusinessMappingData>> businessMappinMap) {
 		try {
@@ -95,12 +80,11 @@ public class EngineAggregatorModule implements Job {
 			JsonObject json = config.get("publish").getAsJsonObject();
 			String dataRoutingKey = json.get("data").getAsString();
 			String toolName = agentConfig.getToolName().toUpperCase();
-			log.info(" dataRoutingKey " + dataRoutingKey + " arg0  To0l Info " + toolName);
+			log.debug(" dataRoutingKey " + dataRoutingKey + "Tool Info " + toolName);
 
 			List<BusinessMappingData> businessMappingList = businessMappinMap.get(toolName);
 			if (dataRoutingKey != null && !registry.containsKey(dataRoutingKey)) {
 				try {
-					log.info(" arg0  businessMappingList  " + businessMappingList);
 					registry.put(dataRoutingKey,
 							new AgentDataSubscriber(dataRoutingKey, agentConfig.isDataUpdateSupported(),
 									agentConfig.getUniqueKey(), agentConfig.getToolCategory(),
@@ -157,7 +141,7 @@ public class EngineAggregatorModule implements Job {
 
 	private Map<String, List<BusinessMappingData>> getMetaData(Neo4jDBHandler dbHandler) {
 		List<NodeData> nodes = null;
-		Map<String, List<BusinessMappingData>> businessMappinMap = new HashMap<String, List<BusinessMappingData>>();
+		Map<String, List<BusinessMappingData>> businessMappinMap = new HashMap<String, List<BusinessMappingData>>(0);
 		Gson gson = new Gson();
 		Set<String> additionalProperties = new HashSet<>();
 		additionalProperties.add("adminuser");

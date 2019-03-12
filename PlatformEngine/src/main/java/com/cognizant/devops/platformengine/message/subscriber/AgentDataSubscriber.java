@@ -121,13 +121,14 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 				}
 			}
 		}
-		Map<String,Map<String,NodeData>> metaDataMap=new HashMap<String,Map<String,NodeData>>();
-		Gson gson = new Gson();
-		if(enableOnlineDatatagging){
-
-			// log.info(" Mapping data " + businessMappingList);
-			// metaDataMap= getMetaData(dbHandler);
-		}
+		/*
+		 * Map<String,Map<String,NodeData>> metaDataMap=new
+		 * HashMap<String,Map<String,NodeData>>(); Gson gson = new Gson();
+		 * if(enableOnlineDatatagging){
+		 * 
+		 * // log.info(" Mapping data " + businessMappingList); // metaDataMap=
+		 * getMetaData(dbHandler); }
+		 */
 		
 		if(json.isJsonArray()){
 			JsonArray asJsonArray = json.getAsJsonArray();
@@ -257,7 +258,7 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 		if (!labelMappingArray.isEmpty()) { // countTotal == matchLabelCount
 			log.info("arg0 Apply Business Mapping Label ");
 			for (int i = 0; i < labelMappingArray.size(); i++) {
-				asJsonObject.addProperty("label" + (i + 1), labelMappingArray.get(i));
+				asJsonObject.addProperty("orgLevel_" + (i + 1), labelMappingArray.get(i));
 			}
 		}
 		return asJsonObject; // nodeData
