@@ -44,6 +44,8 @@ export class BusinessMappingComponent implements OnInit {
   isEditData = false;
   isListView = false;
   isSaveDisable = true;
+  noToolsData=false;
+  disableAdd=false;
   label: String = undefined;
   agentPropertyList = {};
   selectedAgentMappingLabels: AgentMappingLabel[] = [];
@@ -109,13 +111,18 @@ export class BusinessMappingComponent implements OnInit {
           if (usersMappingResponseData.data != undefined) {
             usersMappingResponseData.data = self.clubProperties(usersMappingResponseData.data, true);
             agentDataSourceArray = usersMappingResponseData.data;
+            if(agentDataSourceArray.length==0){
+              self.noToolsData=true;
+            }else{
+              self.noToolsData=false;
+            }
           }
         } else {
           self.messageDialog.showApplicationsMessage("Something went wrong with service,Please try again ", "WARN");
         }
         self.displayedColumns = ['radio', 'mappinglabel', 'properties']
         self.isListView = true;
-        self.subHeading = "Label List";
+        self.subHeading = "List of Labels";
         self.isSaveDisable = true;
         self.agentDataSource = new MatTableDataSource(agentDataSourceArray);
         console.log(self.agentDataSource);
@@ -268,10 +275,13 @@ export class BusinessMappingComponent implements OnInit {
     this.loadAgentProperties(this.selectedAgent);
     this.isEditData = false;
     this.isSaveDisable = false;
+    this.disableAdd=true;
     this.subHeading = "Edit Label for " + this.selectedMappingAgent.businessmappinglabel;
   }
 
   addAgentLabelData() {
+    this.isEditData = false;
+    this.disableAdd=false;
     this.isListView = false;
     this.actionType = "add"
     this.subHeading = "Add Label";
@@ -284,16 +294,19 @@ export class BusinessMappingComponent implements OnInit {
   saveData() {
     var agentBMparameter;
     this.agentPropertyList = {};
-    const numSelected = this.selection.selected.length
-    if (numSelected == 0 || this.label == undefined) {
-      this.messageDialog.showApplicationsMessage("Please select atleast one Tool Property or Mapping Label value should not be empty", "WARN");
-    } else {
+    const numSelected = this.selection.selected.length;
+    //console.log(this.label);
+    if (numSelected == 0 || this.label == undefined ) {
+      this.messageDialog.showApplicationsMessage("Please select atleast one Tool Property to create a Label", "WARN");
+    }else if(this.label==""){
+      this.messageDialog.showApplicationsMessage("Mapping Label value is <b>MANDATORY</b> it should not be empty", "WARN");
+    }else {
       //Validate Label
       var selectedData = this.selection.selected;
       let validationMessage = '';
       selectedData.forEach(
         row => {
-          if (row.value == "") {
+          if (row.value.length == 0 ) {
             validationMessage = "Value should not be empty for propety key " + row.key;
           } else {
             let agentMappingLabelSelected = new AgentMappingLabel(row.id, row.key, row.value, this.label, true);
@@ -371,8 +384,8 @@ export class BusinessMappingComponent implements OnInit {
     } else if (this.actionType == "edit") {
       for (let data of this.agentDataSource.data) {
         if (data.businessmappinglabel == this.label && data.propertiesString == this.agentPropertyList['propertiesString']) {
-          console.log("label and Property exists ");
-          validationMessage = "Mapping Label and Properties with same name and value are already exists for tool <b>" + this.selectedAgent.toolName + " </b>.";
+          //console.log(data.businessmappinglabel +","+this.label+","+","+data.propertiesString+","+this.agentPropertyList['propertiesString']);
+          validationMessage = "Properties with same name and value <b> "+this.agentPropertyList['propertiesString']+" </b> already exists for tool <b>" + this.selectedAgent.toolName + " </b>.<br>Please edit necessary values if applicable";
         }
       }
     }
@@ -383,7 +396,7 @@ export class BusinessMappingComponent implements OnInit {
     var self = this;
     var title = this.actionType == "add" ? "Save Label" : " Edit Label";
     var dialogmessage = this.actionType == "add" ? "Are you sure you want to save your changes?"
-      : "Note: Edit Label should not applied to the data that has been collected. It applied from next data collecation. <br> Are you sure you want to save your changes?";
+      : "Please note: The changes will be applied from next data collection. <br> Are you sure you want to save your changes?";
     const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "32%");
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'yes') {
@@ -401,7 +414,8 @@ export class BusinessMappingComponent implements OnInit {
           this.businessMappingService.editToolMapping(agentBMparameter)
             .then(function (editResponsedata) {
               if (editResponsedata.status = "success") {
-                self.messageDialog.showApplicationsMessage("Label edited Successfully ", "SUCCESS");
+                //console.log(agentBMparameter["toolName"]);
+                self.messageDialog.showApplicationsMessage("The changes you made to the Label name is updated Successfully ", "SUCCESS");
               } else {
                 self.messageDialog.showApplicationsMessage("Unable to edit label " + editResponsedata.message, "ERROR");
               }
@@ -422,7 +436,8 @@ export class BusinessMappingComponent implements OnInit {
     var self = this;
     if (this.selectedMappingAgent.uuid != undefined || this.selectedMappingAgent.uuid != "") {
       var title = "Delete Label";
-      var dialogmessage = "Are you sure you want to delete mapping label ?";
+      //console.log(this.selectedMappingAgent);
+      var dialogmessage = "Are you sure you want to delete Label name <b>"+this.selectedMappingAgent.businessmappinglabel+"</b> ? <br><b> 'PLEASE NOTE THIS ACTION CANNOT BE UNDONE'</b>";
       const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
       dialogRef.afterClosed().subscribe(result => {
         if (result == 'yes') {

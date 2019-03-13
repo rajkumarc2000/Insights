@@ -8,7 +8,13 @@
     margin-bottom: 0;
     list-style-type: none;
 }
-
+.noToolsData{
+    min-height:10vh;
+    background-color: white;
+    text-align: center;
+    border-radius: 0px 0px 10px 10px;
+    padding-top: 20px;
+}
 .linkTxt {  
   cursor: pointer;
 }
@@ -164,6 +170,9 @@ td.mat-cell{
 .listTable{
     border-bottom-width: 1px !important;
     border-bottom-style: solid !important;
+    padding-top:2px;
+    padding-bottom:2px;
+     line-height: 1.7em;
 }
 
 .subHeadingStyle{
