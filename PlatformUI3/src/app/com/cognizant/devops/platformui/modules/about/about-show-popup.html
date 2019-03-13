@@ -15,33 +15,54 @@
  * the License.
  *******************************************************************************-->
 
-<div class="titleStyle">
-        <li style="background-color: #0033a0;margin-left: 130px">About Insights</li>
-        <li (click)="closeShowDetailsDialog()" style="background-color: #0033a0;">
-            <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px','padding-right':'20px','margin-top': '-30px','margin-left':'90%'}">
-            </mat-icon>
+<!--<div class="titleStyle">
+        <li style="background-color: #0033a0; margin-left: 130px">About Insights
         </li>
+        <li (click)="closeShowDetailsDialog()" style="background-color: #0033a0;">
+                <mat-icon svgIcon="close_dialog" [ngStyle]="{'width': '20px', 'height': '20px','padding-right':'20px','margin-top': '-30px','margin-left':'90%'}">
+                </mat-icon>
+        </li>
+</div>-->
+
+<div class="arrange-horizontally-Dialog">
+        <div class="gridheadercenter">
+                About Insights
+        </div>
+        <div class="closeIconCss">
+                <a (click)="closeShowDetailsDialog()">
+                        <mat-icon class="closeiconConf" svgIcon="close_dialog">
+                        </mat-icon>
+                </a>
+        </div>
 </div>
+
 <div class="aboutLogo">
-            <mat-icon svgIcon="ic_about_logo" [ngStyle]="{'width': '211px', 'height': '45px','padding-top':'10px'}">
-            </mat-icon>       
+        <img mat-card-image align="center" height="45px" width="211px" src='icons/svg/about/aboutInsights.png' alt="Cognizant Insights log"
+                class="insightLogo" />
 </div>
-<br>
-        <span class="heading1">Insights</span>
-        <span class="heading2"><sup>BETA</sup></span>
+
 <div class="aboutText">
-       <p><b>For Version Please</b>&nbsp;<b><a href="https://github.com/CognizantOneDevOps/Insights/releases">Click Here</a></b>    
-       </p></div> 
-     <div class="aboutText1">
-        <p>© 2019 Cognizant Technology Solutions Limited. All Rights Reserved.
-InsightsBETA is Property of Cognizant Technology Solutions Ltd. Created under the brand of OneDevOpsTM</p>
-</div> 
-<div class="gitLink">
-   <p><a href="https://github.com/CognizantOneDevOps/Insights.git">https://github.com/CognizantOneDevOps/Insights.git</a>
-   </p></div>
-<div class="gitLink">
-   For Support - Please write to us @<a href="mailto:devopsplatformsupport@cognizant.com">InsightsSupportTeam</a>
+        <span class="heading1">Insights</span>
+        <p> <b>For Version Please</b>&nbsp;<b> <b class="hyperlink" (click)="onHealthClick()"><!--<a  >-->Click Here<!--</a>--></b></b>
+                <!--href="https://github.com/CognizantOneDevOps/Insights/releases"-->
+        </p>
 </div>
+
+<div class="aboutText1">
+        <p>© 2019 Cognizant Technology Solutions Limited. All Rights Reserved. Insights is Property of Cognizant Technology
+                Solutions Ltd. Created under the brand of OneDevOpsTM</p>
+</div>
+
+<div class="gitLink">
+        <p>
+                <a href="https://github.com/CognizantOneDevOps/Insights.git">https://github.com/CognizantOneDevOps/Insights.git</a>
+        </p>
+</div>
+
+<div class="gitLink">
+        For Support - Please write to us @<a href="mailto:devopsplatformsupport@cognizant.com">InsightsSupportTeam</a>
+</div>
+
 <mat-dialog-actions class="mat-dialog-actions-button">
-    <button mat-raised-button (click)="onCloseClick()">OK</button>
+        <button mat-raised-button (click)="onCloseClick()">OK</button>
 </mat-dialog-actions>

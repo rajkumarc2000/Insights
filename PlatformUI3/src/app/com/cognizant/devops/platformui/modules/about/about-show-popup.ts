@@ -17,7 +17,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
-//import { HealthCheckService } from './healthcheck.service';
 
 
 @Component({
@@ -26,103 +25,25 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
   styleUrls: ['./about-show-popup.css']
 })
 export class AboutDialog implements OnInit {
-  showContent: boolean;
-  showThrobber: boolean = false;
-  checkResponseData: boolean;
-  pathName: string;
-  detailType: string;
-  columnLength: number;
-  resultsLength: number = 6;
-  agentDetailedNode = [];
-  agentDetailedDatasource = new MatTableDataSource([]);
-  headerArrayDisplay = [];
-  masterHeader = new Map<String, String>();
-  finalHeaderToShow = new Map<String, String>();
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  headerSet = new Set();
 
   constructor(public dialogRef: MatDialogRef<AboutDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    //this.fillMasterHeaderData();
   }
 
   ngOnInit() {
-   // this.loadDetailsDialogInfo();
-    this.detailType = this.data.detailType;
   }
 
   ngAfterViewInit() {
-    this.agentDetailedDatasource.paginator = this.paginator;
   }
 
-  fillMasterHeaderData() {
- /*   this.masterHeader.set("execId", "Execution ID");
-    this.masterHeader.set("inSightsTimeX", "Execution Time");
-    this.masterHeader.set("status", "Status");
-    this.masterHeader.set("message", "Message");*/
+  onCloseClick(): void {
+    this.dialogRef.close('no');
   }
-
-  /*loadDetailsDialogInfo(): void {
-    this.showThrobber = true;
-    this.showContent = !this.showThrobber;
-    this.checkResponseData = true;
-    this.healthCheckService.loadHealthConfigurations(this.data.toolName, this.data.categoryName)
-      .then((data) => {
-        this.showThrobber = false;
-        this.showContent = !this.showThrobber;
-        var dataArray = data.data.nodes;
-        if (dataArray != undefined) {
-          this.pathName = this.data.pathName;
-          if (dataArray.length === 0 && this.data.detailType != "Platform Service") {
-            this.checkResponseData = false;
-          }
-          for (var key in dataArray) {
-            var dataNodes = dataArray[key];
-            for (var node in dataNodes) {
-              if (node == "propertyMap") {
-                var obj = dataNodes[node];
-                if (typeof obj["message"] !== "undefined") {
-                  obj["message"] = obj["message"].slice(0, 100);
-                }
-                this.agentDetailedNode.push(obj);
-                for (var attr in obj) {
-                  // fill data array in set , Only those header which mention in masterHeader
-                  if (this.masterHeader.has(attr)) {
-                    this.headerSet.add(attr);
-                  }
-                }
-              }
-            }
-          }
-          this.agentDetailedDatasource.data = this.agentDetailedNode;
-          this.agentDetailedDatasource.paginator = this.paginator;
-          this.showSelectedField();
-        }
-      });
-
-  }
-
-  showSelectedField(): void {
-    //Define sequence of headerSet according to mater array and remove unwanted header 
-    this.masterHeader.forEach((value: string, key: string) => {
-      if (this.headerSet.has(key)) {
-        this.finalHeaderToShow.set(key, value);
-      }
-
-    });
-    this.columnLength = this.finalHeaderToShow.size;
-    // create headerArrayDisplay from map keys 
-    if (this.finalHeaderToShow.size > 0) {
-      this.headerArrayDisplay = Array.from(this.finalHeaderToShow.keys());
-    }
-  }
-*/
-onCloseClick(): void {
-        this.dialogRef.close();
-    }
   closeShowDetailsDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close('no');
   }
-
+  onHealthClick(): void {
+    this.dialogRef.close('yes');
+  }
 
 }
