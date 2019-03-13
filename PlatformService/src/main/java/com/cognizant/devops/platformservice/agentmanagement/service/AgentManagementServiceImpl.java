@@ -81,16 +81,22 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			String trackingDetails) throws InsightsCustomException {
 
 		try {
-			String agentId = getAgentkey(toolName);
+			String agentId = null;
 
 			Gson gson = new Gson();
 			JsonElement jelement = gson.fromJson(configDetails.trim(), JsonElement.class);
 			JsonObject json = jelement.getAsJsonObject();
-			json.addProperty("agentId", agentId);
+			//json.addProperty("agentId", agentId);
 			json.addProperty("osversion", osversion);
 			json.addProperty("agentVersion", agentVersion);
 			json.get("subscribe").getAsJsonObject().addProperty("agentCtrlQueue", agentId);
-
+			
+			if(json.get("agentId") == null || json.get("agentId").getAsString().isEmpty()) {
+				agentId = getAgentkey(toolName);
+			} else {
+				agentId = json.get("agentId").getAsString();
+			}
+			
 			Date updateDate = Timestamp.valueOf(LocalDateTime.now());
 
 			
@@ -117,6 +123,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 			String fileName = agentId + FILETYPE;
 			sendAgentPackage(data, AGENTACTION.REGISTER.name(), fileName, agentId, toolName, osversion);
+			performAgentAction(agentId, toolName, osversion, AGENTACTION.START.name(),agentId);
 
 			// Delete tracking.json
 			if (!trackingDetails.isEmpty()) {
@@ -156,8 +163,12 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	public String startStopAgent(String agentId, String toolName, String osversion, String action) throws InsightsCustomException {
 		try {
 			
-			//Push START/STOP option to Daemon queue
-			performAgentAction(agentId, toolName, osversion, action);
+			if(AGENTACTION.START.equals(AGENTACTION.valueOf(action))) {
+				String agentDaemonQueueName = ApplicationConfigProvider.getInstance().getAgentDetails().getAgentPkgQueue();
+				performAgentAction(agentId, toolName, osversion, action,agentDaemonQueueName);
+			} else if (AGENTACTION.STOP.equals(AGENTACTION.valueOf(action))) {
+				performAgentAction(agentId, toolName, osversion, action,agentId);
+			}
 			
 			//Update status in DB
 			AgentConfigDAL agentConfigDAL = new AgentConfigDAL();
@@ -554,7 +565,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		publishAgentAction(agentDaemonQueueName, action.getBytes(), props);
 	}
 
-	private void performAgentAction(String agentId, String toolName, String osversion, String action) throws TimeoutException, IOException {
+	private void performAgentAction(String agentId, String toolName, String osversion, String action,String queueName) throws TimeoutException, IOException {
 		Map<String, Object> headers = new HashMap<>();
 		headers.put("osType", osversion);
 		headers.put("agentToolName", toolName);
@@ -562,8 +573,8 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		headers.put("action", action);
 
 		BasicProperties props = getBasicProperties(headers);
-		String agentDaemonQueueName = ApplicationConfigProvider.getInstance().getAgentDetails().getAgentPkgQueue();
-		publishAgentAction(agentDaemonQueueName, action.getBytes(), props);
+		
+		publishAgentAction(queueName, action.getBytes(), props);
 	}
 
 	private void publishAgentAction(String routingKey, byte[] data, BasicProperties props)
