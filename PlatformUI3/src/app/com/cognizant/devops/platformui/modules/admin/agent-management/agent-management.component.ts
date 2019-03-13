@@ -85,15 +85,19 @@ export class AgentManagementComponent implements OnInit {
     if (this.agentList != null && this.agentList.status == 'success') {
       this.agentListDatasource = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
       console.log(this.agentList);
+      this.agentNameList.push("all");
       for (var data of this.agentList.data) {
         console.log(data);
         /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
+
         if (this.agentNameList.indexOf(data.toolName) == -1) {
           this.agentNameList.push(data.toolName);
+
         }
+
       }
       console.log(this.agentNameList);
-      this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'AgentKey', 'Version', 'Status'];
+      this.displayedColumns = ['radio', 'ToolName', 'AgentKey', 'ToolCategory', 'OS', 'Version', 'Status'];
       setTimeout(() => {
         this.showConfirmMessage = "";
       }, 3000);
@@ -113,20 +117,31 @@ export class AgentManagementComponent implements OnInit {
 
   selectToolAgent(ToolSelect) {
     console.log(ToolSelect);
+
+
     var agentListDatasourceSelected = [];
-    console.log(agentListDatasourceSelected);
-    this.agentList.data.filter(x => {
-      console.log(x);
-      if (x.toolName == ToolSelect) {
-        agentListDatasourceSelected.push(x)
+    //console.log(agentListDatasourceSelected);
+    if (ToolSelect != "all") {
+      this.agentList.data.filter(x => {
+        console.log(x);
+        if (x.toolName == ToolSelect) {
+          agentListDatasourceSelected.push(x)
+        }
       }
+
+      )
     }
 
-    )
 
-    console.log(agentListDatasourceSelected);
+    //console.log(agentListDatasourceSelected);
+    else {
+      agentListDatasourceSelected.push(this.agentList.data);
+      console.log(agentListDatasourceSelected)
+
+    }
     this.agentListDatasource = agentListDatasourceSelected;
-    console.log(this.agentListDatasource)
+    // console.log(this.agentListDatasource)
+
 
   }
 
