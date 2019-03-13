@@ -147,7 +147,7 @@ export class AgentConfigurationComponent implements OnInit {
         }
       }
     } else {
-      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again.";
+      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
       self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
     }
     self.showThrobber = false;
@@ -187,7 +187,7 @@ export class AgentConfigurationComponent implements OnInit {
   async getAgentConfig(version, toolName) {
     var self = this;
     self.isRegisteredTool = false;
-    self.checkValidation();
+    /* self.checkValidation(); */
 
     if (!self.isRegisteredTool) {
       this.agentConfigItems = [];
@@ -215,12 +215,12 @@ export class AgentConfigurationComponent implements OnInit {
         self.showMessage = "Something wrong with service, Please try again";
         self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
       }
-    } else {
+    } /* else {
       self.buttonDisableStatus = true;
       self.showConfig = false;
       self.showMessage = " <b> " + toolName.charAt(0).toUpperCase() + toolName.slice(1) + " </b> agent is already registered, Please select other tool.";
       self.messageDialog.showApplicationsMessage(self.showMessage, "WARN");
-    }
+    } */
   }
 
   getconfigDataParsed(data) {
@@ -442,7 +442,7 @@ export class AgentConfigurationComponent implements OnInit {
     return typeof (arr[key]);
   }
 
-  checkValidation(): void {
+  /* checkValidation(): void {
     var self = this;
     for (var key in self.validationArr) {
       if (self.validationArr[key]['tool'] == self.selectedTool) {
@@ -450,7 +450,7 @@ export class AgentConfigurationComponent implements OnInit {
         self.selectedTool = "";
       }
     }
-  }
+  } */
   uploadFile() {
     this.trackingUploadedFileContentStr = "";
     var uploadedFile = this.myFileDiv.nativeElement.files;

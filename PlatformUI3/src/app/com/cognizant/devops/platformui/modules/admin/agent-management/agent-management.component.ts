@@ -17,7 +17,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 @Component({
@@ -27,18 +27,25 @@ import { MessageDialogService } from '@insights/app/modules/application-dialog/m
 })
 export class AgentManagementComponent implements OnInit {
 
+
   validationArr = {};
   showConfirmMessage: string;
   showList: boolean = false;
   showThrobber: boolean;
   showMessage: string;
   data = [];
+  displayedColumns = [];
   tableParams = [];
   buttonDisableStatus: boolean = true;
   runDisableStatus: string = "";
   agentListDatasource = [];
-  displayedColumns: string[];
+
+
+  agentList: any;
+
   selectedAgent: any;
+  selectTool: any;
+  agentNameList: any = [];
   agentparameter = {};
   receivedParam: any;
   toolVersionData: any;
@@ -74,11 +81,19 @@ export class AgentManagementComponent implements OnInit {
     self.showThrobber = true;
     self.buttonDisableStatus = true;
     self.runDisableStatus = "";
-    let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
-    if (agentList != null && agentList.status == 'success') {
-      this.agentListDatasource = agentList.data.sort((a, b) => a.toolName > b.toolName);
-      //console.log(agentList);
-      this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
+    this.agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
+    if (this.agentList != null && this.agentList.status == 'success') {
+      this.agentListDatasource = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
+      console.log(this.agentList);
+      for (var data of this.agentList.data) {
+        console.log(data);
+        /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
+        if (this.agentNameList.indexOf(data.toolName) == -1) {
+          this.agentNameList.push(data.toolName);
+        }
+      }
+      console.log(this.agentNameList);
+      this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'AgentKey', 'Version', 'Status'];
       setTimeout(() => {
         this.showConfirmMessage = "";
       }, 3000);
@@ -94,6 +109,29 @@ export class AgentManagementComponent implements OnInit {
       this.validationArr[i] = { "os": detailArr[i].osVersion, "version": detailArr[i].agentVersion, "tool": detailArr[i].toolName }
     }
   }
+
+
+  selectToolAgent(ToolSelect) {
+    console.log(ToolSelect);
+    var agentListDatasourceSelected = [];
+    console.log(agentListDatasourceSelected);
+    this.agentList.data.filter(x => {
+      console.log(x);
+      if (x.toolName == ToolSelect) {
+        agentListDatasourceSelected.push(x)
+      }
+    }
+
+    )
+
+    console.log(agentListDatasourceSelected);
+    this.agentListDatasource = agentListDatasourceSelected;
+    console.log(this.agentListDatasource)
+
+  }
+
+
+
 
   statusEdit(element) {
     this.runDisableStatus = element.agentStatus;
@@ -161,7 +199,7 @@ export class AgentManagementComponent implements OnInit {
     if (self.selectedAgent.agentStatus == 'STOP') {
       var title = "Delete Agent";
       var dialogmessage = "Note: Uninstalling the Agent doesn't delete the data that has been collected. The agent could be re-registered again, and the data collection would be resumed from the last run time. <br> <br> Do you want to uninstall <b> " + self.selectedAgent.toolName + " </b> on <b>" + self.selectedAgent.osVersion + " </b> ? ";
-      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT", "45%");
+      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT", "40%");
 
       dialogRef.afterClosed().subscribe(result => {
         //console.log('The dialog was closed  ' + result);
