@@ -13,6 +13,13 @@
   right: 0;
  }
  
+ .labelInfo{
+  font-size:13px;
+  padding-left: 10px;
+  color: black
+}
+
+ 
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
 
