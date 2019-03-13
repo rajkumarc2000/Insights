@@ -13,13 +13,14 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 License for the specific language governing permissions and limitations under
 the License.
 :comment
+SET /A action=
 REM pushd %INSIGHTS_AGENT_HOME%\PlatformAgents\%2%
 IF /I "%1%" == "UNINSTALL" (
-	net stop %3%
-	sc delete %3%
+	net stop %3
+	sc delete %3
 ) ELSE (
-	net stop %3%
-	sc delete %3%
-	nssm install %4%
-	net start %3%
+	net stop %3
+	sc delete %3
+	nssm install %3 %INSIGHTS_AGENT_HOME%\\PlatformAgents\\%2\\%3\\%3.bat
+	net start %3
 )
