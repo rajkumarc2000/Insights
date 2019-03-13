@@ -225,7 +225,7 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 	public JsonObject getToolsMappingLabel(String agentName) {
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
 		String query = "MATCH (n:METADATA:BUSINESSMAPPING) where n.toolName ='" + agentName
-				+ "' return n order by n.inSightsTime asc"; // 'GIT'
+				+ "' return n order by n.inSightsTime desc"; // 'GIT'
 		GraphResponse response;
 		List<Map<String,String>> propertyList= new ArrayList<Map<String,String>>();
 		try {

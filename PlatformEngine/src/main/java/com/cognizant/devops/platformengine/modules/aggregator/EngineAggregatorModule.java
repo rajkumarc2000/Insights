@@ -68,21 +68,25 @@ public class EngineAggregatorModule implements Job {
 			businessMappinMap = getMetaData(graphDBHandler);
 		}
 		for (AgentConfig agentConfig : allAgentConfigurations) {
-			registerAggragators(agentConfig, graphDBHandler, businessMappinMap);
+			String toolName = agentConfig.getToolName().toUpperCase();
+			List<BusinessMappingData> businessMappingList = businessMappinMap.get(toolName);
+			if (businessMappingList == null) {
+				businessMappingList = new ArrayList<BusinessMappingData>(0);
+			}
+			registerAggragators(agentConfig, graphDBHandler, toolName, businessMappingList);
 		}
 	}
 
 
-	private void registerAggragators(AgentConfig agentConfig, Neo4jDBHandler graphDBHandler,
-			Map<String, List<BusinessMappingData>> businessMappinMap) {
+	private void registerAggragators(AgentConfig agentConfig, Neo4jDBHandler graphDBHandler, String toolName,
+			List<BusinessMappingData> businessMappingList) {
 		try {
 			JsonObject config = (JsonObject) new JsonParser().parse(agentConfig.getAgentJson());
 			JsonObject json = config.get("publish").getAsJsonObject();
 			String dataRoutingKey = json.get("data").getAsString();
-			String toolName = agentConfig.getToolName().toUpperCase();
-			log.debug(" dataRoutingKey " + dataRoutingKey + "Tool Info " + toolName);
 
-			List<BusinessMappingData> businessMappingList = businessMappinMap.get(toolName);
+			log.debug(" dataRoutingKey " + dataRoutingKey + "  Tool Info " + toolName);
+
 			if (dataRoutingKey != null && !registry.containsKey(dataRoutingKey)) {
 				try {
 					registry.put(dataRoutingKey,
@@ -101,7 +105,6 @@ public class EngineAggregatorModule implements Job {
 			} else if (registry.containsKey(dataRoutingKey)) {
 				AgentDataSubscriber dataSubscriber = (AgentDataSubscriber) registry.get(dataRoutingKey);
 				dataSubscriber.setMappingData(businessMappingList);
-				log.info(" arg0  businessMappingList if key exists " + businessMappingList);
 			}
 
 			String healthRoutingKey = json.get("health").getAsString();
@@ -158,7 +161,7 @@ public class EngineAggregatorModule implements Job {
 		try {
 			GraphResponse toolResponse = dbHandler
 					.executeCypherQuery("MATCH (n:METADATA:BUSINESSMAPPING) return collect(distinct n.toolName)");
-			log.info("arg0  tool node responce  " + gson.toJson(toolResponse));
+			// log.info("arg0 tool node responce " + gson.toJson(toolResponse));
 			JsonArray arrayToolRegistred= toolResponse.getJson().get("results").getAsJsonArray().get(0).getAsJsonObject().get("data")
 					.getAsJsonArray().get(0).getAsJsonObject().get("row").getAsJsonArray().get(0).getAsJsonArray();
 			
@@ -169,7 +172,7 @@ public class EngineAggregatorModule implements Job {
 				/* log.info("tool info toolName " + toolName); */
 				GraphResponse response = dbHandler.executeCypherQuery(
 						"MATCH (n:METADATA:BUSINESSMAPPING) where n.toolName='" + toolName
-								+ "' return n order by n.inSightsTime asc");
+								+ "' return n order by n.inSightsTime desc");
 				nodes = response.getNodes();
 				List<BusinessMappingData> toolDataList = new ArrayList<BusinessMappingData>(0);
 				for (NodeData node : nodes) {
@@ -200,7 +203,7 @@ public class EngineAggregatorModule implements Job {
 					 */
 					toolDataList.add(toolData);
 				}
-				log.info("arg0 toolDataList  " + toolDataList);
+				log.debug("arg0 toolDataList  " + toolDataList);
 				businessMappinMap.put(toolName, toolDataList);
 			}
 		} catch (GraphDBException e) {

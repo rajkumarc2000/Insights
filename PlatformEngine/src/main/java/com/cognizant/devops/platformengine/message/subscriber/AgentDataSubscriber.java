@@ -78,9 +78,10 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 		boolean enableOnlineDatatagging = ApplicationConfigProvider.getInstance().isEnableOnlineDatatagging();
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
 		String message = new String(body, MessageConstants.MESSAGE_ENCODING);
-		log.info(" Received message ==== "+message);
+		log.warn(" Received message ==== " + message);
 		String routingKey = envelope.getRoutingKey();
-		/* log.info(" routingKey   arg0   ====="+routingKey); */
+		// routingKey = routingKey.replaceAll("_", ".");
+		log.debug("Routing key in data " + routingKey);
 		List<String> labels = new ArrayList<String>();
 		labels.add("RAW");
 		labels.addAll(Arrays.asList(routingKey.split(MessageConstants.ROUTING_KEY_SEPERATOR)));
@@ -121,14 +122,6 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 				}
 			}
 		}
-		/*
-		 * Map<String,Map<String,NodeData>> metaDataMap=new
-		 * HashMap<String,Map<String,NodeData>>(); Gson gson = new Gson();
-		 * if(enableOnlineDatatagging){
-		 * 
-		 * // log.info(" Mapping data " + businessMappingList); // metaDataMap=
-		 * getMetaData(dbHandler); }
-		 */
 		
 		if(json.isJsonArray()){
 			JsonArray asJsonArray = json.getAsJsonArray();
@@ -140,13 +133,7 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 						JsonObject jsonWithLabel = applyDataTagging(e.getAsJsonObject());
 
 						if (jsonWithLabel != null) {
-							/*
-							 * String nodeJsonStr = gson.toJson(nodeData.getPropertyMap()); JsonObject
-							 * finalJson = mergeProperty(e,nodeJsonStr); finalJson.remove("uuid");
-							 */
-							log.info("arg0 Final Json With label info ====== " + jsonWithLabel);// finalJson
 							dataList.add(jsonWithLabel);// finalJson
-
 						} else {
 							dataList.add(e.getAsJsonObject());
 						}
@@ -170,13 +157,12 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 				}else{
 					cypherQuery = "UNWIND {props} AS properties CREATE (n"+queryLabel+") set n=properties return count(n)";
 				}
-				log.info(" Data add cypherQuery ======= "+cypherQuery);
+
 				List<List<JsonObject>> partitionList = partitionList(dataList, 1000);
 				for(List<JsonObject> chunk : partitionList){
 					JsonObject graphResponse = dbHandler.bulkCreateNodes(chunk, labels, cypherQuery);
 					if(graphResponse.get("response").getAsJsonObject().get("errors").getAsJsonArray().size() > 0){
 						log.error("Unable to insert nodes for routing key: "+routingKey+", error occured: "+graphResponse);
-						//log.error(chunk);
 					}
 				}
 				getChannel().basicAck(envelope.getDeliveryTag(), false);
@@ -202,13 +188,8 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 	private JsonObject applyDataTagging(JsonObject asJsonObject) { // , Map<String, Map<String, NodeData>> metaDataMap
 																	// NodeData
 
-		/*
-		 * NodeData nodeData = null ; StringBuilder sb=null;
-		 */
-		log.info("received asJsonObject   " + asJsonObject);
 		List<String> selectedBusinessMapping = new ArrayList<String>(0);
 		List<String> labelMappingArray = new ArrayList<String>(0);
-		log.info(" businessMappingList While applying " + businessMappingList);
 		/*
 		 * for (String key : metaDataMap.keySet()){ StringTokenizer token = new
 		 * StringTokenizer(key,AgentDataConstants.COLON); sb= new StringBuilder();
@@ -232,13 +213,9 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 			for (BusinessMappingData businessMappingData : businessMappingList) {
 				Map<String, String> map = businessMappingData.getPropertyMap();
 				for (Entry<String, String> mapValue : map.entrySet()) {
-					log.info(" arg0 mapValue " + mapValue + "   mapValue.getKey()  " + mapValue.getKey() + "  "
-							+ asJsonObject.has(mapValue.getKey()));
 					if (asJsonObject.has(mapValue.getKey())) {
 						String jsonValue = asJsonObject.get(mapValue.getKey()).getAsString();
-						log.info(" value ==== " + jsonValue + " mapping value  " + mapValue.getValue());
 						if (jsonValue.equalsIgnoreCase(mapValue.getValue())) {
-							log.info(" keay and value match , increase count  == " + mapValue.getValue());
 							selectedBusinessMapping.add(businessMappingData.getBusinessMappingLabel());
 							StringTokenizer sk = new StringTokenizer(businessMappingData.getBusinessMappingLabel(),
 									":");
@@ -254,14 +231,13 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 				}
 			}
 		}
-		log.info(" apply label set Array  " + labelMappingArray);
-		if (!labelMappingArray.isEmpty()) { // countTotal == matchLabelCount
-			log.info("arg0 Apply Business Mapping Label ");
+		log.debug(" apply label set Array  " + labelMappingArray);
+		if (!labelMappingArray.isEmpty()) {
 			for (int i = 0; i < labelMappingArray.size(); i++) {
 				asJsonObject.addProperty("orgLevel_" + (i + 1), labelMappingArray.get(i));
 			}
 		}
-		return asJsonObject; // nodeData
+		return asJsonObject;
 	}
 
 	private  Map<String, Map<String, NodeData>> getMetaData(Neo4jDBHandler dbHandler) {
