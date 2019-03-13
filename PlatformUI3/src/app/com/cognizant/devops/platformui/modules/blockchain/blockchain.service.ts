@@ -23,9 +23,9 @@ import { CookieService } from 'ngx-cookie-service';
 
 export interface IBlockChainService {
 
-    getAllAssets(startDate: string, endDate: string): Promise<any>;
+    getAllAssets(startDate: string, endDate: string, toolname: string): Promise<any>;
     getAssetInfo(assetID: string): Promise<any>;
-    getAssetHistory(basePrimaryID: string): Promise<any>;
+    getAssetHistory(assetID: string): Promise<any>;
     exportToPdf(pdfData:any):Observable<any>;
 }
 
@@ -38,9 +38,9 @@ export class BlockChainService implements IBlockChainService {
     constructor(private restCallHandlerService: RestCallHandlerService, private httpClient:HttpClient, private cookieService: CookieService) {
     }
 
-    getAllAssets(startDate: string, endDate: string): Promise<any> {
+    getAllAssets(startDate: string, endDate: string, toolname: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ALL_ASSETS", { 'startDate': startDate, 'endDate': endDate });
+        return restHandler.get("GET_ALL_ASSETS", { 'startDate': startDate, 'endDate': endDate, 'toolName':toolname });
     }
 
     getAssetInfo(assetID: string): Promise<any> {
@@ -48,9 +48,9 @@ export class BlockChainService implements IBlockChainService {
         return restHandler.get("GET_ASSET_INFO", { 'assetId': assetID });
     }
 
-    getAssetHistory(basePrimaryID: string): Promise<any> {
+    getAssetHistory(assetID: string): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("GET_ASSET_HISTORY", { 'primaryId': basePrimaryID });
+        return restHandler.get("GET_ASSET_HISTORY", { 'assetId': assetID });
     }
 
     exportToPdf(pdfData):Observable<Blob> {

@@ -26,7 +26,7 @@ export interface AssetHistoryData {
     phase: string;
     toolstatus: string;
     toolName: string;
-    basePrimeID: string;
+    //basePrimeID: string;
     author: string;
     timestamp: string;
 }
@@ -92,7 +92,7 @@ export class AssetDetailsDialog implements OnInit {
 
     getAssetHistoryDetails() {
         this.displayProgressBar = true;
-        this.blockChainService.getAssetHistory(this.parentData.basePrimeID)
+        this.blockChainService.getAssetHistory(this.parentData.assetID)
             .then((data) => {
                 console.log("asset history respose>>>");
                 console.log(data);
