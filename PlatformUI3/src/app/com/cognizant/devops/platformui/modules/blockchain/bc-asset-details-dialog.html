@@ -29,7 +29,7 @@
 <!-- Displays Progress spinner until we get server response to display result-->
 
 <div *ngIf="displayProgressBar" class="progressBarStyle">
-     <mat-progress-spinner color="primary" mode="indeterminate">
+     <mat-progress-spinner color="primary" mode="indeterminate" [diameter]="100">
     </mat-progress-spinner> 
 </div>
 
@@ -115,8 +115,8 @@
                       <div class="asset-details-element-description">
                         <!-- <div [innerHTML]="getLevel2Properties(column, element)"></div> -->
                         <dt class="dt">{{column}}</dt>
-                        <dd class="dd" *ngIf="element[column]?.startsWith('http')"> : <span><a href="{{element[column]}}">{{element[column]}}</a></span></dd>
-                        <dd *ngIf="!element[column]?.startsWith('http')" class="dd"> : {{element[column]}}</dd>
+                        <dd class="dd" *ngIf="element[column]?.toString()?.startsWith('http')"> : <span><a href="{{element[column]?.toString()}}">{{element[column]}}</a></span></dd>
+                        <dd *ngIf="!element[column]?.toString()?.startsWith('http')" class="dd"> : {{element[column]}}</dd>
                       </div><br/>
                     </div>
                 </div>

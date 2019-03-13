@@ -106,7 +106,7 @@ export class BlockChainComponent implements OnInit {
       this.displayProgressBar = true;
       this.noSearchResultFlag = false;
       this.showSearchResult = false;
-      this.blockChainService.getAllAssets(this.startDate, this.endDate)
+      this.blockChainService.getAllAssets(this.startDate, this.endDate,this.toolname.value)
         .then((data) => {
           this.displayProgressBar = false;
           if (data.status === "failure") {
@@ -239,7 +239,7 @@ export class BlockChainComponent implements OnInit {
 
   //Displays Asset Details Dialog box
   showAssetDetailsDialog() {
-    if (this.selectedAssetID =="" && this.selectedBasePrimeID =="") {
+    if (this.selectedAssetID =="") {
       return;
     }
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
@@ -248,11 +248,12 @@ export class BlockChainComponent implements OnInit {
       width: '1200px',
       disableClose: true,
       position: { top: '0px', left: '100px', right: '0px', bottom: '0px' },
-      data: { basePrimeID: this.selectedBasePrimeID, assetID: this.selectedAssetID },
+      data: { assetID: this.selectedAssetID },
     });
   }
 
   populateBasePrimeID($event: MatRadioChange, assetID: string) {
+    console.log($event.value);
     this.selectedBasePrimeID = $event.value;
     this.selectedAssetID = assetID;
   }
