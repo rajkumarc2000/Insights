@@ -19,13 +19,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatTableDataSou
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 
 
+
 @Component({
   selector: 'about-show-popup',
   templateUrl: './about-show-popup.html',
   styleUrls: ['./about-show-popup.css']
 })
 export class AboutDialog implements OnInit {
-
+aboutPageURL = "https://github.com/CognizantOneDevOps/Insights/releases";
   constructor(public dialogRef: MatDialogRef<AboutDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -44,6 +45,7 @@ export class AboutDialog implements OnInit {
   }
   onHealthClick(): void {
     this.dialogRef.close('yes');
+    window.open(this.aboutPageURL, "_blank");
   }
 
 }

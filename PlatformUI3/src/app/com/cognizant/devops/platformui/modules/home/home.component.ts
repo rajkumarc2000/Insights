@@ -203,11 +203,11 @@ export class HomeComponent implements OnInit {
           width: '35%',
           disableClose: true,
         });
-        aboutDialogRef.afterClosed().subscribe(result => {
+       /* aboutDialogRef.afterClosed().subscribe(result => {
           if (result == 'yes') {
             this.router.navigateByUrl('InSights/Home/healthcheck', { skipLocationChange: true });
           }
-        });
+        });*/
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
       } else if (item.displayName == 'Logout') {
