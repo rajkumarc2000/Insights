@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -74,6 +76,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private static final String SUCCESS = "SUCCESS";
 	
 	String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath();
+	Pattern agentIdPattern = Pattern.compile("[^A-Za-z0-9\\_]", Pattern.CASE_INSENSITIVE);
 	
 
 	@Override
@@ -95,6 +98,12 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 				agentId = getAgentkey(toolName);
 			} else {
 				agentId = json.get("agentId").getAsString();
+			}
+			
+			Matcher m = agentIdPattern.matcher(agentId);
+
+			if (m.find()) {
+			   throw new InsightsCustomException("Agent Id has to be Alpha numeric with '_' as special character");
 			}
 			
 			Date updateDate = Timestamp.valueOf(LocalDateTime.now());
@@ -604,7 +613,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	}
 
 	private String getAgentkey(String toolName) {
-		return toolName + "-" + Instant.now().toEpochMilli();
+		return toolName + "_" + Instant.now().toEpochMilli();
 	}
 	
 	public static void main(String...args) throws IOException, InsightsCustomException {
@@ -639,6 +648,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 				"			}\n" + 
 				"		}\n" + 
 				"	},\n" + 
+				"  \"agentId\" : \"git_test1\",\n"+
 				"	\"enableBranches\" : false,\n" + 
 				"	\"toolCategory\" : \"SCM\",\n" + 
 				"	\"toolsTimeZone\" : \"GMT\",\n" + 
