@@ -92,7 +92,6 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			//json.addProperty("agentId", agentId);
 			json.addProperty("osversion", osversion);
 			json.addProperty("agentVersion", agentVersion);
-			json.get("subscribe").getAsJsonObject().addProperty("agentCtrlQueue", agentId);
 			
 			if(json.get("agentId") == null || json.get("agentId").getAsString().isEmpty()) {
 				agentId = getAgentkey(toolName);
@@ -105,6 +104,8 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			if (m.find()) {
 			   throw new InsightsCustomException("Agent Id has to be Alpha numeric with '_' as special character");
 			}
+
+			json.get("subscribe").getAsJsonObject().addProperty("agentCtrlQueue", agentId);
 			
 			Date updateDate = Timestamp.valueOf(LocalDateTime.now());
 
