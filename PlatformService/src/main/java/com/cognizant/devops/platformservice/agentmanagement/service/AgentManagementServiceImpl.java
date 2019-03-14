@@ -130,10 +130,10 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 				deleteTrackingJson(toolName);
 			}
 
-			/*// register agent in DB
+			// register agent in DB
 			AgentConfigDAL agentConfigDAL = new AgentConfigDAL();
 			agentConfigDAL.saveAgentConfigFromUI(agentId, json.get("toolCategory").getAsString(), toolName, json,
-					agentVersion, osversion, updateDate);*/
+					agentVersion, osversion, updateDate);
 
 		} catch (Exception e) {
 			log.error("Error while registering agent " + toolName, e);
