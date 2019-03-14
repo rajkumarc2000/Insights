@@ -6,7 +6,42 @@ table {
     text-align: left;
     vertical-align: middle;
 }
+.toolsBoxCss{
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+.arrange-horizontally {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+}
+.labelInfo{
+    font-size:13px;
+    padding-left: 10px;
+    color: black
+  }
 
+.mainText{
+    font-size: 15px;
+    color:  #00b140;
+    font-weight:bold;
+    vertical-align:sub;
+    width: 10%;
+    padding-left: 5px;
+}
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
 

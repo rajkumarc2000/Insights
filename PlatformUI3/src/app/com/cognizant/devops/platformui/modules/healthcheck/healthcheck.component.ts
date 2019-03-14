@@ -18,6 +18,7 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
+//import { Agent } from 'https';
 
 
 @Component({
@@ -39,15 +40,19 @@ export class HealthCheckComponent implements OnInit {
   dataComponentColumns: string[];
   servicesColumns: string[];
   agentDataSource = [];
+  agentListDatasource=[];
   dataComponentDataSource = [];
+  dataListDatasource=[];
   servicesDataSource = [];
+  servicesListDatasource=[];
   healthResponse: any;
   agentResponse: any;
   agentBacktoTopFlag: boolean = false;
   dataBacktoTopFlag: boolean = false;
   servicesBacktoTopFlag: boolean = false;
-
-
+  agentNameList: any = [];
+  dataNameList:any=[];
+  servicesNameList=[];
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
     this.loadAgentCheckInfo();
     this.loadAllHealthCheckInfo();
@@ -70,8 +75,25 @@ export class HealthCheckComponent implements OnInit {
           if (element.type == 'Agents') {
             this.agentNodes = element.agentNodes;
             this.agentDataSource = this.agentNodes;
+            //console.log(this.agentNodes)
           }
         }
+        //this.agentListDatasource =this.agentDataSource;
+        //console.log(this.agentDataSource)
+        this.agentNameList.push("all");
+        for (var data of this.agentDataSource) {
+          //console.log(data);
+          /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
+  
+          if (this.agentNameList.indexOf(data.toolName) == -1) {
+            this.agentNameList.push(data.toolName);
+  
+          }
+  
+        }
+        this.selectToolAgent("all");
+        //this.selectAgentTool="all"
+        //console.log(this.agentNameList);
         //Displays Back to Top button when Agent table contains more than 20 rows
         if (this.agentDataSource.length > 20) {
           this.agentBacktoTopFlag = true;
@@ -83,6 +105,30 @@ export class HealthCheckComponent implements OnInit {
       console.log(error);
     }
 
+  }
+
+  selectToolAgent(ToolSelect) {
+    console.log(ToolSelect);
+
+
+    var agentListDatasourceSelected = [];
+    //console.log(agentListDatasourceSelected);
+    if (ToolSelect != "all") {
+      this.agentDataSource.filter(x => {
+        console.log(x);
+        if (x.toolName == ToolSelect) {
+          agentListDatasourceSelected.push(x)
+        }
+      }
+
+      )
+    }else {
+      agentListDatasourceSelected=this.agentDataSource;
+      //console.log(agentListDatasourceSelected)
+
+    }
+    this.agentListDatasource = agentListDatasourceSelected;
+    console.log(this.agentListDatasource)
   }
 
   async loadAllHealthCheckInfo() {
@@ -104,7 +150,31 @@ export class HealthCheckComponent implements OnInit {
             this.dataComponentDataSource.push(element);
           }
         }
-
+        console.log(this.servicesDataSource)
+        this.dataNameList.push("all");
+        this.servicesNameList.push("all");
+        for (var data of this.dataComponentDataSource) {
+          //console.log(data);
+          /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
+  
+          if (this.dataNameList.indexOf(data.serverName) == -1) {
+            this.dataNameList.push(data.serverName);
+  
+          }
+  
+        }
+        this.selectToolData("all")
+        for (var data of this.servicesDataSource) {
+          //console.log(data);
+          /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
+  
+          if (this.servicesNameList.indexOf(data.serverName) == -1) {
+            this.servicesNameList.push(data.serverName);
+  
+          }
+  
+        }
+        this.selectServicesData("all")
         //Displays Back to Top button when Data Component table contains more than 20 rows
         if (this.dataComponentDataSource.length > 20) {
           this.dataBacktoTopFlag = true;
@@ -123,6 +193,53 @@ export class HealthCheckComponent implements OnInit {
       this.showContent = false;
       console.log(error);
     }
+  }
+
+  selectToolData(ToolSelect) {
+    //console.log(ToolSelect);
+
+
+    var dataListDatasourceSelected = [];
+    //console.log(agentListDatasourceSelected);
+    if (ToolSelect != "all") {
+      this.dataComponentDataSource.filter(x => {
+        console.log(x);
+        if (x.serverName == ToolSelect) {
+          dataListDatasourceSelected.push(x)
+        }
+      }
+
+      )
+    }else {
+      dataListDatasourceSelected=this.dataComponentDataSource;
+      //console.log(agentListDatasourceSelected)
+
+    }
+    this.dataListDatasource = dataListDatasourceSelected;
+    console.log(this.dataComponentDataSource)
+  }
+  selectServicesData(ToolSelect) {
+    //console.log(ToolSelect);
+
+
+    var dataListDatasourceSelected = [];
+    //console.log(agentListDatasourceSelected);
+    if (ToolSelect != "all") {
+      this.servicesDataSource.filter(x => {
+        console.log(x);
+        if (x.serverName == ToolSelect) {
+          dataListDatasourceSelected.push(x)
+        }
+      }
+
+      )
+    }else {
+      dataListDatasourceSelected=this.servicesDataSource;
+      //console.log(agentListDatasourceSelected)
+
+    }
+    this.servicesListDatasource = dataListDatasourceSelected;
+    //console.log(this.dataComponentDataSource)
   }
 
   // Displays Show Details dialog box when Details column is clicked

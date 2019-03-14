@@ -26,10 +26,19 @@
       <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
         <div layout>&nbsp; Agents</div>
       </div>
-
+      <div class="arrange-horizontally">
+        <label class="mainText"> Select Tool </label>
+        <mat-select [(ngModel)]="selectAgentTool" [style.height.px]="20" [style.width.%]="21" (ngModelChange)="selectToolAgent(selectAgentTool)"
+          name="selectAgentTool" required placeholder="Select Tool" class="toolsBoxCss" [ngClass]="{  'input-disabled' :false  ,  'form-control': true}">
+          <mat-option *ngFor="let data of agentNameList" [value]="data" style="color:#0033A0">
+            {{data}}
+          </mat-option>
+        </mat-select>
+        <h2 class="labelInfo">(Please select Tool to see tool properties and Label)</h2>
+      </div>
       <div id="agentsTable" layout-align="center center" class="tableContainerStyle" *ngIf="showContentAgent">
         <!-- Insights Agents Table -->
-        <table mat-table [dataSource]="agentDataSource">
+        <table mat-table [dataSource]="agentListDatasource">
           <!-- Category Column -->
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Category </th>
@@ -92,9 +101,18 @@
       <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
         <div layout>&nbsp; Data Components</div>
       </div>
-
+      <div class="arrange-horizontally">
+        <label class="mainText"> Select Tool </label>
+        <mat-select [(ngModel)]="selectDataTool" [style.height.px]="20" [style.width.%]="21" (ngModelChange)="selectToolData(selectDataTool)"
+          name="selectDataTool" required placeholder="Select Tool" class="toolsBoxCss"[ngClass]="{  'input-disabled' :false  ,  'form-control': true}">
+          <mat-option *ngFor="let data of dataNameList" [value]="data" style="color:#0033A0">
+            {{data}}
+          </mat-option>
+        </mat-select>
+        <h2 class="labelInfo">(Please select Tool to see tool properties and Label)</h2>
+      </div>
       <div id="dataComponentTable" layout-align="center center" class="tableContainerStyle" *ngIf="showContent">
-        <table mat-table [dataSource]="dataComponentDataSource">
+        <table mat-table [dataSource]="dataListDatasource">
           <!-- Server Column -->
           <ng-container matColumnDef="serverName">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Name</th>
@@ -150,9 +168,18 @@
       <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
         <div layout> &nbsp; Services</div>
       </div>
-
+      <div class="arrange-horizontally">
+        <label class="mainText"> Select Tool </label>
+        <mat-select [(ngModel)]="selectServicesTool" [style.height.px]="20" [style.width.%]="21" (ngModelChange)="selectServicesData(selectServicesTool)"
+          name="selectServicesTool" required placeholder="Select Tool" class="toolsBoxCss" [ngClass]="{  'input-disabled' :false  ,  'form-control': true}">
+          <mat-option *ngFor="let data of servicesNameList" [value]="data" style="color:#0033A0">
+            {{data}}
+          </mat-option>
+        </mat-select>
+        <h2 class="labelInfo">(Please select Tool to see tool properties and Label)</h2>
+      </div>
       <div id="servicesTable" layout-align="center center" class="tableContainerStyle" *ngIf="showContent">
-        <table mat-table [dataSource]="servicesDataSource">
+        <table mat-table [dataSource]="servicesListDatasource">
           <!-- Server Column -->
           <ng-container matColumnDef="serverName">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Name</th>
