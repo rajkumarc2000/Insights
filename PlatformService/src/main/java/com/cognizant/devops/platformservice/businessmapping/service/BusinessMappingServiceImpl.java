@@ -214,6 +214,7 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 			}
 		} catch (GraphDBException e) {
 			// TODO Auto-generated catch block
+			log.error(e);
 			e.printStackTrace();
 			return PlatformServiceUtil.buildFailureResponse(e.getMessage());
 		}
@@ -261,6 +262,7 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 			log.debug(updateGraphResponse);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block  GraphDB
+			log.error(e);
 			e.printStackTrace();
 			return PlatformServiceUtil.buildFailureResponse(e.getMessage());
 		}
