@@ -154,7 +154,7 @@ export class BusinessMappingComponent implements OnInit {
       let propString = undefined;
       for (let key of Object.keys(jsonData)) {
         if (this.additionalProperties.indexOf(key) > -1) {
-          console.log(jsonData[key]);
+          //console.log(jsonData[key]);
         } else {
           if (propString == undefined) {
             propString = key + " <b> : </b>" + jsonData[key];
@@ -177,7 +177,6 @@ export class BusinessMappingComponent implements OnInit {
       if (this.masterToolPropertiesData.data != undefined && this.masterToolPropertiesData.status == "success") {
         if (this.actionType == 'edit') {
           var existingKeys = Object.keys(this.selectedMappingAgent);
-          console.log(this.masterToolPropertiesData.data);
 
           for (let masterData of this.masterToolPropertiesData.data) {
             //console.log(masterData);
@@ -204,7 +203,7 @@ export class BusinessMappingComponent implements OnInit {
           this.label = this.selectedMappingAgent.businessmappinglabel;
         } else if (this.actionType == "add") {
           for (var key in this.masterToolPropertiesData.data) {
-            console.log(key + "   ======  " + this.masterToolPropertiesData.data[key]);
+            //console.log(key + "   ======  " + this.masterToolPropertiesData.data[key]);
             var checkvalue = regex.test(this.masterToolPropertiesData.data[key]);
             if (checkvalue) {
               // Skip Key changes
@@ -316,11 +315,9 @@ export class BusinessMappingComponent implements OnInit {
       let validationMessage = '';
       selectedData.forEach(
         row => {
-          console.log("selectes rows" + selectedData.length);
-          console.log("new" + row.key + " : " + row.value);
-          console.log(row.value.length);
+          //console.log("selectes rows" + selectedData.length);
           if (row.value.length == 0) {
-            console.log("new " + row.key + " : " + row.value);
+            //console.log("new " + row.key + " : " + row.value);
             //this.messageDialog.showApplicationsMessage("Value should not be empty for propety key "+ row.key,"WARN");
             validationMessage = "Value should not be empty for propety key <b>" + row.key + "</b>";
           } else {
@@ -368,6 +365,7 @@ export class BusinessMappingComponent implements OnInit {
         }
       } else {
         this.messageDialog.showApplicationsMessage(validationMessage, "ERROR");
+        this.selection.clear()
       }
     }
   }
@@ -387,7 +385,7 @@ export class BusinessMappingComponent implements OnInit {
             alert("Does not contain Special Characters.");
         }*/
       var format = /[ !@#$%^&*()+\=\[\]{};'"\\|,.<>\/?]/;
-      console.log(format.test(str))
+      //console.log(format.test(str))
       if (format.test(str) == true) {
         //console.log("blank space in label");
         validationMessage = "Please check blank space and special charecters are not allowed, It should be like Label1:Label2:Label3";
@@ -405,7 +403,6 @@ export class BusinessMappingComponent implements OnInit {
         }
       } else if (this.actionType == "edit") {
         for (let data of this.agentDataSource.data) {
-          console.log(this.agentPropertyList['propertiesString'].split("<span>"));
           if (data.businessmappinglabel == this.label && data.propertiesString == this.agentPropertyList['propertiesString']) {
             //console.log(data.businessmappinglabel +","+this.label+","+","+data.propertiesString+","+this.agentPropertyList['propertiesString']);
             validationMessage = "Properties with same name and value <b> " + this.agentPropertyList['propertiesString'] + " </b> already exists for tool <b>" + this.selectedAgent.toolName + " </b>.<br>Please edit necessary values if applicable";
@@ -419,7 +416,6 @@ export class BusinessMappingComponent implements OnInit {
   callEditOrSaveDataAPI(agentBMparameter: any) {
     var self = this;
     var title = this.actionType == "add" ? "Save Label" : " Edit Label";
-    console.log("end reached")
     var dialogmessage = this.actionType == "add" ? "Are you sure  you want to save your changes?"
       : "Please note: The changes will be applied from next data collection. <br> Are you sure you want to save your changes?";
     const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "32%");
@@ -452,6 +448,7 @@ export class BusinessMappingComponent implements OnInit {
         this.selectedAgentMappingLabels = [];
         this.label = undefined;
         this.displayAgentMappingDetail();
+        this.selection.clear()
       }
     });
   }
@@ -479,6 +476,7 @@ export class BusinessMappingComponent implements OnInit {
           this.selectedAgentMappingLabels = [];
           this.label = undefined;
           this.displayAgentMappingDetail();
+          this.selection.clear()
         }
       });
     } else {
