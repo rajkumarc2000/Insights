@@ -199,15 +199,15 @@ export class HomeComponent implements OnInit {
         // window.open(this.aboutPageURL, "_blank");
         let aboutDialogRef = this.dialog.open(AboutDialog, {
           panelClass: 'healthcheck-show-details-dialog-container',
-          height: '55%',
+          height: '60%',
           width: '35%',
           disableClose: true,
         });
-       /* aboutDialogRef.afterClosed().subscribe(result => {
-          if (result == 'yes') {
-            this.router.navigateByUrl('InSights/Home/healthcheck', { skipLocationChange: true });
-          }
-        });*/
+        /* aboutDialogRef.afterClosed().subscribe(result => {
+           if (result == 'yes') {
+             this.router.navigateByUrl('InSights/Home/healthcheck', { skipLocationChange: true });
+           }
+         });*/
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
       } else if (item.displayName == 'Logout') {
