@@ -188,6 +188,7 @@ mat-dialog-content::-webkit-scrollbar-track {
 .aboutText1 {
 	font-size: 10pt;
 	margin-left: 20px;
+	margin-right: 20px;
 }
 
 .gitLink {
