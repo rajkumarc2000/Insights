@@ -168,8 +168,9 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 }
 
 .btnAlign{
-    margin-right: 7px; 
+    /* margin-right: 1px;  */
     float: right;
+    margin-left: 160px;
 }
 
 .mat-icon-message{
@@ -367,6 +368,11 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     float: center;
 }
 
+.arrange-vertically
+{
+    margin-top: 3px;
+}
+
 .mainText{
     font-size: 15px;
     color:  #00b140;
@@ -374,6 +380,7 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     vertical-align:sub;
     width: 10%;
     padding-left: 5px;
+    padding-top: 10px;
 }
 .input-file {
     -webkit-appearance: initial;

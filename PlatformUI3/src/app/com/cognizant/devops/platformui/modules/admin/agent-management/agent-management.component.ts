@@ -39,7 +39,7 @@ export class AgentManagementComponent implements OnInit {
   buttonDisableStatus: boolean = true;
   runDisableStatus: string = "";
   agentListDatasource = [];
-
+  showDetail: boolean = false;
 
   agentList: any;
 
@@ -50,7 +50,7 @@ export class AgentManagementComponent implements OnInit {
   receivedParam: any;
   toolVersionData: any;
   versionList = [];
-
+  MAX_ROWS_PER_TABLE = 10;
   constructor(public agentService: AgentService, public router: Router,
     private route: ActivatedRoute, public dialog: MatDialog,
     public messageDialog: MessageDialogService) {
@@ -84,10 +84,10 @@ export class AgentManagementComponent implements OnInit {
     this.agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (this.agentList != null && this.agentList.status == 'success') {
       this.agentListDatasource = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
-      console.log(this.agentList);
+      //console.log(this.agentList);
       this.agentNameList.push("all");
       for (var data of this.agentList.data) {
-        console.log(data);
+        // console.log(data);
         /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
 
         if (this.agentNameList.indexOf(data.toolName) == -1) {
@@ -96,7 +96,8 @@ export class AgentManagementComponent implements OnInit {
         }
 
       }
-      console.log(this.agentNameList);
+      self.showDetail = true;
+      //console.log(this.agentNameList);
       this.displayedColumns = ['radio', 'ToolName', 'AgentKey', 'ToolCategory', 'OS', 'Version', 'Status'];
       setTimeout(() => {
         this.showConfirmMessage = "";
@@ -116,14 +117,14 @@ export class AgentManagementComponent implements OnInit {
 
 
   selectToolAgent(ToolSelect) {
-    console.log(ToolSelect);
+    //console.log(ToolSelect);
 
 
     var agentListDatasourceSelected = [];
     //console.log(agentListDatasourceSelected);
     if (ToolSelect != "all") {
       this.agentList.data.filter(x => {
-        console.log(x);
+        //console.log(x);
         if (x.toolName == ToolSelect) {
           agentListDatasourceSelected.push(x)
         }
@@ -135,8 +136,11 @@ export class AgentManagementComponent implements OnInit {
 
     //console.log(agentListDatasourceSelected);
     else {
-      agentListDatasourceSelected.push(this.agentList.data);
-      console.log(agentListDatasourceSelected)
+      //agentListDatasourceSelected.push(this.agentList.data);
+
+      agentListDatasourceSelected = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
+
+      //console.log(agentListDatasourceSelected)
 
     }
     this.agentListDatasource = agentListDatasourceSelected;
@@ -159,7 +163,7 @@ export class AgentManagementComponent implements OnInit {
       this.showConfirmMessage = "other";
       self.showMessage = "Please select Agent";
     } else {
-      self.agentService.agentStartStop(this.selectedAgent.agentKey, actType)
+      self.agentService.agentStartStop(this.selectedAgent.agentKey, self.selectedAgent.toolName, self.selectedAgent.osVersion, actType)
         .then(function (data) {
           if (actType == "START") {
             if (data.status == "success") {
