@@ -1,205 +1,238 @@
 table {
-    width: 100%;
+	width: 100%;
 }
 
 tr:nth-child(odd) td {
-    background-color: #ffffff;
+	background-color: #ffffff;
 }
 
 tr:nth-child(even) td {
-    background-color: #E1E3E7;
+	background-color: #E1E3E7;
 }
 
 tr.mat-footer-row, tr.mat-row {
-    height: 30px !important;   
-    font-size: 12px !important;
+	height: 30px !important;
+	font-size: 12px !important;
 }
 
 td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
-    height:30px !important; 
-    font-size: 12px !important;
-    letter-spacing: .010em;
-    line-height: 1.2em;
+	height: 30px !important;
+	font-size: 12px !important;
+	letter-spacing: .010em;
+	line-height: 1.2em;
 	text-align: left;
 }
+
 .mat-dialog-container, .mat-dialog {
-    margin: 0 !important;
-    padding: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
-ul{
-  position: relative;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+ul {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 li {
-    display: flex;
-    margin: 1px;
-    padding: 5px;
+	display: flex;
+	margin: 1px;
+	padding: 5px;
 }
-/*li:last-child {
-    position: absolute;
-    top: 0;
-    right: 0;
-}*/
-.titleStyle{
-    background-color: #0033a0; 
-    color:white;
-    margin: 0;
-    margin-bottom:5px;
-    margin-top:-2px;
-    font-weight: bold;
-    /*border:3px solid #0033a0;*/
+
+.titleStyle {
+	background-color: #0033a0;
+	color: white;
+	margin: 0;
+	margin-bottom: 5px;
+	margin-top: -2px;
+	font-weight: bold;
+	/*border:3px solid #0033a0;*/
 }
 
 mat-dialog-content::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+	width: 6px;
+	height: 6px;
 }
 
 mat-dialog-content::-webkit-scrollbar-thumb {
-    background-image: initial;
-    background-position-x: initial;
-    background-position-y: initial;
-    background-size: initial;
-    background-attachment: initial;
-    background-origin: initial;
-    background-clip: initial;
-    background-color: #676666;
+	background-image: initial;
+	background-position-x: initial;
+	background-position-y: initial;
+	background-size: initial;
+	background-attachment: initial;
+	background-origin: initial;
+	background-clip: initial;
+	background-color: #676666;
 }
 
 mat-dialog-content::-webkit-scrollbar-track {
-    border-radius: 10px;
+	border-radius: 10px;
 }
 
-
-.mat-table{
-    font-family: inherit;
+.mat-table {
+	font-family: inherit;
 }
 
-.mat-dialog-content{
-    display: unset;
+.mat-dialog-content {
+	display: unset;
 }
-    
+
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+	width: 6px;
+	height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-image: initial;
-    background-position-x: initial;
-    background-position-y: initial;
-    background-size: initial;
-    background-attachment: initial;
-    background-origin: initial;
-    background-clip: initial;
-    background-color: #676666;
+	background-image: initial;
+	background-position-x: initial;
+	background-position-y: initial;
+	background-size: initial;
+	background-attachment: initial;
+	background-origin: initial;
+	background-clip: initial;
+	background-color: #676666;
 }
 
 ::-webkit-scrollbar-track {
-    border-radius: 10px;
+	border-radius: 10px;
 }
-.scrollData{
-    height:82%;
-    overflow-y:auto;
-    padding-bottom: 10px;
+
+.scrollData {
+	height: 82%;
+	overflow-y: auto;
+	padding-bottom: 10px;
 }
 
 .tableDynamicHeaderCss {
-    background-color: grey;   
-    color: white;
-    font-size: 14px !important;
-    height: 40px !important;
-    margin: 0px;
-    padding:0px;
-    letter-spacing: .010em;
-    line-height: 1.2em;
+	background-color: grey;
+	color: white;
+	font-size: 14px !important;
+	height: 40px !important;
+	margin: 0px;
+	padding: 0px;
+	letter-spacing: .010em;
+	line-height: 1.2em;
 	text-align: center;
-    width:150px !important;
+	width: 150px !important;
 }
 
 .tableMessageHeaderCss {
-    background-color: grey;   
-    color: white;
-    font-size: 14px !important;
-    height: 40px !important;
-    margin: 0px;
-    padding:0px;
-    letter-spacing: .010em;
-    line-height: 1.2em;
+	background-color: grey;
+	color: white;
+	font-size: 14px !important;
+	height: 40px !important;
+	margin: 0px;
+	padding: 0px;
+	letter-spacing: .010em;
+	line-height: 1.2em;
 	text-align: center;
 }
 
 .tableExceIdHeaderCss {
-    background-color: grey;   
-    color: white;
-    font-size: 14px !important;
-    height: 40px !important;
-    margin: 0px;
-    padding:0px;
-    letter-spacing: .010em;
-    line-height: 1.2em;
+	background-color: grey;
+	color: white;
+	font-size: 14px !important;
+	height: 40px !important;
+	margin: 0px;
+	padding: 0px;
+	letter-spacing: .010em;
+	line-height: 1.2em;
 	text-align: center;
-    width:250px !important;
+	width: 250px !important;
 }
-.mat-dialog-actions-button{
-    float: right;
-    padding-right: 30px;
-    padding-bottom: 20px;
-    
-         
+
+.mat-dialog-actions-button {
+	float: right;
+	padding-right: 30px;
+	padding-bottom: 20px;
 }
-.mat-raised-button
-{
-    background-color: #0033a0;
-    -webkit-text-fill-color: white;
-    margin-left:10px;
-    border-radius:10px;
-    min-width:0px ! important;
+
+.mat-raised-button {
+	background-color: #0033a0;
+	-webkit-text-fill-color: white;
+	margin-left: 10px;
+	border-radius: 10px;
+	min-width: 0px ! important;
 }
-.aboutLogo
-{
-height: 30px;
-width: 50px;
-padding-left: 80px;
+
+.aboutLogo {
+	display: flex; justify-content: center;
 }
-.heading1
-{
-    color: #0033a0;
+
+.heading1 {
+	color: #0033a0;
 	font-size: 14pt;
-    margin-left:20px;
+	margin-left: 20px;
+    padding-bottom: 10px;
 }
+
 .insightsLogo {
-	
 	text-align: left;
-    /*padding-top: 25px;*/
 }
-.heading2
-{
-   color: #0033a0;
-   font-size: 5pt; 
+
+.heading2 {
+	color: #0033a0;
+	font-size: 5pt;
 }
-.aboutText
-{
-    font-size: 10pt;
-    margin-left:20px;
-    
-    
+
+.aboutText {
+	font-size: 10pt;
+	margin-left: 20px;
 }
-.aboutText1
-{
-    font-size: 10pt;
-    margin-left:20px;
+
+.aboutText1 {
+	font-size: 10pt;
+	margin-left: 20px;
 }
-.gitLink
-{
-    font-size: 10pt;
-    margin-left:20px;
-    
+
+.gitLink {
+	font-size: 10pt;
+	margin-left: 20px;
+}
+
+.hyperlink {
+	color: #0033A0;
+	text-underline-position: below;
+}
+
+.insightLogo {
+	padding-top: 10px;
+    cursor: pointer;
+}
+
+.arrange-horizontally-Dialog {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    width: 100%;
+    background:  #5C068C ;
+    height: 40px;
+}
+
+.closeIconCss{
+    padding-right: 30px;
+    padding-top: 10px;
+	color: white;
+	
+    /* width: 20%; */
+}
+
+ .gridheadercenter{    
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    color: white; 
+    width: 120%;
+    text-align: center;
+    padding-top: 5px;
+    margin-right: 30px;
 }

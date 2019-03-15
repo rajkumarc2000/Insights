@@ -189,23 +189,25 @@ export class HomeComponent implements OnInit {
     this.selectedItem = item;
     this.displayLandingPage = false;
     this.isToolbarDisplay = item.isToolbarDisplay
-    
+
     if (!item.children || !item.children.length) {
-       //let ShowDetailsDialog:any;
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.selectedOrgName = this.getSelectedOrgName(this.selectedOrg);
         this.switchOrganizations(item.orgId, item.route, this.selectedOrgName);
       } else if (item.displayName == 'About') {
-       // window.open(this.aboutPageURL, "_blank");
-      
-       let showDetailsDialog = this.dialog.open(AboutDialog, {
-      panelClass: 'healthcheck-show-details-dialog-container',
-      height: '350px',
-      width: '450px',
-      disableClose: true,
-      
-    });
+        // window.open(this.aboutPageURL, "_blank");
+        let aboutDialogRef = this.dialog.open(AboutDialog, {
+          panelClass: 'healthcheck-show-details-dialog-container',
+          height: '55%',
+          width: '35%',
+          disableClose: true,
+        });
+       /* aboutDialogRef.afterClosed().subscribe(result => {
+          if (result == 'yes') {
+            this.router.navigateByUrl('InSights/Home/healthcheck', { skipLocationChange: true });
+          }
+        });*/
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
       } else if (item.displayName == 'Logout') {
