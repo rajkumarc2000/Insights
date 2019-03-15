@@ -27,6 +27,7 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 })
 export class AboutDialog implements OnInit {
 aboutPageURL = "https://github.com/CognizantOneDevOps/Insights/releases";
+aboutGitURL = "https://github.com/CognizantOneDevOps/Insights/blob/PlatformUI3.0/LICENSE";
   constructor(public dialogRef: MatDialogRef<AboutDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -43,9 +44,13 @@ aboutPageURL = "https://github.com/CognizantOneDevOps/Insights/releases";
   closeShowDetailsDialog(): void {
     this.dialogRef.close('no');
   }
-  onHealthClick(): void {
+  onVersionClick(): void {
     this.dialogRef.close('yes');
     window.open(this.aboutPageURL, "_blank");
+  }
+  onLicenseClick(): void {
+    this.dialogRef.close('yes');
+    window.open(this.aboutGitURL, "_blank");
   }
 
 }

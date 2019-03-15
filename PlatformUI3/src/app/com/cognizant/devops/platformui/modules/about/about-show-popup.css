@@ -167,7 +167,6 @@ mat-dialog-content::-webkit-scrollbar-track {
 .heading1 {
 	color: #0033a0;
 	font-size: 14pt;
-	margin-left: 20px;
     padding-bottom: 10px;
 }
 
@@ -197,7 +196,7 @@ mat-dialog-content::-webkit-scrollbar-track {
 }
 
 .hyperlink {
-	color: #0033A0;
+	color: #0033a0;
 	text-underline-position: below;
 }
 
@@ -215,7 +214,7 @@ mat-dialog-content::-webkit-scrollbar-track {
     display: -webkit-box;
     display: -webkit-flex;
     width: 100%;
-    background:  #5C068C ;
+    background:  #0033a0 ;
     height: 40px;
 }
 
