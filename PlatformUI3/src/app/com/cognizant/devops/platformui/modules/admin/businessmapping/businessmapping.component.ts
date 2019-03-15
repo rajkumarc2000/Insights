@@ -283,7 +283,8 @@ export class BusinessMappingComponent implements OnInit {
     const numSelected = this.selection.selected.length
     this.isListView = false;
     this.noToolsData = false
-    this.actionType = "edit"
+    this.actionType = "edit";
+    this.selection.clear()
     this.loadAgentProperties(this.selectedAgent);
     this.isEditData = false;
     this.disableAdd = true;
@@ -298,6 +299,7 @@ export class BusinessMappingComponent implements OnInit {
     this.actionType = "add"
     this.subHeading = "Add Label";
     this.label = undefined;
+    this.selection.clear()
     this.loadAgentProperties(this.selectedAgent);
 
   }
@@ -454,7 +456,7 @@ export class BusinessMappingComponent implements OnInit {
         this.selectedAgentMappingLabels = [];
         this.label = undefined;
         this.displayAgentMappingDetail();
-        this.selection.clear()
+        this.selection.clear();
       }
     });
   }
