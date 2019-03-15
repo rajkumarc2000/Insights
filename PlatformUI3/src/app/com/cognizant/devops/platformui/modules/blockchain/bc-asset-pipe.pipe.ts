@@ -9,7 +9,7 @@ export class AssetPipe implements PipeTransform {
     let data = '';
     Object.keys(val).map((f) => {
       const key = f[0].toUpperCase() + f.substring(1);
-      if (key === 'Moddate' || key === 'TxID') {
+      if (key === 'Moddate' || key === 'TxID' || key === 'AssetID' || key === 'InnerObjAsset') {
         return;
       }else if(val[f]!='undefined' && val[f].toString().startsWith("http")){
         data += `<b>${key}</b><span> : <a href="${val[f]}">${val[f]}</a></span><br/>`;

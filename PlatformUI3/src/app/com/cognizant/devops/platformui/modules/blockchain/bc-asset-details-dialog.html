@@ -60,7 +60,7 @@
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">
             </th>
-            <td mat-cell *matCellDef="let row" style="width:30px !important">
+            <td mat-cell *matCellDef="let row;" style="width:30px !important">
                 <a>
                     <mat-icon svgIcon="{{expandedElement === row? 'minus_icon' : 'plus_icon' }}" [ngStyle]="{height: '20px', width: '20px'}"
                         (click)="expandedElement = expandedElement === row ? null : row;">
@@ -111,12 +111,12 @@
             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                 <div class="asset-details-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
                       [style.height]="element.expanded ? 'unset' : '0 !important'">
-                    <div *ngFor="let column of headerArrayDisplay">
+                    <div *ngFor="let column of expandObjects[0]">
                       <div class="asset-details-element-description">
                         <!-- <div [innerHTML]="getLevel2Properties(column, element)"></div> -->
-                        <dt class="dt">{{column}}</dt>
-                        <dd class="dd" *ngIf="element[column]?.toString()?.startsWith('http')"> : <span><a href="{{element[column]?.toString()}}">{{element[column]}}</a></span></dd>
-                        <dd *ngIf="!element[column]?.toString()?.startsWith('http')" class="dd"> : {{element[column]}}</dd>
+                        <dt class="dt">{{column.key}}</dt>
+                        <dd class="dd" *ngIf="column.value?.toString()?.startsWith('http')"> : <span><a href="{{column.value?.toString()}}">{{column.value}}</a></span></dd>
+                        <dd *ngIf="!column.value?.toString()?.startsWith('http')" class="dd"> : {{column.value}}</dd>
                       </div><br/>
                     </div>
                 </div>
@@ -124,9 +124,9 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="asset-details-element-row" [class.asset-details-expanded-row]="expandedElement === element">
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;let i = dataIndex;" (click)="clickRow(i,element.TxID);" class="asset-details-element-row" [class.asset-details-expanded-row]="expandedElement === element">
         </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="asset-details-detail-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];let i = dataIndex;" class="asset-details-detail-row"></tr>
     </table>
     <mat-paginator #paginator [pageSize]="MAX_ROWS_PER_TABLE" showFirstLastButtons class="paginationStyle"></mat-paginator>
   </div>
