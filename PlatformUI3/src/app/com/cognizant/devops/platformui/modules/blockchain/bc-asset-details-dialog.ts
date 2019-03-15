@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *******************************************************************************/
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { RestCallHandlerService } from '@insights/common/rest-call-handler.service';
 import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.service';
@@ -63,9 +63,13 @@ export class AssetDetailsDialog implements OnInit {
     showModel = null;
     pipeheight=0;
     searchInput = '';
+    innerObjAsset = {};
+    expandObjects = [];
+    
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
-        private blockChainService: BlockChainService) {
+        private blockChainService: BlockChainService,
+        private changeDet: ChangeDetectorRef) {
 
     }
 
@@ -91,32 +95,70 @@ export class AssetDetailsDialog implements OnInit {
     }
 
     getAssetHistoryDetails() {
+        
         this.displayProgressBar = true;
-        this.blockChainService.getAssetHistory(this.parentData.assetID)
+        this.blockChainService.getAssetHistory(encodeURIComponent(this.parentData.assetID))
             .then((data) => {
                 console.log("asset history respose>>>");
                 console.log(data);
                 this.displayProgressBar = false;
-                var historyData = data.data;                
-                historyData.sort((value1,value2)=> {
-                    // Ascending order
-                    return(new Date(value1.timestamp).getTime() - new Date(value2.timestamp).getTime());
+                let result = data.data;
+                let historyData = [];
+                result.map((d) => {
+                    Object.keys(d).forEach(k => {
+                        const matchKey = k.match('AssetID');
+                        if (matchKey) {
+                            d['assetID'] = d[k];
+                        }
+
+                    })
+                    historyData.push(d);
                 });
+                console.log(historyData);
+                // historyData.sort((value1,value2)=> {
+                //     // Ascending order
+                //     return(new Date(value1.timestamp).getTime() - new Date(value2.timestamp).getTime());
+                // });
                 // Assign asset history details data sorted by timestamp in ascending order
                 this.assetHistoryDataSource.data = historyData;
                 this.pdfData = data;
                 for (var index in historyData) {
                     var eachObject = historyData[index];
+                    let obj = [];
                     for (var key in eachObject) {
+                        let innerObj = {
+                            key: key,
+                            value: ''
+                        };
                         if (!this.masterHeader.has(key)) {
-                            this.headerSet.add(key);
+                            if (eachObject[key] != 'undefined' && eachObject[key] != null && eachObject[key] != '') {
+                                innerObj['value'] = eachObject[key];// {key: 'assetId', value: 'TXN'}
+                                obj.push(innerObj); // { assetId: {key: 'assetId', value: 'TXN'} }
+                            }
+                            // this.headerSet.add(key);
                         }
                     }
+                    eachObject['innerObjAsset'] = obj; // [{asstId: 'sadf', innerObjAsset: [ {key: 'assetId', value: 'TXN'}]}]
+                    this.headerArrayDisplay.push(eachObject);
+
                 }
-                this.headerArrayDisplay = Array.from(this.headerSet);                
+                console.log(this.headerArrayDisplay);//[{assetId: 'TRC-14', innerObjAsset:{as: 'asdf', name: 'sdf'}}]
+                // this.headerArrayDisplay = Array.from(this.headerSet);                
                 this.assetHistoryDataSource.sort = this.sort;
                 this.assetHistoryDataSource.paginator = this.paginator;
             });
+    }
+
+    clickRow(index,TxID) {
+        this.expandObjects = [];
+        console.log(index , TxID);
+        this.headerArrayDisplay.forEach(x=>{
+            if(x.TxID == TxID){
+                this.expandObjects.push(x.innerObjAsset);
+            }
+        });
+        this.changeDet.detectChanges();
+        console.log(this.expandObjects);
     }
 
     closeAssetDetailsDialog() {
