@@ -67,6 +67,7 @@
 	"groupId" : "maven2-moduleset/rootModule/groupId",
 	"artifactId" : "maven2-moduleset/rootModule/artifactId"
 },
+"agentId":"",
 "toolCategory" : "CI",
 "toolsTimeZone" : "Asia/Kolkata",
 "enableDataValidation": true,
