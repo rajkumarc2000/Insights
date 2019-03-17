@@ -65,7 +65,8 @@
 		  }
 	    }
 	},
- "toolCategory" : "SCM",
+  "agentId": "",
+  "toolCategory" : "SCM",
   "auth": "base64",
   "runSchedule": 5,
   "toolsTimeZone" : "Asia/Kolkata",
@@ -78,6 +79,7 @@
   "timeStampField":"commitTime",
   "timeStampFormat": "%Y-%m-%dT%H:%M:%S",
   "isEpochTimeFormat" : false,
+  
   "enableValueArray": false,
   "baseEndPoint": "https://api.bitbucket.org/2.0/repositories/repoid",
   "isDebugAllowed" : false,
