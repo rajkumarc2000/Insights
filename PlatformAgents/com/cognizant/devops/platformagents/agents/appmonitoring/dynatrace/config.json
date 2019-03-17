@@ -55,6 +55,7 @@
   			}
   		}
    },	
+  "agentId" : "" ,
   "toolCategory": "APPMONITORING",
   "enableDataValidation": true,
   "toolsTimeZone": "GMT",
@@ -65,6 +66,7 @@
   "timeStampField": "launchTime",
   "timeStampFormat": "epoch",
   "isEpochTimeFormat" : true,
+  
   "pattern": "%Y-%m-%dT%H:%M:%S.%fZ",
   "apiToken": "APIToken",
   "startFrom" : "2018-10-02 15:46:33",
