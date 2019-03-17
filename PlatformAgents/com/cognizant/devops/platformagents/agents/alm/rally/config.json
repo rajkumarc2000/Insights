@@ -54,6 +54,7 @@
 							            }
                                }
   },
+  "agentId" : "",
   "toolCategory" : "ALM",
   "proxy": "proxy.companyname.com:8080/",
   "accesstoken":"_2skCGY7Qm27OhmYNrLQu2jhXcW",
@@ -71,6 +72,7 @@
   "timeStampField":"lastUpdateDate",
   "timeStampFormat":"%Y-%m-%dT%H:%M:%SZ",
   "isEpochTimeFormat" : false,
+  
   "isDebugAllowed" : false,
   "loggingSetting" : {
 		"logLevel" : "WARN",
