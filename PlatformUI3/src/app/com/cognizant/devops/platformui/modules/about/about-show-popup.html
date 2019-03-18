@@ -1,6 +1,6 @@
 <!--
  *********************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -42,7 +42,7 @@
 </div>
 
 <div class="aboutText">
-        <span class="heading1">Insights</span>
+        <!--<span class="heading1">Insights</span>-->
         <p> <b>For Version Please</b>&nbsp;<b> <b class="hyperlink" (click)="onVersionClick()"><u>Click Here</u></b></b>
                 <!--href="https://github.com/CognizantOneDevOps/Insights/releases"-->
         </p>
@@ -50,14 +50,14 @@
 
 <div class="aboutText1">
         <p>© 2019 Cognizant Technology Solutions Limited. All Rights Reserved. Insights is Property of Cognizant Technology
-                Solutions Ltd. Created under the brand of OneDevOps<sup>TM</sup></p>
+                Solutions Ltd. Created under the brand of OneDevOps<sup class="tmText">TM</sup></p>
 </div>
 
-<div class="gitLink">
+<!--<div class="gitLink">
         <p>
-                <a href="https://github.com/CognizantOneDevOps/Insights.git">https://github.com/CognizantOneDevOps/Insights.git</a>
+                <a class="hyperlink" (click)="onGitLinkClick()"><u>https://github.com/CognizantOneDevOps/Insights</u></a>
         </p>
-</div>
+</div>-->
 <div class="gitLink">
         <p>
                 For Licensing Information Please&nbsp;<a class="hyperlink" (click)="onLicenseClick()"><u>Click Here</u></a>        
@@ -67,7 +67,6 @@
 <div class="gitLink">
         For Support - Please write to us @&nbsp;<a href="mailto:devopsplatformsupport@cognizant.com">InsightsSupportTeam</a>
 </div>
-
 <mat-dialog-actions class="mat-dialog-actions-button">
         <button mat-raised-button (click)="onCloseClick()">OK</button>
 </mat-dialog-actions>

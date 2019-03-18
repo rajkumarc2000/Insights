@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -27,7 +27,8 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 })
 export class AboutDialog implements OnInit {
 aboutPageURL = "https://github.com/CognizantOneDevOps/Insights/releases";
-aboutGitURL = "https://github.com/CognizantOneDevOps/Insights/blob/PlatformUI3.0/LICENSE";
+aboutGitLicenseURL = "https://github.com/CognizantOneDevOps/Insights/blob/PlatformUI3.0/LICENSE";
+/*aboutGitURL= "https://github.com/CognizantOneDevOps/Insights.git";*/
   constructor(public dialogRef: MatDialogRef<AboutDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -50,7 +51,11 @@ aboutGitURL = "https://github.com/CognizantOneDevOps/Insights/blob/PlatformUI3.0
   }
   onLicenseClick(): void {
     this.dialogRef.close('yes');
-    window.open(this.aboutGitURL, "_blank");
+    window.open(this.aboutGitLicenseURL, "_blank");
   }
+  /*onGitLinkClick(): void {
+    this.dialogRef.close('yes');
+    window.open(this.aboutGitURL, "_blank");
+  }*/
 
 }

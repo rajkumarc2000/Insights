@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -199,8 +199,8 @@ export class HomeComponent implements OnInit {
         // window.open(this.aboutPageURL, "_blank");
         let aboutDialogRef = this.dialog.open(AboutDialog, {
           panelClass: 'healthcheck-show-details-dialog-container',
-          height: '60%',
-          width: '35%',
+          height: '50%',
+          width: '30%',
           disableClose: true,
         });
         /* aboutDialogRef.afterClosed().subscribe(result => {

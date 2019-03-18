@@ -1,6 +1,6 @@
 <!--
  *********************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -17,7 +17,7 @@
 -->
 <div class="pageCss">
   <div layout layout-align="left" class="titleStyle">
-    <div>Configuration | 
+    <div>Configuration |
       <a class="greenTitleTxt">Business Mapping </a>
     </div>
   </div>
@@ -42,8 +42,8 @@
 
   <div class="subHeadingStyle" *ngIf="subHeading!='' ">
     <div class="subLabelInfo">{{subHeading}}
-      <span class="sectionSubHeading"> (Please note: If there are multiple Matches to a label while data collection, then the label will be applied to the first match found) 
-      </span>
+      <!--<span class="sectionSubHeading"> (Please note: If there are multiple Matches to a label while data collection, then the label will be applied to the first match found) 
+      </span>-->
     </div>
   </div>
 
@@ -90,7 +90,7 @@
           </ng-container>
           <ng-container matColumnDef="properties">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> {{selectedAgent.toolName}} Properties ( Property Name : Property Value)</th>
-            <td mat-cell class="listTable"  *matCellDef="let element" style="width:51% !important ">
+            <td mat-cell class="listTable" *matCellDef="let element" style="width:51% !important ">
               <div [innerHTML]="element.propertiesString">
               </div>
             </td>
@@ -126,7 +126,7 @@
 
         <!-- Value Column -->
         <ng-container matColumnDef="propertyValue">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">  {{selectedAgent.toolName}} Property Value </th>
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> {{selectedAgent.toolName}} Property Value </th>
           <td mat-cell style="padding-top:10px;margin-left: 0px" *matCellDef="let element">
             <input [(ngModel)]="element.value" ref-value="ngModel" name="{{element.value}}" [ngClass]="{ 'input-disabled' : !element.editProperties  ,'form-control': element.editProperties} "
               required>

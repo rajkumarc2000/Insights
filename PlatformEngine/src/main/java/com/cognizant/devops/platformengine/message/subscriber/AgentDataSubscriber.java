@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -185,57 +186,60 @@ public class AgentDataSubscriber extends EngineSubscriberResponseHandler{
 		return finalJson;
 	}
 
-	private JsonObject applyDataTagging(JsonObject asJsonObject) { // , Map<String, Map<String, NodeData>> metaDataMap
-																	// NodeData
+	private JsonObject applyDataTagging(JsonObject asJsonObject) {
 
-		List<String> selectedBusinessMapping = new ArrayList<String>(0);
-		List<String> labelMappingArray = new ArrayList<String>(0);
-		/*
-		 * for (String key : metaDataMap.keySet()){ StringTokenizer token = new
-		 * StringTokenizer(key,AgentDataConstants.COLON); sb= new StringBuilder();
-		 * 
-		 * while (token.hasMoreElements()) { String
-		 * agentJsonkey=token.nextElement().toString();
-		 * 
-		 * if(asJsonObject.has(agentJsonkey)){
-		 * sb.append(asJsonObject.get(agentJsonkey).getAsString());
-		 * sb.append(AgentDataConstants.COLON); } }
-		 * 
-		 * Map<String ,NodeData> innerMap = metaDataMap.get(key);
-		 * 
-		 * String innerKey=StringUtils.stripEnd(sb.toString(),AgentDataConstants.COLON);
-		 * if(innerMap.containsKey(innerKey)){
-		 * 
-		 * nodeData = innerMap.get(innerKey); } }
-		 */
-
-		outerloop: {
+		List<String> selectedBusinessMappingArray = new ArrayList<String>(0);
+		Map<String, String> labelMappingMap = new TreeMap<String, String>();
 			for (BusinessMappingData businessMappingData : businessMappingList) {
 				Map<String, String> map = businessMappingData.getPropertyMap();
+			int totalCount = businessMappingData.getPropertyMap().size();
+			int matchLabelcount = 0;
 				for (Entry<String, String> mapValue : map.entrySet()) {
 					if (asJsonObject.has(mapValue.getKey())) {
 						String jsonValue = asJsonObject.get(mapValue.getKey()).getAsString();
 						if (jsonValue.equalsIgnoreCase(mapValue.getValue())) {
-							selectedBusinessMapping.add(businessMappingData.getBusinessMappingLabel());
-							StringTokenizer sk = new StringTokenizer(businessMappingData.getBusinessMappingLabel(),
-									":");
-							while (sk.hasMoreTokens()) {
-								String token = sk.nextToken();
-								if (!labelMappingArray.contains(token)) {
-								labelMappingArray.add(token);
-								}
-							}
-							break outerloop;
+						matchLabelcount++;
+						}
+					}
+				}
+			if (totalCount == matchLabelcount) {
+				selectedBusinessMappingArray.add(businessMappingData.getBusinessMappingLabel());
+			}
+			}
+
+		// selectedBusinessMappingArray.forEach(arg0 -> log.info(" arg0 " + arg0));
+		// ;
+
+		if (!selectedBusinessMappingArray.isEmpty()) {
+			for (int i = 0; i < selectedBusinessMappingArray.size(); i++) {
+				StringTokenizer sk = new StringTokenizer(selectedBusinessMappingArray.get(i), ":");
+				int level = 0;
+				while (sk.hasMoreTokens()) {
+					String token = sk.nextToken();
+					level++;
+					String key = "orgLevel_" + level;
+					// log.debug(" apply label set Array " + token + " " + level + " " + key);
+					if (!labelMappingMap.containsKey(key)) {
+						labelMappingMap.put(key, token);
+					} else {
+						if (!labelMappingMap.get(key).contains(token)) {
+							labelMappingMap.put(key, labelMappingMap.get(key).concat("," + token));
 						}
 					}
 				}
 			}
-		}
-		log.debug(" apply label set Array  " + labelMappingArray);
-		if (!labelMappingArray.isEmpty()) {
-			for (int i = 0; i < labelMappingArray.size(); i++) {
-				asJsonObject.addProperty("orgLevel_" + (i + 1), labelMappingArray.get(i));
+			JsonParser jsonParser = new JsonParser();
+			Gson gson = new Gson();
+			for (Entry<String, String> entry : labelMappingMap.entrySet()) {
+				// log.debug("Business Mapping label info " + entry);
+				List<String> items = Arrays.asList(entry.getValue().split("\\s*,\\s*"));
+				JsonArray jsonArray = (JsonArray) jsonParser.parse(items.toString());// entry.getValue()
+				// jsonArray.("aa");
+				// log.info(" jsonArray " + jsonArray);
+
+				asJsonObject.add(entry.getKey(), jsonArray); // .getAsJsonPrimitive()
 			}
+			// log.info(" asJsonObject ====== " + asJsonObject);
 		}
 		return asJsonObject;
 	}
