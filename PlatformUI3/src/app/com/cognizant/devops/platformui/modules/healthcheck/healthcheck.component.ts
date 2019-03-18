@@ -40,23 +40,20 @@ export class HealthCheckComponent implements OnInit {
   dataComponentColumns: string[];
   servicesColumns: string[];
   agentDataSource = [];
-  agentListDatasource=[];
+  agentListDatasource = [];
   dataComponentDataSource = [];
-  dataListDatasource=[];
+  dataListDatasource = [];
   servicesDataSource = [];
-  servicesListDatasource=[];
+  servicesListDatasource = [];
   healthResponse: any;
   agentResponse: any;
   agentBacktoTopFlag: boolean = false;
-  dataBacktoTopFlag: boolean = false;
   servicesBacktoTopFlag: boolean = false;
   agentNameList: any = [];
-  dataNameList:any=[];
-  servicesNameList=[];
-  selectAgentTool:any;
+  selectAgentTool: any;
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
     this.loadAgentCheckInfo();
-    this.loadAllHealthCheckInfo();
+    this.loadOtherHealthCheckInfo();
   }
 
   ngOnInit() { }
@@ -76,30 +73,17 @@ export class HealthCheckComponent implements OnInit {
           if (element.type == 'Agents') {
             this.agentNodes = element.agentNodes;
             this.agentDataSource = this.agentNodes;
-            //console.log(this.agentNodes)
           }
         }
-        //this.agentListDatasource =this.agentDataSource;
-        //console.log(this.agentDataSource)
-        this.agentNameList.push("all");
+        this.agentNameList.push("All");
         for (var data of this.agentDataSource) {
-          //console.log(data);
-          /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
-  
           if (this.agentNameList.indexOf(data.toolName) == -1) {
             this.agentNameList.push(data.toolName);
-  
+
           }
-  
         }
-        this.selectToolAgent("all");
-        //this.selectAgentTool="all"
-        //console.log(this.agentNameList);
-        //Displays Back to Top button when Agent table contains more than 20 rows
-        if (this.agentDataSource.length > 20) {
-          this.agentBacktoTopFlag = true;
-        }
-        this.displayedAgentColumns = ['category', 'toolName', 'inSightsTimeX', 'status', 'details'];
+        this.selectToolAgent("All");
+        this.displayedAgentColumns = ['toolName', 'agentKey', 'category', 'inSightsTimeX', 'status', 'details'];
       }
     } catch (error) {
       this.showContentAgent = false;
@@ -110,31 +94,25 @@ export class HealthCheckComponent implements OnInit {
 
   selectToolAgent(ToolSelect) {
     console.log(ToolSelect);
-
-
     var agentListDatasourceSelected = [];
-    //console.log(agentListDatasourceSelected);
-    if (ToolSelect != "all") {
+    if (ToolSelect != "All") {
       this.agentDataSource.filter(x => {
         console.log(x);
         if (x.toolName == ToolSelect) {
           agentListDatasourceSelected.push(x)
         }
       }
-
       )
-    }else {
-      agentListDatasourceSelected=this.agentDataSource;
-      //console.log(agentListDatasourceSelected)
-
+    } else {
+      agentListDatasourceSelected = this.agentDataSource;
     }
     this.agentListDatasource = agentListDatasourceSelected;
     console.log(this.agentListDatasource)
   }
 
-  async loadAllHealthCheckInfo() {
+  async loadOtherHealthCheckInfo() {
     try {
-      // Loads Agent , Data Component and Services
+      // Loads Data Component and Services
       this.showThrobber = true;
       this.showContent = !this.showThrobber;
       this.healthResponse = await this.healthCheckService.loadServerHealthConfiguration();
@@ -151,45 +129,9 @@ export class HealthCheckComponent implements OnInit {
             this.dataComponentDataSource.push(element);
           }
         }
-        console.log(this.servicesDataSource)
-        this.dataNameList.push("all");
-        this.servicesNameList.push("all");
-        for (var data of this.dataComponentDataSource) {
-          //console.log(data);
-          /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
-  
-          if (this.dataNameList.indexOf(data.serverName) == -1) {
-            this.dataNameList.push(data.serverName);
-  
-          }
-  
-        }
-        this.selectToolData("all")
-        for (var data of this.servicesDataSource) {
-          //console.log(data);
-          /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
-  
-          if (this.servicesNameList.indexOf(data.serverName) == -1) {
-            this.servicesNameList.push(data.serverName);
-  
-          }
-  
-        }
-        this.selectServicesData("all")
-        //Displays Back to Top button when Data Component table contains more than 20 rows
-        if (this.dataComponentDataSource.length > 20) {
-          this.dataBacktoTopFlag = true;
-        }
-        //Displays Back to Top button when Services table contains more than 20 rows
-        if (this.servicesDataSource.length > 20) {
-          this.servicesBacktoTopFlag = true;
-        }
-
         this.dataComponentColumns = ['serverName', 'ipAddress', 'version', 'status'];
         this.servicesColumns = ['serverName', 'ipAddress', 'version', 'status', 'details'];
-
       }
-
     } catch (error) {
       this.showContent = false;
       console.log(error);
@@ -198,7 +140,6 @@ export class HealthCheckComponent implements OnInit {
 
   selectToolData(ToolSelect) {
     //console.log(ToolSelect);
-
 
     var dataListDatasourceSelected = [];
     //console.log(agentListDatasourceSelected);
@@ -211,36 +152,13 @@ export class HealthCheckComponent implements OnInit {
       }
 
       )
-    }else {
-      dataListDatasourceSelected=this.dataComponentDataSource;
+    } else {
+      dataListDatasourceSelected = this.dataComponentDataSource;
       //console.log(agentListDatasourceSelected)
 
     }
     this.dataListDatasource = dataListDatasourceSelected;
     console.log(this.dataComponentDataSource)
-  }
-  selectServicesData(ToolSelect) {
-    //console.log(ToolSelect);
-
-
-    var dataListDatasourceSelected = [];
-    //console.log(agentListDatasourceSelected);
-    if (ToolSelect != "all") {
-      this.servicesDataSource.filter(x => {
-        console.log(x);
-        if (x.serverName == ToolSelect) {
-          dataListDatasourceSelected.push(x)
-        }
-      }
-
-      )
-    }else {
-      dataListDatasourceSelected=this.servicesDataSource;
-      //console.log(agentListDatasourceSelected)
-
-    }
-    this.servicesListDatasource = dataListDatasourceSelected;
-    //console.log(this.dataComponentDataSource)
   }
 
   // Displays Show Details dialog box when Details column is clicked
