@@ -89,7 +89,6 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			Gson gson = new Gson();
 			JsonElement jelement = gson.fromJson(configDetails.trim(), JsonElement.class);
 			JsonObject json = jelement.getAsJsonObject();
-			//json.addProperty("agentId", agentId);
 			json.addProperty("osversion", osversion);
 			json.addProperty("agentVersion", agentVersion);
 			
@@ -106,7 +105,6 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			}
 
 			json.get("subscribe").getAsJsonObject().addProperty("agentCtrlQueue", agentId);
-			
 			Date updateDate = Timestamp.valueOf(LocalDateTime.now());
 
 			
@@ -444,6 +442,8 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		//Copy __init__.py to agent instance folder, otherwise python code wont work
 		Files.copy(Paths.get(filePath + File.separator + toolName  + File.separator + "com"+ File.separator + "__init__.py"),
 					Paths.get(filePath + File.separator + agentId + File.separator + "__init__.py"), REPLACE_EXISTING);
+		
+		FileUtils.deleteDirectory(destinationPath.resolve("com").toFile());
 		
 		Files.move(sourcePath.resolve("com"),destinationPath.resolve("com"),REPLACE_EXISTING);
 		
