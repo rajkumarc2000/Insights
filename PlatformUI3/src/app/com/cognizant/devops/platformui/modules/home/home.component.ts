@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -23,6 +23,10 @@ import { NavItem } from '@insights/app/modules/home/nav-item';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
 import { DataSharedService } from '@insights/common/data-shared-service';
+import { AboutDialog } from '@insights/app/modules/about/about-show-popup';
+//import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 
 
 @Component({
@@ -86,7 +90,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
-    public router: Router, private dataShare: DataSharedService) {
+    public router: Router, private dataShare: DataSharedService, private dialog: MatDialog) {
     //console.log("in home on constructor init ");
     //router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
@@ -185,13 +189,25 @@ export class HomeComponent implements OnInit {
     this.selectedItem = item;
     this.displayLandingPage = false;
     this.isToolbarDisplay = item.isToolbarDisplay
+
     if (!item.children || !item.children.length) {
       if (item.iconName == 'grafanaOrg') {
         this.selectedOrg = (this.selectedItem == undefined ? '' : this.selectedItem.displayName);
         this.selectedOrgName = this.getSelectedOrgName(this.selectedOrg);
         this.switchOrganizations(item.orgId, item.route, this.selectedOrgName);
       } else if (item.displayName == 'About') {
-        window.open(this.aboutPageURL, "_blank");
+        // window.open(this.aboutPageURL, "_blank");
+        let aboutDialogRef = this.dialog.open(AboutDialog, {
+          panelClass: 'healthcheck-show-details-dialog-container',
+          height: '50%',
+          width: '30%',
+          disableClose: true,
+        });
+        /* aboutDialogRef.afterClosed().subscribe(result => {
+           if (result == 'yes') {
+             this.router.navigateByUrl('InSights/Home/healthcheck', { skipLocationChange: true });
+           }
+         });*/
       } else if (item.displayName == 'Help') {
         window.open(this.helpPageURL, "_blank");
       } else if (item.displayName == 'Logout') {

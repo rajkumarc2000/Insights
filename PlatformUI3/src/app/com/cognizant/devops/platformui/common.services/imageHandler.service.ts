@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -74,6 +74,7 @@ export class ImageHandlerService implements IImageHandlerService {
         this.addImage('inactive_show_details', "icons/svg/auditReporting/ShowDetails-Inactive.svg");
         this.addImage('export_to_pdf_icon', "icons/svg/auditReporting/PDFIcon.svg");
         this.addImage('view_pipe_line', "icons/svg/auditReporting/ViewPipeLine-GREEN.svg");
+        this.addImage('ic_about_logo', "icons/svg/ic_about_logo.svg");
 
     }
 

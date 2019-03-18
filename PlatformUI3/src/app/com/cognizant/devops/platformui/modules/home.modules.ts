@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -37,6 +37,7 @@ import { GrafanaDashboardComponent } from '@insights/app/modules/grafana-dashboa
 import { PageNotFoundComponent } from '@insights/app/modules/page-not-found/page-not-found.component';
 import { HealthCheckComponent } from '@insights/app/modules/healthcheck/healthcheck.component';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
+import { AboutDialog } from '@insights/app/modules/about/about-show-popup';
 import { BlockChainComponent } from '@insights/app/modules/blockchain/blockchain.component';
 import { AgentManagementComponent } from '@insights/app/modules/admin/agent-management/agent-management.component';
 import { DatadictionaryComponent } from '@insights/app/modules/datadictionary/datadictionary.component';
@@ -79,6 +80,7 @@ import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
     PageNotFoundComponent,
     HealthCheckComponent,
     ShowDetailsDialog,
+    AboutDialog,
     AgentManagementComponent,
     DatadictionaryComponent,
     BusinessMappingComponent,
@@ -108,6 +110,7 @@ import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
   ],
   entryComponents: [
     ShowDetailsDialog,
+    AboutDialog,
     ConfirmationMessageDialog,
     ApplicationMessageDialog,
     AddGroupMessageDialog,

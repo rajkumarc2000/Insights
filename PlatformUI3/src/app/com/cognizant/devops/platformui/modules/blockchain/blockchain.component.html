@@ -1,6 +1,6 @@
 <!--
  *********************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -53,11 +53,23 @@
               <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
+          <div class="dateElementStyle">
+            <a>Tool</a>
+            <a class="redFontStyle">*</a>
+            <a>:</a>
+            <mat-form-field style="padding-left:10px;" required>
+              <mat-select style="font-size:14px;" placeholder="Choose a tool" [formControl]="toolname">
+                <mat-option *ngFor="let tl of tools" [value]="tl">
+                  {{tl}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </mat-radio-button>
         <mat-radio-button value="searchByAssetId" color="primary" (change)="searchCriteriaChange($event)">
           <div class="dateElementStyle">
             <mat-form-field class="inputAssetIdStyle">
-              <input matInput #assetIdInput type="text" (keyup.enter)="getAssetID(assetIdInput.value)" (blur)="getAssetID(assetIdInput.value)">
+              <input matInput #assetIdInput type="text" (click)="getAssetID(assetIdInput.value)" (keyup.enter)="getAssetID(assetIdInput.value)" (blur)="getAssetID(assetIdInput.value)">
               <mat-placeholder class="placeholder">Input Asset ID</mat-placeholder>
             </mat-form-field>
           </div>
@@ -109,7 +121,7 @@
         <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">
         </th>
         <td mat-cell *matCellDef="let row" style="width:40px !important;text-align: left">
-          <mat-radio-button value="{{row.basePrimeID}}" color="primary" (change)="populateBasePrimeID($event, row.assetID)"> </mat-radio-button>
+          <mat-radio-button value="{{row.assetID}}" color="primary" (change)="populateBasePrimeID($event, row.assetID)"> </mat-radio-button>
         </td>
       </ng-container>
 

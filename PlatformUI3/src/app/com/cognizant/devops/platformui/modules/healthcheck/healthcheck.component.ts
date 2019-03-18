@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -53,6 +53,7 @@ export class HealthCheckComponent implements OnInit {
   agentNameList: any = [];
   dataNameList:any=[];
   servicesNameList=[];
+  selectAgentTool:any;
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
     this.loadAgentCheckInfo();
     this.loadAllHealthCheckInfo();

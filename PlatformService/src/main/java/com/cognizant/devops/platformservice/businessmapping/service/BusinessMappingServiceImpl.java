@@ -214,6 +214,7 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 			}
 		} catch (GraphDBException e) {
 			// TODO Auto-generated catch block
+			log.error(e);
 			e.printStackTrace();
 			return PlatformServiceUtil.buildFailureResponse(e.getMessage());
 		}
@@ -224,7 +225,8 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 	@Override
 	public JsonObject getToolsMappingLabel(String agentName) {
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
-		String query = "MATCH (n:METADATA:BUSINESSMAPPING) where n.toolName ='"+agentName+"' return n"; // 'GIT'
+		String query = "MATCH (n:METADATA:BUSINESSMAPPING) where n.toolName ='" + agentName
+				+ "' return n order by n.inSightsTime desc"; // 'GIT'
 		GraphResponse response;
 		List<Map<String,String>> propertyList= new ArrayList<Map<String,String>>();
 		try {
@@ -253,17 +255,14 @@ public class BusinessMappingServiceImpl implements BusinessMappingService {
 			log.debug("arg0 uuid  "+uuid);
 			JsonArray asJsonArray = getCurrentRecords(uuid,dbHandler);
 			log.debug("arg0  "+asJsonArray);
-			//nodeProperties.add(json);
-			//String properties = json.get("properties").getAsString();//msg String
-			//log.debug("arg0 "+properties);
-			/*JsonObject graphResponse = dbHandler.bulkCreateNodes(nodeProperties, null, query);
-			if (graphResponse.get(DatataggingConstants.RESPONSE).getAsJsonObject().get(DatataggingConstants.ERRORS)
-					.getAsJsonArray().size() > 0) {
-				log.error(graphResponse);
-				//return "success";
-			}*/
+			String replaceString=agentMappingJson.replaceAll("\\\"(\\w+)\\\"\\:","$1:");
+			String updateCypherQuery = " MATCH (n :METADATA:BUSINESSMAPPING {uuid:'"+uuid+"'})SET n ="+replaceString+" RETURN n";
+			log.debug("to replace"+updateCypherQuery);
+			GraphResponse updateGraphResponse = dbHandler.executeCypherQuery(updateCypherQuery);
+			log.debug(updateGraphResponse);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block  GraphDB
+			log.error(e);
 			e.printStackTrace();
 			return PlatformServiceUtil.buildFailureResponse(e.getMessage());
 		}

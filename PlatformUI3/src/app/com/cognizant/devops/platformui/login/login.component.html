@@ -1,6 +1,6 @@
 <!-- 
  *******************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -24,7 +24,7 @@
 
       <div class="column textPad">
         <div>
-          <img mat-card-image align="left" height="57px" width="250px" class="customerLogoImage" [src]="imageSrc" />
+          <img mat-card-image align="left" height="67px" width="250px" class="customerLogoImage" [src]="imageSrc" />
         </div>
         <div class="topTxtCss">
           <div layout class="bulletCss"></div>
@@ -71,8 +71,8 @@
             <mat-icon svgIcon="user-icon-active" class="actvIcoCss" [ngStyle]="{height: '17px', width: '17px'}"></mat-icon>
             &nbsp;
             <mat-form-field layout class="md-block containerMargin" [ngClass]="{'wrnTxt': loginForm.controls['username'].errors && !loginForm.controls['username'].pristine}">
-              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text"
-                formControlName="username" />
+              <input matInput name="username" required placeholder="User Name" class="inputGreyTextCss activeCss" type="text" formControlName="username"
+              />
             </mat-form-field>
             <div *ngIf="loginForm.controls['username'].errors && !loginForm.controls['username'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
               <div class="wrnTxt">Please enter a valid Username.</div>
@@ -83,12 +83,11 @@
 
             &nbsp;
             <mat-form-field [ngClass]="{'error': loginForm.controls['password'].errors && !loginForm.controls['password'].pristine}">
-              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss"
-                formControlName="password" autocomplete="new-password" />
+              <input matInput placeholder="Password" type="password" name="password" required class="inputGreyTextCss activeCss" formControlName="password"
+                autocomplete="new-password" />
             </mat-form-field>
             <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine" [ngStyle]="{'width':'190px','padding-left':'35px'}">
-              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid
-                password.
+              <div class="wrnTxt" [hidden]="!loginForm.controls['password'].errors.required">Please enter a valid password.
               </div>
             </div>
             <div id="invalidMsg" class="errTxt" ng-if="loginController.isLoginError">

@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -24,6 +24,7 @@ import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 import { MatRadioChange, MatInput } from '@angular/material';
 import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
+import {FormControl, Validators} from '@angular/forms';
 
 export interface AssetData {
   assetID: string;
@@ -66,6 +67,8 @@ export class BlockChainComponent implements OnInit {
   selectedBasePrimeID: string = "";
   selectedAssetID: string = "";
   displayProgressBar: boolean = false;
+  toolname = new FormControl('', [Validators.required]);
+  tools = ['JIRA','GIT','JENKINS','NEXUS'];
 
 
 
@@ -90,8 +93,9 @@ export class BlockChainComponent implements OnInit {
     this.selectedAssetID = "";
     this.selectedBasePrimeID = "";    
     if (this.selectedOption == "searchByDates") {
-      if (this.startDateInput === undefined || this.endDateInput === undefined) {
-        this.messageDialog.showApplicationsMessage("Please select both start date and end date first.", "ERROR");
+      console.log(this.toolname.value);
+      if (this.startDateInput === undefined || this.endDateInput === undefined || this.toolname.value == '') {
+        this.messageDialog.showApplicationsMessage("Please select start/end date & tool for Date search.", "ERROR");
         return;
       }
       let dateCompareResult: number = this.compareDate(this.startDateInput, this.endDateInput);
@@ -102,7 +106,7 @@ export class BlockChainComponent implements OnInit {
       this.displayProgressBar = true;
       this.noSearchResultFlag = false;
       this.showSearchResult = false;
-      this.blockChainService.getAllAssets(this.startDate, this.endDate)
+      this.blockChainService.getAllAssets(this.startDate, this.endDate,this.toolname.value)
         .then((data) => {
           this.displayProgressBar = false;
           if (data.status === "failure") {
@@ -171,6 +175,7 @@ export class BlockChainComponent implements OnInit {
       this.endDateMatInput.value = '';
       this.startDateInput = undefined;
       this.endDateInput = undefined;
+      this.toolname.patchValue('');
     }
   }
   //Checks whether start date is greater than end date and if yes throws error message
@@ -186,6 +191,7 @@ export class BlockChainComponent implements OnInit {
   getAssetID(assetIdInput: string) {
     if (assetIdInput) {
       this.assetID = assetIdInput;
+      this.selectedOption = 'searchByAssetId';
     } else {
       this.assetID = "";
     }
@@ -233,7 +239,7 @@ export class BlockChainComponent implements OnInit {
 
   //Displays Asset Details Dialog box
   showAssetDetailsDialog() {
-    if (this.selectedAssetID =="" && this.selectedBasePrimeID =="") {
+    if (this.selectedAssetID =="") {
       return;
     }
     let showDetailsDialog = this.dialog.open(AssetDetailsDialog, {
@@ -242,11 +248,12 @@ export class BlockChainComponent implements OnInit {
       width: '1200px',
       disableClose: true,
       position: { top: '0px', left: '100px', right: '0px', bottom: '0px' },
-      data: { basePrimeID: this.selectedBasePrimeID, assetID: this.selectedAssetID },
+      data: { assetID: this.selectedAssetID },
     });
   }
 
   populateBasePrimeID($event: MatRadioChange, assetID: string) {
+    console.log($event.value);
     this.selectedBasePrimeID = $event.value;
     this.selectedAssetID = assetID;
   }

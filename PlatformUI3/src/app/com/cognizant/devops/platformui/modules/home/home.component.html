@@ -1,6 +1,6 @@
 <!--
 *******************************************************************************
- * Copyright 2017 Cognizant Technology Solutions
+ * Copyright 2019 Cognizant Technology Solutions
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
@@ -23,7 +23,7 @@
         <table class="logoTable">
           <tr *ngIf="isExpanded">
             <td>
-              <img mat-card-image align="left" (click)="showLandingPage()" height="44px" width="195px" src='icons/svg/homePage/Insights.png'
+              <img mat-card-image align="left" (click)="showLandingPage()" height="51px" width="195px" src='icons/svg/homePage/Insights.png'
                 alt="Cognizant Insights log" class="insightLogo" />
             </td>
             <td>
@@ -32,7 +32,8 @@
           </tr>
           <tr *ngIf="!isExpanded" style="margin:auto;display:table-row;margin-right:auto;margin-left:30px;height:100%;">
             <a (click)="onMenuClick()">
-              <img mat-card-image class="feviconIcon" height="40px" align="center" src='icons/svg/homePage/menu_white_36.png' />
+              <img mat-card-image class="feviconIcon" height="40px" width="40px" align="center" src='icons/svg/homePage/menu_white_36.png'
+              />
             </a>
             <!--<mat-icon class="material-icons-menu">menu</mat-icon>-->
           </tr>
@@ -49,7 +50,7 @@
             </td>
           </tr>
           <tr *ngIf="!isExpanded">
-            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/IS_BETA.png'
+            <img mat-card-image class="feviconIcon" (click)="showLandingPage()" height="40px" align="center" src='icons/svg/homePage/Insights_Fevicon.png'
             />
             <!-- Insights_Fevicon.svg -->
           </tr>
@@ -83,7 +84,7 @@
           </mat-nav-list>
         </div>
         <div class="customerLogo" *ngIf="isExpanded">
-          <img mat-card-image align="left" height="57px" width="250px" class="customerLogoImage" [src]="insightsCustomerLogo" />
+          <img mat-card-image align="left" height="67px" width="250px" class="customerLogoImage" [src]="insightsCustomerLogo" />
         </div>
         <div class="textCopyright" *ngIf="isExpanded">
           © 2019 Cognizant Technologies Solutions Limited.
