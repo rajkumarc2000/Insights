@@ -94,13 +94,6 @@
         </mat-icon>
         Service Failure. Please try again.
       </div>
-
-      <div layout layout-align="right" class="rightAlignStyle" *ngIf="agentBacktoTopFlag">
-        <a (click)="goToHealthCheckTitle()">
-          <mat-icon svgIcon="healthcheck_back_to_top" [ngStyle]="{height: '29px', width: '26px'}">
-          </mat-icon>
-        </a>
-      </div>
     </mat-tab>
     <mat-tab label="Data Components" class="healthcheck-tab-style">
       <div layout layout-align="left" class="sectionHeadingStyleWithoutButton">
@@ -151,13 +144,6 @@
         <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
         </mat-icon>
         Service Failure. Please try again.
-      </div>
-
-      <div layout layout-align="right" class="rightAlignStyle" *ngIf="dataBacktoTopFlag">
-        <a (click)="goToHealthCheckTitle()">
-          <mat-icon svgIcon="healthcheck_back_to_top" [ngStyle]="{height: '29px', width: '26px'}">
-          </mat-icon>
-        </a>
       </div>
     </mat-tab>
     <mat-tab label="Services" class="healthcheck-tab-style">
@@ -215,12 +201,6 @@
         <mat-icon svgIcon="healthcheck_failure_status" [ngStyle]="{color: '#FF8F1C', height: '25px', width: '25px'}">
         </mat-icon>
         Service Failure. Please try again.
-      </div>
-      <div layout layout-align="right" class="rightAlignStyle" *ngIf="servicesBacktoTopFlag">
-        <a (click)="goToHealthCheckTitle()">
-          <mat-icon svgIcon="healthcheck_back_to_top" [ngStyle]="{height: '29px', width: '26px'}">
-          </mat-icon>
-        </a>
       </div>
     </mat-tab>
   </mat-tab-group>
