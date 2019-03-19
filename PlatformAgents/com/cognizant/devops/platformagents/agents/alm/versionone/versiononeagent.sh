@@ -14,7 +14,7 @@
 # the License.
 #-------------------------------------------------------------------------------
 #! /bin/sh
-# /etc/init.d/InSightsGitAgent
+# /etc/init.d/__AGENT_KEY__
 
 ### BEGIN INIT INFO
 # Provides: Runs a Python script on startup
@@ -30,14 +30,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsVersionOneAgent already running"
     else
      echo "Starting InSightsVersionOneAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/versionone
-     python -c "from com.cognizant.devops.platformagents.agents.alm.versionone.VersionOneAgent import VersionOneAgent; VersionOneAgent()" &
+     python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.versionone.VersionOneAgent import VersionOneAgent; VersionOneAgent()" &
     fi
-    if [[ $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsGitAgent Started Sucessfully"
     else
      echo "InSightsVersionOneAgent Failed to Start"
@@ -45,12 +45,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsVersionOneAgent"
-    if [[ $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}')
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
     else
      echo "InSIghtsGitAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsVersionOneAgent Failed to Stop"
     else
      echo "InSightsVersionOneAgent Stopped"
@@ -58,32 +58,32 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsVersionOneAgent"
-    if [[ $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsVersionOneAgent stopping"
-     sudo kill -9 $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
      echo "InSightsVersionOneAgent stopped"
      echo "InSightsVersionOneAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/versionone
-     python -c "from com.cognizant.devops.platformagents.agents.alm.versionone.VersionOneAgent import VersionOneAgent; VersionOneAgent()" &
+     python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.versionone.VersionOneAgent import VersionOneAgent; VersionOneAgent()" &
      echo "InSightsVersionOneAgent started"
     else
      echo "InSightsVersionOneAgent already in stopped state"
      echo "InSightsVersionOneAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/versionone
-     python -c "from com.cognizant.devops.platformagents.agents.alm.versionone.VersionOneAgent import VersionOneAgent; VersionOneAgent()" &
+     python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.versionone.VersionOneAgent import VersionOneAgent; VersionOneAgent()" &
      echo "InSightsVersionOneAgent started"
     fi
     ;;
   status)
     echo "Checking the Status of InSightsVersionOneAgent"
-    if [[ $(ps aux | grep '[a]lm.versionone.VersionOneAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsVersionOneAgent is running"
     else
      echo "InSightsVersionOneAgent is stopped"
     fi
     ;;
   *)
-    echo "Usage: /etc/init.d/InSightsVersionOneAgent {start|stop|restart|status}"
+    echo "Usage: /etc/init.d/__AGENT_KEY__ {start|stop|restart|status}"
     exit 1
     ;;
 esac

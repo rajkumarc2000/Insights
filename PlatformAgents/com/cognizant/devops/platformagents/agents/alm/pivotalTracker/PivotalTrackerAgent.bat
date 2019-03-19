@@ -14,4 +14,4 @@ License for the specific language governing permissions and limitations under
 the License.
 :comment
 pushd %INSIGHTS_AGENT_HOME%\PlatformAgents\pivotalTracker
-python -c "from com.cognizant.devops.platformagents.agents.alm.pivotalTracker.PivotalTrackerAgent import PivotalTrackerAgent; PivotalTrackerAgent()"
+python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.pivotalTracker.PivotalTrackerAgent import PivotalTrackerAgent; PivotalTrackerAgent()"
