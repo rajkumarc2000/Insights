@@ -18,7 +18,6 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
-//import { Agent } from 'https';
 
 
 @Component({
@@ -47,8 +46,6 @@ export class HealthCheckComponent implements OnInit {
   servicesListDatasource = [];
   healthResponse: any;
   agentResponse: any;
-  agentBacktoTopFlag: boolean = false;
-  servicesBacktoTopFlag: boolean = false;
   agentNameList: any = [];
   selectAgentTool: any;
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
@@ -63,7 +60,7 @@ export class HealthCheckComponent implements OnInit {
       this.showThrobberAgent = true;
       this.showContentAgent = !this.showThrobberAgent;
       this.agentResponse = await this.healthCheckService.loadServerAgentConfiguration();
-      //console.log(this.agentResponse);
+      console.log(this.agentResponse);
       if (this.agentResponse != null) {
         this.showThrobberAgent = false;
         this.showContentAgent = !this.showThrobberAgent;
@@ -143,26 +140,24 @@ export class HealthCheckComponent implements OnInit {
 
     var dataListDatasourceSelected = [];
     //console.log(agentListDatasourceSelected);
-    if (ToolSelect != "all") {
+    if (ToolSelect != "All") {
       this.dataComponentDataSource.filter(x => {
         console.log(x);
         if (x.serverName == ToolSelect) {
           dataListDatasourceSelected.push(x)
         }
       }
-
       )
     } else {
       dataListDatasourceSelected = this.dataComponentDataSource;
-      //console.log(agentListDatasourceSelected)
-
     }
     this.dataListDatasource = dataListDatasourceSelected;
     console.log(this.dataComponentDataSource)
   }
 
   // Displays Show Details dialog box when Details column is clicked
-  showDetailsDialog(toolName: string, categoryName: string, pathName: string, detailType: string) {
+  showDetailsDialog(toolName: string, categoryName: string, agentId: string) {
+    console.log(toolName + "  " + categoryName + "  " + agentId);
     var rcategoryName = categoryName.replace(/ +/g, "");
     if (toolName == "-") {
       var filePath = "${INSIGHTS_HOME}/logs/" + rcategoryName + "/" + rcategoryName + ".log";
@@ -177,7 +172,7 @@ export class HealthCheckComponent implements OnInit {
       height: '500px',
       width: '900px',
       disableClose: true,
-      data: { toolName: toolName, categoryName: categoryName, pathName: filePath, detailType: detailType },
+      data: { toolName: toolName, categoryName: categoryName, pathName: filePath, detailType: detailType, agentId: agentId },
     });
   }
 

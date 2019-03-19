@@ -320,7 +320,7 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("update");
-          self.agentConfigstatus = "Agent update Failed"
+          self.agentConfigstatus = "Agent update Failed";
           self.agentConfigstatusCode = "ERROR";
         }
       } else {
@@ -334,22 +334,25 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("register");
-          self.agentConfigstatus = "Agent Register Failed"
+          self.agentConfigstatus = "Agent Register Failed";
           self.agentConfigstatusCode = "ERROR";
         }
       }
-
     }
     //console.log(this.agentConfigstatus)
-    if (this.agentConfigstatus) {
-      let navigationExtras: NavigationExtras = {
-        skipLocationChange: true,
-        queryParams: {
-          "agentstatus": this.agentConfigstatus,
-          "agentConfigstatusCode": this.agentConfigstatusCode
-        }
-      };
-      this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+    if (this.agentConfigstatusCode == "SUCCESS") {
+      if (this.agentConfigstatus) {
+        let navigationExtras: NavigationExtras = {
+          skipLocationChange: true,
+          queryParams: {
+            "agentstatus": this.agentConfigstatus,
+            "agentConfigstatusCode": this.agentConfigstatusCode
+          }
+        };
+        this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+      }
+    } else {
+      self.messageDialog.showApplicationsMessage(this.agentConfigstatus, "ERROR");
     }
   }
 

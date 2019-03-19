@@ -46,7 +46,7 @@
           <!-- Tool Instance Id Column -->
           <ng-container matColumnDef="agentKey">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Instance Id </th>
-            <td mat-cell *matCellDef="let element"> {{element.agentKey}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.agentId}} </td>
           </ng-container>
           <!-- Category Column -->
           <ng-container matColumnDef="category">
@@ -73,7 +73,7 @@
           <ng-container matColumnDef="details">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCss"> Details </th>
             <td mat-cell *matCellDef="let element">
-              <a (click)="showDetailsDialog(element.toolName,element.category)">
+              <a (click)="showDetailsDialog(element.toolName,element.category,element.agentId)">
                 <mat-icon svgIcon="healthcheck_show_details" [ngStyle]="{color:'#5C068C', height: '20px', width: '20px'}">
                 </mat-icon>
               </a>

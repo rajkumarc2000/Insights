@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 @Component({
@@ -38,11 +38,10 @@ export class AgentManagementComponent implements OnInit {
   tableParams = [];
   buttonDisableStatus: boolean = true;
   runDisableStatus: string = "";
-  agentListDatasource = [];
+  agentListDatasource = new MatTableDataSource<any>();
   showDetail: boolean = false;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   agentList: any;
-
   selectedAgent: any;
   selectTool: any;
   agentNameList: any = [];
@@ -50,10 +49,10 @@ export class AgentManagementComponent implements OnInit {
   receivedParam: any;
   toolVersionData: any;
   versionList = [];
-  MAX_ROWS_PER_TABLE = 10;
+  MAX_ROWS_PER_TABLE = 5;
   constructor(public agentService: AgentService, public router: Router,
     private route: ActivatedRoute, public dialog: MatDialog,
-    public messageDialog: MessageDialogService) {
+    public messageDialog: MessageDialogService, private changeDetectorRefs: ChangeDetectorRef) {
     this.getRegisteredAgents();
   }
 
@@ -74,6 +73,10 @@ export class AgentManagementComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.agentListDatasource.paginator = this.paginator;
+  }
+
   public async getRegisteredAgents() {
 
     var self = this;
@@ -83,19 +86,16 @@ export class AgentManagementComponent implements OnInit {
     self.runDisableStatus = "";
     this.agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (this.agentList != null && this.agentList.status == 'success') {
-      this.agentListDatasource = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
+      this.agentListDatasource.data = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
+      this.agentListDatasource.paginator = this.paginator;
       //console.log(this.agentList);
-      this.agentNameList.push("all");
+      this.agentNameList.push("All");
       for (var data of this.agentList.data) {
-        // console.log(data);
-        /* if (this.agentNameList.find((test) => test === data.toolName) === undefined) { */
-
         if (this.agentNameList.indexOf(data.toolName) == -1) {
           this.agentNameList.push(data.toolName);
-
         }
-
       }
+      //console.log(this.agentListDatasource);
       self.showDetail = true;
       //console.log(this.agentNameList);
       this.displayedColumns = ['radio', 'ToolName', 'AgentKey', 'ToolCategory', 'OS', 'Version', 'Status'];
@@ -114,43 +114,25 @@ export class AgentManagementComponent implements OnInit {
       this.validationArr[i] = { "os": detailArr[i].osVersion, "version": detailArr[i].agentVersion, "tool": detailArr[i].toolName }
     }
   }
-
-
-  selectToolAgent(ToolSelect) {
+  selectToolAgent(toolSelect) {
     //console.log(ToolSelect);
-
-
     var agentListDatasourceSelected = [];
     //console.log(agentListDatasourceSelected);
-    if (ToolSelect != "all") {
-      this.agentList.data.filter(x => {
-        //console.log(x);
-        if (x.toolName == ToolSelect) {
-          agentListDatasourceSelected.push(x)
+    if (toolSelect != "All") {
+      this.agentList.data.filter(av => {
+        if (av.toolName == toolSelect) {
+          agentListDatasourceSelected.push(av)
         }
       }
-
       )
-    }
-
-
-    //console.log(agentListDatasourceSelected);
-    else {
-      //agentListDatasourceSelected.push(this.agentList.data);
-
+    } else {
       agentListDatasourceSelected = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
-
-      //console.log(agentListDatasourceSelected)
-
     }
-    this.agentListDatasource = agentListDatasourceSelected;
-    // console.log(this.agentListDatasource)
-
-
+    this.agentListDatasource.data = agentListDatasourceSelected;
+    this.agentListDatasource.paginator = this.paginator;
+    this.changeDetectorRefs.detectChanges();
+    console.log(this.agentListDatasource);
   }
-
-
-
 
   statusEdit(element) {
     this.runDisableStatus = element.agentStatus;

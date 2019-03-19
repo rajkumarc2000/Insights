@@ -132,11 +132,11 @@ public class HealthStatus {
 
 
 	@RequestMapping(value = "/detailHealth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody JsonObject loadAgentsHealth(@RequestParam String category, @RequestParam String tool){
+	public @ResponseBody JsonObject loadAgentsHealth(@RequestParam String category, @RequestParam String tool,@RequestParam String agentId){
 		if(StringUtils.isEmpty(category) || StringUtils.isEmpty(tool)){
 			return PlatformServiceUtil.buildFailureResponse(ErrorMessage.CATEGORY_AND_TOOL_NAME_NOT_SPECIFIED);
 		}
-		log.debug(" message tool name "+category+"  "+tool);
+		log.debug(" message tool name "+category+"  "+tool+"  "+agentId);
 		StringBuffer label = new StringBuffer("HEALTH");
 		if(category.equalsIgnoreCase(ServiceStatusConstants.PlatformEngine)) {
 			label.append(":").append("ENGINE");
@@ -146,7 +146,7 @@ public class HealthStatus {
 			label.append(":").append(category);
 			label.append(":").append(tool);	
 		}
-		GraphResponse response = loadHealthData(label.toString(),ServiceStatusConstants.Agents);
+		GraphResponse response = loadHealthData(label.toString(),ServiceStatusConstants.Agents,agentId);
 		return PlatformServiceUtil.buildSuccessResponseWithData(response);
 	}
 
@@ -268,7 +268,7 @@ public class HealthStatus {
 		ElasticSearchDBHandler apiCallElasticsearch =new ElasticSearchDBHandler();
 		try {
 			if(serviceType.equalsIgnoreCase("PlatformEngine")) {
-				graphResponse = loadHealthData("HEALTH:ENGINE",serviceType);
+				graphResponse = loadHealthData("HEALTH:ENGINE",serviceType,"");
 				if(graphResponse !=null ) {
 					if(graphResponse.getNodes().size() > 0 ) {
 						successResponse=graphResponse.getNodes().get(0).getPropertyMap().get("message");;
@@ -295,7 +295,7 @@ public class HealthStatus {
 					status=PlatformServiceConstants.FAILURE;
 				}
 				log.info(" PlatformInsightSpark service response "+serviceResponse);
-				graphResponse = loadHealthData("HEALTH:INSIGHTS",serviceType);
+				graphResponse = loadHealthData("HEALTH:INSIGHTS",serviceType,"");
 				log.debug(" graphResponse message arg 0  "+graphResponse);
 				if(graphResponse !=null ) {
 					if(graphResponse.getNodes().size() > 0 ) {
@@ -318,7 +318,7 @@ public class HealthStatus {
 				}
 
 			}else if(serviceType.equalsIgnoreCase("Agents")) {
-				graphResponse = loadHealthData("HEALTH:LATEST",serviceType);
+				graphResponse = loadHealthData("HEALTH:LATEST",serviceType,"");
 				if(graphResponse !=null ) {
 					if(graphResponse.getNodes().size() > 0 ) {
 						status=PlatformServiceConstants.SUCCESS;
@@ -339,13 +339,19 @@ public class HealthStatus {
 		return returnObject;
 	}
 
-	private GraphResponse loadHealthData(String label, String type) {
+	private GraphResponse loadHealthData(String label, String type, String agentId) {
 
 		int limitOfRow=1;
+		String query ="";
 		if(type.equalsIgnoreCase("Agents")) {
 			limitOfRow=10;
 		}
-		String query = "MATCH (n:"+label+") where n.inSightsTime IS NOT NULL RETURN n order by n.inSightsTime DESC LIMIT "+limitOfRow;
+		if(agentId.equalsIgnoreCase("")) {
+			query ="MATCH (n:"+label+") where n.inSightsTime IS NOT NULL RETURN n order by n.inSightsTime DESC LIMIT "+limitOfRow;
+		}else if(!agentId.equalsIgnoreCase("")){
+			query ="MATCH (n:"+label+") where n.inSightsTime IS NOT NULL and n.agentId ='"+agentId+"' RETURN n order by n.inSightsTime DESC LIMIT "+limitOfRow;
+		}
+		log.info("query  ====== "+query);
 		GraphResponse graphResponse =null;
 		try { 
 			Neo4jDBHandler dbHandler = new Neo4jDBHandler();
@@ -359,11 +365,12 @@ public class HealthStatus {
 	}
 
 	private JsonObject buildAgentResponse(String status ,String message, GraphResponse graphResponse) {
-		log.error(" message in buildAgentResponse "+graphResponse.getNodes().size());
+		log.error(" message in buildAgentResponse debug "+graphResponse.getNodes().size());
 		String toolcategory=""; 
 		String toolName="";
 		String insightTimeX="";
 		String agentstatus="";
+		String agentId="";
 		JsonObject jsonResponse = new JsonObject();
 		JsonArray agentNode = new JsonArray();
 		if(status.equalsIgnoreCase(PlatformServiceConstants.SUCCESS)) {
@@ -376,12 +383,18 @@ public class HealthStatus {
 				insightTimeX=node.getPropertyMap().get("inSightsTimeX");;
 				message=node.getPropertyMap().get("message");;
 				toolcategory=node.getPropertyMap().get("category");;
-				toolName=node.getPropertyMap().get("toolName");;
+				toolName=node.getPropertyMap().get("toolName");
+				if(node.getPropertyMap().containsKey("agentId")) {
+					agentId=node.getPropertyMap().get("agentId");	
+				}else {
+					agentId="";
+				}
 				agentstatus=node.getPropertyMap().get("status");
 				insightTimeX=node.getPropertyMap().get("inSightsTimeX");;
 				JsonObject jsonResponse2 = new JsonObject();
 				jsonResponse2.addProperty("inSightsTimeX", insightTimeX);
 				jsonResponse2.addProperty("toolName", toolName);
+				jsonResponse2.addProperty("agentId", agentId);
 				jsonResponse2.addProperty("inSightsTimeX", insightTimeX);
 				jsonResponse2.addProperty(PlatformServiceConstants.STATUS, agentstatus);
 				jsonResponse2.addProperty(PlatformServiceConstants.MESSAGE, message);

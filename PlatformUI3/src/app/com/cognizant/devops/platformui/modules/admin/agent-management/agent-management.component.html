@@ -32,56 +32,50 @@
   <div class="arrange-horizontally">
 
     <label class="mainText"> Select Tool </label>
-    <mat-select [(ngModel)]="selectTool" [style.height.px]="20" [style.width.%]="21" style="margin-top: 10px"
-      (ngModelChange)="selectToolAgent(selectTool)" name="selectTool" required placeholder="Select Tool" [ngClass]="{  'input-disabled' :false  ,  'form-control': true}">
+    <mat-select [(ngModel)]="selectTool" [style.width.%]="21" (ngModelChange)="selectToolAgent(selectTool)" name="selectTool"
+      required placeholder="Select Tool" class="form-control-select">
       <mat-option *ngFor="let data of agentNameList" [value]="data" style="color:#0033A0">
         {{data}}
       </mat-option>
-    </mat-select>
+      </mat-select>
 
-    <h2 class="labelInfo">(Please select Tool to see tool properties and Label)</h2>
+      <h2 class="labelInfo">(Please select Tool to see status of ONLY the TOOL)</h2>
 
-
-    <div class="btnAlign">
-      <button mat-icon-button (click)="addAgentData()">
+      <div class="btnAlign">
+        <button mat-icon-button (click)="addAgentData()">
         <mat-icon title="Add Agent" class="mat-icon material-icons">
           add_circle
         </mat-icon>
         <mat-icon svgIcon="lineInButton" class="mat-icon material-icons">
         </mat-icon>
       </button>
-      <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START' || runDisableStatus==''">
+        <button mat-icon-button (click)="agentStartStopAction('START')" [disabled]="runDisableStatus=='START' || runDisableStatus==''">
         <mat-icon title=" Start " class="mat-icon material-icons ">
           play_circle_filled
         </mat-icon>
       </button>
-      <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP' || runDisableStatus==''">
+        <button mat-icon-button (click)="agentStartStopAction('STOP')" [disabled]="runDisableStatus=='STOP' || runDisableStatus==''">
         <mat-icon title="Stop " class="mat-icon material-icons ">
           fiber_manual_record
         </mat-icon>
       </button>
-      <button mat-icon-button [disabled]="buttonDisableStatus" (click)="editAgent()">
+        <button mat-icon-button [disabled]="buttonDisableStatus" (click)="editAgent()">
         <mat-icon title="Edit " class="mat-icon material-icons">
           edit
         </mat-icon>
       </button>
-      <button mat-icon-button [disabled]="runDisableStatus!='STOP'" (click)="uninstallAgent()">
+        <button mat-icon-button [disabled]="runDisableStatus!='STOP'" (click)="uninstallAgent()">
         <mat-icon title="Delete " class="mat-icon material-icons">
           delete
         </mat-icon>
       </button>
-    </div>
+      </div>
   </div>
-  <div>
 
+  <div>
     <mat-radio-group [(ngModel)]="selectedAgent">
       <table mat-table [dataSource]="agentListDatasource" class="mat-elevation-z8" style="margin-top:2% !important">
         <!-- Radio Button Column -->
-
-        <ng-container matColumnDef="ToolName">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Name</th>
-          <td mat-cell *matCellDef="let element" style="width:15% !important"> {{element.toolName}} </td>
-        </ng-container>
 
         <ng-container matColumnDef="radio">
           <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" style="width:10% !important"></th>
@@ -90,15 +84,17 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="AgentKey">
-          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Instance Id</th>
-          <td mat-cell *matCellDef="let element" style="width:20% !important"> {{element.agentKey}} </td>
+        <ng-container matColumnDef="ToolName">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Tool Name</th>
+          <td mat-cell *matCellDef="let element" style="width:15% !important"> {{element.toolName}} </td>
         </ng-container>
 
 
 
-
-
+        <ng-container matColumnDef="AgentKey">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Instance ID</th>
+          <td mat-cell *matCellDef="let element" style="width:25% !important"> {{element.agentKey}} </td>
+        </ng-container>
 
         <ng-container matColumnDef="OS">
           <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Operating System</th>
@@ -110,20 +106,15 @@
           <td mat-cell *matCellDef="let element" style="width:20% !important"> {{element.toolCategory}} </td>
         </ng-container>
 
-
         <ng-container matColumnDef="Version">
           <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Version</th>
-          <td mat-cell *matCellDef="let element" style="width:15% !important"> {{element.agentVersion}} </td>
+          <td mat-cell *matCellDef="let element" style="width:10% !important"> {{element.agentVersion}} </td>
         </ng-container>
-
-
-
 
         <ng-container matColumnDef="Status">
           <th mat-header-cell *matHeaderCellDef class="tableHeaderCss">Status</th>
           <td mat-cell *matCellDef="let element" style="width:15% !important"> {{element.agentStatus}} </td>
         </ng-container>
-
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
