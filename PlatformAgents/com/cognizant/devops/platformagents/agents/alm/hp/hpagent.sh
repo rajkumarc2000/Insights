@@ -14,7 +14,7 @@
 # the License.
 #-------------------------------------------------------------------------------
 #! /bin/sh
-# /etc/init.d/InSightsHpAgent
+# /etc/init.d/__AGENT_KEY__
 
 ### BEGIN INIT INFO
 # Provides: Runs a Python script on startup
@@ -32,14 +32,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsHpAgent already running"
     else
      echo "Starting InSightsHpAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/hp
-     python -c "from com.cognizant.devops.platformagents.agents.alm.hp.HpAlmAgent import HpAlmAgent; HpAlmAgent()" &
+     python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.hp.HpAlmAgent import HpAlmAgent; HpAlmAgent()" &
     fi
-    if [[ $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsHpAgent Started Sucessfully"
     else
      echo "InSightsHpAgent Failed to Start"
@@ -47,12 +47,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsHpAgent"
-    if [[ $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}')
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
     else
      echo "InSightsHpAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsHpAgent Failed to Stop"
     else
      echo "InSightsHpAgent Stopped"
@@ -60,25 +60,25 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsHpAgent"
-    if [[ $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsHpAgent stopping"
-     sudo kill -9 $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
      echo "InSightsHpAgent stopped"
      echo "InSightsHpAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/hp
-     python -c "from com.cognizant.devops.platformagents.agents.alm.hp.HpAlmAgent import HpAlmAgent; HpAlmAgent()" &
+     python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.hp.HpAlmAgent import HpAlmAgent; HpAlmAgent()" &
      echo "InSightsHpAgent started"
     else
      echo "InSightsHpAgent already in stopped state"
      echo "InSightsHpAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/hp
-     python -c "from com.cognizant.devops.platformagents.agents.alm.hp.HpAlmAgent import HpAlmAgent; HpAlmAgent()" &
+     python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.hp.HpAlmAgent import HpAlmAgent; HpAlmAgent()" &
      echo "InSightsHpAgent started"
     fi
     ;;
   status)
     echo "Checking the Status of InSightsHpAgent"
-    if [[ $(ps aux | grep '[a]lm.hp.HpAlmAgent' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsHpAgent is running"
     else
      echo "InSightsHpAgent is stopped"
