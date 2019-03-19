@@ -85,7 +85,7 @@ case "$1" in
     fi
     ;;
   *)
-    echo "Usage: /etc/init.d/InSightsHpAgent {start|stop|restart|status}"
+    echo "Usage: /etc/init.d/__AGENT_KEY__ {start|stop|restart|status}"
     exit 1
     ;;
 esac
