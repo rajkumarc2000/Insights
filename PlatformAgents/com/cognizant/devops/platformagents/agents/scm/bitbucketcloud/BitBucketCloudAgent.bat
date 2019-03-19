@@ -14,4 +14,4 @@ License for the specific language governing permissions and limitations under
 the License.
 :comment
 pushd %INSIGHTS_AGENT_HOME%\PlatformAgents\bitbucketcloud
-python -c "from com.cognizant.devops.platformagents.agents.scm.bitbucketcloud.BitBucketCloudAgent import BitBucketCloudAgent; BitBucketCloudAgent()"
+python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.scm.bitbucketcloud.BitBucketCloudAgent import BitBucketCloudAgent; BitBucketCloudAgent()"
