@@ -70,6 +70,7 @@ export class AgentConfigurationComponent implements OnInit {
   subTitleName: string;
   subTitleInfoText: string;
   @ViewChild('fileInput') myFileDiv: ElementRef;
+  regex = new RegExp("^[a-zA-Z0-9_]*$", 'gi');
 
   constructor(public config: InsightsInitService, public agentService: AgentService,
     private router: Router, private route: ActivatedRoute,
@@ -286,24 +287,37 @@ export class AgentConfigurationComponent implements OnInit {
     var self = this;
     this.agentConfigstatus = undefined;
     this.agentConfigstatusCode = undefined;
-    self.updatedConfigdata = {};
+    this.updatedConfigParamdata = undefined;
     this.updatedConfigParamdata = {};
 
-    for (let configParamData of this.agentConfigItems) {
-      if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
-        this.item = {};
-        for (let configinnerData of configParamData.children) {
-          this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
-        }
-        this.updatedConfigParamdata[configParamData.key] = this.item;
-      } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
-        this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
-      } else if (configParamData.key == "dynamicTemplate") {
-        this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
-      }
-    }
     //console.log(this.updatedConfigParamdata);
-    if (this.updatedConfigParamdata) {
+    var agentId = this.updatedConfigParamdata['agentId'];
+    //console.log("selected agentId ===== " + agentId + "  " + Number.isNaN(agentId) + "   " + this.regex.test(agentId));
+
+    if (Number.isNaN(agentId) || agentId == undefined || agentId == "") {
+      self.messageDialog.showApplicationsMessage("Please enter valid agentId,It should not be blank ", "ERROR");
+      this.updatedConfigParamdata = undefined;
+    } /*else {
+      console.log(this.regex);
+      this.updatedConfigParamdata = undefined;
+      self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
+    }*/
+
+    if (this.updatedConfigParamdata != undefined) {
+
+      for (let configParamData of this.agentConfigItems) {
+        if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
+          this.item = {};
+          for (let configinnerData of configParamData.children) {
+            this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
+          }
+          this.updatedConfigParamdata[configParamData.key] = this.item;
+        } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
+          this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
+        } else if (configParamData.key == "dynamicTemplate") {
+          this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
+        }
+      }
 
       self.configData = "";
       self.configData = JSON.stringify(self.updatedConfigParamdata);
@@ -338,21 +352,22 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "ERROR";
         }
       }
-    }
-    //console.log(this.agentConfigstatus)
-    if (this.agentConfigstatusCode == "SUCCESS") {
-      if (this.agentConfigstatus) {
-        let navigationExtras: NavigationExtras = {
-          skipLocationChange: true,
-          queryParams: {
-            "agentstatus": this.agentConfigstatus,
-            "agentConfigstatusCode": this.agentConfigstatusCode
-          }
-        };
-        this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+
+      //console.log(this.agentConfigstatus)
+      if (this.agentConfigstatusCode == "SUCCESS") {
+        if (this.agentConfigstatus) {
+          let navigationExtras: NavigationExtras = {
+            skipLocationChange: true,
+            queryParams: {
+              "agentstatus": this.agentConfigstatus,
+              "agentConfigstatusCode": this.agentConfigstatusCode
+            }
+          };
+          this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+        }
+      } else {
+        self.messageDialog.showApplicationsMessage(this.agentConfigstatus, "ERROR");
       }
-    } else {
-      self.messageDialog.showApplicationsMessage(this.agentConfigstatus, "ERROR");
     }
   }
 
