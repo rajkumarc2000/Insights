@@ -54,7 +54,7 @@ export class AgentConfigurationComponent implements OnInit {
   files = [];
   fileUploadSuccessMessage: string = "";
   fileUploadErrorMessage: string = "";
-  trackingUploadedFileContentStr: any;
+  trackingUploadedFileContentStr: string = "";
   showTrackingJsonUploadButton: boolean;
   buttonDisableStatus: boolean = true;
   isRegisteredTool: boolean = false;
@@ -341,15 +341,19 @@ export class AgentConfigurationComponent implements OnInit {
 
     }
     //console.log(this.agentConfigstatus)
-    if (this.agentConfigstatus) {
-      let navigationExtras: NavigationExtras = {
-        skipLocationChange: true,
-        queryParams: {
-          "agentstatus": this.agentConfigstatus,
-          "agentConfigstatusCode": this.agentConfigstatusCode
-        }
-      };
-      this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+    if (this.agentConfigstatusCode == "SUCCESS") {
+      if (this.agentConfigstatus) {
+        let navigationExtras: NavigationExtras = {
+          skipLocationChange: true,
+          queryParams: {
+            "agentstatus": this.agentConfigstatus,
+            "agentConfigstatusCode": this.agentConfigstatusCode
+          }
+        };
+        this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+      }
+    } else {
+      self.messageDialog.showApplicationsMessage(this.agentConfigstatus, "ERROR");
     }
   }
 
