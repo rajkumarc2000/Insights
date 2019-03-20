@@ -123,7 +123,7 @@ export class BusinessMappingComponent implements OnInit {
         }
         self.displayedColumns = ['radio', 'mappinglabel', 'properties']
         self.isListView = true;
-        self.subHeading = "List of Labels";
+        self.subHeading = "List of Business Mapping Labels";
         self.agentDataSource = new MatTableDataSource(agentDataSourceArray);
         //console.log(self.agentDataSource);
         //console.log(self.selectedMappingAgent);
@@ -224,11 +224,22 @@ export class BusinessMappingComponent implements OnInit {
       } else {
         this.agentPropertyDataSource = [];
       }
-      //console.log(this.agentMappingLabels);
+      console.log(this.agentMappingLabels);
       this.agentPropertyDataSource = new MatTableDataSource(this.agentPropertyDataSource);
+      console.log(this.agentPropertyDataSource);
+      this.agentPropertyDataSource.data.forEach(row => {
+        if (row.value != "") {
+          this.selection.select(row)
+        }
+      }
+      );
     } catch (error) {
       //console.log(error);
     }
+  }
+
+  canbeChecked(key) {
+    console.log("key  " + key);
   }
 
   getagentPropertyDataSource() {
@@ -288,7 +299,7 @@ export class BusinessMappingComponent implements OnInit {
     this.loadAgentProperties(this.selectedAgent);
     this.isEditData = false;
     this.disableAdd = true;
-    this.subHeading = "Edit Label for " + this.selectedMappingAgent.businessmappinglabel;
+    this.subHeading = "Edit Business Mapping Label for " + this.selectedMappingAgent.businessmappinglabel;
   }
 
   addAgentLabelData() {
@@ -297,7 +308,7 @@ export class BusinessMappingComponent implements OnInit {
     this.noToolsData = false
     this.isListView = false;
     this.actionType = "add"
-    this.subHeading = "Add Label";
+    this.subHeading = "Add Business Mapping Label";
     this.label = undefined;
     this.selection.clear()
     this.loadAgentProperties(this.selectedAgent);
@@ -382,15 +393,6 @@ export class BusinessMappingComponent implements OnInit {
     if (validationMessage == '') {
       var labelArray = this.label.split(":");
       var str: string = String(this.label);
-      /*var regex = /^[A-Za-z0-9 ]+$/
- 
-        //Validate TextBox value against the Regex.
-        var isValid = regex.test(str);
-        if (!isValid) {
-            alert("Contains Special Characters.");
-        } else {
-            alert("Does not contain Special Characters.");
-        }*/
       var format = /[ !@#$%^&*()+\=\[\]{};'"\\|,.<>\/?]/;
       //console.log(format.test(str))
       if (format.test(str) == true) {
@@ -411,7 +413,6 @@ export class BusinessMappingComponent implements OnInit {
       } else if (this.actionType == "edit") {
         for (let data of this.agentDataSource.data) {
           if (data.businessmappinglabel == this.label && data.propertiesString == this.agentPropertyList['propertiesString']) {
-            //console.log(data.businessmappinglabel + "," + this.label + "," + "," + data.propertiesString + "," + this.agentPropertyList['propertiesString']);
             validationMessage = "Properties with same name and value <b> " + this.agentPropertyList['propertiesString'] + " </b> already exists for tool <b>" + this.selectedAgent.toolName + " </b>.<br>Please edit necessary values if applicable";
           }
         }
@@ -422,9 +423,9 @@ export class BusinessMappingComponent implements OnInit {
 
   callEditOrSaveDataAPI(agentBMparameter: any) {
     var self = this;
-    var title = this.actionType == "add" ? "Save Label" : " Edit Label";
-    var dialogmessage = this.actionType == "add" ? "Are you sure  you want to save your changes?"
-      : "Please note: The changes will be applied from next data collection. <br> Are you sure you want to save your changes?";
+    var title = this.actionType == "add" ? "Save Business Mapping Label" : " Edit Business Mapping Label";
+    var dialogmessage = this.actionType == "add" ? "Are you sure do you want to save changes to the Business Mapping Label <b> " + this.label + " </b>?"
+      : "Please note: The changes will be applied from next data collection. <br> Are you sure do you want to save changes to the Business Mapping Label <b> " + this.label + " </b>?";
     const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "32%");
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'yes') {
@@ -433,21 +434,19 @@ export class BusinessMappingComponent implements OnInit {
           this.businessMappingService.saveToolMapping(agentBMparameter)
             .then(function (saveResponsedata) {
               if (saveResponsedata.status == "success") {
-                self.messageDialog.showApplicationsMessage("Label <b> " + self.label + " </b> saved Successfully ", "SUCCESS");
+                self.messageDialog.showApplicationsMessage("Business Mapping Label <b>" + self.label + "</b> saved successfully.", "SUCCESS");
               } else {
-                self.messageDialog.showApplicationsMessage("Unable to save label <b> " + self.label + " </b> " + saveResponsedata.message, "ERROR");
+                self.messageDialog.showApplicationsMessage("Unable to save the Business Mapping Label <b> " + self.label + " </b>. " + saveResponsedata.message, "ERROR");
               }
               self.displayAgentMappingDetail();
             });
         } else if (this.actionType == "edit") {
           this.businessMappingService.editToolMapping(agentBMparameter)
             .then(function (editResponsedata) {
-              //console.log(editResponsedata);
               if (editResponsedata.status == "success") {
-                //console.log(agentBMparameter["toolName"]);
-                self.messageDialog.showApplicationsMessage("The changes you made to the <b> " + self.label + " </b> is updated Successfully ", "SUCCESS");
+                self.messageDialog.showApplicationsMessage("The changes you made to the Business Mapping Label <b> " + self.label + " </b> have been updated successfully.", "SUCCESS");
               } else {
-                self.messageDialog.showApplicationsMessage("Unable to edit label <b> " + self.label + " </b> " + editResponsedata.message, "ERROR");
+                self.messageDialog.showApplicationsMessage("Unable to edit Business Mapping Label <b> " + self.label + " </b>. " + editResponsedata.message, "ERROR");
               }
               self.displayAgentMappingDetail();
             });
@@ -464,10 +463,10 @@ export class BusinessMappingComponent implements OnInit {
   deleteMapping() {
     var self = this;
     if (this.selectedMappingAgent.uuid != undefined || this.selectedMappingAgent.uuid != "") {
-      var title = "Delete Label";
+      var title = "Delete Business Mapping Label";
       //console.log(this.selectedMappingAgent);
-      var dialogmessage = "Are you sure you want to delete Label <b>" + this.selectedMappingAgent.businessmappinglabel + "</b> ? <br><b> 'PLEASE NOTE THIS ACTION CANNOT BE UNDONE'</b>";
-      const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
+      var dialogmessage = "Are you sure do you want to delete Business Mapping Label <b>" + this.selectedMappingAgent.businessmappinglabel + "</b>? <br><b>'PLEASE NOTE THIS ACTION CANNOT BE UNDONE.'</b><br><br>Please Note: <b>" + this.selectedMappingAgent.businessmappinglabel + "</b> deleted will be retained in the previously gathered data. However, if you create a new Business Mapping Label with the same name, it may impact other functionalities.";
+      const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "42%");
       dialogRef.afterClosed().subscribe(result => {
         if (result == 'yes') {
           this.businessMappingService.deleteToolMapping(this.selectedMappingAgent.uuid)
