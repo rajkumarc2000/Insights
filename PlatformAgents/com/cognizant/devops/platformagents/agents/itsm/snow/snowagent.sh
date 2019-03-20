@@ -30,14 +30,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSnowAgent already running"
     else
      echo "Starting InSightsSnowAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/snow
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.itsm.snow.snowAgent import snowAgent; snowAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSnowAgent Started Sucessfully"
     else
      echo "InSightsSnowAgent Failed to Start"
@@ -45,12 +45,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsSnowAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSIghtsSnowAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSnowAgent Failed to Stop"
     else
      echo "InSightsSnowAgent Stopped"
@@ -58,9 +58,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsSnowAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSnowAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsSnowAgent stopped"
      echo "InSightsSnowAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/snow
@@ -76,7 +76,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsSnowAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSnowAgent is running"
     else
      echo "InSightsSnowAgent is stopped"

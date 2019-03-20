@@ -30,14 +30,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsBambooAgent already running"
     else
      echo "Starting InSightsBambooAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/bamboo
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.ci.bamboo.BambooAgent import BambooAgent; BambooAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsBambooAgent Started Sucessfully"
     else
      echo "InSightsBambooAgent Failed to Start"
@@ -45,12 +45,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsBambooAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSightsBambooAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsBambooAgent Failed to Stop"
     else
      echo "InSightsBambooAgent Stopped"
@@ -58,9 +58,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsBambooAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsBambooAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsBambooAgent stopped"
      echo "InSightsBambooAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/bamboo
@@ -76,7 +76,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsBambooAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsBambooAgent is running"
     else
      echo "InSightsBambooAgent is stopped"

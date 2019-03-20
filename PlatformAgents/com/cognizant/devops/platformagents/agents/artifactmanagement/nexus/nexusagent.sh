@@ -32,14 +32,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsNexusAgent already running"
     else
      echo "Starting InSightsNexusAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/nexus
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.artifactmanagement.nexus.NexusAgent import NexusAgent; NexusAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsNexusAgent Started Sucessfully"
     else
      echo "InSightsNexusAgent Failed to Start"
@@ -47,12 +47,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsNexusAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSightsNexusAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsNexusAgent Failed to Stop"
     else
      echo "InSightsNexusAgent Stopped"
@@ -60,9 +60,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsNexusAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsNexusAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsNexusAgent stopped"
      echo "InSightsNexusAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/nexus
@@ -78,7 +78,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsNexusAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsNexusAgent is running"
     else
      echo "InSightsNexusAgent is stopped"

@@ -32,14 +32,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsQTESTAgent already running"
     else
      echo "Starting InSightsQTESTAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/qtest
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.qtest.QtestAgent import QtestAgent; QtestAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsQTESTAgent Started Sucessfully"
     else
      echo "InSightsQTESTAgent Failed to Start"
@@ -47,12 +47,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsQTESTAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSightsQTESTAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsQTESTAgent Failed to Stop"
     else
      echo "InSightsQTESTAgent Stopped"
@@ -60,9 +60,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsQTESTAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsQTESTAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsQTESTAgent stopped"
      echo "InSightsQTESTAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/qtest
@@ -78,7 +78,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsQTESTAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsQTESTAgent is running"
     else
      echo "InSightsQTESTAgent is stopped"

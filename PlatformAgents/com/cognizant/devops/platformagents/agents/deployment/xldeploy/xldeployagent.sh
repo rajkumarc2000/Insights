@@ -30,14 +30,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsXLDeployAgent already running"
     else
      echo "Starting InSightsXLDeployAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/xldeploy
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.deployment.xldeploy.XLDeployAgent import XLDeployAgent; XLDeployAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsXLDeployAgent Started Sucessfully"
     else
      echo "InSightsXLDeployAgent Failed to Start"
@@ -45,12 +45,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsXLDeployAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSIghtsXLDeployAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsXLDeployAgent Failed to Stop"
     else
      echo "InSightsXLDeployAgent Stopped"
@@ -58,9 +58,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsXLDeployAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsXLDeployAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsXLDeployAgent stopped"
      echo "InSightsXLDeployAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/xldeploy
@@ -76,7 +76,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsXLDeployAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsXLDeployAgent is running"
     else
      echo "InSightsXLDeployAgent is stopped"

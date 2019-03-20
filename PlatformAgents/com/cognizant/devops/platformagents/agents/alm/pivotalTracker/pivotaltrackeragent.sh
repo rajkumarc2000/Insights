@@ -30,14 +30,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsPivotalTrackerAgent already running"
     else
      echo "Starting InSightsPivotalTrackerAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/pivotalTracker
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.pivotalTracker.PivotalTrackerAgent import PivotalTrackerAgent; PivotalTrackerAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsPivotalTrackerAgent Started Sucessfully"
     else
      echo "InSightsPivotalTrackerAgent Failed to Start"
@@ -45,12 +45,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsPivotalTrackerAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSightsPivotalTrackerAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsPivotalTrackerAgent Failed to Stop"
     else
      echo "InSightsPivotalTrackerAgent Stopped"
@@ -58,9 +58,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsPivotalTrackerAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsPivotalTrackerAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsPivotalTrackerAgent stopped"
      echo "InSightsPivotalTrackerAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/pivotalTracker
@@ -76,7 +76,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsPivotalTrackerAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsPivotalTrackerAgent is running"
     else
      echo "InSightsPivotalTrackerAgent is stopped"

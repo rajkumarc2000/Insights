@@ -30,14 +30,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsUCDAgent already running"
     else
      echo "Starting InSightsUCDAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/ucd
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.deployment.ucd.UrbanCodeDeployAgent import UrbanCodeDeployAgent; UrbanCodeDeployAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsUCDAgent Started Sucessfully"
     else
      echo "InSightsUCDAgent Failed to Start"
@@ -45,12 +45,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsUCDAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSIghtsUCDAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsUCDAgent Failed to Stop"
     else
      echo "InSightsUCDAgent Stopped"
@@ -58,9 +58,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsUCDAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsUCDAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsUCDAgent stopped"
      echo "InSightsUCDAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/ucd
@@ -76,7 +76,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsUCDAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsUCDAgent is running"
     else
      echo "InSightsUCDAgent is stopped"

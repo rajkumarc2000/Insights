@@ -32,14 +32,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSonarAgent already running"
     else
      echo "Starting InSightsSonarAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/sonar
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.codequality.sonar.SonarAgent import SonarAgent; SonarAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSonarAgent Started Sucessfully"
     else
      echo "InSightsSonarAgent Failed to Start"
@@ -47,12 +47,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsSonarAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSIghtsSonarAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSonarAgent Failed to Stop"
     else
      echo "InSightsSonarAgent Stopped"
@@ -60,9 +60,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsSonarAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSonarAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsSonarAgent stopped"
      echo "InSightsSonarAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/sonar
@@ -78,7 +78,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsSonarAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsSonarAgent is running"
     else
      echo "InSightsSonarAgent is stopped"

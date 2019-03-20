@@ -32,14 +32,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsRallyAgent already running"
     else
      echo "Starting InSightsRallyAgent"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/rally
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.alm.rally.RallyAgent import RallyAgent; RallyAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsRallyAgent Started Sucessfully"
     else
      echo "InSightsRallyAgent Failed to Start"
@@ -47,12 +47,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping InSightsRallyAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "InSightsRallyAgent already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsRallyAgent Failed to Stop"
     else
      echo "InSightsRallyAgent Stopped"
@@ -60,9 +60,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting InSightsRallyAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsRallyAgent stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "InSightsRallyAgent stopped"
      echo "InSightsRallyAgent starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/rally
@@ -78,7 +78,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of InSightsRallyAgent"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "InSightsRallyAgent is running"
     else
      echo "InSightsRallyAgent is stopped"
