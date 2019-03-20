@@ -1,8 +1,8 @@
 {
 	"mqConfig" : {
-		"user" : "iSight", 
-		"password" : "iSight", 
-		"host" : "127.0.0.1", 
+		"user" : "iSight",
+		"password" : "iSight",
+		"host" : "127.0.0.1",
 		"exchange" : "iSight",
 		"agentControlXchg":"iAgent"
 	},
@@ -15,13 +15,13 @@
 	},
 	"communication":{
 		"type" : "REST",
-    	"sslVerify": true,
+    	"sslVerify": false,
     	"responseType": "JSON" 
 	},
 	"dynamicTemplate": {
-	  "timeFieldMapping" : {
-		"startDate" : "%Y-%m-%d"
-  		},
+		"timeFieldMapping" : {
+			"startDate" : "%Y-%m-%d"
+		},
 		"responseTemplate" : {
 			"sha": "commitId",
 			"commit" : {
@@ -31,9 +31,50 @@
 					"date": "commitTime"
 				}
 			}
+		},
+		"pullReqResponseTemplate": {
+			"number": "pullReqId",
+			"state": "pullReqState",
+			"head": {
+				"ref": "originBranch",
+				"repo": {
+					"fork": "isForked"
+				}
+			},
+			"base": {
+				"ref": "baseBranch"
+			},
+			"isMerged": "isMerged"
+		},
+		"metaData": {
+			"branches": {
+				"dataUpdateSupported" : true,
+				"uniqueKey" : [
+					"repoName",
+					"gitType"
+				]
+			},
+			"commits": {
+				"dataUpdateSupported": true,
+				"uniqueKey": [
+					"repoName",
+					"branchName",
+					"commitId"
+				]
+			},
+			"pullReqCommits": {
+				"dataUpdateSupported": true,
+				"uniqueKey": [
+					"repoName",
+					"commitId",
+					"baseBranch",
+					"pullReqId"
+				]
+			}
 		}
 	},
-	"enableBranches" : false,
+	"enableBranches" : true,
+	"enableOptimizedDataRetrieval": true,
 	"enableBrancheDeletion" : false,
 	"enableDataValidation": true,	
 	"toolCategory" : "SCM",
@@ -46,8 +87,8 @@
 	"timeStampField":"commitTime",
 	"timeStampFormat":"%Y-%m-%dT%H:%M:%SZ",
 	"isEpochTimeFormat" : false,
-	"startFrom" : "2016-10-10 15:46:33",
-	"accessToken": "accesstoken",
+	"startFrom" : "2017-10-01 00:00:01",
+	"accessToken": "accessToken",
 	"getRepos":"https://api.github.com/users/<USER_NAME>/repos",
 	"commitsBaseEndPoint":"https://api.github.com/repos/<REPO_NAME>/",
 	"isDebugAllowed" : false,

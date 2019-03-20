@@ -22,9 +22,7 @@ from dateutil import parser
 import datetime
 from com.cognizant.devops.platformagents.core.BaseAgent import BaseAgent
 import logging
-import csv
-import os
-import sys
+import urllib
 
 
 class GitAgent(BaseAgent):
@@ -45,7 +43,13 @@ class GitAgent(BaseAgent):
         metaData = dynamicTemplate.get('metaData', {})
         branchesMetaData = metaData.get('branches', {})
         commitsMetaData = metaData.get('commits', {})
-        pullReqResponseTemplate = dynamicTemplate.get('pullReqResponseTemplate')
+        pullReqCommitsMetaData = metaData.get('pullReqCommits', {})
+        defPullReqResTemplate = {
+            "number": "pullReqId", "state": "pullReqState",
+            "head": {"ref": "originBranch", "repo": {"fork": "isForked"}},
+            "base": {"ref": "baseBranch"}, "isMerged": "isMerged"
+        }
+        pullReqResponseTemplate = dynamicTemplate.get('pullReqResponseTemplate', defPullReqResTemplate)
         repoPageNum = 1
         fetchNextPage = True
         while fetchNextPage:
@@ -55,7 +59,8 @@ class GitAgent(BaseAgent):
             for repo in repos:
                 repoName = repo.get('name', None)
                 repoDefaultBranch = repo.get('default_branch', None)
-                trackingDetails = self.tracking.get(repoName,None)
+                commitDict = dict()
+                trackingDetails = self.tracking.get(repoName, None)
                 if trackingDetails is None:
                     trackingDetails = {}
                     self.tracking[repoName] = trackingDetails
@@ -79,7 +84,9 @@ class GitAgent(BaseAgent):
                         if enableBranches:
                             if isOptimalDataCollect:
                                 self.retrievePullRequest(commitsBaseEndPoint, repoName, repoDefaultBranch, accessToken, trackingDetails,
-                                                         startFromStr, commitsMetaData, pullReqResponseTemplate)
+                                                         startFromStr, pullReqCommitsMetaData, pullReqResponseTemplate)
+                                if 'commitDict' in trackingDetails:
+                                    commitDict = trackingDetails['commitDict']
                             branches = []
                             allBranches = []
                             branchPage = 1
@@ -118,11 +125,11 @@ class GitAgent(BaseAgent):
                             injectData = dict()
                             injectData['repoName'] = repoName
                             injectData['branchName'] = branch
-                            parsedBranch = branch
-                            if '+' in parsedBranch:
-                                parsedBranch = parsedBranch.replace('+', '%2B')
-                            if '&' in parsedBranch:
-                                parsedBranch = parsedBranch.replace('&', '%26')
+                            if branch == repoDefaultBranch:
+                                injectData['default'] = True
+                            else:
+                                injectData['default'] = False
+                            parsedBranch = urllib.quote_plus(branch)
                             fetchNextCommitsPage = True
                             getCommitDetailsUrl = commitsBaseEndPoint+repoName+'/commits?sha='+parsedBranch+'&access_token='+accessToken+'&per_page=100'
                             since = trackingDetails.get(branch, {}).get('latestCommitDate', None)
@@ -147,11 +154,14 @@ class GitAgent(BaseAgent):
                                     if latestCommit is None and len(commits) > 0:
                                         latestCommit = commits[0]
                                     for commit in commits:
+                                        commitId = commit.get('sha', None)
                                         if since is not None or startFrom < parser.parse(commit["commit"]["author"]["date"], ignoretz=True):
-                                            data += self.parseResponse(responseTemplate, commit, injectData)
+                                            if commitId not in commitDict:
+                                                data += self.parseResponse(responseTemplate, commit, injectData)
+                                                commitDict[commitId] = False
                                         else:
                                             fetchNextCommitsPage = False
-                                            self.updateTrackingForBranch(trackingDetails, branch, latestCommit)
+                                            self.updateTrackingForBranch(trackingDetails, branch, latestCommit, repoDefaultBranch)
                                             break
                                     if len(commits) == 0 or len(data) == 0 or len(commits) < 100:
                                         fetchNextCommitsPage = False
@@ -161,8 +171,10 @@ class GitAgent(BaseAgent):
                                     logging.error(ex)
                                 commitsPageNum = commitsPageNum + 1
                             if len(data) > 0:
-                                self.updateTrackingForBranch(trackingDetails, branch, latestCommit, isOptimalDataCollect, len(data), hasLatestPullReq)
+                                self.updateTrackingForBranch(trackingDetails, branch, latestCommit, repoDefaultBranch,
+                                                             isOptimalDataCollect, len(data), hasLatestPullReq)
                                 self.publishToolsData(data, commitsMetaData)
+                            trackingDetails['commitDict'] = commitDict
                             self.updateTrackingJson(self.tracking)
             repoPageNum = repoPageNum + 1
             repos = self.getResponse(getReposUrl+'&per_page=100&sort=created&page='+str(repoPageNum), 'GET', None, None, None)
@@ -170,13 +182,15 @@ class GitAgent(BaseAgent):
     def retrievePullRequest(self, repoEndPoint, repoName, defaultBranch, accessToken, trackingDetails, startFrom, metaData, responseTemplate):
         injectData = dict()
         commitData = list()
-        baseNQDefBranchData = list()
         injectData['repoName'] = repoName
         defaultParams = 'access_token=%s' % accessToken + '&per_page=100&page=%s'
         pullReqUrl = repoEndPoint + repoName + '/pulls?state=all&sort=updated&direction=desc&'
         pullReqUrl += defaultParams
         lastTrackedTimeStr = trackingDetails.get('pullReqModificationTime', startFrom)
         lastTrackedTime = parser.parse(lastTrackedTimeStr, ignoretz=True)
+        if 'commitDict' not in trackingDetails:
+            trackingDetails['commitDict'] = dict()
+        commitDict = trackingDetails['commitDict']
         pullReqPage = 1
         nextPullReqPage = True
         while nextPullReqPage:
@@ -211,6 +225,7 @@ class GitAgent(BaseAgent):
                         logging.error(err)
                     for commit in commitDetails:
                         commitList.append(commit)
+                        commitDict[commit.get('sha', '')] = True
                     if len(commitDetails) < 100:
                         nextPullReqCommitPage = False
                     else:
@@ -247,10 +262,10 @@ class GitAgent(BaseAgent):
                         originTrackingDetails['totalPullReqCommits'] = originTrackingDetails.get('totalPullReqCommits', 0) + len(commitList)
                     except Exception as err:
                         logging.error(err)
-                if baseBranch != defaultBranch:
-                    baseNQDefBranch = {'repoName': repoName, 'defaultBranch': defaultBranch, 'pullReqNumber': pullReq.get('number', None),
-                                       'base': baseBranch, 'head': originBranch, 'isMerged': pullReq['isMerged'], 'isForked': isForked}
-                    baseNQDefBranchData.append(baseNQDefBranch)
+                if baseBranch == defaultBranch:
+                    injectData['default'] = True
+                else:
+                    injectData['default'] = False
                 if commitList:
                     pullReqInjectData = self.parseResponse(responseTemplate, pullReq, injectData)[0]
                     commitData += self.parseResponse(self.getResponseTemplate(), commitList, pullReqInjectData)
@@ -261,21 +276,8 @@ class GitAgent(BaseAgent):
         if commitData:
             self.publishToolsData(commitData, metaData)
             self.updateTrackingJson(self.tracking)
-        if baseNQDefBranchData:
-            agentDir = os.path.dirname(sys.modules[self.__class__.__module__].__file__) + os.path.sep
-            addHeader = False
-            csvFilePath = agentDir + "/pullReqInfo.csv"
-            if not os.path.exists(csvFilePath):
-                addHeader = True
-            with open(csvFilePath, 'ab') as csvFile:
-                fields = ['repoName', 'defaultBranch', 'pullReqNumber', 'base', 'head', 'isMerged', 'isForked']
-                writer = csv.DictWriter(csvFile, fieldnames=fields)
-                if addHeader:
-                    writer.writeheader()
-                for baseNQDefBranch in baseNQDefBranchData:
-                    writer.writerow(baseNQDefBranch)
 
-    def updateTrackingForBranch(self, trackingDetails, branchName, latestCommit, isOptimalDataCollect=False, totalCommit=0, hasLatestPullReq=False):
+    def updateTrackingForBranch(self, trackingDetails, branchName, latestCommit, repoDefaultBranch, isOptimalDataCollect=False, totalCommit=0, hasLatestPullReq=False):
         updatetimestamp = latestCommit["commit"]["author"]["date"]
         dt = parser.parse(updatetimestamp)
         fromDateTime = dt + datetime.timedelta(seconds=01)
@@ -285,12 +287,17 @@ class GitAgent(BaseAgent):
             trackingDetails[branchName]['latestCommitId'] = latestCommit['sha']
         else:
             trackingDetails[branchName] = {'latestCommitDate': fromDateTime, 'latestCommitId': latestCommit["sha"]}
+        branchTrackingDetails = trackingDetails[branchName]
+        if branchName == repoDefaultBranch:
+            branchTrackingDetails['default'] = True
+        else:
+            branchTrackingDetails['default'] = False
         if isOptimalDataCollect:
-            trackingDetails[branchName]['totalCommit'] = trackingDetails[branchName].get('totalCommit', 0) + totalCommit
+            branchTrackingDetails['totalCommit'] = branchTrackingDetails.get('totalCommit', 0) + totalCommit
             if not hasLatestPullReq:
-                trackingDetails[branchName]['commitCount'] = trackingDetails[branchName].get('commitCount', 0) + totalCommit
+                branchTrackingDetails['commitCount'] = branchTrackingDetails.get('commitCount', 0) + totalCommit
             elif hasLatestPullReq:
-                trackingDetails[branchName]['commitCount'] = totalCommit
+                branchTrackingDetails['commitCount'] = totalCommit
 
     def updateTrackingForBranchCreateDelete(self, trackingDetails, repoName, branchName, lastCommitDate, lastCommitId):
         trackingDetails = self.tracking.get(repoName,None)
