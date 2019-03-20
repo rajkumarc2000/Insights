@@ -16,8 +16,20 @@
 # Turn on a case-insensitive matching (-s set nocasematch)
 opt=$1
 action=$2
-agentservice=$3
+toolName=$3
+agentservice=$4
 echo "$opt"
+
+if [ "$#" -lt 2 ]; then
+  echo "insufficient arguments" >&2
+  exit 1
+fi
+
+if [ "$agentservice" == "" ]; then
+   echo "Agent service name cannot be null"
+   exit 1
+fi
+
 case $opt in
         [lL][Ii][nN][uU][Xx])
                 case $action in 
@@ -28,7 +40,7 @@ case $opt in
 		            ;;
 		         	*)
 		         		echo "Git Running on Linux..."
-						sudo cp -xp $agentservice.sh  /etc/init.d/$agentservice
+						sudo cp -xp $INSIGHTS_AGENT_HOME/PlatformAgents/$toolName/$agentservice/$agentservice.sh  /etc/init.d/$agentservice
 						sudo chmod +x /etc/init.d/$agentservice
 						sudo chkconfig $agentservice on
 						sudo service  $agentservice status
@@ -50,7 +62,7 @@ case $opt in
 			        ;;
 				*)
                    echo "Git Running on Ubuntu..."
-					sudo cp -xp $agentservice.service /etc/systemd/system
+					sudo cp -xp $INSIGHTS_AGENT_HOME/PlatformAgents/$toolName/$agentservice/$agentservice.service /etc/systemd/system
 					sudo systemctl enable $agentservice
 					sudo systemctl start $agentservice
 					echo "Service installaton steps completed"

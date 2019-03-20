@@ -31,14 +31,14 @@ source /etc/profile
 
 case "$1" in
   start)
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "__AGENT_KEY__ already running"
     else
      echo "Starting __AGENT_KEY__"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/git
      python -c "from __AGENT_KEY__.com.cognizant.devops.platformagents.agents.scm.git.GitAgent import GitAgent; GitAgent()" &
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "__AGENT_KEY__ Started Sucessfully"
     else
      echo "__AGENT_KEY__ Failed to Start"
@@ -46,12 +46,12 @@ case "$1" in
     ;;
   stop)
     echo "Stopping __AGENT_KEY__"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
     else
      echo "__AGENT_KEY__ already in stopped state"
     fi
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "__AGENT_KEY__ Failed to Stop"
     else
      echo "__AGENT_KEY__ Stopped"
@@ -59,9 +59,9 @@ case "$1" in
     ;;
   restart)
     echo "Restarting __AGENT_KEY__"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "__AGENT_KEY__ stopping"
-     sudo kill -9 $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}')
+     sudo kill -9 $(ps aux | grep '__PS_KEY__' | awk '{print $2}')
      echo "__AGENT_KEY__ stopped"
      echo "__AGENT_KEY__ starting"
      cd $INSIGHTS_AGENT_HOME/PlatformAgents/git
@@ -77,7 +77,7 @@ case "$1" in
     ;;
   status)
     echo "Checking the Status of __AGENT_KEY__"
-    if [[ $(ps aux | grep '__AGENT_KEY__' | awk '{print $2}') ]]; then
+    if [[ $(ps aux | grep '__PS_KEY__' | awk '{print $2}') ]]; then
      echo "__AGENT_KEY__ is running"
     else
      echo "__AGENT_KEY__ is stopped"

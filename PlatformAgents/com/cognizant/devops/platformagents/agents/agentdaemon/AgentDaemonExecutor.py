@@ -169,7 +169,7 @@ class AgentDaemonExecutor:
                  ''' 
                  if osType == "WINDOWS":
                      if (action == "START" or action == "STOP"):
-                        p = subprocess.Popen(['net '+action+ ' '+agentId],shell=True)
+                        p = subprocess.Popen(['net',action,agentId],shell=True)
                      else:
                         scriptFile = installagentFilePath + os.path.sep +'installagent.bat'
                         p = subprocess.Popen([scriptFile,action,agentToolName,agentId],cwd=installagentFilePath,shell=True)
@@ -181,8 +181,9 @@ class AgentDaemonExecutor:
                          scriptFile = installagentFilePath + os.path.sep +'installagent.sh'
                          if (action == "REGISTER" or action == "UPDATE"):
                              p = subprocess.Popen(['chmod 777 '+scriptFile,scriptFile],shell=True)
-                             p = subprocess.Popen(['chmod -R 777 '+scriptFile,scriptFile],shell=True) 
-                         p = subprocess.Popen([scriptFile +' '+osType+' '+action+' '+agentId],cwd=installagentFilePath,shell=True)
+                             p = subprocess.Popen(['chmod -R 777 '+scriptFile,scriptFile],shell=True)
+                             p = subprocess.Popen(['chmod -R 777 '+basePath + os.path.sep + agentToolName,basePath + os.path.sep + agentToolName],shell=True)
+                             p = subprocess.Popen([scriptFile +' '+osType+' '+action+' '+agentToolName+' '+agentId],cwd=installagentFilePath,shell=True)
                          #stdout, stderr = p.communicate()
                          print('Process id - '+ str(p.returncode))
                  ch.basic_ack(delivery_tag = method.delivery_tag)

@@ -72,7 +72,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class AgentManagementServiceImpl implements AgentManagementService {
 	private static Logger log = LogManager.getLogger(AgentManagementServiceImpl.class);
 
-	private static final String FILETYPE = ".zip";
+	private static final String ZIPEXTENSION = ".zip";
 	private static final String SUCCESS = "SUCCESS";
 	
 	String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath();
@@ -129,13 +129,13 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			Path agentZipPath = updateAgentConfig(toolName, json,agentId);
 			byte[] data = Files.readAllBytes(agentZipPath);
 
-			String fileName = agentId + FILETYPE;
+			String fileName = agentId + ZIPEXTENSION;
 			sendAgentPackage(data, AGENTACTION.REGISTER.name(), fileName, agentId, toolName, osversion);
 			performAgentAction(agentId, toolName, osversion, AGENTACTION.START.name(),agentId);
 
 			// Delete tracking.json
 			if (!trackingDetails.isEmpty()) {
-				deleteTrackingJson(toolName);
+				deleteTrackingJson(agentId);
 			}
 
 			// register agent in DB
@@ -196,6 +196,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		try {
 			// Get latest agent code
 			getToolRawConfigFile(agentVersion, toolName);
+			setupAgentInstanceCreation(toolName, osversion, agentId);
 
 			Gson gson = new Gson();
 			JsonElement jelement = gson.fromJson(configDetails.trim(), JsonElement.class);
@@ -209,7 +210,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 			byte[] data = Files.readAllBytes(agentZipPath);
 
-			String fileName = agentId + FILETYPE;
+			String fileName = agentId + ZIPEXTENSION;
 
 			sendAgentPackage(data, AGENTACTION.UPDATE.name(), fileName, agentId, toolName, osversion);
 
@@ -297,7 +298,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			try {
 				String docrootToolPath = ApplicationConfigProvider.getInstance().getAgentDetails().getDocrootUrl() + "/"
 						+ version + "/agents/" + tool;
-				docrootToolPath = docrootToolPath.trim() + "/" + tool.trim() + ".zip";
+				docrootToolPath = docrootToolPath.trim() + "/" + tool.trim() + ZIPEXTENSION;
 				String targetDir = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath()
 						+ File.separator + tool;
 				configJson = AgentManagementUtil.getInstance()
@@ -359,18 +360,17 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private String getOfflineToolRawConfigFile(String version, String tool) throws InsightsCustomException {
 		String offlinePath = ApplicationConfigProvider.getInstance().getAgentDetails().getOfflineAgentPath()
 				+ File.separator + version + File.separator + tool;
-		String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath() + File.separator
-				+ tool;
+		String agentPath = filePath + File.separator + tool;
 
 		try {
-			FileUtils.copyDirectory(new File(offlinePath), new File(filePath));
+			FileUtils.copyDirectory(new File(offlinePath), new File(agentPath));
 		} catch (IOException e) {
 			log.error("Error while copying offline tool files to unzip path", e);
 			throw new InsightsCustomException(
 					"Error while copying offline tool files to unzip path -" + e.getMessage());
 		}
 
-		Path dir = Paths.get(filePath);
+		Path dir = Paths.get(agentPath);
 		String config = null;
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
 				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("config.json"));
@@ -423,10 +423,12 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			Path destinationFile = destinationFilePath.resolve(agentId + ".sh");
 			Files.move(sourceFilePath.resolve(toolName + "agent.sh"),destinationFile,REPLACE_EXISTING);
 			addAgentKeyToServiceFile(destinationFile,agentId);
+			addProcessKeyToServiceFile(destinationFile,agentId);
 		} else if ("Ubuntu".equalsIgnoreCase(osversion)) {
 			Path destinationFile = destinationFilePath.resolve(agentId + ".sh");
 			Files.move(sourceFilePath.resolve(toolName + "agent.sh"),destinationFile,REPLACE_EXISTING);
 			addAgentKeyToServiceFile(destinationFile,agentId);
+			addProcessKeyToServiceFile(destinationFile,agentId);
 			
 			Path destinationServiceFile = destinationFilePath.resolve(agentId + ".service");
 			Files.move(sourceFilePath.resolve(toolName + "agent.service"),destinationServiceFile,REPLACE_EXISTING);
@@ -459,6 +461,24 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		
 	}
 	
+	private void addProcessKeyToServiceFile(Path destinationFile, String agentId) throws IOException {
+		String psKey = getPSKey(agentId);
+		try (Stream<String> lines = Files.lines(destinationFile)) {
+			   List<String> replaced = lines
+			       .map(line-> line.replaceAll("__PS_KEY__", psKey))
+			       .collect(Collectors.toList());
+			   Files.write(destinationFile, replaced);
+			}
+		
+	}
+	
+	private String getPSKey(String agentId) {
+		Character firstChar = agentId.charAt(0);
+		return "["+firstChar+"]"+ agentId.substring(1) + ".com";
+	}
+
+
+
 	private Path updateAgentConfig(String toolName, JsonObject json, String agentId) throws IOException {
 		String configFilePath = filePath + File.separator + agentId;
 		File configFile = null;
@@ -480,7 +500,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		Path sourceFolderPath = Paths.get(ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath(),
 				agentId);
 		Path zipPath = Paths.get(ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath(),
-				agentId + ".zip");
+				agentId + ZIPEXTENSION);
 		Path agentZipPath = null;
 		try {
 			agentZipPath = AgentManagementUtil.getInstance().getAgentZipFolder(sourceFolderPath, zipPath);
@@ -517,12 +537,11 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 	}
 
-	private String deleteTrackingJson(String toolName) throws IOException {
-		String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath() + File.separator
-				+ toolName;
+	private String deleteTrackingJson(String agentId) throws IOException {
+		String trackingFilePath = filePath + File.separator	+ agentId;
 		File trackingFile = null;
 		// Writing json to file
-		Path dir = Paths.get(filePath);
+		Path dir = Paths.get(trackingFilePath);
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
 				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("config.json"))) {
 
@@ -649,20 +668,21 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 				"			}\n" + 
 				"		}\n" + 
 				"	},\n" + 
-				"  \"agentId\" : \"git_test1\",\n"+
+				"  \"agentId\" : \"git_test3\",\n"+
 				"	\"enableBranches\" : false,\n" + 
 				"	\"toolCategory\" : \"SCM\",\n" + 
 				"	\"toolsTimeZone\" : \"GMT\",\n" + 
 				"	\"insightsTimeZone\" : \"Asia/Kolkata\",\n" + 
 				"	\"useResponseTemplate\" : true,\n" + 
 				"	\"auth\" : \"base64\",\n" + 
-				"	\"runSchedule\" : 30,\n" + 
+				"	\"runSchedule\" : 1,\n" + 
 				"	\"timeStampField\":\"commitTime\",\n" + 
 				"	\"timeStampFormat\":\"%Y-%m-%dT%H:%M:%SZ\",\n" + 
 				"	\"startFrom\" : \"2016-10-10 15:46:33\",\n" + 
-				"	\"accessToken\": \"accesstoken\",\n" + 
-				"	\"getRepos\":\"https://api.github.com/users/<USER_NAME>/repos\",\n" + 
-				"	\"commitsBaseEndPoint\":\"https://api.github.com/repos/<REPO_NAME>/\",\n" + 
+				"	\"accessToken\": \"df0e7149523c150d5bfb33314d676160fc6ffbe1\",\n" + 
+				"	\"testUpdate\": \"workorNotworking\",\n" + 
+				"	\"getRepos\":\"https://api.github.com/users/mayankdevops/repos\",\n" + 
+				"	\"commitsBaseEndPoint\":\"https://api.github.com/repos/mayankdevops/\",\n" + 
 				"	\"isDebugAllowed\" : false,\n" + 
 				"	\"loggingSetting\" : {\n" + 
 				"		\"logLevel\" : \"WARN\"\n" + 
@@ -671,8 +691,10 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		
 		AgentManagementServiceImpl impl = new AgentManagementServiceImpl();
 		impl.getToolRawConfigFile("v2.0", "git");
-		impl.registerAgent("git", "v2.0", "windows", configJson, "");
-		
+		impl.registerAgent("git", "v2.0", "ubuntu", configJson, "");
+		//impl.updateAgent("git_test1", configJson, "git", "v2.0", "windows");
+		//impl.startStopAgent("git_test2", "git", "linux", "STOP");
+		//impl.uninstallAgent("git_test1", "git", "windows");
 		/*Path targetFile = Paths.get("D:\\download\\git\\InSightsGitAgent.sh");
 		File directory = new File(String.valueOf("D:\\download\\git\\git-234234234234"));
 
