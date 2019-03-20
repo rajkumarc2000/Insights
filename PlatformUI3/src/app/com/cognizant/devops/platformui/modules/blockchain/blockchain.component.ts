@@ -29,9 +29,9 @@ import {FormControl, Validators} from '@angular/forms';
 export interface AssetData {
   assetID: string;
   phase: string;
-  toolStatus: string;
+  toolstatus: string;
   toolName: string;
-  basePrimeID: string;
+  timestamp: string;
 }
 
 
@@ -46,7 +46,7 @@ export class BlockChainComponent implements OnInit {
   maxDateValue: any;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
+  displayedColumns: string[] = ['select', 'assetID', 'toolName', 'phase', 'toolstatus','timestamp'];
   dataSource = new MatTableDataSource<AssetData>([]);
   MAX_ROWS_PER_TABLE = 10;
   startDate: string;
@@ -108,6 +108,17 @@ export class BlockChainComponent implements OnInit {
       this.showSearchResult = false;
       this.blockChainService.getAllAssets(this.startDate, this.endDate,this.toolname.value)
         .then((data) => {
+          let assetDetails = [];
+            data.data.map((d)=>{
+              Object.keys(d).forEach(k=>{
+                  const matchKey = k.match('AssetID');
+                  if (matchKey) {
+                    d['assetID'] = d[k];
+                  }
+                  
+              })
+              assetDetails.push(d);
+          });
           this.displayProgressBar = false;
           if (data.status === "failure") {
             console.log("inside failure loop");
@@ -118,8 +129,8 @@ export class BlockChainComponent implements OnInit {
             console.log("result not found msg>>" + this.searchResultNotFoundMsg);
           } else {
             console.log(" success server response >>");
-            console.log(data);
-            this.dataSource.data = data.data;
+            console.log(assetDetails);
+            this.dataSource.data = assetDetails;
             //this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
             this.showSearchResult = true;
             this.noSearchResultFlag = false;
@@ -141,6 +152,17 @@ export class BlockChainComponent implements OnInit {
           .then((data) => {
             console.log(" assetId server response >>");
             console.log(data);
+            let assetDetails = [];
+            data.data.map((d) => {
+              Object.keys(d).forEach(k => {
+                const matchKey = k.match('AssetID');
+                if (matchKey) {
+                  d['assetID'] = d[k];
+                }
+
+              })
+              assetDetails.push(d);
+            });
             this.displayProgressBar = false;
             if (data.status === "failure") {
               this.noSearchResultFlag = true;
@@ -150,8 +172,8 @@ export class BlockChainComponent implements OnInit {
               console.log("result not found msg>>" + this.searchResultNotFoundMsg);
             } else {
               console.log("server response >>");
-              console.log(data);
-              this.dataSource.data = data.data;
+              console.log(assetDetails);
+              this.dataSource.data = assetDetails;
               //this.displayedColumns = ['select', 'assetID', 'toolName', 'phase', 'toolStatus'];
               this.showSearchResult = true;
               this.noSearchResultFlag = false;

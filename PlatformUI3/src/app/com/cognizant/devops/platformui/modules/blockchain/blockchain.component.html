@@ -146,10 +146,16 @@
       </ng-container>
 
       <!-- Status Column -->
-      <ng-container matColumnDef="toolStatus">
+      <ng-container matColumnDef="toolstatus">
         <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let element"> {{element.toolStatus}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.toolstatus}} </td>
       </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="timestamp">
+          <th mat-header-cell *matHeaderCellDef class="tableHeaderCss" mat-sort-header> Last Updated Time </th>
+          <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
+        </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeaderCss"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;">
