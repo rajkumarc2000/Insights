@@ -60,7 +60,6 @@ export class HealthCheckComponent implements OnInit {
       this.showThrobberAgent = true;
       this.showContentAgent = !this.showThrobberAgent;
       this.agentResponse = await this.healthCheckService.loadServerAgentConfiguration();
-      console.log(this.agentResponse);
       if (this.agentResponse != null) {
         this.showThrobberAgent = false;
         this.showContentAgent = !this.showThrobberAgent;
@@ -90,11 +89,9 @@ export class HealthCheckComponent implements OnInit {
   }
 
   selectToolAgent(ToolSelect) {
-    console.log(ToolSelect);
     var agentListDatasourceSelected = [];
     if (ToolSelect != "All") {
       this.agentDataSource.filter(x => {
-        console.log(x);
         if (x.toolName == ToolSelect) {
           agentListDatasourceSelected.push(x)
         }
@@ -104,7 +101,6 @@ export class HealthCheckComponent implements OnInit {
       agentListDatasourceSelected = this.agentDataSource;
     }
     this.agentListDatasource = agentListDatasourceSelected;
-    console.log(this.agentListDatasource)
   }
 
   async loadOtherHealthCheckInfo() {
@@ -136,13 +132,9 @@ export class HealthCheckComponent implements OnInit {
   }
 
   selectToolData(ToolSelect) {
-    //console.log(ToolSelect);
-
     var dataListDatasourceSelected = [];
-    //console.log(agentListDatasourceSelected);
     if (ToolSelect != "All") {
       this.dataComponentDataSource.filter(x => {
-        console.log(x);
         if (x.serverName == ToolSelect) {
           dataListDatasourceSelected.push(x)
         }
@@ -152,12 +144,10 @@ export class HealthCheckComponent implements OnInit {
       dataListDatasourceSelected = this.dataComponentDataSource;
     }
     this.dataListDatasource = dataListDatasourceSelected;
-    console.log(this.dataComponentDataSource)
   }
 
   // Displays Show Details dialog box when Details column is clicked
   showDetailsDialog(toolName: string, categoryName: string, agentId: string) {
-    console.log(toolName + "  " + categoryName + "  " + agentId);
     var rcategoryName = categoryName.replace(/ +/g, "");
     if (toolName == "-") {
       var filePath = "${INSIGHTS_HOME}/logs/" + rcategoryName + "/" + rcategoryName + ".log";
