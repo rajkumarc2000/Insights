@@ -70,7 +70,7 @@ public class Application {
 							.withIntervalInSeconds(defaultInterval)
 							.repeatForever())
 					.build();
-	
+	/*
 			// Schedule the Correlation Module.
 			JobDetail correlationJob = JobBuilder.newJob(EngineCorrelatorModule.class)
 					.withIdentity("EngineCorrelatorModule", "iSight")
@@ -120,7 +120,7 @@ public class Application {
 					.withSchedule(SimpleScheduleBuilder.simpleSchedule()
 							.withIntervalInSeconds(defaultInterval)
 							.repeatForever())
-					.build();
+					.build();*/
 	
 			// Tell quartz to schedule the job using our trigger
 			Scheduler scheduler;
@@ -128,10 +128,10 @@ public class Application {
 			scheduler = new StdSchedulerFactory().getScheduler();
 			scheduler.start();
 			scheduler.scheduleJob(aggrgatorJob, aggregatorTrigger);
-			scheduler.scheduleJob(correlationJob, correlationTrigger);
+			/*scheduler.scheduleJob(correlationJob, correlationTrigger);
 			scheduler.scheduleJob(projectMappingJob, projectMappingTrigger);
 			scheduler.scheduleJob(dataPurgingJob, dataPurgingTrigger);
-			scheduler.scheduleJob(offlineDataProcessingJob, offlineDataProcessingTrigger);
+			scheduler.scheduleJob(offlineDataProcessingJob, offlineDataProcessingTrigger);*/
 			EngineStatusLogger.getInstance().createEngineStatusNode("Platform Engine Service Started ",PlatformServiceConstants.SUCCESS);
 		} catch (SchedulerException e) {
 			EngineStatusLogger.getInstance().createEngineStatusNode("Platform Engine Service not running due to Scheduler Exception "+e.getMessage(),PlatformServiceConstants.FAILURE);

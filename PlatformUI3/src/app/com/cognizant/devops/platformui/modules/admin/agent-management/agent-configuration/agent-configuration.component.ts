@@ -228,7 +228,7 @@ export class AgentConfigurationComponent implements OnInit {
     if (data != undefined) {
       for (let configDatakey of Object.keys(data)) {
         let agentConfig = new AgentConfigItem();
-        let agentConfigChilds: AgentConfigItem[] = []
+        let agentConfigChilds: AgentConfigItem[] = [];
         let value = data[configDatakey];
         if (typeof (data[configDatakey]) == 'object' && configDatakey != 'dynamicTemplate') {
           for (let configinnerDatakey of Object.keys(value)) {
@@ -307,10 +307,9 @@ export class AgentConfigurationComponent implements OnInit {
     //console.log(this.updatedConfigParamdata);
     var agentId: string = String(this.updatedConfigParamdata['agentId']);
     var oldAgentId: string = String(this.defaultConfigdata['agentId']);
+    var checkAgentId = this.regex.test(agentId);
     if (actionType == "Add") {
-      //console.log("selected agentId ===== " + agentId + "  oldAgentId " + oldAgentId + "  checkAgentId  " + checkAgentId + "   " + this.regex);
-      var checkAgentId = this.regex.test(agentId);
-      //console.log("  checkAgentId  " + checkAgentId + "   " + this.regex)
+      console.log("selected agentId ===== " + agentId + "  oldAgentId " + oldAgentId + "  checkAgentId  " + checkAgentId + "   " + this.regex);
       if (agentId == undefined || agentId == "") {
         self.messageDialog.showApplicationsMessage("Please enter valid agentId,It should not be blank ", "ERROR");
         agentId = undefined;
