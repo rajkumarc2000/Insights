@@ -51,7 +51,6 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.cognizant.devops.platformcommons.config.ApplicationConfigCache;
 import com.cognizant.devops.platformcommons.config.ApplicationConfigProvider;
 import com.cognizant.devops.platformcommons.constants.MessageConstants;
 import com.cognizant.devops.platformcommons.core.enums.AGENTACTION;
@@ -170,11 +169,12 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	@Override
 	public String startStopAgent(String agentId, String toolName, String osversion, String action) throws InsightsCustomException {
 		try {
-			
+			String agentDaemonQueueName = ApplicationConfigProvider.getInstance().getAgentDetails().getAgentPkgQueue();
 			if(AGENTACTION.START.equals(AGENTACTION.valueOf(action))) {
-				String agentDaemonQueueName = ApplicationConfigProvider.getInstance().getAgentDetails().getAgentPkgQueue();
 				performAgentAction(agentId, toolName, osversion, action,agentDaemonQueueName);
-			} else if (AGENTACTION.STOP.equals(AGENTACTION.valueOf(action))) {
+			} else if (AGENTACTION.STOP.equals(AGENTACTION.valueOf(action)) && "WINDOWS".equalsIgnoreCase(osversion)) {
+				performAgentAction(agentId, toolName, osversion, action,agentDaemonQueueName);
+			} else {
 				performAgentAction(agentId, toolName, osversion, action,agentId);
 			}
 			
@@ -635,89 +635,5 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private String getAgentkey(String toolName) {
 		return toolName + "_" + Instant.now().toEpochMilli();
 	}
-	
-	public static void main(String...args) throws IOException, InsightsCustomException {
-		ApplicationConfigCache.loadConfigCache();
-		
-		String configJson = "{\n" + 
-				"	\"mqConfig\" : {\n" + 
-				"		\"user\" : \"iSight\", \n" + 
-				"		\"password\" : \"iSight\", \n" + 
-				"		\"host\" : \"127.0.0.1\", \n" + 
-				"		\"exchange\" : \"iSight\",\n" + 
-				"		\"agentControlXchg\":\"iAgent\"\n" + 
-				"	},\n" + 
-				"	\"subscribe\" : {\n" + 
-				"		\"config\" : \"SCM.GIT.config\"\n" + 
-				"	},\n" + 
-				"	\"publish\" : {\n" + 
-				"		\"data\" : \"SCM.GIT.DATA\",\n" + 
-				"		\"health\" : \"SCM.GIT.HEALTH\"\n" + 
-				"	},\n" + 
-				"	\"communication\":{\n" + 
-				"		\"type\" : \"REST\" \n" + 
-				"	},\n" + 
-				"	\"dynamicTemplate\": {\n" + 
-				"		\"responseTemplate\" : {\n" + 
-				"			\"sha\": \"commitId\",\n" + 
-				"			\"commit\" : {\n" + 
-				"				\"author\" : {\n" + 
-				"					\"name\": \"authorName\",\n" + 
-				"					\"date\": \"commitTime\"\n" + 
-				"				}\n" + 
-				"			}\n" + 
-				"		}\n" + 
-				"	},\n" + 
-				"  \"agentId\" : \"git_test3\",\n"+
-				"	\"enableBranches\" : false,\n" + 
-				"	\"toolCategory\" : \"SCM\",\n" + 
-				"	\"toolsTimeZone\" : \"GMT\",\n" + 
-				"	\"insightsTimeZone\" : \"Asia/Kolkata\",\n" + 
-				"	\"useResponseTemplate\" : true,\n" + 
-				"	\"auth\" : \"base64\",\n" + 
-				"	\"runSchedule\" : 1,\n" + 
-				"	\"timeStampField\":\"commitTime\",\n" + 
-				"	\"timeStampFormat\":\"%Y-%m-%dT%H:%M:%SZ\",\n" + 
-				"	\"startFrom\" : \"2016-10-10 15:46:33\",\n" + 
-				"	\"accessToken\": \"df0e7149523c150d5bfb33314d676160fc6ffbe1\",\n" + 
-				"	\"testUpdate\": \"workorNotworking\",\n" + 
-				"	\"getRepos\":\"https://api.github.com/users/mayankdevops/repos\",\n" + 
-				"	\"commitsBaseEndPoint\":\"https://api.github.com/repos/mayankdevops/\",\n" + 
-				"	\"isDebugAllowed\" : false,\n" + 
-				"	\"loggingSetting\" : {\n" + 
-				"		\"logLevel\" : \"WARN\"\n" + 
-				"	}\n" + 
-				"}";
-		
-		AgentManagementServiceImpl impl = new AgentManagementServiceImpl();
-		impl.getToolRawConfigFile("v2.0", "git");
-		impl.registerAgent("git", "v2.0", "ubuntu", configJson, "");
-		//impl.updateAgent("git_test1", configJson, "git", "v2.0", "windows");
-		//impl.startStopAgent("git_test2", "git", "linux", "STOP");
-		//impl.uninstallAgent("git_test1", "git", "windows");
-		/*Path targetFile = Paths.get("D:\\download\\git\\InSightsGitAgent.sh");
-		File directory = new File(String.valueOf("D:\\download\\git\\git-234234234234"));
 
-	    if (!directory.exists()) {
-	        directory.mkdir();
-	    }
-		Path targetNewFile = Paths.get("D:\\download\\git\\git-234234234234\\git-435435454.sh");
-		
-	    
-		try (Stream<String> lines = Files.lines(targetFile)) {
-			   List<String> replaced = lines
-			       .map(line-> line.replaceAll("__AGENT_KEY__", "git-435435454"))
-			       .collect(Collectors.toList());
-			   Files.write(targetFile, replaced);
-			}
-		Files.copy(targetFile,targetNewFile,REPLACE_EXISTING);
-		
-		Files.copy(Paths.get("D:\\download\\git\\com\\__init__.py"),Paths.get("D:\\download\\git\\git-234234234234\\__init__.py"), REPLACE_EXISTING);
-		
-		Path srcdir = Paths.get("D:\\download\\git\\com");
-		Path destdir = Paths.get("D:\\download\\git\\git-234234234234\\com");
-		//FileUtils.copyDirectory(new File("D:\\download\\git"), new File("D:\\download\\git\\git-234234234234"));
-		Files.move(srcdir,destdir,REPLACE_EXISTING);*/
-		System.exit(0);
-	}
 }
