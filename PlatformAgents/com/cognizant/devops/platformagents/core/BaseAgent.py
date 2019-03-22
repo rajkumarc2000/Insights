@@ -366,13 +366,14 @@ class BaseAgent(object):
             self.executeAgentExtensions()
             self.publishHealthData(self.generateHealthData())
             
-            '''If agent receive the STOP command, Python program should exit gracefully after current data collection is complete.  '''
-            if self.shouldAgentRun == False:
-                sys.exit()
         except Exception as ex:
             self.publishHealthData(self.generateHealthData(ex=ex))
             logging.error(ex)
             self.logIndicator(self.EXECUTION_ERROR, self.config.get('isDebugAllowed', False))
+        finally:
+            '''If agent receive the STOP command, Python program should exit gracefully after current data collection is complete.  '''
+            if self.shouldAgentRun == False:
+                os._exit(0)
         
     def executeAgentExtensions(self):
         if hasattr(self, 'extensions'):
