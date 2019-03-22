@@ -70,7 +70,7 @@ export class AgentConfigurationComponent implements OnInit {
   subTitleName: string;
   subTitleInfoText: string;
   @ViewChild('fileInput') myFileDiv: ElementRef;
-  regex = new RegExp("^[a-zA-Z0-9_]*$", 'gi');
+  regex = new RegExp("^[a-zA-Z0-9_]*$", 'gi');///[ !@#$%^&*()+\=\[\]{};'"\\|,.<>\/?]/
 
   constructor(public config: InsightsInitService, public agentService: AgentService,
     private router: Router, private route: ActivatedRoute,
@@ -290,34 +290,49 @@ export class AgentConfigurationComponent implements OnInit {
     this.updatedConfigParamdata = undefined;
     this.updatedConfigParamdata = {};
 
-    //console.log(this.updatedConfigParamdata);
-    var agentId = this.updatedConfigParamdata['agentId'];
-    //console.log("selected agentId ===== " + agentId + "  " + Number.isNaN(agentId) + "   " + this.regex.test(agentId));
-
-    if (Number.isNaN(agentId) || agentId == undefined || agentId == "") {
-      self.messageDialog.showApplicationsMessage("Please enter valid agentId,It should not be blank ", "ERROR");
-      this.updatedConfigParamdata = undefined;
-    } /*else {
-      console.log(this.regex);
-      this.updatedConfigParamdata = undefined;
-      self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
-    }*/
-
-    if (this.updatedConfigParamdata != undefined) {
-
-      for (let configParamData of this.agentConfigItems) {
-        if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
-          this.item = {};
-          for (let configinnerData of configParamData.children) {
-            this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
-          }
-          this.updatedConfigParamdata[configParamData.key] = this.item;
-        } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
-          this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
-        } else if (configParamData.key == "dynamicTemplate") {
-          this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
+    for (let configParamData of this.agentConfigItems) {
+      if (configParamData.key != "dynamicTemplate" && configParamData.type == "object") {
+        this.item = {};
+        for (let configinnerData of configParamData.children) {
+          this.item[configinnerData.key] = this.checkDatatype(configinnerData.value);
         }
+        this.updatedConfigParamdata[configParamData.key] = this.item;
+      } else if (configParamData.key != "dynamicTemplate" && configParamData.type != "object") {
+        this.updatedConfigParamdata[configParamData.key] = this.checkDatatype(configParamData.value);
+      } else if (configParamData.key == "dynamicTemplate") {
+        this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
       }
+    }
+
+    //console.log(this.updatedConfigParamdata);
+    var agentId: string = String(this.updatedConfigParamdata['agentId']);
+    var oldAgentId: string = String(this.defaultConfigdata['agentId']);
+    if (actionType == "Add") {
+      //console.log("selected agentId ===== " + agentId + "  oldAgentId " + oldAgentId + "  checkAgentId  " + checkAgentId + "   " + this.regex);
+      var checkAgentId = this.regex.test(agentId);
+      //console.log("  checkAgentId  " + checkAgentId + "   " + this.regex)
+      if (agentId == undefined || agentId == "") {
+        self.messageDialog.showApplicationsMessage("Please enter valid agentId,It should not be blank ", "ERROR");
+        agentId = undefined;
+      } else if (!checkAgentId) {
+        console.log(this.regex);
+        agentId = undefined;
+        self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
+      }
+    } else {
+      if (agentId != oldAgentId) {
+        self.messageDialog.showApplicationsMessage("You are not allow to change AgentId while update ", "ERROR");
+        agentId = undefined;
+      } else if (!checkAgentId) {
+        console.log(this.regex);
+        agentId = undefined;
+        self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
+      }
+
+    }
+
+    if (this.updatedConfigParamdata && agentId != undefined) {
+
 
       self.configData = "";
       self.configData = JSON.stringify(self.updatedConfigParamdata);
