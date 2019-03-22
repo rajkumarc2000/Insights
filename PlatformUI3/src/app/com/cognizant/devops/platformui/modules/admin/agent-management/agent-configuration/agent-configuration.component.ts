@@ -230,6 +230,9 @@ export class AgentConfigurationComponent implements OnInit {
         let agentConfig = new AgentConfigItem();
         let agentConfigChilds: AgentConfigItem[] = [];
         let value = data[configDatakey];
+        if (value == undefined || value == null) {
+          value = "";
+        }
         if (typeof (data[configDatakey]) == 'object' && configDatakey != 'dynamicTemplate') {
           for (let configinnerDatakey of Object.keys(value)) {
             let agentConfigChild = new AgentConfigItem();
