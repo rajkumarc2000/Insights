@@ -70,16 +70,25 @@ class BaseAgent(object):
 	if filePresent:
             self.configFilePath = 'config.json'
             self.trackingFilePath = 'tracking.json'
-            self.logFilePath = logDirPath +'/'+ 'log_'+type(self).__name__+'.log'            
+            #self.logFilePath = logDirPath +'/'+ 'log_'+type(self).__name__+'.log'            
         else:
             self.configFilePath = agentDir+'config.json'
             self.trackingFilePath = agentDir+'tracking.json' 
-	    self.logFilePath = logDirPath + '/'+'log_'+type(self).__name__+'.log'	    
+	    #self.logFilePath = logDirPath + '/'+'log_'+type(self).__name__+'.log'	    
         trackingFilePresent = os.path.isfile(self.trackingFilePath)
         if not trackingFilePresent:
             self.updateTrackingJson({})
     
     def setupLogging(self):
+        agentDir = os.path.dirname(sys.modules[self.__class__.__module__].__file__) + os.path.sep
+        self.logFilePath = agentDir +'/'+ 'log_'+type(self).__name__+'.log'
+        if self.config.get('agentId') != None and self.config.get('agentId') != '':
+            if "INSIGHTS_HOME" in os.environ:
+                logDirPath = os.environ['INSIGHTS_HOME']+'/logs/PlatformAgent'
+                if not os.path.exists(logDirPath):
+                    os.makedirs(logDirPath)
+                self.logFilePath = logDirPath +'/'+ 'log_'+self.config.get('agentId')+'.log'
+        
         loggingSetting = self.config.get('loggingSetting',{})
         maxBytes = loggingSetting.get('maxBytes', 1000 * 1000 * 5)
         backupCount = loggingSetting.get('backupCount', 1000)
