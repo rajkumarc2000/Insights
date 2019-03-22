@@ -101,7 +101,7 @@ export class BusinessMappingComponent implements OnInit {
         self.selectedMappingAgent = undefined;
         self.masterToolPropertiesData = data;
       });
-    console.log(self.masterToolPropertiesData);
+    //console.log(self.masterToolPropertiesData);
     this.displayAgentMappingDetail()
   }
 
