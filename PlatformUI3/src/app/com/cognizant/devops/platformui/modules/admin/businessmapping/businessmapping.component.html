@@ -152,5 +152,9 @@
         <tr mat-row showRow *matRowDef="let row; columns: displayedToolColumns;">
         </tr>
       </table>
+      <div *ngIf="noToolsPropertyData" class="noToolsData">
+        No properties were found for the selected Tool <b> {{selectedAgent.toolName}} </b>. Please go to the Agent Management
+        section to Edit or Update the selected Tool <b> {{selectedAgent.toolName}} </b> to add tool properties.
+      </div>
     </div>
   </div>
