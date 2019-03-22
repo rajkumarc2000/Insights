@@ -70,6 +70,7 @@ export class AgentConfigurationComponent implements OnInit {
   subTitleName: string;
   subTitleInfoText: string;
   @ViewChild('fileInput') myFileDiv: ElementRef;
+  regex = new RegExp("^[a-zA-Z0-9_]*$", 'gi');///[ !@#$%^&*()+\=\[\]{};'"\\|,.<>\/?]/
 
   constructor(public config: InsightsInitService, public agentService: AgentService,
     private router: Router, private route: ActivatedRoute,
@@ -147,7 +148,7 @@ export class AgentConfigurationComponent implements OnInit {
         }
       }
     } else {
-      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again.";
+      self.showMessage = "Problem with Docroot URL (or) Platform service. Please try again";
       self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
     }
     self.showThrobber = false;
@@ -187,7 +188,7 @@ export class AgentConfigurationComponent implements OnInit {
   async getAgentConfig(version, toolName) {
     var self = this;
     self.isRegisteredTool = false;
-    self.checkValidation();
+    /* self.checkValidation(); */
 
     if (!self.isRegisteredTool) {
       this.agentConfigItems = [];
@@ -215,20 +216,23 @@ export class AgentConfigurationComponent implements OnInit {
         self.showMessage = "Something wrong with service, Please try again";
         self.messageDialog.showApplicationsMessage(self.showMessage, "ERROR");
       }
-    } else {
+    } /* else {
       self.buttonDisableStatus = true;
       self.showConfig = false;
       self.showMessage = " <b> " + toolName.charAt(0).toUpperCase() + toolName.slice(1) + " </b> agent is already registered, Please select other tool.";
       self.messageDialog.showApplicationsMessage(self.showMessage, "WARN");
-    }
+    } */
   }
 
   getconfigDataParsed(data) {
     if (data != undefined) {
       for (let configDatakey of Object.keys(data)) {
         let agentConfig = new AgentConfigItem();
-        let agentConfigChilds: AgentConfigItem[] = []
+        let agentConfigChilds: AgentConfigItem[] = [];
         let value = data[configDatakey];
+        if (value == undefined || value == null) {
+          value = "";
+        }
         if (typeof (data[configDatakey]) == 'object' && configDatakey != 'dynamicTemplate') {
           for (let configinnerDatakey of Object.keys(value)) {
             let agentConfigChild = new AgentConfigItem();
@@ -286,7 +290,7 @@ export class AgentConfigurationComponent implements OnInit {
     var self = this;
     this.agentConfigstatus = undefined;
     this.agentConfigstatusCode = undefined;
-    self.updatedConfigdata = {};
+    this.updatedConfigParamdata = undefined;
     this.updatedConfigParamdata = {};
 
     for (let configParamData of this.agentConfigItems) {
@@ -302,8 +306,35 @@ export class AgentConfigurationComponent implements OnInit {
         this.updatedConfigParamdata["dynamicTemplate"] = JSON.parse(configParamData.value);
       }
     }
+
     //console.log(this.updatedConfigParamdata);
-    if (this.updatedConfigParamdata) {
+    var agentId: string = String(this.updatedConfigParamdata['agentId']);
+    var oldAgentId: string = String(this.defaultConfigdata['agentId']);
+    var checkAgentId = this.regex.test(agentId);
+    if (actionType == "Add") {
+      console.log("selected agentId ===== " + agentId + "  oldAgentId " + oldAgentId + "  checkAgentId  " + checkAgentId + "   " + this.regex);
+      if (agentId == undefined || agentId == "") {
+        self.messageDialog.showApplicationsMessage("Please enter valid agentId,It should not be blank ", "ERROR");
+        agentId = undefined;
+      } else if (!checkAgentId) {
+        console.log(this.regex);
+        agentId = undefined;
+        self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
+      }
+    } else {
+      if (agentId != oldAgentId) {
+        self.messageDialog.showApplicationsMessage("You are not allow to change AgentId while update ", "ERROR");
+        agentId = undefined;
+      } else if (!checkAgentId) {
+        console.log(this.regex);
+        agentId = undefined;
+        self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
+      }
+
+    }
+
+    if (this.updatedConfigParamdata && agentId != undefined) {
+
 
       self.configData = "";
       self.configData = JSON.stringify(self.updatedConfigParamdata);
@@ -320,7 +351,7 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("update");
-          self.agentConfigstatus = "Agent update Failed"
+          self.agentConfigstatus = "Agent update Failed";
           self.agentConfigstatusCode = "ERROR";
         }
       } else {
@@ -334,26 +365,26 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("register");
-          self.agentConfigstatus = "Agent Register Failed"
+          self.agentConfigstatus = "Agent Register Failed";
           self.agentConfigstatusCode = "ERROR";
         }
       }
 
-    }
-    //console.log(this.agentConfigstatus)
-    if (this.agentConfigstatusCode == "SUCCESS") {
-      if (this.agentConfigstatus) {
-        let navigationExtras: NavigationExtras = {
-          skipLocationChange: true,
-          queryParams: {
-            "agentstatus": this.agentConfigstatus,
-            "agentConfigstatusCode": this.agentConfigstatusCode
-          }
-        };
-        this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+      //console.log(this.agentConfigstatus)
+      if (this.agentConfigstatusCode == "SUCCESS") {
+        if (this.agentConfigstatus) {
+          let navigationExtras: NavigationExtras = {
+            skipLocationChange: true,
+            queryParams: {
+              "agentstatus": this.agentConfigstatus,
+              "agentConfigstatusCode": this.agentConfigstatusCode
+            }
+          };
+          this.router.navigate(['InSights/Home/agentmanagement'], navigationExtras);
+        }
+      } else {
+        self.messageDialog.showApplicationsMessage(this.agentConfigstatus, "ERROR");
       }
-    } else {
-      self.messageDialog.showApplicationsMessage(this.agentConfigstatus, "ERROR");
     }
   }
 
@@ -446,7 +477,7 @@ export class AgentConfigurationComponent implements OnInit {
     return typeof (arr[key]);
   }
 
-  checkValidation(): void {
+  /* checkValidation(): void {
     var self = this;
     for (var key in self.validationArr) {
       if (self.validationArr[key]['tool'] == self.selectedTool) {
@@ -454,7 +485,7 @@ export class AgentConfigurationComponent implements OnInit {
         self.selectedTool = "";
       }
     }
-  }
+  } */
   uploadFile() {
     this.trackingUploadedFileContentStr = "";
     var uploadedFile = this.myFileDiv.nativeElement.files;

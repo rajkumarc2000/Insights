@@ -15,6 +15,8 @@
  *******************************************************************************/
 package com.cognizant.devops.platformservice.agentmanagement.service;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -27,13 +29,15 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
@@ -47,6 +51,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.cognizant.devops.platformcommons.config.ApplicationConfigCache;
 import com.cognizant.devops.platformcommons.config.ApplicationConfigProvider;
 import com.cognizant.devops.platformcommons.constants.MessageConstants;
 import com.cognizant.devops.platformcommons.core.enums.AGENTACTION;
@@ -67,44 +72,70 @@ import com.rabbitmq.client.ConnectionFactory;
 public class AgentManagementServiceImpl implements AgentManagementService {
 	private static Logger log = LogManager.getLogger(AgentManagementServiceImpl.class);
 
-	private static final String FILETYPE = ".zip";
+	private static final String ZIPEXTENSION = ".zip";
 	private static final String SUCCESS = "SUCCESS";
+	
+	String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath();
+	Pattern agentIdPattern = Pattern.compile("[^A-Za-z0-9\\_]", Pattern.CASE_INSENSITIVE);
+	
 
 	@Override
 	public String registerAgent(String toolName, String agentVersion, String osversion, String configDetails,
 			String trackingDetails) throws InsightsCustomException {
 
 		try {
-			String agentId = getAgentkey(toolName);
+			String agentId = null;
 
 			Gson gson = new Gson();
 			JsonElement jelement = gson.fromJson(configDetails.trim(), JsonElement.class);
 			JsonObject json = jelement.getAsJsonObject();
-			json.addProperty("agentId", agentId);
 			json.addProperty("osversion", osversion);
 			json.addProperty("agentVersion", agentVersion);
-			json.get("subscribe").getAsJsonObject().addProperty("agentCtrlQueue", agentId);
+			
+			if(json.get("agentId") == null || json.get("agentId").getAsString().isEmpty()) {
+				agentId = getAgentkey(toolName);
+			} else {
+				agentId = json.get("agentId").getAsString();
+			}
+			
+			Matcher m = agentIdPattern.matcher(agentId);
 
+			if (m.find()) {
+			   throw new InsightsCustomException("Agent Id has to be Alpha numeric with '_' as special character");
+			}
+
+			json.get("subscribe").getAsJsonObject().addProperty("agentCtrlQueue", agentId);
 			Date updateDate = Timestamp.valueOf(LocalDateTime.now());
 
+			
+			/** Create agent based folder and complete basic steps using agent instance
+			 *   1. Create folder with instance id (agent key)
+			 *   2. Copy all files from agent folder uder instance id folder
+			 *   3. Replace __AGENT_KEY__ with instance id in service file based on OS
+			 *   4. Rename InSights<agentName>Agent.sh to instanceId.sh name
+			 *   5. Use new path in rest of the steps for agent registration
+			 */
+			
+			setupAgentInstanceCreation(toolName, osversion,agentId);
+			
 			// Update tracking.json file
 			if (!trackingDetails.isEmpty()) {
 				JsonElement trackingJsonElement = gson.fromJson(trackingDetails.trim(), JsonElement.class);
 				JsonObject trackingDetailsJson = trackingJsonElement.getAsJsonObject();
-				updateTrackingJson(toolName, trackingDetailsJson);
+				updateTrackingJson(toolName, trackingDetailsJson,agentId);
 			}
 
 			// Create zip/tar file with updated config.json
-			Path agentZipPath = updateAgentConfig(toolName, json);
+			Path agentZipPath = updateAgentConfig(toolName, json,agentId);
 			byte[] data = Files.readAllBytes(agentZipPath);
 
-			String fileName = toolName + FILETYPE;
+			String fileName = agentId + ZIPEXTENSION;
 			sendAgentPackage(data, AGENTACTION.REGISTER.name(), fileName, agentId, toolName, osversion);
-			performAgentAction(agentId, AGENTACTION.START.name());
+			performAgentAction(agentId, toolName, osversion, AGENTACTION.START.name(),agentId);
 
 			// Delete tracking.json
 			if (!trackingDetails.isEmpty()) {
-				deleteTrackingJson(toolName);
+				deleteTrackingJson(agentId);
 			}
 
 			// register agent in DB
@@ -119,6 +150,8 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 		return SUCCESS;
 	}
+
+
 
 	@Override
 	public String uninstallAgent(String agentId, String toolName, String osversion) throws InsightsCustomException {
@@ -135,9 +168,17 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	}
 
 	@Override
-	public String startStopAgent(String agentId, String action) throws InsightsCustomException {
+	public String startStopAgent(String agentId, String toolName, String osversion, String action) throws InsightsCustomException {
 		try {
-			performAgentAction(agentId, action);
+			
+			if(AGENTACTION.START.equals(AGENTACTION.valueOf(action))) {
+				String agentDaemonQueueName = ApplicationConfigProvider.getInstance().getAgentDetails().getAgentPkgQueue();
+				performAgentAction(agentId, toolName, osversion, action,agentDaemonQueueName);
+			} else if (AGENTACTION.STOP.equals(AGENTACTION.valueOf(action))) {
+				performAgentAction(agentId, toolName, osversion, action,agentId);
+			}
+			
+			//Update status in DB
 			AgentConfigDAL agentConfigDAL = new AgentConfigDAL();
 			agentConfigDAL.updateAgentRunningStatus(agentId, AGENTACTION.valueOf(action));
 
@@ -155,6 +196,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		try {
 			// Get latest agent code
 			getToolRawConfigFile(agentVersion, toolName);
+			setupAgentInstanceCreation(toolName, osversion, agentId);
 
 			Gson gson = new Gson();
 			JsonElement jelement = gson.fromJson(configDetails.trim(), JsonElement.class);
@@ -164,11 +206,11 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 			Date updateDate = Timestamp.valueOf(LocalDateTime.now());
 
-			Path agentZipPath = updateAgentConfig(toolName, json);
+			Path agentZipPath = updateAgentConfig(toolName, json, agentId);
 
 			byte[] data = Files.readAllBytes(agentZipPath);
 
-			String fileName = toolName + FILETYPE;
+			String fileName = agentId + ZIPEXTENSION;
 
 			sendAgentPackage(data, AGENTACTION.UPDATE.name(), fileName, agentId, toolName, osversion);
 
@@ -256,7 +298,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			try {
 				String docrootToolPath = ApplicationConfigProvider.getInstance().getAgentDetails().getDocrootUrl() + "/"
 						+ version + "/agents/" + tool;
-				docrootToolPath = docrootToolPath.trim() + "/" + tool.trim() + ".zip";
+				docrootToolPath = docrootToolPath.trim() + "/" + tool.trim() + ZIPEXTENSION;
 				String targetDir = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath()
 						+ File.separator + tool;
 				configJson = AgentManagementUtil.getInstance()
@@ -318,18 +360,17 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	private String getOfflineToolRawConfigFile(String version, String tool) throws InsightsCustomException {
 		String offlinePath = ApplicationConfigProvider.getInstance().getAgentDetails().getOfflineAgentPath()
 				+ File.separator + version + File.separator + tool;
-		String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath() + File.separator
-				+ tool;
+		String agentPath = filePath + File.separator + tool;
 
 		try {
-			FileUtils.copyDirectory(new File(offlinePath), new File(filePath));
+			FileUtils.copyDirectory(new File(offlinePath), new File(agentPath));
 		} catch (IOException e) {
 			log.error("Error while copying offline tool files to unzip path", e);
 			throw new InsightsCustomException(
 					"Error while copying offline tool files to unzip path -" + e.getMessage());
 		}
 
-		Path dir = Paths.get(filePath);
+		Path dir = Paths.get(agentPath);
 		String config = null;
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
 				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("config.json"));
@@ -346,12 +387,103 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		return config;
 	}
 
-	private Path updateAgentConfig(String toolName, JsonObject json) throws IOException {
-		String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath() + File.separator
-				+ toolName;
+	/** Create agent based folder and complete basic steps using agent instance
+	 *   1. Create folder with instance id (agent key)
+	 *   2. Copy all files from agent folder uder instance id folder
+	 *   3. Replace __AGENT_KEY__ with instance id in service file based on OS
+	 *   4. Rename InSights<agentName>Agent.sh to instanceId.sh name
+	 *   5. Use new path in rest of the steps for agent registration
+	 * @throws IOException 
+	 */
+	private void setupAgentInstanceCreation(String toolName, String osversion, String agentId) throws IOException {
+
+		Path toolUnzipPath = Paths.get(filePath + File.separator + toolName);
+		File instanceDir = new File(filePath + File.separator + agentId);
+
+	    if (!instanceDir.exists()) {
+	    	instanceDir.mkdir();
+	    }
+	    
+	    copyServiceFileToInstanceFolder(toolName,agentId,osversion);
+	    copyPythonCodeToInstanceFolder(toolName,agentId);
+	    
+	}
+
+	private void copyServiceFileToInstanceFolder(String toolName, String agentId, String osversion) throws IOException {
+		
+		Path sourceFilePath = Paths.get(filePath + File.separator + toolName);
+		Path destinationFilePath = Paths.get(filePath + File.separator + agentId);
+		
+		if("Windows".equalsIgnoreCase(osversion)) {
+			Path destinationFile = destinationFilePath.resolve(agentId + ".bat");
+			Files.move(sourceFilePath.resolve(toolName + "agent.bat"),destinationFile,REPLACE_EXISTING);
+			addAgentKeyToServiceFile(destinationFile,agentId);
+		} 
+		else if ("linux".equalsIgnoreCase(osversion)) {
+			Path destinationFile = destinationFilePath.resolve(agentId + ".sh");
+			Files.move(sourceFilePath.resolve(toolName + "agent.sh"),destinationFile,REPLACE_EXISTING);
+			addAgentKeyToServiceFile(destinationFile,agentId);
+			addProcessKeyToServiceFile(destinationFile,agentId);
+		} else if ("Ubuntu".equalsIgnoreCase(osversion)) {
+			Path destinationFile = destinationFilePath.resolve(agentId + ".sh");
+			Files.move(sourceFilePath.resolve(toolName + "agent.sh"),destinationFile,REPLACE_EXISTING);
+			addAgentKeyToServiceFile(destinationFile,agentId);
+			addProcessKeyToServiceFile(destinationFile,agentId);
+			
+			Path destinationServiceFile = destinationFilePath.resolve(agentId + ".service");
+			Files.move(sourceFilePath.resolve(toolName + "agent.service"),destinationServiceFile,REPLACE_EXISTING);
+			addAgentKeyToServiceFile(destinationServiceFile,agentId);
+		}
+	}
+	
+	private void copyPythonCodeToInstanceFolder(String toolName, String agentId) throws IOException {
+		
+		Path sourcePath = Paths.get(filePath + File.separator + toolName);
+		Path destinationPath = Paths.get(filePath + File.separator + agentId);
+		
+		//Copy __init__.py to agent instance folder, otherwise python code wont work
+		Files.copy(Paths.get(filePath + File.separator + toolName  + File.separator + "com"+ File.separator + "__init__.py"),
+					Paths.get(filePath + File.separator + agentId + File.separator + "__init__.py"), REPLACE_EXISTING);
+		
+		FileUtils.deleteDirectory(destinationPath.resolve("com").toFile());
+		
+		Files.move(sourcePath.resolve("com"),destinationPath.resolve("com"),REPLACE_EXISTING);
+		
+	}
+
+	private void addAgentKeyToServiceFile(Path destinationFile, String agentId) throws IOException {
+		try (Stream<String> lines = Files.lines(destinationFile)) {
+			   List<String> replaced = lines
+			       .map(line-> line.replaceAll("__AGENT_KEY__", agentId))
+			       .collect(Collectors.toList());
+			   Files.write(destinationFile, replaced);
+			}
+		
+	}
+	
+	private void addProcessKeyToServiceFile(Path destinationFile, String agentId) throws IOException {
+		String psKey = getPSKey(agentId);
+		try (Stream<String> lines = Files.lines(destinationFile)) {
+			   List<String> replaced = lines
+			       .map(line-> line.replaceAll("__PS_KEY__", psKey))
+			       .collect(Collectors.toList());
+			   Files.write(destinationFile, replaced);
+			}
+		
+	}
+	
+	private String getPSKey(String agentId) {
+		Character firstChar = agentId.charAt(0);
+		return "["+firstChar+"]"+ agentId.substring(1) + ".com";
+	}
+
+
+
+	private Path updateAgentConfig(String toolName, JsonObject json, String agentId) throws IOException {
+		String configFilePath = filePath + File.separator + agentId;
 		File configFile = null;
 		// Writing json to file
-		Path dir = Paths.get(filePath);
+		Path dir = Paths.get(configFilePath);
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
 				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("config.json"))) {
 
@@ -366,9 +498,9 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 			throw e;
 		}
 		Path sourceFolderPath = Paths.get(ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath(),
-				toolName);
+				agentId);
 		Path zipPath = Paths.get(ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath(),
-				toolName + ".zip");
+				agentId + ZIPEXTENSION);
 		Path agentZipPath = null;
 		try {
 			agentZipPath = AgentManagementUtil.getInstance().getAgentZipFolder(sourceFolderPath, zipPath);
@@ -380,12 +512,11 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 	}
 
-	private String updateTrackingJson(String toolName, JsonObject trackingDetails) throws IOException {
-		String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath() + File.separator
-				+ toolName;
+	private String updateTrackingJson(String toolName, JsonObject trackingDetails, String agentId) throws IOException {
+		String trackingFilePath = filePath + File.separator	+ toolName + File.separator + agentId;
 		File trackingFile = null;
 		// Writing json to file
-		Path dir = Paths.get(filePath);
+		Path dir = Paths.get(trackingFilePath);
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
 				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("config.json"))) {
 
@@ -406,12 +537,11 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 
 	}
 
-	private String deleteTrackingJson(String toolName) throws IOException {
-		String filePath = ApplicationConfigProvider.getInstance().getAgentDetails().getUnzipPath() + File.separator
-				+ toolName;
+	private String deleteTrackingJson(String agentId) throws IOException {
+		String trackingFilePath = filePath + File.separator	+ agentId;
 		File trackingFile = null;
 		// Writing json to file
-		Path dir = Paths.get(filePath);
+		Path dir = Paths.get(trackingFilePath);
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
 				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("config.json"))) {
 
@@ -464,14 +594,16 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 		publishAgentAction(agentDaemonQueueName, action.getBytes(), props);
 	}
 
-	private void performAgentAction(String agentId, String action) throws TimeoutException, IOException {
+	private void performAgentAction(String agentId, String toolName, String osversion, String action,String queueName) throws TimeoutException, IOException {
 		Map<String, Object> headers = new HashMap<>();
+		headers.put("osType", osversion);
+		headers.put("agentToolName", toolName);
 		headers.put("agentId", agentId);
+		headers.put("action", action);
 
 		BasicProperties props = getBasicProperties(headers);
-		// agentId will be queue id. Agent code will connect to MQ based on agentId
-		// present in config.json
-		publishAgentAction(agentId, action.getBytes(), props);
+		
+		publishAgentAction(queueName, action.getBytes(), props);
 	}
 
 	private void publishAgentAction(String routingKey, byte[] data, BasicProperties props)
@@ -501,6 +633,91 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	}
 
 	private String getAgentkey(String toolName) {
-		return toolName + "-" + Instant.now().toEpochMilli();
+		return toolName + "_" + Instant.now().toEpochMilli();
+	}
+	
+	public static void main(String...args) throws IOException, InsightsCustomException {
+		ApplicationConfigCache.loadConfigCache();
+		
+		String configJson = "{\n" + 
+				"	\"mqConfig\" : {\n" + 
+				"		\"user\" : \"iSight\", \n" + 
+				"		\"password\" : \"iSight\", \n" + 
+				"		\"host\" : \"127.0.0.1\", \n" + 
+				"		\"exchange\" : \"iSight\",\n" + 
+				"		\"agentControlXchg\":\"iAgent\"\n" + 
+				"	},\n" + 
+				"	\"subscribe\" : {\n" + 
+				"		\"config\" : \"SCM.GIT.config\"\n" + 
+				"	},\n" + 
+				"	\"publish\" : {\n" + 
+				"		\"data\" : \"SCM.GIT.DATA\",\n" + 
+				"		\"health\" : \"SCM.GIT.HEALTH\"\n" + 
+				"	},\n" + 
+				"	\"communication\":{\n" + 
+				"		\"type\" : \"REST\" \n" + 
+				"	},\n" + 
+				"	\"dynamicTemplate\": {\n" + 
+				"		\"responseTemplate\" : {\n" + 
+				"			\"sha\": \"commitId\",\n" + 
+				"			\"commit\" : {\n" + 
+				"				\"author\" : {\n" + 
+				"					\"name\": \"authorName\",\n" + 
+				"					\"date\": \"commitTime\"\n" + 
+				"				}\n" + 
+				"			}\n" + 
+				"		}\n" + 
+				"	},\n" + 
+				"  \"agentId\" : \"git_test3\",\n"+
+				"	\"enableBranches\" : false,\n" + 
+				"	\"toolCategory\" : \"SCM\",\n" + 
+				"	\"toolsTimeZone\" : \"GMT\",\n" + 
+				"	\"insightsTimeZone\" : \"Asia/Kolkata\",\n" + 
+				"	\"useResponseTemplate\" : true,\n" + 
+				"	\"auth\" : \"base64\",\n" + 
+				"	\"runSchedule\" : 1,\n" + 
+				"	\"timeStampField\":\"commitTime\",\n" + 
+				"	\"timeStampFormat\":\"%Y-%m-%dT%H:%M:%SZ\",\n" + 
+				"	\"startFrom\" : \"2016-10-10 15:46:33\",\n" + 
+				"	\"accessToken\": \"df0e7149523c150d5bfb33314d676160fc6ffbe1\",\n" + 
+				"	\"testUpdate\": \"workorNotworking\",\n" + 
+				"	\"getRepos\":\"https://api.github.com/users/mayankdevops/repos\",\n" + 
+				"	\"commitsBaseEndPoint\":\"https://api.github.com/repos/mayankdevops/\",\n" + 
+				"	\"isDebugAllowed\" : false,\n" + 
+				"	\"loggingSetting\" : {\n" + 
+				"		\"logLevel\" : \"WARN\"\n" + 
+				"	}\n" + 
+				"}";
+		
+		AgentManagementServiceImpl impl = new AgentManagementServiceImpl();
+		impl.getToolRawConfigFile("v2.0", "git");
+		impl.registerAgent("git", "v2.0", "ubuntu", configJson, "");
+		//impl.updateAgent("git_test1", configJson, "git", "v2.0", "windows");
+		//impl.startStopAgent("git_test2", "git", "linux", "STOP");
+		//impl.uninstallAgent("git_test1", "git", "windows");
+		/*Path targetFile = Paths.get("D:\\download\\git\\InSightsGitAgent.sh");
+		File directory = new File(String.valueOf("D:\\download\\git\\git-234234234234"));
+
+	    if (!directory.exists()) {
+	        directory.mkdir();
+	    }
+		Path targetNewFile = Paths.get("D:\\download\\git\\git-234234234234\\git-435435454.sh");
+		
+	    
+		try (Stream<String> lines = Files.lines(targetFile)) {
+			   List<String> replaced = lines
+			       .map(line-> line.replaceAll("__AGENT_KEY__", "git-435435454"))
+			       .collect(Collectors.toList());
+			   Files.write(targetFile, replaced);
+			}
+		Files.copy(targetFile,targetNewFile,REPLACE_EXISTING);
+		
+		Files.copy(Paths.get("D:\\download\\git\\com\\__init__.py"),Paths.get("D:\\download\\git\\git-234234234234\\__init__.py"), REPLACE_EXISTING);
+		
+		Path srcdir = Paths.get("D:\\download\\git\\com");
+		Path destdir = Paths.get("D:\\download\\git\\git-234234234234\\com");
+		//FileUtils.copyDirectory(new File("D:\\download\\git"), new File("D:\\download\\git\\git-234234234234"));
+		Files.move(srcdir,destdir,REPLACE_EXISTING);*/
+		System.exit(0);
 	}
 }

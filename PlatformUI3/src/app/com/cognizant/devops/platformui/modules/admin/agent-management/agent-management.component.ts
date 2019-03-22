@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 
 @Component({
@@ -27,26 +27,32 @@ import { MessageDialogService } from '@insights/app/modules/application-dialog/m
 })
 export class AgentManagementComponent implements OnInit {
 
+
   validationArr = {};
   showConfirmMessage: string;
   showList: boolean = false;
   showThrobber: boolean;
   showMessage: string;
   data = [];
+  displayedColumns = [];
   tableParams = [];
   buttonDisableStatus: boolean = true;
   runDisableStatus: string = "";
-  agentListDatasource = [];
-  displayedColumns: string[];
+  agentListDatasource = new MatTableDataSource<any>();
+  showDetail: boolean = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  agentList: any;
   selectedAgent: any;
+  selectTool: any;
+  agentNameList: any = [];
   agentparameter = {};
   receivedParam: any;
   toolVersionData: any;
   versionList = [];
-
+  MAX_ROWS_PER_TABLE = 5;
   constructor(public agentService: AgentService, public router: Router,
     private route: ActivatedRoute, public dialog: MatDialog,
-    public messageDialog: MessageDialogService) {
+    public messageDialog: MessageDialogService, private changeDetectorRefs: ChangeDetectorRef) {
     this.getRegisteredAgents();
   }
 
@@ -67,6 +73,10 @@ export class AgentManagementComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.agentListDatasource.paginator = this.paginator;
+  }
+
   public async getRegisteredAgents() {
 
     var self = this;
@@ -74,11 +84,21 @@ export class AgentManagementComponent implements OnInit {
     self.showThrobber = true;
     self.buttonDisableStatus = true;
     self.runDisableStatus = "";
-    let agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
-    if (agentList != null && agentList.status == 'success') {
-      this.agentListDatasource = agentList.data.sort((a, b) => a.toolName > b.toolName);
-      //console.log(agentList);
-      this.displayedColumns = ['radio', 'OS', 'ToolCategory', 'ToolName', 'Version', 'Status'];
+    this.agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
+    if (this.agentList != null && this.agentList.status == 'success') {
+      this.agentListDatasource.data = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
+      this.agentListDatasource.paginator = this.paginator;
+      //console.log(this.agentList);
+      this.agentNameList.push("All");
+      for (var data of this.agentList.data) {
+        if (this.agentNameList.indexOf(data.toolName) == -1) {
+          this.agentNameList.push(data.toolName);
+        }
+      }
+      //console.log(this.agentListDatasource);
+      self.showDetail = true;
+      //console.log(this.agentNameList);
+      this.displayedColumns = ['radio', 'ToolName', 'AgentKey', 'ToolCategory', 'OS', 'Version', 'Status'];
       setTimeout(() => {
         this.showConfirmMessage = "";
       }, 3000);
@@ -94,6 +114,25 @@ export class AgentManagementComponent implements OnInit {
       this.validationArr[i] = { "os": detailArr[i].osVersion, "version": detailArr[i].agentVersion, "tool": detailArr[i].toolName }
     }
   }
+  selectToolAgent(toolSelect) {
+    //console.log(ToolSelect);
+    var agentListDatasourceSelected = [];
+    //console.log(agentListDatasourceSelected);
+    if (toolSelect != "All") {
+      this.agentList.data.filter(av => {
+        if (av.toolName == toolSelect) {
+          agentListDatasourceSelected.push(av)
+        }
+      }
+      )
+    } else {
+      agentListDatasourceSelected = this.agentList.data.sort((a, b) => a.toolName > b.toolName);
+    }
+    this.agentListDatasource.data = agentListDatasourceSelected;
+    this.agentListDatasource.paginator = this.paginator;
+    this.changeDetectorRefs.detectChanges();
+    console.log(this.agentListDatasource);
+  }
 
   statusEdit(element) {
     this.runDisableStatus = element.agentStatus;
@@ -106,7 +145,7 @@ export class AgentManagementComponent implements OnInit {
       this.showConfirmMessage = "other";
       self.showMessage = "Please select Agent";
     } else {
-      self.agentService.agentStartStop(this.selectedAgent.agentKey, actType)
+      self.agentService.agentStartStop(this.selectedAgent.agentKey, self.selectedAgent.toolName, self.selectedAgent.osVersion, actType)
         .then(function (data) {
           if (actType == "START") {
             if (data.status == "success") {
@@ -161,7 +200,7 @@ export class AgentManagementComponent implements OnInit {
     if (self.selectedAgent.agentStatus == 'STOP') {
       var title = "Delete Agent";
       var dialogmessage = "Note: Uninstalling the Agent doesn't delete the data that has been collected. The agent could be re-registered again, and the data collection would be resumed from the last run time. <br> <br> Do you want to uninstall <b> " + self.selectedAgent.toolName + " </b> on <b>" + self.selectedAgent.osVersion + " </b> ? ";
-      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT", "45%");
+      const dialogRef = self.messageDialog.showConfirmationMessage(title, dialogmessage, this.selectedAgent.toolName, "ALERT", "40%");
 
       dialogRef.afterClosed().subscribe(result => {
         //console.log('The dialog was closed  ' + result);

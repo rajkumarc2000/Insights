@@ -27,6 +27,13 @@
   right: 0;
  }
  
+ .labelInfo{
+  font-size:13px;
+  padding-left: 10px;
+  color: black;
+}
+
+ 
 th:first-child { border-radius: 10px 0 0 0; }
 th:last-child { border-radius: 0 10px 0 0; }
 
@@ -175,8 +182,9 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 }
 
 .btnAlign{
-    margin-right: 7px; 
+    /* margin-right: 1px;  */
     float: right;
+    margin-left: 140px;
 }
 
 .mat-icon-message{
@@ -206,6 +214,22 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     margin-left: 10px;
 }
 
+.form-control-select {
+    display: block;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
 .arrange-horizontally {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -214,6 +238,8 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
+    margin-top: 10px;
+    height: 40px;
 }
 
 .button-row{
@@ -374,13 +400,19 @@ tr.mat-footer-row, tr.mat-row-dynamic{
     float: center;
 }
 
+.arrange-vertically
+{
+    margin-top: 3px;
+}
+
 .mainText{
     font-size: 15px;
     color:  #00b140;
     font-weight:bold;
     vertical-align:sub;
     width: 10%;
-    padding-left: 5px;
+    padding-left: 19px;
+    padding-top: 10px;
 }
 .input-file {
     -webkit-appearance: initial;

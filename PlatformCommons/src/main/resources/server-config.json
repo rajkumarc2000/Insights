@@ -3,25 +3,28 @@
 	{
 		"elasticSearchEndpoint": "http://localhost:9200"
 	},
+	
+	"maturityModelConfig": {
+		"inputFilelocation": "D:\\Project\\Insights\\InSights_Windows\\maturityFiles\\Instructions.docx"
+	},
 
-	"sparkConfigurations": 
-	{
+	"sparkConfigurations": {
 		"appName": "inSights",
 		"master": "local[*]",
 		"sparkExecutorMemory": "8g",
 		"sparkElasticSearchHost": "http://localhost",
 		"sparkElasticSearchPort": "9200",
-		"sparkElasticSearchConfigIndex": "",
-		"sparkElasticSearchResultIndex": "",
+		"sparkElasticSearchConfigIndex": "spark-jobs-conf/configs",
+		"sparkElasticSearchResultIndex": "spark-jobs-conf/kpiresults",
 		"kpiSize": "30",
 		"sparkResultSince": 5,
-		"sparkMasterExecutionEndPoint": "http://localhost:4040"
+		"sparkMasterExecutionEndPoint": "http://52.202.65.198:4040"
 	},
+
 
 	"queryCache": 
 	{
-		"esCacheIndex": "neo4j-cached-results",
-		"purgeEsResultsBefore": 0
+		"esCacheIndex": "neo4j-cached-results/querycacheresult"
 	},
 
 	"emailConfiguration": 
@@ -62,7 +65,7 @@
 	"graph": 
 	{
 		"endpoint": "http://localhost:7474",
-		"authToken": "",
+		"authToken": "bmVvNGo6QzBnbml6YW50QDE=",
 		"boltEndPoint": "bolt://localhost:7687",
 		"maxIdleConnections": 25
 	},
@@ -74,49 +77,57 @@
 		"adminUserName": "admin",
 		"adminUserPassword": "admin",
 		"dbUserName": "grafana",
-		"dbPassword": "password",
-	    "grafanaVersion":"5.2.2"
+		"dbPassword": "C0gnizant@1"
 	},
 
 	"postgre": 
 	{
 		"userName": "grafana",
-		"password": "password",
-		"insightsDBUrl": "jdbc:postgresql://127.0.0.1:5432/insight",
-		"grafanaDBUrl": "jdbc:postgresql://127.0.0.1:5432/grafana"
+		"password": "C0gnizant@1",
+		"insightsDBUrl": "jdbc:postgresql://localhost:5432/insight",
+		"grafanaDBUrl": "jdbc:postgresql://localhost:5432/grafana"
 	},
-
+	
+	"mysql":
+	{
+		"userName":"root",
+		"password":"root",
+		"dbUrl":"jdbc:mysql://localhost:3306/devops_stage?zeroDateTimeBehavior=convertToNull"
+	},
+	
 	"messageQueue": 
 	{
 		"host": "localhost",
 		"user": "iSight",
 		"password": "iSight",
-		"prefetchCount" : 10
+		"prefetchCount" : 5
+		
 	},
 
 	"agentDetails": 
 	{
-		"isOnlineRegistration": true,
-		"docrootUrl": "https://platform.cogdevops.com/insights_install/release",
-		"offlineAgentPath": "D://download//agents",
-		"unzipPath": "D://download",
+		"isOnlineRegistration": false,
+		"docrootUrl": "http://platform.cogdevops.com//insights_install//release//",
+		"offlineAgentPath": "D:\\Project\\Insights\\InSights_Windows\\Agents\\offlineAgent",
+		"unzipPath": "D:\\Project\\Insights\\InSights_Windows\\Agents\\PlatformAgents\\zip",
 		"agentExchange": "iAgent",
 		"agentPkgQueue": "INSIGHTS.AGENTS.PACKAGE"
 	},
 	"correlations" : {
-        	"correlationWindow" : 48,
-        	"correlationFrequency" : 3,
-        	"batchSize" : 2000
-  	},
+    "correlationWindow" : 48,                                                                     
+   "correlationFrequency" : 3,
+    "batchSize" : 2000
+  },
+
 
 	"insightsServiceURL": "http://localhost:8080",
 	"disableAuth": false,
 	"enableNativeUsers": true,
 	"insightsTimeZone": "Asia/Kolkata",
-	"userId": "UserID",
-	"password": "Passwd",
+	"userId": "admin",
+	"password": "admin",
 	"refreshTime": "Jan 22, 2017 5:04:25 PM",
-	"enableOnlineDatatagging": false,
+	"enableOnlineDatatagging": true,
 	"trustedHosts": 
 	[
 		"localhost"

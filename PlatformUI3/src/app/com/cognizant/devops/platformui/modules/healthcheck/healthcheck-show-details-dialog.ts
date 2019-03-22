@@ -68,7 +68,7 @@ export class ShowDetailsDialog implements OnInit {
     this.showThrobber = true;
     this.showContent = !this.showThrobber;
     this.checkResponseData = true;
-    this.healthCheckService.loadHealthConfigurations(this.data.toolName, this.data.categoryName)
+    this.healthCheckService.loadHealthConfigurations(this.data.toolName, this.data.categoryName, this.data.agentId)
       .then((data) => {
         this.showThrobber = false;
         this.showContent = !this.showThrobber;
