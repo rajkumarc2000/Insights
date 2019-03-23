@@ -9,7 +9,7 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/beta/</directory>
+            <directory>${project.basedir}/app/</directory>
         </fileSet>
     </fileSets>
 </assembly>
