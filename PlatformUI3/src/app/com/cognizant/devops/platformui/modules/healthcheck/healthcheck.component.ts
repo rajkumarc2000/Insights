@@ -131,7 +131,7 @@ export class HealthCheckComponent implements OnInit {
     }
   }
 
-  selectToolData(ToolSelect) {
+  /*selectToolData(ToolSelect) {
     var dataListDatasourceSelected = [];
     if (ToolSelect != "All") {
       this.dataComponentDataSource.filter(x => {
@@ -144,7 +144,7 @@ export class HealthCheckComponent implements OnInit {
       dataListDatasourceSelected = this.dataComponentDataSource;
     }
     this.dataListDatasource = dataListDatasourceSelected;
-  }
+  }*/
 
   // Displays Show Details dialog box when Details column is clicked
   showDetailsDialog(toolName: string, categoryName: string, agentId: string) {
