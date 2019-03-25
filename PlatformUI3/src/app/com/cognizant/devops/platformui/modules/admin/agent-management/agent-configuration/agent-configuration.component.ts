@@ -312,12 +312,12 @@ export class AgentConfigurationComponent implements OnInit {
     var oldAgentId: string = String(this.defaultConfigdata['agentId']);
     var checkAgentId = this.regex.test(agentId);
     if (actionType == "Add") {
-      console.log("selected agentId ===== " + agentId + "  oldAgentId " + oldAgentId + "  checkAgentId  " + checkAgentId + "   " + this.regex);
-      if (agentId == undefined || agentId == "") {
+      //console.log("selected agentId ===== " + agentId + "  oldAgentId " + oldAgentId + "  checkAgentId  " + checkAgentId + "   " + this.regex);
+      if (agentId == undefined || agentId == "" || agentId == "NaN") {
         self.messageDialog.showApplicationsMessage("Please enter valid agentId,It should not be blank ", "ERROR");
         agentId = undefined;
       } else if (!checkAgentId) {
-        console.log(this.regex);
+        //console.log(this.regex);
         agentId = undefined;
         self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
       }
@@ -326,7 +326,7 @@ export class AgentConfigurationComponent implements OnInit {
         self.messageDialog.showApplicationsMessage("You are not allow to change AgentId while update ", "ERROR");
         agentId = undefined;
       } else if (!checkAgentId) {
-        console.log(this.regex);
+        //console.log(this.regex);
         agentId = undefined;
         self.messageDialog.showApplicationsMessage("Please enter valid agentId, and only contain alphanumeric character and underscore ", "ERROR");
       }
@@ -494,8 +494,11 @@ export class AgentConfigurationComponent implements OnInit {
       if (!testFileExt) {
         this.fileUploadErrorMessage = "Please upload only json file";
       }
+      //console.log(testFileExt);
       if (testFileExt) {
+        //console.log(uploadedFile[i]);
         this.getTrackingFileContentToString(uploadedFile[i]);
+        //console.log(this.trackingUploadedFileContentStr);
         setTimeout(() => {
           //console.log(uploadedFile[i]);
         }, 5000);
@@ -507,13 +510,13 @@ export class AgentConfigurationComponent implements OnInit {
   getTrackingFileContentToString(trackingJsonFileArray): void {
     var self = this;
     var reader = new FileReader();
+    reader.readAsText(trackingJsonFileArray);
     reader.onload = () => {
       this.trackingUploadedFileContentStr = reader.result;
       if (this.trackingUploadedFileContentStr == "") {
         this.fileUploadErrorMessage = "Unable to read file ,Please try again ";
       }
     };
-    reader.readAsText(trackingJsonFileArray);
   }
 
   checkFile(sender, validExts) {

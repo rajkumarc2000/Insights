@@ -131,7 +131,7 @@ export class AgentManagementComponent implements OnInit {
     this.agentListDatasource.data = agentListDatasourceSelected;
     this.agentListDatasource.paginator = this.paginator;
     this.changeDetectorRefs.detectChanges();
-    console.log(this.agentListDatasource);
+    //console.log(this.agentListDatasource);
   }
 
   statusEdit(element) {

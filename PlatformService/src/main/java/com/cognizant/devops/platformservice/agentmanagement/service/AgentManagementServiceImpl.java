@@ -513,7 +513,7 @@ public class AgentManagementServiceImpl implements AgentManagementService {
 	}
 
 	private String updateTrackingJson(String toolName, JsonObject trackingDetails, String agentId) throws IOException {
-		String trackingFilePath = filePath + File.separator	+ toolName + File.separator + agentId;
+		String trackingFilePath = filePath + File.separator + agentId;
 		File trackingFile = null;
 		// Writing json to file
 		Path dir = Paths.get(trackingFilePath);
