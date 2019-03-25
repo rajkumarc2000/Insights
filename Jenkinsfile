@@ -41,21 +41,12 @@ gitCommitID = sh (
 	try{
 	
    stage ('Insight_PS_Build') {
-        sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && npm install'
-	sh 'cd /var/jenkins/jobs/$commitID/workspace && mvn clean install -DskipTests'
+        sh 'mvn clean install -DskipTests'
 	   }	
 	stage ('Insight_PS_CodeAnalysis') {
-		sh 'mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java -pl !PlatformUI3'
+		sh 'mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/main/java'
 		
-        }
-		
-        stage ('Insight_PUI2.0_CodeAnalysis') {		
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=app/src/modules -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
-	}
-        stage ('Insight_PUI3_CodeAnalysis') {		
-		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=src/app/com/cognizant/devops/platformui/modules -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
-	}
-		
+    }	
 	stage ('Insight_PS_NexusUpload') {		
 		sh 'mvn deploy -DskipTests=true'		
 		}
@@ -63,11 +54,53 @@ gitCommitID = sh (
 	}
 	catch (err){
 		
-	slackSend channel: '#insightsjenkins', color: 'bad', message: "BuildFailed for commitID - *$gitCommitID*, Branch - *$branchName* \n Build Log can be found @ https://buildon.cogdevops.com/buildon/HistoricCIWebController?commitId=$gitCommitID", teamDomain: "insightscogdevops", token: slackToken
+	slackSend channel: '#insightsjenkins', color: 'good', message: "BuildFailed for commitID - *$gitCommitID*, Branch - *$branchName* \n Build Log can be found @ https://buildon.cogdevops.com/buildon/HistoricCIWebController?commitId=$gitCommitID", teamDomain: "insightscogdevops", token: slackToken
 	sh 'exit 1'
 	}	
-	// Platform Service Ends	   
+	// Platform Service Ends	
+	
+	
+	// Platform UI2.0 Starts
+	try{
+	stage ('Insight_PUI2.0_Build') {
+        
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && bower install --allow-root && tsd install && npm install && grunt'
+	}
+	
+	stage ('Insight_PUI2.0_CodeAnalysis') {		
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && mvn sonar:sonar -Dmaven.test.failure.ignore=true -DskipTests=true -Dsonar.sources=app/src/modules -Dsonar.language=js -Dsonar.javascript.file.suffixes=.ts'
+	}
+	
+	stage ('Insight_PUI2.0_NexusUpload') {		
+		//Framing Nexus URL for artifact uploaded to Nexus with unique timestamp													
+		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version"
+       		pomversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version").trim()   //Get version from pom.xml to form the nexus repo URL
+		
+		if($branchName != master && pomversion.contains("SNAPSHOT")){		
+			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"
+		} 		
+		else if($branchName == master && !pomversion.contains("SNAPSHOT")){		
+		    NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/InsightsRelease"
+		
+		}
+		  else{		
+		    sh 'exit 1'
+		
+		}		
+		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0  && zip -r app.zip app'
+	 	sh "mvn deploy:deploy-file -Dfile=/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/app.zip -DgroupId='com.cognizant.devops' -DartifactId='PlatformUI2.0' -Dpackaging=zip -Dversion=${pomversion} -DrepositoryId=nexus -Durl=${NEXUSREPO} -DskipTests=true"		
+	     } 
 	   
+	   }
+	 catch (err){
+		
+		slackSend channel: '#insightsjenkins', color: 'good', message: "BuildFailed for commitID - *$gitCommitID*,Branch - *$branchName* \n Build Log can be found @ https://buildon.cogdevops.com/buildon/HistoricCIWebController?commitId=$gitCommitID", teamDomain: "insightscogdevops", token: slackToken
+		sh 'exit 1'
+		}
+	   
+	   // Platform UI2.0 Ends
+	   
+		try{   
         //Send Notification to Slack Channel
 	stage ('SlackNotification') {
 	
@@ -86,17 +119,12 @@ gitCommitID = sh (
        		pomversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformInsights/version").trim()  //Get version from pom.xml to form the nexus repo URL
 	   
 	    //PlatformUI version
-		
-		//PlatformUI version
 		//Framing Nexus URL for artifact uploaded to Nexus with unique timestamp													
 		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version"
-       		pomUIversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version").trim() 
+       		pomUIversion=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/version").trim()  
 		
-		//Framing Nexus URL for artifact uploaded to Nexus with unique timestamp													
-		sh "cd /var/jenkins/jobs/$commitID/workspace/PlatformUI3 && mvn -B help:evaluate -Dexpression=project.version | grep -e '^[^[]' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/version"
-       		pomUI3version=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI3/version").trim()  
+		if($branchName != master && pomversionService.contains("SNAPSHOT") && pomversionEngine.contains("SNAPSHOT") && pomversion.contains("SNAPSHOT") && pomUIversion.contains("SNAPSHOT")){
 		
-		if(pomversionService.contains("SNAPSHOT") && pomversionEngine.contains("SNAPSHOT") && pomversion.contains("SNAPSHOT") && pomUIversion.contains("SNAPSHOT") && pomUI3version.contains("SNAPSHOT")){
 		
 			NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/buildonInsights"
 			
@@ -112,11 +140,9 @@ gitCommitID = sh (
 		//get artifact info (artifactID,classifier,timestamp, buildnumber,version) from maven-metadata.xml
 	   	sh "curl -s ${NEXUSREPO}/com/cognizant/devops/PlatformUI2.0/${pomUIversion}/maven-metadata.xml  | grep -oP '(?<=<artifactId>).*?(?=</artifactId>)|(?<=<version>).*?(?=</version>)|(?<=<timestamp>).*?(?=</timestamp>)|(?<=<buildNumber>).*?(?=</buildNumber>)|(?<=<classifier>).*?(?=</classifier>)' | paste -sd- - | sed 's/-SNAPSHOT//g' | sed 's/--/-/g' | sed 's/\$/.zip/' > /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/PUI_artifact"		
 		
-		//get artifact info (artifactID,classifier,timestamp, buildnumber,version) from maven-metadata.xml
-	   	sh "curl -s ${NEXUSREPO}/com/cognizant/devops/PlatformUI3/${pomUIversion}/maven-metadata.xml  | grep -oP '(?<=<artifactId>).*?(?=</artifactId>)|(?<=<version>).*?(?=</version>)|(?<=<timestamp>).*?(?=</timestamp>)|(?<=<buildNumber>).*?(?=</buildNumber>)|(?<=<classifier>).*?(?=</classifier>)' | paste -sd- - | sed 's/-SNAPSHOT//g' | sed 's/--/-/g' | sed 's/\$/.zip/' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/PUI3_artifact"		
 		
-		
-		} else {
+		}
+		else if($branchName == master && !pomversionService.contains("SNAPSHOT") && !pomversionEngine.contains("SNAPSHOT") && !pomversion.contains("SNAPSHOT") && !pomUIversion.contains("SNAPSHOT")){	
 		
 		    NEXUSREPO="http://insightsplatformnexusrepo.cogdevops.com:8001/nexus/content/repositories/InsightsRelease"
 			
@@ -132,10 +158,11 @@ gitCommitID = sh (
 		//get artifact info (artifactID,classifier,timestamp, buildnumber,version) from maven-metadata.xml
 	   	sh "curl -s ${NEXUSREPO}/com/cognizant/devops/PlatformUI2.0/maven-metadata.xml  | grep -oP '(?<=<artifactId>).*?(?=</artifactId>)|(?<=<release>).*?(?=</release>)|(?<=<timestamp>).*?(?=</timestamp>)|(?<=<buildNumber>).*?(?=</buildNumber>)|(?<=<classifier>).*?(?=</classifier>)' | paste -sd- - | sed 's/-SNAPSHOT//g' | sed 's/--/-/g' | sed 's/\$/.zip/' > /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/PUI_artifact"	
 		
-		//get artifact info (artifactID,classifier,timestamp, buildnumber,version) from maven-metadata.xml
-	   	sh "curl -s ${NEXUSREPO}/com/cognizant/devops/PlatformUI3/maven-metadata.xml  | grep -oP '(?<=<artifactId>).*?(?=</artifactId>)|(?<=<release>).*?(?=</release>)|(?<=<timestamp>).*?(?=</timestamp>)|(?<=<buildNumber>).*?(?=</buildNumber>)|(?<=<classifier>).*?(?=</classifier>)' | paste -sd- - | sed 's/-SNAPSHOT//g' | sed 's/--/-/g' | sed 's/\$/.zip/' > /var/jenkins/jobs/$commitID/workspace/PlatformUI3/PUI3_artifact"	
-				
-		}	
+		
+		}
+		 else{
+		   sh 'exit 1'
+		 }
 		
 		//Platform Service
 		PS_artifactName=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformService/PS_artifact").trim()
@@ -152,12 +179,13 @@ gitCommitID = sh (
 		//Platform UI 2.0
 		PUI_artifactName=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/PUI_artifact").trim()
 		PUI_artifact="${NEXUSREPO}/com/cognizant/devops/PlatformUI2.0/${pomUIversion}/${PUI_artifactName}"
-		
-		//Platform UI 3
-		PUI3_artifactName=readFile("/var/jenkins/jobs/$commitID/workspace/PlatformUI3/PUI3_artifact").trim()
-		PUI3_artifact="${NEXUSREPO}/com/cognizant/devops/PlatformUI3/${pomUI3version}/${PUI3_artifactName}"
 	
 	
-   	    slackSend channel: '#insightsjenkins', color: 'good', message: "New Insights artifacts are uploaded to Nexus for commitID : *${env.commitID}* ,Branch - *${env.branchName}* \n *PlatformService* ${PS_artifact} \n *PlatformEngine* ${PE_artifact} \n *PlatformInsights*  ${PI_artifact} \n *PlatformUI2.0* ${PUI_artifact} \n *PlatformUI3* ${PUI3_artifact}", teamDomain: 'insightscogdevops', token: slackToken // "*" is for making the text bold in slack notification
+   	    slackSend channel: '#insightsjenkins', color: 'good', message: "New Insights artifacts are uploaded to Nexus for commitID : *${env.commitID}* ,Branch - *${env.branchName}* \n *PlatformService* ${PS_artifact} \n *PlatformEngine* ${PE_artifact} \n *PlatformInsights*  ${PI_artifact} \n *PlatformUI2.0* ${PUI_artifact}", teamDomain: 'insightscogdevops', token: slackToken // "*" is for making the text bold in slack notification
   	}
+	catch (err){
+		
+		slackSend channel: '#insightsjenkins', color: 'good', message: "BuildFailed for commitID - *$gitCommitID*,Branch - *$branchName* \n Build Log can be found @ https://buildon.cogdevops.com/buildon/HistoricCIWebController?commitId=$gitCommitID", teamDomain: "insightscogdevops", token: slackToken
+		sh 'exit 1'
+		}
 }
