@@ -44,12 +44,12 @@
   padding-top: 1px !important;
   padding-bottom: 1px !important;
   font-family:inherit;
-  height: 30px !important;
+  height: 2.5% !important;
 
 }
 
 .mat-list-item-ripple{
-  height: 30px
+  height: 2.5%
 }
 
 .mat-list-item.active {
@@ -104,6 +104,8 @@
   width: 100%;
   padding-left: 200px !important;
   padding-right: 16px !important;
+  table-layout: auto;
+  width: 100%;
 }
 
 .logoTable{
@@ -111,6 +113,8 @@
   width: 100%;
   padding-left: 16px !important;
   padding-right: 16px !important; 
+  table-layout: auto;
+  width: 100%;
 }
 
 .roleName{
@@ -142,15 +146,21 @@
     padding-bottom: 10px !important;
 }
 .bottomButton{
-    border-bottom-style:solid;
-    border-bottom-color:#9e9a9a;
-    border-bottom-width:2px;
+    
     border-top-style: solid;
     border-color:#9e9a9a;
     border-top-width: 2px;
     padding-bottom: 5px;
     padding-top: 5px;
     height: 21%;
+   
+}
+
+.bottomSeperator{
+    border-bottom-style:solid;
+    border-bottom-color:#9e9a9a;
+    border-bottom-width:2px;
+    display: list-item;
 }
 .customerLogo{
   height: 50%;
@@ -202,7 +212,7 @@
 }
 
 .mat-list-item-content{
-  height: 30px !important; 
+  height: 2.5% !important; 
   font-family: inherit;
   padding-top: 0px;
   padding-right: 0px !important;
@@ -379,7 +389,7 @@
     border-bottom-style:solid;
     border-bottom-color:#9e9a9a;
     border-bottom-width:2px;
-
+    display: list-item;
   }
   .headingPage{
     margin-right: 16px;
@@ -494,7 +504,7 @@
 
   .logoSetting{
     margin-left: -1vmax;
-    margin-right: 26px;
+    margin-right: 0.5%;
     margin-top: 2px;
     height: 10%;
   }
@@ -565,7 +575,7 @@
 .insightLogo{
   margin:auto;
   display:table-row;
-  margin-right:auto;
+  margin-right:1vmax;
   margin-left:2vmax;
   cursor: pointer;
 }
@@ -576,6 +586,25 @@
   display:block;
   align-items: center;
   cursor: pointer;
+}
+
+td, th {
+    display: block;
+}
+
+.arrange-horizontally {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    height: 10%;
+    width: 100%;
+    margin-left: 1%;
+    margin-right: 26px;
+    margin-top: 2px;
 }
 
 

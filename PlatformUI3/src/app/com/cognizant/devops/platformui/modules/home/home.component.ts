@@ -63,6 +63,8 @@ export class HomeComponent implements OnInit {
   navOrgList: NavItem[] = [];
   selectedItem: NavItem;
   orgList = [];
+  imageDatasource = [{ menuIcon: 'menuIcon' }];
+  displayedColumns = ['image'];
   defaultOrg: number;
   selectedOrg: String;
   selectedOrgName: String;
@@ -86,7 +88,7 @@ export class HomeComponent implements OnInit {
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router, private dataShare: DataSharedService) {
-    //console.log("in home on constructor init ");
+    console.log("in home on constructor init ");
     //router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
     if (this.depth === undefined) {
@@ -108,6 +110,8 @@ export class HomeComponent implements OnInit {
     this.framesize = this.framesize - otherMenu; //bottom nav 106 px + tap fix content 110 236
     window.addEventListener('message', receiveMessage, false);
     this.getInformationFromGrafana();
+    this.displayedColumns = ['image'];
+    this.imageDatasource = [{ menuIcon: 'menuIcon' }];
   }
 
   onMenuClick() {
