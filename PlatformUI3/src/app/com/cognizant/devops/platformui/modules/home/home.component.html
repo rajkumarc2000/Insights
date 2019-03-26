@@ -83,6 +83,7 @@
       </div>
       <div class="bottomnavg">
         <div class="bottomButton">
+
           <mat-nav-list *ngIf="isExpanded" class="arrange-horizontally-bottombutton">
             <ng-container *ngFor="let itemBottom of navItemsBottom;">
               <a [attr.title]="itemBottom.title" mat-list-item class="mat-list-item-bottom" (click)="onItemSelected(itemBottom)">

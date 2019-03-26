@@ -298,6 +298,7 @@
     z-index: 1;
 }
 
+
 .mat-icon{
   align-items: flex-end;
   cursor: pointer;
@@ -454,6 +455,7 @@
   display:block;
   align-items: center;
   cursor: pointer;
+  margin-top: 12px !important;
 }
 
 }
@@ -469,6 +471,7 @@
   display:block;
   align-items: center;
   cursor: pointer;
+  margin-top: 12px !important;
 }
 
 .mat-list-item.active
@@ -562,12 +565,12 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    margin-left: 120px;
+    /* margin-left: 120px; */
 }
-
+/* 
 .bottomButton{
   height: 25%;
-}
+} */
 .mat-list-text-bottom
 {
   font-size: 20px !important;
@@ -586,6 +589,8 @@
   display:block;
   align-items: center;
   cursor: pointer;
+  margin-top: 12px !important
+  
 }
 
 td, th {
