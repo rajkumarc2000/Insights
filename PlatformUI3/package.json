@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href=/beta/",
+    "build": "ng build --prod --base-href=/app/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -32,7 +32,7 @@
     "ngx-webstorage-service": "^3.1.3",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
-	"typescript": "^2.7.2",
+    "typescript": "^2.7.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

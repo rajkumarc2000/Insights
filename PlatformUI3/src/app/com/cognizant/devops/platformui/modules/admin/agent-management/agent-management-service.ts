@@ -27,7 +27,7 @@ export interface IAgentService {
     loadAgentServices(ServerName: string): Promise<any>;
     registerAgent(toolName: string, toolVersion: string, osName: string, configData: string, trackingDetails: string): Promise<any>;
     updateAgent(agentId: string, configData: string, toolName: string, toolVersion: string, osName: string): Promise<any>;
-    agentStartStop(agentId: string, actionType: string): Promise<any>;
+    agentStartStop(agentId: string, toolName: string, osName: string, actionType: string): Promise<any>;
     agentUninstall(agentId: string, toolName: string, osversion: string): Promise<any>
 }
 
@@ -74,8 +74,8 @@ export class AgentService implements IAgentService {
         return this.restCallHandlerService.postWithParameter("AGENT_UPDATE", { 'agentId': agentId, 'configJson': configData, 'toolName': toolName, 'agentVersion': toolVersion, 'osversion': osName }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
-    agentStartStop(agentId: string, actionType: string): Promise<any> {
-        return this.restCallHandlerService.postWithParameter("AGENT_START_STOP", { 'agentId': agentId, 'action': actionType }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
+    agentStartStop(agentId: string, toolName: string, osName: string, actionType: string): Promise<any> {
+        return this.restCallHandlerService.postWithParameter("AGENT_START_STOP", { 'agentId': agentId, 'toolName': toolName, 'osversion': osName, 'action': actionType }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
     agentUninstall(agentId: string, toolName: string, osversion: string): Promise<any> {

@@ -38,7 +38,7 @@ public class SpringAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		log.error(authException);
-		// String msg = "{ \"error\" : { \"message\" : \"Invalid Credentials\"}}";
+		//String msg = "{ \"error\" : { \"message\" : \"Invalid Credentials\"}}";
 		String msg = PlatformServiceUtil.buildFailureResponse("Invalid Credentials").toString();
 		PrintWriter writer = response.getWriter();
 		writer.write(msg);

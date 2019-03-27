@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 
 export interface IHealthCheckService {
     loadServerHealthConfiguration(): Promise<any>;
-    loadHealthConfigurations(toolName: string, toolCategory: string): Promise<any>;
+    loadHealthConfigurations(toolName: string, toolCategory: string, agentId: String): Promise<any>;
 }
 
 
@@ -28,7 +28,7 @@ export interface IHealthCheckService {
 
 @Injectable()
 export class HealthCheckService implements IHealthCheckService {
-    
+
     constructor(private restCallHandlerService: RestCallHandlerService) {
     }
 
@@ -40,9 +40,9 @@ export class HealthCheckService implements IHealthCheckService {
         var restHandler = this.restCallHandlerService;
         return restHandler.get("AGENT_COMP_STATUS");
     }
-    loadHealthConfigurations(toolName: string, toolCategory: string): Promise<any> {
+    loadHealthConfigurations(toolName: string, toolCategory: string, agentId: String): Promise<any> {
         var restHandler = this.restCallHandlerService;
-        return restHandler.get("HEALTH_TOOL", { 'tool': toolName, 'category': toolCategory });
+        return restHandler.get("HEALTH_TOOL", { 'tool': toolName, 'category': toolCategory, 'agentId': agentId });
     }
 
 }
