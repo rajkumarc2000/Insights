@@ -183,8 +183,8 @@ tr.mat-footer-row, tr.mat-row-dynamic{
 
 .btnAlign{
     /* margin-right: 1px;  */
-    float: right;
-    margin-left: 140px;
+  position: absolute;
+  right: 50px;
 }
 
 .mat-icon-message{
