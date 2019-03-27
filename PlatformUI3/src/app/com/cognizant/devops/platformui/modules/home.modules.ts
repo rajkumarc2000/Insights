@@ -67,7 +67,9 @@ import { LogoSettingComponent } from '@insights/app/modules/settings/logo-settin
 import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
 import { LogoSettingService } from '@insights/app/modules/settings/logo-setting/logo-setting.service';
 import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
-
+import { CustomReportComponent } from './blockchain/custom-report/custom-report.component';
+import { CustomReportConfigComponent } from './blockchain/custom-report/custom-report-configuration/custom-report-configuration.component';
+import { QueryBuilderService } from './blockchain/custom-report/custom-report-service';
 
 
 @NgModule({
@@ -94,7 +96,9 @@ import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
     AddGroupMessageDialog,
     LogoSettingComponent,
     AssetDetailsDialog,
-    AssetPipe
+    AssetPipe,
+    CustomReportComponent,
+    CustomReportConfigComponent
   ],
   imports: [
     HomeRouting,
@@ -129,7 +133,8 @@ import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
     MessageDialogService,
     LogoSettingService,
     BlockChainService,
-    DatePipe
+    DatePipe,
+    QueryBuilderService
   ]
 })
 

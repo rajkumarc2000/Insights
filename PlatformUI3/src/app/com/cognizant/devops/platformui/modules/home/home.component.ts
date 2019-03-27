@@ -264,14 +264,42 @@ export class HomeComponent implements OnInit {
           }
         ]*/
       },
+      // {
+      //   displayName: 'Audit Reporting',
+      //   iconName: 'feature',
+      //   route: 'InSights/Home/blockchain',
+      //   isToolbarDisplay: true,
+      //   showMenu: InsightsInitService.showAuditReporting,
+      //   title: "Audit Reporting",
+      //   isAdminMenu: true
+      // },
       {
-        displayName: 'Audit Reporting',
+        displayName : 'Audit Reporting',
         iconName: 'feature',
-        route: 'InSights/Home/blockchain',
-        isToolbarDisplay: true,
-        showMenu: InsightsInitService.showAuditReporting,
-        title: "Audit Reporting",
-        isAdminMenu: true
+        isAdminMenu: false,
+        showMenu: true,
+        title: "Audit Report and search assets",
+        isToolbarDisplay: true,//false
+        children: [
+          {
+            displayName: 'Search Assets',
+            iconName: 'feature',
+            route: 'InSights/Home/blockchain',
+            isToolbarDisplay: true,
+            showMenu: InsightsInitService.showAuditReporting,
+            title: "Search Assets",
+            isAdminMenu: true
+          },
+          {
+            displayName: 'Query Builder',
+            iconName: 'feature',
+            route: 'InSights/Home/querybuilder',
+            isToolbarDisplay: true,
+            showMenu: InsightsInitService.showAuditReporting,
+            title: "Query Builder",
+            isAdminMenu: true
+          }
+        ]
       },
       {
         displayName: 'Playlist',
