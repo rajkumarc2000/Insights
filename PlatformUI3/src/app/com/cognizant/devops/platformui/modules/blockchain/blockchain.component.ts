@@ -25,6 +25,7 @@ import { MessageDialogService } from '@insights/app/modules/application-dialog/m
 import { MatRadioChange, MatInput } from '@angular/material';
 import { AssetDetailsDialog } from '@insights/app/modules/blockchain/bc-asset-details-dialog';
 import {FormControl, Validators} from '@angular/forms';
+import { InsightsInitService } from '../../common.services/insights-initservice';
 
 export interface AssetData {
   assetID: string;
@@ -68,14 +69,17 @@ export class BlockChainComponent implements OnInit {
   selectedAssetID: string = "";
   displayProgressBar: boolean = false;
   toolname = new FormControl('', [Validators.required]);
-  tools = ['JIRA','GIT','JENKINS','NEXUS'];
+  tools = [];
 
 
 
 
   constructor(private blockChainService: BlockChainService, private datepipe: DatePipe,
     private messageDialog: MessageDialogService, private dialog: MatDialog) {
-    
+      let toolList =  InsightsInitService.processJson.Steps;
+      toolList.forEach(element => {
+        this.tools.push(element.Tool.toUpperCase());
+      });
   }
 
   ngOnInit() {
