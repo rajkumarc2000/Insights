@@ -20,6 +20,7 @@ import { BlockChainService } from '@insights/app/modules/blockchain/blockchain.s
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AssetData } from '@insights/app/modules/blockchain/blockchain.component';
 import {saveAs as importedSaveAs} from "file-saver"; 
+import { InsightsInitService } from '../../common.services/insights-initservice';
 
 export interface AssetHistoryData {
     assetID: string;
@@ -202,7 +203,7 @@ export class AssetDetailsDialog implements OnInit {
                 custMap[x.toolName] = lst
             }
         });
-        console.log(custMap);
+        console.log("custMap",custMap);
 
         let orderlst = [];
         let clst = custMap;
@@ -243,8 +244,16 @@ export class AssetDetailsDialog implements OnInit {
             })
         })
 
-        console.log(orderlst);
-        let processorder = ["JIRA", "GIT", "JENKINS", "NEXUS"];
+        console.log("orderlst",orderlst);
+        let processorder = [];
+        let toolList =  InsightsInitService.processJson.Steps;
+        toolList.forEach(element => {
+          console.log(element.Tool.toUpperCase());
+          processorder.push(element.Tool.toUpperCase());
+        });
+        console.log("processorder",processorder);
+        
+       // let processorder = ["JIRA", "GIT", "JENKINS", "NEXUS"];
         processorder.forEach(p => {
             orderlst.forEach(a => {
                 if (p === a.point) {
