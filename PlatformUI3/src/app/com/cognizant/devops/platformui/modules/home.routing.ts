@@ -30,6 +30,8 @@ import { BlockChainComponent } from '@insights/app/modules/blockchain/blockchain
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 import { LogoSettingComponent } from '@insights/app/modules/settings/logo-setting/logo-setting.component';
+import { CustomReportComponent } from './blockchain/custom-report/custom-report.component';
+import { CustomReportConfigComponent } from './blockchain/custom-report/custom-report-configuration/custom-report-configuration.component';
 
 const homeRoutes: Routes = [
   {
@@ -48,7 +50,9 @@ const homeRoutes: Routes = [
       { path: 'agentconfiguration', component: AgentConfigurationComponent },
       { path: 'accessGroupManagement', component: UserOnboardingComponent },
       { path: 'landingPage', component: LandingPageComponent },
-      { path: 'logoSetting', component: LogoSettingComponent }
+      { path: 'logoSetting', component: LogoSettingComponent },
+      { path: 'querybuilder', component: CustomReportComponent },
+      { path: 'reportconfiguration', component: CustomReportConfigComponent },
     ]
   }
 ];
