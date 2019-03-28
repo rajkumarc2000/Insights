@@ -104,8 +104,8 @@ export class AgentManagementComponent implements OnInit {
         this.showConfirmMessage = "";
       }, 3000);
     } else {
-      self.showMessage = "Something wrong with Service, Please try again.";
-      self.messageDialog.showApplicationsMessage("Something wrong with Service, Please try again.", "ERROR");
+      self.showMessage = "Something wrong with Service.Please try again.";
+      self.messageDialog.showApplicationsMessage("Something wrong with Service.Please try again.", "ERROR");
     }
   }
   private consolidatedArr(detailArr): void {
