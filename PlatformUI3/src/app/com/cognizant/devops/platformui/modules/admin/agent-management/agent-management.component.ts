@@ -84,6 +84,7 @@ export class AgentManagementComponent implements OnInit {
     self.showThrobber = true;
     self.buttonDisableStatus = true;
     self.runDisableStatus = "";
+    this.agentNameList = [];
     this.agentList = await self.agentService.loadAgentServices("DB_AGENTS_LIST");
     if (this.agentList != null && this.agentList.status == 'success') {
       this.agentListDatasource.data = this.agentList.data.sort((a, b) => a.toolName > b.toolName);

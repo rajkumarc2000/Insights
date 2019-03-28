@@ -365,7 +365,7 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("register");
-          self.agentConfigstatus = "Agent Register Failed";
+          self.agentConfigstatus = "Adding Agent Failed.";
           self.agentConfigstatusCode = "ERROR";
         }
       }
