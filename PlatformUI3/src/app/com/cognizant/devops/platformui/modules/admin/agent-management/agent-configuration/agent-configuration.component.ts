@@ -111,7 +111,7 @@ export class AgentConfigurationComponent implements OnInit {
     } else if (this.receivedParam.type == "new") {
       this.btnValue = "Add";//Register
       this.subTitleName = "Add an Agent"
-      this.subTitleInfoText = "(You may edit the Agent from the main page after adding the agent)";
+      this.subTitleInfoText = "(You may edit the Agent from the main page after adding the Agent)";
       this.selectedOS = undefined;
       this.selectedVersion = undefined
       this.selectedTool = undefined;
