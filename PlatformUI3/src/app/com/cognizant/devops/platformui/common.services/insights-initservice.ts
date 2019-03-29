@@ -42,14 +42,8 @@ export class InsightsInitService {
         const result1 = await this.loadUiServiceLocation();
         const result2 = await this.loadAgentConfigDesc();
         const result3 = await this.loadImageHandler();
-        await this.loadProcessJsonFile();
     }
 
-    private async loadProcessJsonFile() {
-        let processJsonResponse = await this.getJSONUsingObservable("/PlatformAuditService/traceability/getProcessFlow").toPromise();
-        InsightsInitService.processJson = processJsonResponse;
-
-    }
     private async loadAgentConfigDesc() {
         var self = this;
         var agentConfigJsonUrl = "config/configDesc.json"

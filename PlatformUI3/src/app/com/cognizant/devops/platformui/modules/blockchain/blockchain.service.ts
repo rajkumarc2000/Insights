@@ -27,6 +27,7 @@ export interface IBlockChainService {
     getAssetInfo(assetID: string): Promise<any>;
     getAssetHistory(assetID: string): Promise<any>;
     exportToPdf(pdfData:any):Observable<any>;
+    getProcessFlow():Promise<any>;
 }
 
 
@@ -60,6 +61,11 @@ export class BlockChainService implements IBlockChainService {
         headers_object = headers_object.append("Content-Type", "application/json");
         headers_object = headers_object.append("Authorization", authToken);
         return this.httpClient.post(EXPORT_TO_PDF, pdfData, {headers:headers_object, responseType: 'blob'});
+    }
+
+    getProcessFlow(): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("GET_PROCESS_JSON");
     }
 
 }

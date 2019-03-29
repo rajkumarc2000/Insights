@@ -139,6 +139,7 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("GET_ASSET_INFO", '/PlatformAuditService/traceability/getAssetInfo');
         this.addEndPoint("GET_ASSET_HISTORY", '/PlatformAuditService/traceability/getAssetHistory');
         this.addEndPoint("EXPORT_TO_PDF", '/PlatformAuditService/traceability/getAuditReport');
+        this.addEndPoint("GET_PROCESS_JSON", '/PlatformAuditService/traceability/getProcessFlow');
 
         this.addEndPoint("CREATE_UPDATE_CYPHER_QUERY", '/PlatformService/blockchain/queryBuilder/createQuery');
         this.addEndPoint("FETCH_CYPHER_QUERY", '/PlatformService/blockchain/queryBuilder/fetchQueries');

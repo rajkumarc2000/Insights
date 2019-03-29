@@ -66,16 +66,18 @@ export class AssetDetailsDialog implements OnInit {
     searchInput = '';
     innerObjAsset = {};
     expandObjects = [];
+    order = [];
     
     constructor(public dialogRef: MatDialogRef<AssetDetailsDialog>,
         @Inject(MAT_DIALOG_DATA) public parentData: any,
         private blockChainService: BlockChainService,
         private changeDet: ChangeDetectorRef) {
-
+            
     }
 
     ngOnInit() {
         this.assetID = this.parentData.assetID;
+        this.order = this.parentData.tools;
         this.fillMasterHeaderData();
         this.getAssetHistoryDetails();
     }
@@ -245,16 +247,10 @@ export class AssetDetailsDialog implements OnInit {
         })
 
         console.log("orderlst",orderlst);
-        let processorder = [];
-        let toolList =  InsightsInitService.processJson.Steps;
-        toolList.forEach(element => {
-          console.log(element.Tool.toUpperCase());
-          processorder.push(element.Tool.toUpperCase());
-        });
-        console.log("processorder",processorder);
+        console.log("processorder",this.order);
         
        // let processorder = ["JIRA", "GIT", "JENKINS", "NEXUS"];
-        processorder.forEach(p => {
+       this.order.forEach(p => {
             orderlst.forEach(a => {
                 if (p === a.point) {
                     this.list.push(a);
