@@ -111,7 +111,7 @@ export class AgentConfigurationComponent implements OnInit {
     } else if (this.receivedParam.type == "new") {
       this.btnValue = "Add";//Register
       this.subTitleName = "Add an Agent"
-      this.subTitleInfoText = "(You may edit the Agent from the main page after adding the agent)";
+      this.subTitleInfoText = "(You may edit the Agent from the main page after adding the Agent)";
       this.selectedOS = undefined;
       this.selectedVersion = undefined
       this.selectedTool = undefined;
@@ -365,7 +365,7 @@ export class AgentConfigurationComponent implements OnInit {
           self.agentConfigstatusCode = "SUCCESS";
         } else {
           self.sendStatusMsg("register");
-          self.agentConfigstatus = "Agent Register Failed";
+          self.agentConfigstatus = "Adding Agent Failed.";
           self.agentConfigstatusCode = "ERROR";
         }
       }
@@ -537,7 +537,7 @@ export class AgentConfigurationComponent implements OnInit {
   }
 
   cancelChange(actionType) {
-    var title = "Cancel Agent";
+    var title = "Cancel";
     var dialogmessage = "Are you sure you want to discard your changes?";
     const dialogRef = this.messageDialog.showConfirmationMessage(title, dialogmessage, "", "ALERT", "30%");
     dialogRef.afterClosed().subscribe(result => {

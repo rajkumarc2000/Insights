@@ -279,7 +279,7 @@ tr.mat-header-row {
     padding-right: 30px;
     color: #5C068C;
     /*margin-bottom: 20px;*/
-    padding-top: 0px;
+    /* padding-top: 0px; */
     padding-bottom: 21px
 }
 .textPadding{
@@ -313,7 +313,8 @@ tr.mat-header-row {
 }
 
 .closeiconConf{
-    height:50px;
+    margin-top: 10%;
+    height:40px;
     width: 40px;
     text-align: right; 
     color:white;
