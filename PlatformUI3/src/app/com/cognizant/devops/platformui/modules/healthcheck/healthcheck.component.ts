@@ -18,7 +18,8 @@ import { InsightsInitService } from '@insights/common/insights-initservice';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ShowDetailsDialog } from '@insights/app/modules/healthcheck/healthcheck-show-details-dialog';
-
+import { CommonModule, DatePipe } from '@angular/common';
+import { DataSharedService } from '@insights/common/data-shared-service';
 
 @Component({
   selector: 'app-healthcheck',
@@ -48,18 +49,23 @@ export class HealthCheckComponent implements OnInit {
   agentResponse: any;
   agentNameList: any = [];
   selectAgentTool: any;
-  constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog) {
+  timeZone: string = "+0000";
+  constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog,
+    private dataShare: DataSharedService) {
     this.loadAgentCheckInfo();
     this.loadOtherHealthCheckInfo();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.timeZone = this.dataShare.getStoragedProperty("timeZoneOffSet");
+  }
 
   async loadAgentCheckInfo() {
     try {
       this.showThrobberAgent = true;
       this.showContentAgent = !this.showThrobberAgent;
       this.agentResponse = await this.healthCheckService.loadServerAgentConfiguration();
+      console.log(this.agentResponse);
       if (this.agentResponse != null) {
         this.showThrobberAgent = false;
         this.showContentAgent = !this.showThrobberAgent;

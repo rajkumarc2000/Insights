@@ -28,5 +28,11 @@ export class AuthInterceptor implements HttpInterceptor {
       withCredentials: true
     });
     return next.handle(request);
+    /*// clone request and replace 'http://' with 'https://' at the same time
+    const secureReq = request.clone({
+      url: request.url.replace('http://', 'https://'), withCredentials: true
+    });
+    // send the cloned, "secure" request to the next handler.
+    return next.handle(secureReq);*/
   }
 }

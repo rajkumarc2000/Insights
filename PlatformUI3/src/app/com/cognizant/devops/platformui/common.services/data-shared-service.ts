@@ -17,7 +17,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SESSION_STORAGE, StorageService } from 'ngx-webstorage-service';
-
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Injectable()
 export class DataSharedService {
@@ -25,7 +25,7 @@ export class DataSharedService {
   private userSource = new BehaviorSubject<String>('admin');
   currentUser = this.userSource.asObservable();
 
-  constructor(@Inject(SESSION_STORAGE) private storage: StorageService) { }
+  constructor(@Inject(SESSION_STORAGE) private storage: StorageService, private datePipe: DatePipe) { }
 
   public changeUser(user: String) {
     this.userSource.next(user)
@@ -60,6 +60,31 @@ export class DataSharedService {
 
   public getStorageService(): StorageService {
     return this.storage;
+  }
+
+  public getStoragedProperty(key: string): any {
+    return this.storage.get(key);
+  }
+
+  public storeTimeZone() {
+    var date = new Date();
+    //const timeZoneOffset = date.getTimezoneOffset(); " ==== " + timeZoneOffset +
+    var zone = this.datePipe.transform(date, 'ZZZZ')
+    var zoneOffset = zone.slice(3, zone.length);
+    this.storage.set("timeZone", zone);
+    this.storage.set("timeZoneOffSet", zone);
+  }
+
+  public convertDateToZone(dateStr: string): string {
+    var date = new Date(dateStr);
+    var zone = this.storage.get("timeZone");
+    var zoneOffset = this.storage.get("timeZoneOffSet");
+    var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');//getUTCDate() new Date(date.getUTCMilliseconds()) Y-m-dTH:M:SZ
+    var dateWithTimeZone = this.datePipe.transform(utcDate, 'yyyy-MM-ddTHH:mm:ssZ', zoneOffset);//  '+0530'
+    var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');//getUTCDate() new Date(date.getUTCMilliseconds()) Y-m-dTH:M:SZ
+    var dateWithTimeZone = this.datePipe.transform(utcDate, 'yyyy-MM-ddTHH:mm:ssZ', zoneOffset);//  '+0530'
+    //console.log(date + " ==== " + zone + " ==== " + zoneOffset + " ==== " + dateWithTimeZone + " ====  " + utcDate + " ====  " + dateWithTimeZone.toString());
+    return dateWithTimeZone;
   }
 
 }

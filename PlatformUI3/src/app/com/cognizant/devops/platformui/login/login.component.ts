@@ -22,9 +22,10 @@ import { RestCallHandlerService } from '@insights/common/rest-call-handler.servi
 import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { LogService } from '@insights/common/log-service';
 import { DataSharedService } from '@insights/common/data-shared-service';
+import { ImageHandlerService } from '@insights/common/imageHandler.service';
 
 export interface ILoginComponent {
   createAndValidateForm(): void;
@@ -35,7 +36,7 @@ export interface ILoginComponent {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [LogService]
+  providers: [LogService, DatePipe]
 })
 export class LoginComponent implements OnInit, ILoginComponent {
 
@@ -54,7 +55,8 @@ export class LoginComponent implements OnInit, ILoginComponent {
 
   constructor(private loginService: LoginService, private restAPIUrlService: RestAPIurlService,
     private restCallHandlerService: RestCallHandlerService, private cookieService: CookieService,
-    private router: Router, private logger: LogService, private dataShare: DataSharedService) {
+    private router: Router, private logger: LogService, private dataShare: DataSharedService,
+    private datePipe: DatePipe, private imageHandeler: ImageHandlerService) {
     //console.log(" logging in login "); //this.logger.log
     this.getAsyncData();
 
@@ -62,6 +64,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
 
   ngOnInit() {
     this.createAndValidateForm();
+    this.dataShare.storeTimeZone();
     //this.deleteAllPreviousCookies();
   }
 
@@ -79,6 +82,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
       //console.log(this.resourceImage);
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
+        this.imageHandeler.addImage("customer_logo_uploded", this.imageSrc);
         this.dataShare.uploadOrFetchLogo(this.imageSrc);
       } else {
         this.imageSrc = 'icons/svg/landingPage/Insights_Logo.png';
@@ -108,6 +112,14 @@ export class LoginComponent implements OnInit, ILoginComponent {
           if (data.status === 'SUCCESS') {
             self.showThrobber = false;
             var date = new Date();
+            //var timeZoneOffset = this.dataShare.convertDateToZone(date.toString());
+            //console.log(timeZoneOffset);
+            /*const timeZoneOffset = date.getTimezoneOffset();
+            var zone = this.datePipe.transform(date, 'ZZZZ')
+            var z = zone.slice(3, zone.length);
+            var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');//getUTCDate() new Date(date.getUTCMilliseconds()) Y-m-dTH:M:SZ
+            var dateWithTimeZone = this.datePipe.transform(utcDate, 'yyyy-MM-ddTHH:mm:ssZ', z);//  '+0530'
+            console.log(date + " ==== " + timeZoneOffset + " ==== " + zone + " ==== " + z + " ==== " + dateWithTimeZone + " ====  " + utcDate + " ====  " + dateWithTimeZone.toString());*/
             var dateDashboardSessionExpiration = new Date(new Date().getTime() + 86400 * 1000);
             var minutes = 30;
             date.setTime(date.getTime() + (minutes * 60 * 1000));
