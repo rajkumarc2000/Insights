@@ -166,7 +166,7 @@ mat-dialog-content::-webkit-scrollbar-track {
 .mat-dialog-actions-button {
 	float: right;
 	padding-right: 30px;
-	padding-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .mat-raised-button {

@@ -199,7 +199,7 @@ export class HomeComponent implements OnInit {
         // window.open(this.aboutPageURL, "_blank");
         let aboutDialogRef = this.dialog.open(AboutDialog, {
           panelClass: 'healthcheck-show-details-dialog-container',
-          height: '50%',
+          height: '49%',
           width: '30%',
           disableClose: true,
         });
