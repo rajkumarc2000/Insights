@@ -200,6 +200,7 @@
   
   .form{
       box-sizing: border-box;
+      padding: 20px;
   }
   
   .configureBut {
@@ -417,4 +418,8 @@
     border-radius: 10px 10px 10px 10px;   
     vertical-align:center;
     padding-top: 8px;
+}
+
+.mat-icon-font-size {
+    font-size: 18px;
 }

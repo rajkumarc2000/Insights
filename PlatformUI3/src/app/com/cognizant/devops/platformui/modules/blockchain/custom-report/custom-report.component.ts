@@ -102,14 +102,8 @@ import { QueryBuilderService } from './custom-report-service';
         console.log('deleteReport', this.selectedAgent.reportName);
         let result = await this.queryBuilderService.deleteQuery(this.selectedAgent.reportName);
         if (result.status == "success") {
-            let navigationExtras: NavigationExtras = {
-                skipLocationChange: true,
-                queryParams: {
-                    "querystatus": "Deleted Successfully",
-                    "queryConfigstatusCode": "SUCCESS"
-                }
-            };
-            this.router.navigate(['InSights/Home/querybuilder'], navigationExtras);
+            this.getCustomReports();
+            setTimeout(() => this.messageDialog.showApplicationsMessage("Deleted Successfully","SUCCESS"));
         } else {
             this.messageDialog.showApplicationsMessage("DB Operation Failed!", "ERROR");
         }

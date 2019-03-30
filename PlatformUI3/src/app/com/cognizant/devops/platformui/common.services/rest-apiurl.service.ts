@@ -144,6 +144,8 @@ export class RestAPIurlService implements IRestAPIUrlService {
         this.addEndPoint("CREATE_UPDATE_CYPHER_QUERY", '/PlatformService/blockchain/queryBuilder/createQuery');
         this.addEndPoint("FETCH_CYPHER_QUERY", '/PlatformService/blockchain/queryBuilder/fetchQueries');
         this.addEndPoint("DELETE_CYPHER_QUERY", '/PlatformService/blockchain/queryBuilder/deleteQuery');
+        this.addEndPoint("UPLOAD_QUERY_FILE", '/PlatformService/blockchain/queryBuilder/uploadFile');
+        this.addEndPoint("DOWNLOAD_CYPHER_QUERY",'/PlatformService/blockchain/queryBuilder/getFileContents')
     }
 
     public addEndPoint(name: String, url: String) {

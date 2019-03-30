@@ -19,6 +19,7 @@ import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/rou
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { QueryBuilderService } from '@insights/app/modules/blockchain/custom-report/custom-report-service';
+import { saveAs as importedSaveAs} from "file-saver"; 
 
 @Component({
   selector: 'app-custom-reportconfiguration',
@@ -35,6 +36,7 @@ export class CustomReportConfigComponent implements OnInit {
   frequencyList = ['Daily', 'Weekly', 'Fortnightly', 'Monthly'];
   queryConfigstatusCode;
   queryConfigstatus;
+  selectedFile: File = null;
 
   ngOnInit() {
     console.log("compoenntconfig --");
@@ -58,7 +60,8 @@ export class CustomReportConfigComponent implements OnInit {
     this.queryForm = this.formBuilder.group({
       reportname: ['', [Validators.required]],
       frequency: ['', [Validators.required]],
-      subscribers: ['', [Validators.required, Validators.email]]
+      subscribers: ['', [Validators.required, Validators.email]],
+      query: ['', [Validators.required]]
     })
   }
 
@@ -74,6 +77,7 @@ export class CustomReportConfigComponent implements OnInit {
         reportname: data.reportName,
         frequency: data.frequency,
         subscribers: data.subscribers,
+        query : data.querypath
       }
       console.log('update', datas);
       this.queryForm.setValue(datas);
@@ -88,41 +92,66 @@ export class CustomReportConfigComponent implements OnInit {
     }
   }
 
+  editFile() {
+    this.queryForm.patchValue({
+      query: ''
+    })
+  }
+
+  openFile() {
+    window.open(this.queryForm.get('query').value, '_blank');
+  }
+
+
+  onFileChanged(event) {
+    this.selectedFile = <File>event.target.files[0];
+    console.log(this.selectedFile);
+  }
+
   async saveData(actionType) {
     let result;
+    const fd = new FormData();
+    fd.append('json', this.selectedFile, this.selectedFile.name);
     if (actionType == 'add') {
-      console.log('add');
-      console.log('inside add', this.queryForm.value);
-      result = await this.queryBuilderService.saveOrUpdateQuery(this.queryForm.value);
-      console.log('result --', result);
-      this.queryConfigstatus = "Query Added Successfully"
+        console.log('add');
+        console.log('inside add', this.queryForm.value);
+        let upload = await this.queryBuilderService.uploadFile(fd);
+        if (upload.status == "success") {
+            result = await this.queryBuilderService.saveOrUpdateQuery(this.queryForm.value,this.selectedFile.name);
+            console.log('result --', result);
+            this.queryConfigstatus = "Query Added Successfully"
+        } else {
+            console.log('some issue in upload, Please check the permission');
+            this.messageDialog.showApplicationsMessage("Error uploading File", "ERROR");
+        }
     } else {
       console.log('update');
       console.log('inside update', this.queryForm.value);
-      result = await this.queryBuilderService.saveOrUpdateQuery(this.queryForm.value);
-      console.log('result --', result);
-      this.queryConfigstatus = "Query Updated Successfully"
+      let upload = await this.queryBuilderService.uploadFile(fd);
+      if (upload.status == "success") {
+        result = await this.queryBuilderService.saveOrUpdateQuery(this.queryForm.value,this.selectedFile.name);
+        console.log('result --', result);
+        this.queryConfigstatus = "Query Updated Successfully"
+      } else {
+        console.log('some issue in upload, Please check the permission');
+        this.messageDialog.showApplicationsMessage("Error uploading File", "ERROR");
+      }
     }
 
     if (result.status == "success") {
-      this.queryConfigstatusCode = "SUCCESS";
+        this.queryConfigstatusCode = "SUCCESS";
+        let navigationExtras: NavigationExtras = {
+             skipLocationChange: true,
+             queryParams: {
+                   "querystatus": this.queryConfigstatus,
+                   "queryConfigstatusCode": this.queryConfigstatusCode
+              }
+        };
+        this.router.navigate(['InSights/Home/querybuilder'], navigationExtras);
     } else {
-      this.queryConfigstatus = "DB Operation Failed!"
-      this.queryConfigstatusCode = "ERROR";
-    }
-
-    if (result.status == "success") {
-      let navigationExtras: NavigationExtras = {
-        skipLocationChange: true,
-        queryParams: {
-          "querystatus": this.queryConfigstatus,
-          "queryConfigstatusCode": this.queryConfigstatusCode
-        }
-      };
-      this.router.navigate(['InSights/Home/querybuilder'], navigationExtras);
-
-    } else {
-      this.messageDialog.showApplicationsMessage(this.queryConfigstatus, "ERROR");
+        this.queryConfigstatus = "DB Operation Failed!"
+        this.queryConfigstatusCode = "ERROR";
+        this.messageDialog.showApplicationsMessage(this.queryConfigstatus, "ERROR");
     }
   }
 
@@ -142,6 +171,18 @@ export class CustomReportConfigComponent implements OnInit {
         };
         this.router.navigate(['InSights/Home/querybuilder'], navigationExtras);
       }
+    });
+  }
+
+
+  downloadFile(filepath) {
+    this.queryBuilderService.downloadFile(filepath).subscribe((data) => {
+      console.log(data);
+      importedSaveAs(data);
+    },
+    error => {
+      console.log(error);
+      this.messageDialog.showApplicationsMessage("Error downloading File", "ERROR");
     });
   }
 

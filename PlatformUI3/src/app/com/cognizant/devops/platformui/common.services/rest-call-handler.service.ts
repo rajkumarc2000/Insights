@@ -148,6 +148,20 @@ export class RestCallHandlerService {
 
   }
 
+  
+  public postFormData(url: string, fd: FormData): Observable<any> {
+
+    var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
+    var authToken = this.cookieService.get('Authorization');
+    var dataresponse = this.http.post(restCallUrl, fd, {
+      headers: {
+        'Authorization': authToken
+      },
+    })
+    return dataresponse;
+
+  }
+
   public postWithData(url: string, data: String, requestParams?: Object, additionalheaders?: Object): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
