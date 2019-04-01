@@ -72,7 +72,15 @@
               </div>
               <div *ngIf="element.type=='list'">
                 <mat-select [(ngModel)]="element.value" name="{{element.key}}" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
-                  required placeholder="Select number of records" [disabled]="!iseditdisabled">
+                  required placeholder="Number of Records" [disabled]="!iseditdisabled">
+                  <mat-option *ngFor="let record of element.record" [value]="record.value">
+                    {{record.name}}
+                  </mat-option>
+                  </mat-select>
+              </div>
+              <div *ngIf="element.type=='freq'">
+                <mat-select [(ngModel)]="element.value" name="{{element.key}}" [ngClass]="{  'input-disabled' : !iseditdisabled ,  'form-control': iseditdisabled}"
+                  required placeholder="Set frequency" [disabled]="!iseditdisabled">
                   <mat-option *ngFor="let record of element.record" [value]="record.value">
                     {{record.name}}
                   </mat-option>

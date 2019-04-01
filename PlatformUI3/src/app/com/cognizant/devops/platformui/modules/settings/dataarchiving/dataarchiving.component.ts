@@ -114,7 +114,7 @@ export class DataArchivingComponent implements OnInit {
       {
         key: 'dataArchivalFrequency', value: "", displayName: 'Please select the frequency of Data Archival',
         infoText: "(Daily / Weekly / Monthly)", isReadOnly: false,
-        type: "list", record: this.dataFreqRecord
+        type: "freq", record: this.dataFreqRecord
       },
       {
         key: 'rowLimit', displayName: 'Number of Records to Archive',
