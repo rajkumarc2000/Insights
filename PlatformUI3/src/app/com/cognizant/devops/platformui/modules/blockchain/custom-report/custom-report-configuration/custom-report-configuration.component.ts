@@ -37,6 +37,7 @@ export class CustomReportConfigComponent implements OnInit {
   queryConfigstatusCode;
   queryConfigstatus;
   selectedFile: File = null;
+  showFile: boolean = false;
 
   ngOnInit() {
     console.log("compoenntconfig --");
@@ -61,7 +62,8 @@ export class CustomReportConfigComponent implements OnInit {
       reportname: ['', [Validators.required]],
       frequency: ['', [Validators.required]],
       subscribers: ['', [Validators.required, Validators.email]],
-      query: ['', [Validators.required]]
+      query: ['', [Validators.required]],
+      queryPath : ['']
     })
   }
 
@@ -77,10 +79,10 @@ export class CustomReportConfigComponent implements OnInit {
         reportname: data.reportName,
         frequency: data.frequency,
         subscribers: data.subscribers,
-        query : data.querypath
+        queryPath : data.querypath
       }
       console.log('update', datas);
-      this.queryForm.setValue(datas);
+      this.queryForm.patchValue(datas);
       this.btnValue = "Update";
       this.subTitleName = "Update Query"
       this.subTitleInfoText = "(You may edit the Query builder from the main page after adding)";
@@ -93,9 +95,8 @@ export class CustomReportConfigComponent implements OnInit {
   }
 
   editFile() {
-    this.queryForm.patchValue({
-      query: ''
-    })
+    this.showFile = !this.showFile;
+    console.log('edit')
   }
 
   openFile() {

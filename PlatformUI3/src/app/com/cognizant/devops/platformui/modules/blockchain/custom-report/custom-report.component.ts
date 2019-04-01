@@ -91,6 +91,10 @@ import { QueryBuilderService } from './custom-report-service';
     editReport(){
         console.log('editReport');
         console.log(this.selectedAgent);
+        if(this.selectedAgent === undefined){
+            this.messageDialog.showApplicationsMessage("Please select a record to edit", "ERROR");
+            return;
+        }
         const paramCheck = this.reportSourceList.data.filter(f => f.reportName === this.selectedAgent.reportName);
         const param = paramCheck.length > 0 ? paramCheck[0]: {};
         console.log(param);
@@ -99,6 +103,10 @@ import { QueryBuilderService } from './custom-report-service';
     }
 
     async deleteReport() {
+        if(this.selectedAgent === undefined){
+            this.messageDialog.showApplicationsMessage("Please select a record to Delete", "ERROR");
+            return;
+        }
         console.log('deleteReport', this.selectedAgent.reportName);
         let result = await this.queryBuilderService.deleteQuery(this.selectedAgent.reportName);
         if (result.status == "success") {

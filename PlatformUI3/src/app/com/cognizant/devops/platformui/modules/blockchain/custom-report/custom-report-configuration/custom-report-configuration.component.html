@@ -104,48 +104,30 @@
                 </div>
                 <div class="arrange-horizontally button-row">
                     <div class="labelWidth">
-                        <label class="labelText">Write the Query
+                        <label class="labelText">Upload Query
                             <span style="color:#ff0000">* </span>
-                            <mat-icon title="You may copy and paste the Query in ‘plain text format ONLY’)" class="mat-icon-button mat-icon material-icons mat-icon-font-size">info</mat-icon>
+                            <mat-icon title="Upload Cypher query with proper syntax" class="mat-icon-button mat-icon material-icons mat-icon-font-size">info</mat-icon>
                         </label>
                     </div>
                     <div class="inputWidth">
-                        <!-- <span *ngIf="this.receivedParam.type ==='update' && queryForm.get('query').value !== ''">
-                                <a href="file:///{{queryForm.get('query').value}}">{{queryForm.get('query').value}}</a>
-                            <p class="form-control" style="width:70%;"> {{queryForm.get('query').value}}
-                            <span>
-                                <button mat-icon-button (click)="editFile()">
-                                    <mat-icon title="Edit " class="mat-icon material-icons">
-                                        edit
-                                    </mat-icon>
-                                </button>
-                            </span>
-                            <span>
-                                <button mat-icon-button (click)="openFile()">
-                                    <mat-icon title="Edit " class="mat-icon material-icons">
-                                        View
-                                    </mat-icon>
-                                </button>
-                            </span></p>
-                        </span> -->
-                        <span *ngIf="this.receivedParam.type ==='update'">
-                            <span *ngIf="queryForm.get('query').value === ''">
-                                <input type="file" class="form-control" (change)="onFileChanged($event)" formControlName="query">
-                            </span>
-                            <span *ngIf="queryForm.get('query').value !== ''">
-                                <p>
-                                    <span style="font-size: 14px;margin-left: 10px;text-decoration: underline;cursor: pointer;" (click)="downloadFile(queryForm.get('query').value)">{{queryForm.get('query').value}}</span>
-                                    <span>
-                                        <button mat-icon-button (click)="editFile()">
-                                            <mat-icon title="Edit " class="mat-icon material-icons">edit</mat-icon>
-                                        </button>
-                                    </span>
-                                </p>
-                            </span>
-                        </span>
                         <span *ngIf="this.receivedParam.type ==='add'">
-                            <input type="file" class="form-control" (change)="onFileChanged($event)" formControlName="query">
+                                <input type="file" class="form-control" (change)="onFileChanged($event)" formControlName="query">
                         </span>
+                        <span *ngIf="this.receivedParam.type ==='update'">
+                                <span *ngIf="this.showFile">
+                                    <input type="file" class="form-control" (change)="onFileChanged($event)" formControlName="query">
+                                </span>
+                                <span *ngIf="!this.showFile">
+                                    <p>
+                                        <span style="font-size: 14px;margin-left: 10px;text-decoration: underline;cursor: pointer;" (click)="downloadFile(queryForm.get('queryPath').value)">{{queryForm.get('queryPath').value}}</span>
+                                        <span>
+                                            <button mat-icon-button (click)="editFile()">
+                                                <mat-icon title="Edit " class="mat-icon material-icons">edit</mat-icon>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </span>
+                            </span>
                     </div>
                 </div>
 
