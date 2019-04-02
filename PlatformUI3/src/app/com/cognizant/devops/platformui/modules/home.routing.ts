@@ -28,6 +28,7 @@ import { DataArchivingComponent } from '@insights/app/modules/settings/dataarchi
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
 import { BlockChainComponent } from '@insights/app/modules/blockchain/blockchain.component';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
+import { RelationshipBuilderComponent } from '@insights/app/modules/relationship-builder/relationship-builder.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 import { LogoSettingComponent } from '@insights/app/modules/settings/logo-setting/logo-setting.component';
 import { CustomReportComponent } from './blockchain/custom-report/custom-report.component';
@@ -45,6 +46,7 @@ const homeRoutes: Routes = [
       { path: 'loggedout', redirectTo: 'login' },
       { path: 'agentmanagement', component: AgentManagementComponent },
       { path: 'datadictionary', component: DatadictionaryComponent },
+      { path: 'relationship-builder', component: RelationshipBuilderComponent },
       { path: 'businessmapping', component: BusinessMappingComponent },
       { path: 'dataarchiving', component: DataArchivingComponent },
       { path: 'agentconfiguration', component: AgentConfigurationComponent },
