@@ -166,7 +166,7 @@ System.register(['jquery', 'angular'], function(exports_1) {
                             textColor = '#d8d9da';
                         }
                         chartOptions = angular_1.default.copy(chartOptions, {});
-                        chartOptions['backgroundColor'] = fillColor;
+                        //chartOptions['backgroundColor'] = fillColor;
                         var hAxis = chartOptions['hAxis'];
                         if (hAxis === undefined) {
                             hAxis = {};
@@ -177,13 +177,13 @@ System.register(['jquery', 'angular'], function(exports_1) {
                             hTextStyle = {};
                             hAxis['textStyle'] = hTextStyle;
                         }
-                        hTextStyle['color'] = textColor;
+                        //hTextStyle['color'] = textColor;
                         var legendTextStyle = chartOptions['legendTextStyle'];
                         if (legendTextStyle === undefined) {
                             legendTextStyle = {};
                             chartOptions['legendTextStyle'] = legendTextStyle;
                         }
-                        legendTextStyle['color'] = textColor;
+                        //legendTextStyle['color'] = textColor;
                         var vAxes = chartOptions['vAxes'];
                         if (vAxes === undefined) {
                             vAxes = [{}];
@@ -196,7 +196,6 @@ System.register(['jquery', 'angular'], function(exports_1) {
                                 vTextStyle = {};
                                 vAxis['textStyle'] = vTextStyle;
                             }
-                            vTextStyle['color'] = textColor;
                         }
                     }
                     return chartOptions;

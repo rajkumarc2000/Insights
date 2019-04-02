@@ -146,52 +146,52 @@ export class BaseCharts {
         this.appendChartContainer();
     }
 
-    applyTheme(chartOptions){
+    applyTheme(chartOptions) {
         let grafanaBootData = window['grafanaBootData'];
         let isLightTheme = grafanaBootData.user.lightTheme;
         let version = Number(grafanaBootData.settings.buildInfo.version.split(".")[0]);
-        if(version >= 5){
+        if (version >= 5) {
             let textColor = '';
             let fillColor = '';
-            if(isLightTheme){
+            if (isLightTheme) {
                 fillColor = '#ffffff';
                 textColor = '#52545c';
-            }else{
+            } else {
                 fillColor = '#212124';
                 textColor = '#d8d9da';
             }
             chartOptions = angular.copy(chartOptions, {})
-            chartOptions['backgroundColor'] = fillColor;
+            //chartOptions['backgroundColor'] = fillColor;
             let hAxis = chartOptions['hAxis'];
-            if(hAxis === undefined){
+            if (hAxis === undefined) {
                 hAxis = {};
                 chartOptions['hAxis'] = hAxis;
             }
             let hTextStyle = hAxis['textStyle'];
-            if(hTextStyle === undefined){
+            if (hTextStyle === undefined) {
                 hTextStyle = {};
                 hAxis['textStyle'] = hTextStyle;
             }
-            hTextStyle['color'] = textColor;
+            //hTextStyle['color'] = textColor;
             let legendTextStyle = chartOptions['legendTextStyle'];
-            if(legendTextStyle === undefined){
+            if (legendTextStyle === undefined) {
                 legendTextStyle = {};
                 chartOptions['legendTextStyle'] = legendTextStyle;
             }
-            legendTextStyle['color'] = textColor;
+            //legendTextStyle['color'] = textColor;
             let vAxes = chartOptions['vAxes'];
-            if(vAxes === undefined){
+            if (vAxes === undefined) {
                 vAxes = [{}];
                 chartOptions['vAxes'] = vAxes;
             }
-            for(let v in vAxes){
+            for (let v in vAxes) {
                 let vAxis = vAxes[v];
                 let vTextStyle = vAxis['textStyle'];
-                if(vTextStyle === undefined){
+                if (vTextStyle === undefined) {
                     vTextStyle = {};
-                    vAxis['textStyle'] =vTextStyle;
+                    vAxis['textStyle'] = vTextStyle;
                 }
-                vTextStyle['color'] = textColor;
+                //vTextStyle['color'] = textColor;
             }
         }
         return chartOptions;
