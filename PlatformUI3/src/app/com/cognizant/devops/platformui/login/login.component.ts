@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
     try {
       var restCallUrl = this.restAPIUrlService.getRestCallUrl("GET_LOGO_IMAGE");
       this.resourceImage = await this.restCallHandlerService.getJSON(restCallUrl);
-      //console.log(this.resourceImage);
+      this.dataShare.removeCustomerLogoFromSesssion()
       if (this.resourceImage.data.encodedString.length > 0) {
         this.imageSrc = 'data:image/jpg;base64,' + this.resourceImage.data.encodedString;
         this.imageHandeler.addImage("customer_logo_uploded", this.imageSrc);

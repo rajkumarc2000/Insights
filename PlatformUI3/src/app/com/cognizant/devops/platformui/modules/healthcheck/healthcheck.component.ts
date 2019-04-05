@@ -49,7 +49,7 @@ export class HealthCheckComponent implements OnInit {
   agentResponse: any;
   agentNameList: any = [];
   selectAgentTool: any;
-  timeZone: string = "+0000";
+  //timeZone: string = "+0000";
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog,
     private dataShare: DataSharedService) {
     this.loadAgentCheckInfo();
@@ -57,7 +57,8 @@ export class HealthCheckComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timeZone = this.dataShare.getStoragedProperty("timeZoneOffSet");
+    //this.timeZone = this.dataShare.getStoragedProperty("timeZoneOffSet");
+    //console.log(this.timeZone);
   }
 
   async loadAgentCheckInfo() {

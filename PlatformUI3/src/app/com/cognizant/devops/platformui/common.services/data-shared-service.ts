@@ -32,7 +32,6 @@ export class DataSharedService {
   }
 
   public uploadOrFetchLogo(imageSrc: any) {
-    //console.log("in uploadOrFetchLogo ")
     if (imageSrc != 'DefaultLogo') {
       this.storage.set("customerLogo", imageSrc);
     } else {
@@ -42,6 +41,10 @@ export class DataSharedService {
 
   public getCustomerLogo() {
     return this.storage.get("customerLogo");
+  }
+
+  public removeCustomerLogoFromSesssion(): void {
+    this.storage.remove("customerLogo");
   }
 
   public setUserName(userName: String) {
@@ -79,11 +82,9 @@ export class DataSharedService {
     var date = new Date(dateStr);
     var zone = this.storage.get("timeZone");
     var zoneOffset = this.storage.get("timeZoneOffSet");
-    var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');//getUTCDate() new Date(date.getUTCMilliseconds()) Y-m-dTH:M:SZ
-    var dateWithTimeZone = this.datePipe.transform(utcDate, 'yyyy-MM-ddTHH:mm:ssZ', zoneOffset);//  '+0530'
-    var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');//getUTCDate() new Date(date.getUTCMilliseconds()) Y-m-dTH:M:SZ
-    var dateWithTimeZone = this.datePipe.transform(utcDate, 'yyyy-MM-ddTHH:mm:ssZ', zoneOffset);//  '+0530'
-    //console.log(date + " ==== " + zone + " ==== " + zoneOffset + " ==== " + dateWithTimeZone + " ====  " + utcDate + " ====  " + dateWithTimeZone.toString());
+    //var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');
+    var dateWithTimeZone = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', zoneOffset);//  '+0530' utcDate
+    console.log(date + " ==== " + zone + " ==== " + zoneOffset + " ==== " + dateWithTimeZone + " ====  " + + " ====  " + dateWithTimeZone.toString());
     return dateWithTimeZone;
   }
 
