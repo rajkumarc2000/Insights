@@ -36,8 +36,9 @@ export class LogoSettingComponent implements OnInit {
   buttonEnable: boolean = false;
   url = '';
 
-  constructor(private logoSettingService: LogoSettingService, private http: HttpClient, private restAPIUrlService: RestAPIurlService,
-    private cookieService: CookieService, public messageDialog: MessageDialogService) { }
+  constructor(private logoSettingService: LogoSettingService, private http: HttpClient,
+    private restAPIUrlService: RestAPIurlService, private cookieService: CookieService,
+    public messageDialog: MessageDialogService) { }
 
   ngOnInit() {
   }

@@ -47,12 +47,12 @@ import { GrafanaDashboardService } from '@insights/app/modules/grafana-dashboard
 import { AgentService } from '@insights/app/modules/admin/agent-management/agent-management-service';
 import { HealthCheckService } from '@insights/app/modules/healthcheck/healthcheck.service';
 import { DataDictionaryService } from '@insights/app/modules/datadictionary/datadictionary.service';
-
+import { RelationshipBuilderComponent } from '@insights/app/modules/relationship-builder/relationship-builder.component';
 import { BusinessMappingService } from '@insights/app/modules/admin/businessmapping/businessmapping.service';
 import { BusinessMappingComponent } from '@insights/app/modules/admin/businessmapping/businessmapping.component';
 import { DataArchivingService } from '@insights/app/modules/settings/dataarchiving/dataarchiving-service';
 import { AgentConfigurationComponent } from '@insights/app/modules/admin/agent-management/agent-configuration/agent-configuration.component';
-
+import { RelationshipBuilderService } from '@insights/app/modules/relationship-builder/relationship-builder.service';
 import { UserOnboardingComponent } from '@insights/app/modules/user-onboarding/user-onboarding.component';
 import { LandingPageComponent } from '@insights/app/modules/landing-page/landing-page.component';
 import { ConfirmationMessageDialog } from '@insights/app/modules/application-dialog/confirmation-message-dialog';
@@ -70,6 +70,7 @@ import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
 import { CustomReportComponent } from './blockchain/custom-report/custom-report.component';
 import { CustomReportConfigComponent } from './blockchain/custom-report/custom-report-configuration/custom-report-configuration.component';
 import { QueryBuilderService } from './blockchain/custom-report/custom-report-service';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { QueryBuilderService } from './blockchain/custom-report/custom-report-se
     ShowDetailsDialog,
     AboutDialog,
     AgentManagementComponent,
+    RelationshipBuilderComponent,
     DatadictionaryComponent,
     BusinessMappingComponent,
     DataArchivingComponent,
@@ -127,6 +129,7 @@ import { QueryBuilderService } from './blockchain/custom-report/custom-report-se
     AgentService,
     HealthCheckService,
     DataDictionaryService,
+    RelationshipBuilderService,
     BusinessMappingService,
     DataArchivingService,
     UserOnboardingService,

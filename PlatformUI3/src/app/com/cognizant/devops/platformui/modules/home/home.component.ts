@@ -81,11 +81,9 @@ export class HomeComponent implements OnInit {
   insightsCustomerLogo: any;
   aboutPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/pages/218936/Release+Notes";
   helpPageURL = "https://onedevops.atlassian.net/wiki/spaces/OI/overview";
+
   ngOnInit() {
-    this.insightsCustomerLogo = this.dataShare.getCustomerLogo();
-    if (this.insightsCustomerLogo == "DefaultLogo") {
-      this.insightsCustomerLogo = "";//icons/svg/homePage/Customer_Logo.png
-    }
+    this.loadCustomerLogo();
   }
 
   constructor(private grafanaService: GrafanaAuthenticationService,
@@ -97,6 +95,7 @@ export class HomeComponent implements OnInit {
     if (this.depth === undefined) {
       this.depth = 0;
     }
+    this.loadCustomerLogo();
     this.grafanaService.validateSession();
     this.isValidUser = true;
     this.framesize = window.frames.innerHeight;
@@ -117,6 +116,13 @@ export class HomeComponent implements OnInit {
 
   onMenuClick() {
     this.isExpanded = !this.isExpanded
+  }
+
+  loadCustomerLogo() {
+    this.insightsCustomerLogo = this.dataShare.getCustomerLogo();
+    if (this.insightsCustomerLogo == "DefaultLogo") {
+      this.insightsCustomerLogo = "";
+    }
   }
 
   public async getInformationFromGrafana() {
@@ -274,7 +280,7 @@ export class HomeComponent implements OnInit {
       //   isAdminMenu: true
       // },
       {
-        displayName : 'Audit Reporting',
+        displayName: 'Audit Reporting',
         iconName: 'feature',
         isAdminMenu: false,
         showMenu: true,
@@ -310,6 +316,9 @@ export class HomeComponent implements OnInit {
         title: "Playlist",
         isAdminMenu: false
       },
+
+
+
       {
         displayName: 'Data Dictionary',
         iconName: 'datadictionary',
@@ -360,6 +369,16 @@ export class HomeComponent implements OnInit {
             isToolbarDisplay: true,
             showMenu: true,
             title: "Group & Users",
+            isAdminMenu: true
+          },
+
+          {
+            displayName: 'Relationship Builder',
+            iconName: 'feature',
+            route: 'InSights/Home/relationship-builder',
+            isToolbarDisplay: true,
+            showMenu: true,
+            title: "Relationship-Builder",
             isAdminMenu: true
           },
           {
