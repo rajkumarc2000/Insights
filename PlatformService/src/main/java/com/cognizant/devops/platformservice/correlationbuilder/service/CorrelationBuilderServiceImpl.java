@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.cognizant.devops.platformcommons.exception.InsightsCustomException;
 import com.cognizant.devops.platformservice.agentmanagement.service.AgentManagementServiceImpl;
 import com.cognizant.devops.platformservice.businessmapping.service.BusinessMappingService;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -27,7 +28,7 @@ public class CorrelationBuilderServiceImpl implements CorrelationBuilderService 
 	public String getCorrelationJson() throws InsightsCustomException {
 		// TODO Auto-generated method stub
 		//Path dir = Paths.get(filePath);
-		String agentPath = "C:\\Users\\593714\\Desktop\\downloads\\Server2\\INSIGHTS_HOME\\.InSights\\";
+		String agentPath = "D:\\Project\\Insights_Windows\\Server2\\INSIGHTS_HOME\\.InSights";
 		Path dir = Paths.get(agentPath);
 		String config = null;
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
@@ -36,7 +37,7 @@ public class CorrelationBuilderServiceImpl implements CorrelationBuilderService 
 
 			JsonParser parser = new JsonParser();
 			Object obj = parser.parse(reader);
-			config = ((JsonObject) obj).toString();
+			config = ((JsonArray) obj).toString();
 		} catch (IOException e) {
 			log.error("Offline file reading issue", e);
 			throw new InsightsCustomException("Offline file reading issue -" + e.getMessage());
