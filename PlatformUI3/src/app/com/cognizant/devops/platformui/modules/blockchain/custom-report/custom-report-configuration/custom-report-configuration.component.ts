@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { MessageDialogService } from '@insights/app/modules/application-dialog/message-dialog-service';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { QueryBuilderService } from '@insights/app/modules/blockchain/custom-report/custom-report-service';
 import { saveAs as importedSaveAs} from "file-saver"; 
 
@@ -44,7 +44,6 @@ export class CustomReportConfigComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.receivedParam = JSON.parse(params["reportparam"]);
-
       this.showThrobber = true;
       this.initializeVariable();
     });
@@ -61,11 +60,17 @@ export class CustomReportConfigComponent implements OnInit {
     this.queryForm = this.formBuilder.group({
       reportname: ['', [Validators.required]],
       frequency: ['', [Validators.required]],
-      subscribers: ['', [Validators.required, Validators.email]],
-      query: ['', [Validators.required]],
-      queryPath : ['']
+      subscribers: ['', [Validators.required, this.commaSepEmail]],
+      queryPath : ['', Validators.required]
     })
   }
+
+  commaSepEmail = (control: AbstractControl): { [key: string]: any } | null => {
+    const emails = control.value.split(',');
+    const forbidden = emails.some(email => Validators.email(new FormControl(email)));
+   console.log(forbidden);
+    return forbidden ? { 'toAddress': { value: control.value } } : null;
+  };
 
   get formValues() { return this.queryForm.controls; }
 
@@ -75,15 +80,17 @@ export class CustomReportConfigComponent implements OnInit {
       this.showThrobber = false;
       console.log('in update', this.receivedParam);
       const { data } = this.receivedParam;
+      const queryPath = data.querypath.slice().split('\\').pop();
       const datas = {
-        reportname: data.reportName,
-        frequency: data.frequency,
-        subscribers: data.subscribers,
-        queryPath : data.querypath
+        reportname: [{value: data.reportName, disabled: true}, Validators.required],
+        frequency: [data.frequency, Validators.required],
+        subscribers: [data.subscribers, Validators.required],
+        queryPath : [queryPath, Validators.required]
       }
       console.log('update', datas);
-      this.queryForm.patchValue(datas);
+      this.queryForm = this.formBuilder.group(datas);
       this.btnValue = "Update";
+      console.log(this.btnValue);
       this.subTitleName = "Update Query"
       this.subTitleInfoText = "(You may edit the Query builder from the main page after adding)";
     } else if (this.receivedParam.type == "add") {
@@ -96,6 +103,9 @@ export class CustomReportConfigComponent implements OnInit {
 
   editFile() {
     this.showFile = !this.showFile;
+    this.queryForm.patchValue({
+      queryPath: ''
+    })
     console.log('edit')
   }
 
@@ -106,6 +116,9 @@ export class CustomReportConfigComponent implements OnInit {
 
   onFileChanged(event) {
     this.selectedFile = <File>event.target.files[0];
+    this.queryForm.patchValue({
+      queryPath: this.selectedFile.name
+    })
     console.log(this.selectedFile);
   }
 
@@ -176,8 +189,9 @@ export class CustomReportConfigComponent implements OnInit {
   }
 
 
-  downloadFile(filepath) {
-    this.queryBuilderService.downloadFile(filepath).subscribe((data) => {
+  downloadFile() {
+    console.log(this.receivedParam);
+    this.queryBuilderService.downloadFile(this.receivedParam.data.querypath).subscribe((data) => {
       console.log(data);
       importedSaveAs(data);
     },

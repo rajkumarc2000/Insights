@@ -111,15 +111,15 @@
                     </div>
                     <div class="inputWidth">
                         <span *ngIf="this.receivedParam.type ==='add'">
-                                <input type="file" class="form-control" (change)="onFileChanged($event)" formControlName="query">
+                                <input type="file" class="form-control" (change)="onFileChanged($event)">
                         </span>
                         <span *ngIf="this.receivedParam.type ==='update'">
                                 <span *ngIf="this.showFile">
-                                    <input type="file" class="form-control" (change)="onFileChanged($event)" formControlName="query">
+                                    <input type="file" class="form-control" (change)="onFileChanged($event)">
                                 </span>
                                 <span *ngIf="!this.showFile">
                                     <p>
-                                        <span style="font-size: 14px;margin-left: 10px;text-decoration: underline;cursor: pointer;" (click)="downloadFile(queryForm.get('queryPath').value)">{{queryForm.get('queryPath').value}}</span>
+                                        <span style="font-size: 14px;margin-left: 10px;text-decoration: underline;cursor: pointer;" (click)="downloadFile()">{{queryForm.get('queryPath').value}}</span>
                                         <span>
                                             <button mat-icon-button (click)="editFile()">
                                                 <mat-icon title="Edit " class="mat-icon material-icons">edit</mat-icon>
@@ -127,7 +127,7 @@
                                         </span>
                                     </p>
                                 </span>
-                            </span>
+                        </span>
                     </div>
                 </div>
 
