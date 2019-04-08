@@ -36,7 +36,7 @@ export class QueryBuilderService implements IQueryBuilderService {
     saveOrUpdateQuery(form: any,fileName: any): Promise<any> {
         console.log(form);
         return this.restCallHandlerService.postWithParameter("CREATE_UPDATE_CYPHER_QUERY",
-            { 'reportName': form.reportname, 'frequency': form.frequency, 'subscribers': form.subscribers, 'fileName': fileName},
+            { 'reportName': form.reportname, 'frequency': form.frequency, 'subscribers': form.subscribers, 'fileName': fileName, 'queryType': form.querytype},
             { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
