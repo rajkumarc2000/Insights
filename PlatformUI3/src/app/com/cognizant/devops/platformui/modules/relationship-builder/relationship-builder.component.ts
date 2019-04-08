@@ -37,7 +37,7 @@ export class RelationshipBuilderComponent implements OnInit {
   agent1Category: any;
   agent2Tool: any;
   agent2Category: any;
-  corrprop: any;
+
   corrData: any;
 
   constructor(private relationshipBuilderService: RelationshipBuilderService) {
@@ -119,25 +119,26 @@ export class RelationshipBuilderComponent implements OnInit {
 
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
-          // console.log(corelationResponse);
+          console.log(corelationResponse);
           //this.corrprop = corelationResponse.data;// corelationResponse.data ["relationName"]
           this.corrprop = corelationResponse;
-          //  console.log(this.corrprop);
+          console.log(this.corrprop);
           if (this.corrprop != null) {
             // console.log(this.corrprop);
 
             for (var key in this.corrprop) {
               var element = this.corrprop[key];
               //element.relationName = key;
-              console.log(element.relationName);
+              //console.log(element.relationName);
 
-              this.servicesDataSource.push(element.relationName);
+              this.servicesDataSource.push(element);
 
             }
           }
 
           console.log(this.servicesDataSource);
           this.dataComponentColumns = ['relationName'];
+          //console.log(this.dataComponentColumns);
 
         }
       );
