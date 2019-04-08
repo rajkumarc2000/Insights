@@ -61,7 +61,8 @@ export class CustomReportConfigComponent implements OnInit {
       reportname: ['', [Validators.required]],
       frequency: ['', [Validators.required]],
       subscribers: ['', [Validators.required, this.commaSepEmail]],
-      queryPath : ['', Validators.required]
+      queryPath : ['', [Validators.required]],
+      querytype : ['',[Validators.required]]
     })
   }
 
@@ -85,7 +86,8 @@ export class CustomReportConfigComponent implements OnInit {
         reportname: [{value: data.reportName, disabled: true}, Validators.required],
         frequency: [data.frequency, Validators.required],
         subscribers: [data.subscribers, Validators.required],
-        queryPath : [queryPath, Validators.required]
+        queryPath : [queryPath, Validators.required],
+        querytype : [data.querytype, Validators.required]
       }
       console.log('update', datas);
       this.queryForm = this.formBuilder.group(datas);

@@ -423,3 +423,11 @@
 .mat-icon-font-size {
     font-size: 18px;
 }
+
+.query{
+    text-align: right;
+    margin-left: 2%;
+    font-family: Open Sans !important;
+    font-size: 14px;
+    margin-right: 3%;
+}
