@@ -13,8 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.cognizant.devops.platformcommons.config.ApplicationConfigProvider;
 import com.cognizant.devops.platformcommons.exception.InsightsCustomException;
 import com.cognizant.devops.platformservice.agentmanagement.service.AgentManagementServiceImpl;
+import com.cognizant.devops.platformservice.agentmanagement.util.AgentManagementUtil;
 import com.cognizant.devops.platformservice.businessmapping.service.BusinessMappingService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -28,7 +30,7 @@ public class CorrelationBuilderServiceImpl implements CorrelationBuilderService 
 	public String getCorrelationJson() throws InsightsCustomException {
 		// TODO Auto-generated method stub
 		//Path dir = Paths.get(filePath);
-		String agentPath = "D:\\Project\\Insights_Windows\\Server2\\INSIGHTS_HOME\\.InSights";
+		String agentPath = "C:\\Users\\593714\\Desktop\\downloads\\Server2\\INSIGHTS_HOME\\.InSights";
 		Path dir = Paths.get(agentPath);
 		String config = null;
 		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
@@ -42,8 +44,35 @@ public class CorrelationBuilderServiceImpl implements CorrelationBuilderService 
 			log.error("Offline file reading issue", e);
 			throw new InsightsCustomException("Offline file reading issue -" + e.getMessage());
 		}
-		log.error(config);
+		log.error("config"+config); 
 		return config;
+	}
+	
+	@Override
+	public String saveConfig(String config) throws InsightsCustomException {
+		String configFilePath = "C:\\Users\\593714\\Desktop\\downloads\\Server2\\INSIGHTS_HOME\\.InSights";
+		File configFile = null;
+		// Writing json to file
+		log.error("saveconfig"+config);
+		Path dir = Paths.get(configFilePath);
+		try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
+				(path, attrs) -> attrs.isRegularFile() && path.toString().endsWith("correlation.json"))) {
+
+			configFile = paths.limit(1).findFirst().get().toFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try (FileWriter file = new FileWriter(configFile)) {
+			file.write(config.toString());
+			file.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return "succcess";
+
 	}
 
 }
