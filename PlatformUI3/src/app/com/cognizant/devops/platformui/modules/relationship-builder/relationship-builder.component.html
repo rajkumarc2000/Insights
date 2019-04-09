@@ -74,13 +74,15 @@
           <table *ngIf="showDetail" style="margin-left: 3%;">
             <tbody style="display:grid;max-height:50vh;overflow:auto;">
               <tr class="dat-row" *ngFor="let element of agent1TableData">
-                <ng-container matColumnDef="radio">
-
-                  <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element)"></mat-radio-button>
-
+                <mat-radio-group [(ngModel)]="selectedMappingAgent">
+                  <ng-container matColumnDef="radio">
+                    <!-- 
+                  <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element)"></mat-radio-button> -->
+                    <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element) "></mat-radio-button>
+                  </ng-container>
 
                   <td style="text-align:left;padding-left: 15px;padding-top: 8px;align-items: center;">{{element}}</td>
-                </ng-container>
+                </mat-radio-group>
               </tr>
             </tbody>
           </table>
@@ -94,7 +96,15 @@
           <table *ngIf="showDetail2" style="margin-left: 4%;">
             <tbody style="display:grid;max-height:50vh;overflow:auto;">
               <tr class="dat-row" *ngFor="let element of agent2TableData">
-                <td style="text-align:left;padding-left: 15px;padding-top: 8px;">{{element}}</td>
+
+                <mat-radio-group [(ngModel)]="selectedMappingAgent2">
+                  <ng-container matColumnDef="radio">
+                    <!-- 
+                                  <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element)"></mat-radio-button> -->
+                    <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element) "></mat-radio-button>
+                  </ng-container>
+                  <td style="text-align:left;padding-left: 15px;padding-top: 8px;">{{element}}</td>
+                </mat-radio-group>
               </tr>
             </tbody>
           </table>
