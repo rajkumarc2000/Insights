@@ -16,6 +16,8 @@ export class RelationshipBuilderComponent implements OnInit {
   agentNodes = [];
   displayedAgentColumns: string[];
   selectedAgent1: any;
+  isListView = false;
+  isEditData = false;
   selectedAgent2: any;
   agent1TableData: any;
   agent2TableData: any;
@@ -183,6 +185,10 @@ export class RelationshipBuilderComponent implements OnInit {
     }
 
 
+  }
+  statusEdit(selectedElement) {
+    this.isListView = true;
+    this.isEditData = true;
   }
 
 
