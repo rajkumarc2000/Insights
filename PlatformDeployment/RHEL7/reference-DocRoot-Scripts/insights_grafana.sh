@@ -18,7 +18,7 @@ echo "#################### Installing Grafana (running as BG process) ##########
 sudo mkdir grafana
 cd grafana
 sudo wget https://platform.cogdevops.com/insights_install/installationScripts/latest/RHEL/grafana/latest/grafana.tar.gz
-sudo tar -zxvf grafana.tar.gz
+sudo tar -xvf grafana.tar.gz
 export GRAFANA_HOME=`pwd`
 sudo echo GRAFANA_HOME=`pwd` | sudo tee -a /etc/environment
 sudo echo "export" GRAFANA_HOME=`pwd` | sudo tee -a /etc/profile
