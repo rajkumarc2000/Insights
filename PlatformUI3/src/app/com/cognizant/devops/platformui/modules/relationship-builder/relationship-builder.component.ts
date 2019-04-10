@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RelationshipBuilderService } from '@insights/app/modules/relationship-builder/relationship-builder.service';
-
+import { ShowJsonDialog } from '@insights/app/modules/relationship-builder/show-correlationjson';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-relationship-builder',
   templateUrl: './relationship-builder.component.html',
@@ -9,6 +10,7 @@ import { RelationshipBuilderService } from '@insights/app/modules/relationship-b
 export class RelationshipBuilderComponent implements OnInit {
   dictResponse: any;
   corelationResponse: any;
+  corelationResponseMaster: any;
   dataComponentColumns: string[];
   agentDataSource = [];
   corrprop = [];
@@ -42,7 +44,11 @@ export class RelationshipBuilderComponent implements OnInit {
   public data: any;
   corrData: any;
 
-  constructor(private relationshipBuilderService: RelationshipBuilderService) {
+
+  relData: any;
+  relationDataSource = [];
+
+  constructor(private relationshipBuilderService: RelationshipBuilderService, private dialog: MatDialog) {
     this.dataDictionaryInfo();
     this.getCorrelation();
   }
@@ -118,11 +124,46 @@ export class RelationshipBuilderComponent implements OnInit {
 
   getCorrelation() {
     try {
+      var self = this;
+      this.relationshipBuilderService.loadUiServiceLocation().then(
+        (corelationResponse) => {
+          self.corelationResponseMaster = corelationResponse;
+          this.corrprop = corelationResponse;
+          console.log(corelationResponse);
+          if (this.corrprop != null) {
+            for (var key in this.corrprop) {
+              var element = this.corrprop[key];
+              var a = (element.relationName);
+              var b = (element.destination.toolName);
+              var c = (element.source.toolName);
+              this.relationDataSource.push(a)
+              this.servicesDataSource.push(element);
+            }
+          }
+          this.relData = this.relationDataSource;
+          console.log(this.relData);
+          this.dataComponentColumns = ['relationName']; 
+        });
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
+
+
+
+
+  /* getCorrelation() {
+    try {
 
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
 
-
+          var sample = JSON.stringify(this.corelationResponse);
 
           //console.log(corelationResponse);
           //this.corrprop = corelationResponse.data;// corelationResponse.data ["relationName"]
@@ -150,42 +191,56 @@ export class RelationshipBuilderComponent implements OnInit {
                // this.servicesDataSource.push(d);
                this.servicesDataSource.push(c) */
 
-              //}
+  //}
 
-            }
-          }
+  //  }
+  // }
 
-          //this.data = this.servicesDataSource;
-          console.log(this.servicesDataSource);
-
-
-          /* var sample = JSON.stringify(this.servicesDataSource); */
-          /*for (var keys in this.servicesDataSource) {
-            var elements = this.servicesDataSource[keys];
-            console.log(keys);
-            console.log(elements);
-            
-          }
-
- */
-
-          this.dataComponentColumns = ['relationName'];
-          console.log(this.dataComponentColumns);
-
-        }
-      );
+  //this.data = this.servicesDataSource;
+  //          console.log(this.servicesDataSource);
 
 
-
-
-
-    }
-    catch (error) {
-      console.log(error);
-    }
-
-
+  /* var sample = JSON.stringify(this.servicesDataSource); */
+  /*for (var keys in this.servicesDataSource) {
+    var elements = this.servicesDataSource[keys];
+    console.log(keys);
+    console.log(elements);
+    
   }
+
+ 
+
+  this.dataComponentColumns = ['relationName'];
+  console.log(this.dataComponentColumns);
+
+}
+);
+
+
+
+
+
+}
+catch (error) {
+console.log(error);
+}
+
+
+} */
+
+
+  showDetailsDialog() {
+
+    let showJsonDialog = this.dialog.open(ShowJsonDialog, {
+      panelClass: 'showjson-dialog-container',
+      height: '500px',
+      width: '900px',
+      disableClose: true,
+      data: this.corelationResponseMaster,
+
+    });
+  }
+
   statusEdit(selectedElement) {
     this.isListView = true;
     this.isEditData = true;

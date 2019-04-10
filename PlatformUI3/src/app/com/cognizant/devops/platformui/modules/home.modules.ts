@@ -70,6 +70,7 @@ import { AssetPipe } from './blockchain/bc-asset-pipe.pipe';
 import { CustomReportComponent } from './blockchain/custom-report/custom-report.component';
 import { CustomReportConfigComponent } from './blockchain/custom-report/custom-report-configuration/custom-report-configuration.component';
 import { QueryBuilderService } from './blockchain/custom-report/custom-report-service';
+import { ShowJsonDialog } from '@insights/app/modules/relationship-builder/show-correlationjson';
 import { from } from 'rxjs';
 
 
@@ -84,6 +85,7 @@ import { from } from 'rxjs';
     HealthCheckComponent,
     ShowDetailsDialog,
     AboutDialog,
+    ShowJsonDialog,
     AgentManagementComponent,
     RelationshipBuilderComponent,
     DatadictionaryComponent,
@@ -117,6 +119,7 @@ import { from } from 'rxjs';
   entryComponents: [
     ShowDetailsDialog,
     AboutDialog,
+    ShowJsonDialog,
     ConfirmationMessageDialog,
     ApplicationMessageDialog,
     AddGroupMessageDialog,

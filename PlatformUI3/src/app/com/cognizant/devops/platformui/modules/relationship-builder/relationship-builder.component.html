@@ -72,7 +72,15 @@
         <b>&nbsp; Relationship Name</b>
       </div>
 
+      <div ng-app="myApp" ng-controller="charactersCtrl">
+        <input ng-model="searchText" placeholder="enter search term here">
+        <div ng-repeat="c in characters | filter : searchText">{{ c }}</div>
 
+      </div>
+
+      <button mat-raised-button (click)="showDetailsDialog()" class="configureBut" style="width:150px;padding-left: 10px;padding-right: 10px;">
+        SHOW
+      </button>
       <div class="divTablesHeading">
         <!-- <mat-table mat-table [dataSource]="servicesDataSource">
           <ng-container matColumnDef="relationName">
@@ -81,23 +89,38 @@
           </ng-container>
         </mat-table> -->
 
-        <table mat-table [dataSource]="servicesDataSource">
+        <!--  <table mat-table [dataSource]="servicesDataSource">
 
           <ng-container matColumnDef="relationName">
             <th mat-header-cell *matHeaderCellDef class="tableHeaderCssNew"><b>Selected Co-Relationship</b></th>
 
 
-           
-              <td mat-cell *matCellDef="let key" style="width:200px !important"><b>{{key.relationName}}</b> </td>
-            
 
-            <!--  <td mat-cell *matCellDef="let key" style="width:200px !important">{{key.source.toolName}} </td> -->
-            <!--  <td mat-cell *matCellDef="let key" style="width:200px !important">{{key.toolName}} </td> -->
+            <td mat-cell *matCellDef="let key" style="width:200px !important"><b>{{key.relationName}}</b> </td>
+
+
+             <td mat-cell *matCellDef="let key" style="width:200px !important">{{key.source.toolName}} </td> 
+             <td mat-cell *matCellDef="let key" style="width:200px !important">{{key.toolName}} </td> 
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="dataComponentColumns" style="height:40px">
           </tr>
           <tr mat-row *matRowDef="let row; columns: dataComponentColumns;"></tr>
-        </table>
+        </table> -->
+
+
+        <!-- <table style="margin-left: 3%;">
+          <tbody style="display:grid;max-height:50vh;overflow:auto;">
+            <tr class="dat-row" *ngFor="let dummy of relData">
+              <mat-radio-group [(ngModel)]="selectedDummyAgent">
+                <ng-container matColumnDef="radio">
+                  <mat-radio-button [value]="dummy" color="primary" (click)="statusEdit(dummy) "></mat-radio-button>
+                </ng-container>
+                <td style="text-align:left;padding-left: 15px;padding-top: 8px;align-items: center;">{{dummy}}</td>
+              </mat-radio-group>
+            </tr>
+          </tbody>
+        </table> -->
+
 
       </div>
       <div>

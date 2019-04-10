@@ -13,7 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
+#search input[type=search].filled
+{
+  width: 200px;
+  padding-left: 32px;
+  color: black;
+  background-color: #fff;
+  cursor: auto;
 
+}
+
+.input
+{
+    border-left-style: none !important;
+    border-right-style: none !important;
+    border-top-style: none !important;
+}
 
 .mainDivContainer{
     margin-left: 16px;
