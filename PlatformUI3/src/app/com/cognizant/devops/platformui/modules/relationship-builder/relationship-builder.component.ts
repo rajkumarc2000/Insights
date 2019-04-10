@@ -16,6 +16,8 @@ export class RelationshipBuilderComponent implements OnInit {
   agentNodes = [];
   displayedAgentColumns: string[];
   selectedAgent1: any;
+  isListView = false;
+  isEditData = false;
   selectedAgent2: any;
   agent1TableData: any;
   agent2TableData: any;
@@ -37,7 +39,7 @@ export class RelationshipBuilderComponent implements OnInit {
   agent1Category: any;
   agent2Tool: any;
   agent2Category: any;
-
+  public data: any;
   corrData: any;
 
   constructor(private relationshipBuilderService: RelationshipBuilderService) {
@@ -119,26 +121,56 @@ export class RelationshipBuilderComponent implements OnInit {
 
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
-          console.log(corelationResponse);
+
+
+
+          //console.log(corelationResponse);
           //this.corrprop = corelationResponse.data;// corelationResponse.data ["relationName"]
           this.corrprop = corelationResponse;
-          console.log(this.corrprop);
+          // console.log(this.corrprop);
           if (this.corrprop != null) {
             // console.log(this.corrprop);
 
             for (var key in this.corrprop) {
               var element = this.corrprop[key];
+              // console.log(key);
+              // console.log(element);
               //element.relationName = key;
-              //console.log(element.relationName);
-
+              var a = (element.relationName);
+              var b = (element.destination.toolName);
+              console.log(a);
+              console.log(b);
+              // var d = (element.destination.fields);
+              var c = (element.source.toolName);
+              console.log(c);
+              //if (key == 'data') {
               this.servicesDataSource.push(element);
+              /*  this.servicesDataSource.push(a);
+               this.servicesDataSource.push(b);
+               // this.servicesDataSource.push(d);
+               this.servicesDataSource.push(c) */
+
+              //}
 
             }
           }
 
+          //this.data = this.servicesDataSource;
           console.log(this.servicesDataSource);
+
+
+          /* var sample = JSON.stringify(this.servicesDataSource); */
+          /*for (var keys in this.servicesDataSource) {
+            var elements = this.servicesDataSource[keys];
+            console.log(keys);
+            console.log(elements);
+            
+          }
+
+ */
+
           this.dataComponentColumns = ['relationName'];
-          //console.log(this.dataComponentColumns);
+          console.log(this.dataComponentColumns);
 
         }
       );
@@ -153,6 +185,10 @@ export class RelationshipBuilderComponent implements OnInit {
     }
 
 
+  }
+  statusEdit(selectedElement) {
+    this.isListView = true;
+    this.isEditData = true;
   }
 
 
