@@ -94,15 +94,6 @@ export class InsightsInitService {
         return InsightsInitService.agentsOsList;
     }
 
-    public getGrafanaHost1(): Promise<any> {
-        var self = this;
-        var resource;
-        var authToken = this.cookieService.get('Authorization');
-        var defaultHeader = { 'Authorization': authToken };
-        var restcallUrl = InsightsInitService.getServiceHost() + "/PlatformService/configure/grafanaEndPoint";
-        return this.http.get(restcallUrl).toPromise();
-    }
-
     public getJSONUsingObservable(url): Observable<any> {
         return this.http.get(url)
     }

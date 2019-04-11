@@ -17,6 +17,7 @@ package com.cognizant.devops.platformservice.security.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +38,12 @@ import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
 import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
 import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -64,6 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private GrafanaUserDetailsService userDetailsService;
+
+	private static final String[] CSRF_IGNORE = { "/login/**", "/user/authenticate/**" };
 
 	@Bean
 	public DefaultSpringSecurityContextSource getDefaultSpringSecurityContextSource() {
@@ -103,8 +112,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+				.cors().and()
 			.authorizeRequests()
 			.antMatchers("/datasources/**").permitAll()
+				// .antMatchers("/user/authenticate").permitAll()
 			.antMatchers("/admin/**").access("hasAuthority('Admin')")
 			.antMatchers("/configure/loadConfigFromResources").permitAll()
 			.antMatchers("/**").authenticated()
@@ -112,8 +123,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().httpBasic().authenticationEntryPoint(springAuthenticationEntryPoint)
 			//.and().sessionManagement().maximumSessions(1).and().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 			.and().sessionManagement().maximumSessions(1).and().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-			.and().csrf().disable()
-			.headers().addHeaderWriter(springHeaderWriter);
+				.and().headers().addHeaderWriter(springHeaderWriter)
+				.and().csrf()
+				.ignoringAntMatchers(CSRF_IGNORE) // URI where CSRF check will not be applied
+				.csrfTokenRepository(csrfTokenRepository()) // defines a repository where tokens are stored
+				.and()
+				.addFilterAfter(new CustomCsrfFilter(), CsrfFilter.class); // Csrf filter in which we will add 
+				//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // disable()
+		//
 	}
 	
 	 @Bean
@@ -127,6 +144,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         
 	        return resolver;
 	    }	
+
+	private CsrfTokenRepository csrfTokenRepository() {
+		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+		repository.setHeaderName(CustomCsrfFilter.CSRF_COOKIE_NAME);
+		return repository;
+	}
 		
 		@Override
 		public void configure(WebSecurity web) throws Exception {
@@ -140,6 +163,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
 			return arrayHttpMessageConverter;
 		}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"));
+		configuration.setAllowCredentials(true);
+		configuration.setAllowedHeaders(Arrays.asList("XSRF-TOKEN", "X-XSRF-TOKEN"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
 		private List<MediaType> getSupportedMediaTypes() {
 			final List<MediaType> list = new ArrayList<MediaType>();

@@ -57,9 +57,7 @@ export class LoginComponent implements OnInit, ILoginComponent {
     private restCallHandlerService: RestCallHandlerService, private cookieService: CookieService,
     private router: Router, private logger: LogService, private dataShare: DataSharedService,
     private datePipe: DatePipe, private imageHandeler: ImageHandlerService) {
-    //console.log(" logging in login "); //this.logger.log
     this.getAsyncData();
-
   }
 
   ngOnInit() {
@@ -89,7 +87,6 @@ export class LoginComponent implements OnInit, ILoginComponent {
         this.imageAlt = 'Cognizant log';
         this.dataShare.uploadOrFetchLogo("DefaultLogo");
       }
-
     } catch (error) {
       //console.log(error);
     }
@@ -108,25 +105,20 @@ export class LoginComponent implements OnInit, ILoginComponent {
       var token = 'Basic ' + btoa(this.username + ":" + this.password);
       this.loginService.loginUserAuthentication(this.username, this.password)
         .then((data) => {
+          console.log(data);
           var grafcookies = data.data;
           if (data.status === 'SUCCESS') {
             self.showThrobber = false;
             var date = new Date();
-            //var timeZoneOffset = this.dataShare.convertDateToZone(date.toString());
-            //console.log(timeZoneOffset);
-            /*const timeZoneOffset = date.getTimezoneOffset();
-            var zone = this.datePipe.transform(date, 'ZZZZ')
-            var z = zone.slice(3, zone.length);
-            var utcDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZ', '+0000');//getUTCDate() new Date(date.getUTCMilliseconds()) Y-m-dTH:M:SZ
-            var dateWithTimeZone = this.datePipe.transform(utcDate, 'yyyy-MM-ddTHH:mm:ssZ', z);//  '+0530'
-            console.log(date + " ==== " + timeZoneOffset + " ==== " + zone + " ==== " + z + " ==== " + dateWithTimeZone + " ====  " + utcDate + " ====  " + dateWithTimeZone.toString());*/
             var dateDashboardSessionExpiration = new Date(new Date().getTime() + 86400 * 1000);
             var minutes = 30;
             date.setTime(date.getTime() + (minutes * 60 * 1000));
-            this.cookieService.set('Authorization', token, date);
-            this.cookieService.set('DashboardSessionExpiration', dateDashboardSessionExpiration.toString());
+            //this.cookieService.set('Authorization', token, date);
+            this.dataShare.setAuthorizationToken(token);
+            //this.cookieService.set('DashboardSessionExpiration', dateDashboardSessionExpiration.toString());
             this.cookies = "";
             for (var key in grafcookies) {
+              console.log(key + "    " + grafcookies[key])
               this.cookieService.set(key, grafcookies[key], date);
             }
             var uniqueString = "grfanaLoginIframe";
@@ -166,10 +158,10 @@ export class LoginComponent implements OnInit, ILoginComponent {
               //self.showThrobber = false;
               self.router.navigate(['/InSights/Home']);
             }, 2000);
-          } else if (data.error.message) {
+          } else if (data.status === "failure") {
             self.showThrobber = false;
             self.isLoginError = true;
-            self.logMsg = data.error.message;
+            self.logMsg = data.message;
             self.isDisabled = false;
           }
         });

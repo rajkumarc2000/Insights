@@ -89,14 +89,14 @@ export class HomeComponent implements OnInit {
   constructor(private grafanaService: GrafanaAuthenticationService,
     private cookieService: CookieService, private config: InsightsInitService,
     public router: Router, private dataShare: DataSharedService, private dialog: MatDialog) {
-    //console.log("in home on constructor init ");
+    console.log("in home on constructor init ");
     //router.onSameUrlNavigation = 'reload';
     this.displayLandingPage = true;
     if (this.depth === undefined) {
       this.depth = 0;
     }
-    this.loadCustomerLogo();
-    this.grafanaService.validateSession();
+    //this.loadCustomerLogo();
+    //this.grafanaService.validateSession();
     this.isValidUser = true;
     this.framesize = window.frames.innerHeight;
     this.leftNavWidthInPer = 20;
@@ -129,14 +129,14 @@ export class HomeComponent implements OnInit {
     let currentUserResponce: any;
     let self = this;
     this.userResponse = await this.grafanaService.getUsers()
-    //console.log(" In user response " + JSON.stringify(this.userResponse));
+    console.log(" In user response " + JSON.stringify(this.userResponse));
     if (this.userResponse.data != undefined) {
       self.userName = self.userResponse.data.name != undefined ? self.userResponse.data.name.replace(/['"]+/g, '') : "";
       self.userCurrentOrg = self.userResponse.data.orgId;
       self.dataShare.setUserName(self.userName);
     }
     this.currentUserOrgs = await this.grafanaService.getCurrentUserOrgs();
-    //console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
+    console.log("In load organization " + JSON.stringify(this.currentUserOrgs));
     if (this.currentUserOrgs.data != undefined) {
       for (let orgData of this.currentUserOrgs.data) {
         if (orgData.orgId == self.userCurrentOrg) {
@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit {
         }
       }
       self.dataShare.setOrgAndRole(self.selectedOrg, self.userCurrentOrg, self.userRole);
-      //console.log(self.userRole.toString() + "   " + self.userCurrentOrg);
+      console.log(self.userRole.toString() + "   " + self.userCurrentOrg);
       self.cookieService.set('grafanaRole', self.userRole.toString());
       self.cookieService.set('grafanaOrg', self.userCurrentOrg);
     } else {
@@ -445,12 +445,12 @@ export class HomeComponent implements OnInit {
     // construct a form with hidden inputs, targeting the iframe
     var form = document.createElement("form");
     form.target = uniqueString;
-    this.config.getGrafanaHost1().then(function (response) {
+    if (this.config.getGrafanaHost()) {
       form.action = InsightsInitService.grafanaHost + "/logout";
       form.method = "GET";
       document.body.appendChild(form);
       form.submit();
-    });
+    }
     this.grafanaService.logout()
       .then(function (data) {
         //console.log(data);

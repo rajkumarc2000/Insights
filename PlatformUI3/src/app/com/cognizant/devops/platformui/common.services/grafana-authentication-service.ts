@@ -27,9 +27,9 @@ export interface IAuthenticationService {
     logout(): Promise<any>;
     getGrafanaCurrentOrgAndRole(): Promise<any>;
     getCurrentUserOrgs(): Promise<any>;
-    getUsers(): Promise<any> ;
+    getUsers(): Promise<any>;
 }
- 
+
 
 @Injectable()
 export class GrafanaAuthenticationService implements IAuthenticationService {
@@ -51,7 +51,7 @@ export class GrafanaAuthenticationService implements IAuthenticationService {
     }
 
     public validateSession(): void {
-        var authToken = this.cookieService.get('Authorization');
+        var authToken = ""; //this.cookieService.get('Authorization')
         //console.log(authToken)
         if (authToken === undefined) {
             this.cookieService.delete('Authorization');
@@ -63,8 +63,8 @@ export class GrafanaAuthenticationService implements IAuthenticationService {
             if (new Date(dashboardSessionExpirationTime) > date) {
                 var minutes = 30;
                 //console.log("Inside validateSession");
-                date.setTime(date.getTime() + (minutes * 60 * 1000));
-                this.cookieService.set('Authorization', authToken, date);
+                //date.setTime(date.getTime() + (minutes * 60 * 1000));
+                //this.cookieService.set('Authorization', authToken, date);
             } else {
                 this.cookieService.delete('Authorization');
                 this.router.navigate(['/login']);
@@ -92,8 +92,8 @@ export class GrafanaAuthenticationService implements IAuthenticationService {
         return restHandler.postWithParameter("ACCESS_GROUP_MANAGEMENT_SWITCH_ORGS", { "orgId": orgId }, { 'Content-Type': 'application/x-www-form-urlencoded' }).toPromise();
     }
 
-   public getUsers(): Promise<any> {
-            var restHandler = this.restCallHandlerService;
-             return restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_USERS");
+    public getUsers(): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("ACCESS_GROUP_MANAGEMENT_GET_USERS");
     }
 }

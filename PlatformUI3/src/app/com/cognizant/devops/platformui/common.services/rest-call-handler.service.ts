@@ -20,33 +20,21 @@ import { RestAPIurlService } from '@insights/common/rest-apiurl.service'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { CommonModule } from '@angular/common';
+import { DataSharedService } from '@insights/common/data-shared-service';
+
 
 @Injectable()
 export class RestCallHandlerService {
   asyncResult: any;
   constructor(private http: HttpClient, private restAPIUrlService: RestAPIurlService,
-    private cookieService: CookieService) {
+    private dataShare: DataSharedService) {
 
   }
 
   public async get(url: string, requestParams?: Object, additionalheaders?: Object): Promise<any> {
 
-    var dataresponse;
-    var authToken = this.cookieService.get('Authorization');
-    /* var headers;
-    var defaultHeader = {
-      'Authorization': authToken
-    };
+    var authToken = this.dataShare.getAuthorizationToken();//cookieService.get('Authorization')
 
-    if (this.checkValidObject(additionalheaders)) {
-      headers = this.extend(defaultHeader, additionalheaders);
-    } else {
-      headers = defaultHeader;
-    }
-    var allData = {
-      method: 'GET',
-      headers: headers
-    }*/
     const headers = new HttpHeaders()
       .set("Authorization", authToken);
     //console.log(headers);
@@ -63,7 +51,7 @@ export class RestCallHandlerService {
     //console.log(restCallUrl);
     var dataresponse;
     var headers;
-    var authToken = this.cookieService.get('Authorization');
+    var authToken = this.dataShare.getAuthorizationToken();//cookieService.get('Authorization')
     var defaultHeader = {
       'Authorization': authToken
     };
@@ -103,7 +91,7 @@ export class RestCallHandlerService {
     //console.log(restCallUrl);
     var dataresponse;
     let headers;
-    var authToken = this.cookieService.get('Authorization');
+    var authToken = this.dataShare.getAuthorizationToken();//cookieService.get('Authorization')
 
     let params = new HttpParams();
 
@@ -138,7 +126,8 @@ export class RestCallHandlerService {
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
     var fd = new FormData();
     fd.append("file", imageFile);
-    var authToken = this.cookieService.get('Authorization');
+    var authToken = this.dataShare.getAuthorizationToken();//cookieService.get('Authorization')
+
     var dataresponse = this.http.post(restCallUrl, fd, {
       headers: {
         'Authorization': authToken
@@ -148,11 +137,11 @@ export class RestCallHandlerService {
 
   }
 
-  
+
   public postFormData(url: string, fd: FormData): Observable<any> {
 
     var restCallUrl = this.restAPIUrlService.getRestCallUrl(url);
-    var authToken = this.cookieService.get('Authorization');
+    var authToken = this.dataShare.getAuthorizationToken();//cookieService.get('Authorization')
     var dataresponse = this.http.post(restCallUrl, fd, {
       headers: {
         'Authorization': authToken
@@ -168,7 +157,7 @@ export class RestCallHandlerService {
     //console.log(restCallUrl);
     var dataresponse;
     let headers;
-    var authToken = this.cookieService.get('Authorization');
+    var authToken = this.dataShare.getAuthorizationToken();//cookieService.get('Authorization')
 
     let params = new HttpParams();
 
@@ -197,8 +186,6 @@ export class RestCallHandlerService {
     return dataresponse;
 
   }
-
-
 
   private extend(obj: Object, src: Object) {
     for (var key in src) {

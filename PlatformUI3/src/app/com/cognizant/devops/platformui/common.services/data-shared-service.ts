@@ -51,6 +51,22 @@ export class DataSharedService {
     this.storage.set("userName", userName);
   }
 
+  public setAuthorizationToken(strAuthorization: string) {
+    this.storage.set("Authorization", strAuthorization);
+  }
+
+  public getAuthorizationToken() {
+    return this.storage.get("Authorization");
+  }
+
+  public setSessionExpirationTime(timeDashboardSessionExpiration: any) {
+    this.storage.set("dashboardSessionExpiration", timeDashboardSessionExpiration);
+  }
+
+  public getSessionExpirationTime() {
+    return this.storage.get("dashboardSessionExpiration");
+  }
+
   public setOrgAndRole(orgName: String, orgId: any, role: String) {
     this.storage.set("userRole", role);
     this.storage.set("orgName", orgName);

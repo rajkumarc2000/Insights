@@ -15,24 +15,28 @@
  ******************************************************************************/
 
 import { Injectable } from '@angular/core';
-import { InsightsInitService } from '@insights/common/insights-initservice';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Observable } from 'rxjs'
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() { }
+  constructor(private tokenExtractor: HttpXsrfTokenExtractor) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({
-      withCredentials: true
-    });
+    let token = this.tokenExtractor.getToken() as string;
+    //console.log(" token  " + token);
+    if (token !== null) {
+      request = request.clone({
+        setHeaders: { "XSRF-TOKEN": token }
+      });
+      request = request.clone({
+        withCredentials: true
+      });
+    } else {
+      request = request.clone({
+        withCredentials: true
+      });
+    }
     return next.handle(request);
-    /*// clone request and replace 'http://' with 'https://' at the same time
-    const secureReq = request.clone({
-      url: request.url.replace('http://', 'https://'), withCredentials: true
-    });
-    // send the cloned, "secure" request to the next handler.
-    return next.handle(secureReq);*/
   }
 }

@@ -512,7 +512,7 @@ export class AgentConfigurationComponent implements OnInit {
     var reader = new FileReader();
     reader.readAsText(trackingJsonFileArray);
     reader.onload = () => {
-      this.trackingUploadedFileContentStr = reader.result;
+      this.trackingUploadedFileContentStr = reader.result.toString();
       if (this.trackingUploadedFileContentStr == "") {
         this.fileUploadErrorMessage = "Unable to read file ,Please try again ";
       }

@@ -16,6 +16,10 @@
 package com.cognizant.devops.platformservice.rest.data;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.validation.constraints.Size;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +34,7 @@ import com.cognizant.devops.platformcommons.constants.ErrorMessage;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphResponse;
 import com.cognizant.devops.platformcommons.dal.neo4j.Neo4jDBHandler;
+import com.cognizant.devops.platformcommons.exception.InsightsCustomException;
 import com.cognizant.devops.platformdal.tools.layout.ToolsLayoutDAL;
 import com.cognizant.devops.platformservice.rest.util.PlatformServiceUtil;
 import com.google.gson.JsonObject;
@@ -47,14 +52,25 @@ public class PlatformMappingData {
 	}
 	
 	@RequestMapping(value = "/toolsCategory", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody JsonObject getToolsCatList(@RequestParam(required = false) String toolName) {
-		ToolsLayoutDAL toolLayoutDal = new ToolsLayoutDAL();
-		List<String> allCatName = toolLayoutDal.getToolCategoryNames(toolName);
-		return PlatformServiceUtil.buildSuccessResponseWithData(allCatName);
+	public @ResponseBody JsonObject getToolsCatList(@RequestParam(required = true) @Size(max = 10) String toolName) {
+		try {
+			ToolsLayoutDAL toolLayoutDal = new ToolsLayoutDAL();
+			Pattern agentNamePattern = Pattern.compile("[^A-Za-z0-9]", Pattern.CASE_INSENSITIVE);
+			Matcher m = agentNamePattern.matcher(toolName);
+
+			if (m.find()) {
+				throw new InsightsCustomException("Agent name not valid");
+			}
+			List<String> allCatName = toolLayoutDal.getToolCategoryNames(toolName);
+			return PlatformServiceUtil.buildSuccessResponseWithData(allCatName);
+		} catch (InsightsCustomException e) {
+			return PlatformServiceUtil.buildFailureResponse(ErrorMessage.CATEGORY_AND_TOOL_NAME_NOT_SPECIFIED);
+		}
+		
 	}
 	
 	@RequestMapping(value = "/toolsField", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody JsonObject loadToolsField(@RequestParam(required = false) String toolName) {
+	public @ResponseBody JsonObject loadToolsField(@RequestParam String toolName) {
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
 		String query = "MATCH (n:" +toolName+ ":DATA) return n limit 1";
 		try { 
@@ -68,7 +84,7 @@ public class PlatformMappingData {
 	//match (n:GIT) return distinct(n.git_RepoName) 
 	
 	@RequestMapping(value = "/toolsFieldValue", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody JsonObject loadToolsFieldValue(@RequestParam(required = false) String toolName, 
+	public @ResponseBody JsonObject loadToolsFieldValue(@RequestParam String toolName,
 			@RequestParam(required = false) String fieldName) {
 		Neo4jDBHandler dbHandler = new Neo4jDBHandler();
 		String query = "MATCH (n:" +toolName + ") return distinct(n." +fieldName +")";
