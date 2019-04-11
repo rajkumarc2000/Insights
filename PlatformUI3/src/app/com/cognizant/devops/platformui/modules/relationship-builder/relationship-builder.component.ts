@@ -8,6 +8,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./relationship-builder.component.css', './../home.module.css']
 })
 export class RelationshipBuilderComponent implements OnInit {
+  selectedDummyAgent: any = undefined;
+  updatedDatasource = [];
   dictResponse: any;
   corelationResponse: any;
   corelationResponseMaster: any;
@@ -124,11 +126,13 @@ export class RelationshipBuilderComponent implements OnInit {
 
   getCorrelation() {
     try {
+      this.relationDataSource=[];
+      this.servicesDataSource=[];
       var self = this;
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
           self.corelationResponseMaster = corelationResponse;
-          this.corrprop = corelationResponse;
+          this.corrprop = corelationResponse.data;
           console.log(corelationResponse);
           console.log(self.corelationResponseMaster);
           if (this.corrprop != null) {
@@ -141,8 +145,8 @@ export class RelationshipBuilderComponent implements OnInit {
               this.servicesDataSource.push(element);
             }
           }
-          this.relData = this.relationDataSource;
-          console.log(this.relData);
+          //this.relData = this.relationDataSource;
+          //console.log(this.relData);
           this.dataComponentColumns = ['relationName'];
         });
     }
@@ -244,9 +248,31 @@ console.log(error);
     //console.log(showJsonDialog);
   }
 
-  statusEdit(selectedElement) {
+  statusEdit() {
     this.isListView = true;
     this.isEditData = true;
+    console.log(this.selectedDummyAgent)
+    for (var key in this.servicesDataSource) {
+      if(this.servicesDataSource[key].relationName!=this.selectedDummyAgent){
+        //console.log(this.selectedDummyAgent);
+        this.updatedDatasource.push(this.servicesDataSource[key])
+      }
+    }
+    console.log(this.updatedDatasource.length);
+    
+    this.relationshipBuilderService.saveCorrelationConfig(JSON.stringify(this.updatedDatasource)).then(
+      (corelationResponse2) => {
+        console.log(corelationResponse2)
+        if (corelationResponse2.status=="success"){
+          this.updatedDatasource=[];
+          this.relationDataSource=[];
+          this.servicesDataSource=[];
+          this.getCorrelation();
+        }
+      });
+    
+    //his.relData= "";
+    
   }
   saveData() {
 

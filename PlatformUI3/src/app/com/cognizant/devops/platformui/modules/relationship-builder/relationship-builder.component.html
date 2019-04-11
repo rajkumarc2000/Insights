@@ -54,7 +54,7 @@
         save
       </mat-icon>
     </button>
-    <button mat-icon-button [disabled]="" (click)="deleteMapping()">
+    <button mat-icon-button [disabled]="" (click)="statusEdit()">
       <mat-icon title="Delete " class="mat-icon material-icons">
         delete
       </mat-icon>
@@ -113,18 +113,18 @@
         </table> -->
 
 
-        <!-- <table style="margin-left: 3%;">
+        <table style="margin-left: 3%;">
           <tbody style="display:grid;max-height:50vh;overflow:auto;">
-            <tr class="dat-row" *ngFor="let dummy of relData">
+            <tr class="dat-row" *ngFor="let dummy of relationDataSource">
               <mat-radio-group [(ngModel)]="selectedDummyAgent">
                 <ng-container matColumnDef="radio">
-                  <mat-radio-button [value]="dummy" color="primary" (click)="statusEdit(dummy) "></mat-radio-button>
+                  <mat-radio-button [value]="dummy" color="primary" ></mat-radio-button>
                 </ng-container>
                 <td style="text-align:left;padding-left: 15px;padding-top: 8px;align-items: center;">{{dummy}}</td>
               </mat-radio-group>
             </tr>
           </tbody>
-        </table> -->
+        </table>
 
 
       </div>
