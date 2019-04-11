@@ -29,12 +29,93 @@
   right: 50px;
   top:120px;
 }
+mat-dialog-content::-webkit-scrollbar {
+    width: 6px;
+    height: 16px;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+mat-dialog-content::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+.scrollData{
+    height:70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+}
+
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.arrange-horizontally-Dialog {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    width: 100%;
+    background:  #0033a0 ;
+    height: 40px;
+}
+
+
+.closeIconCss{
+    padding-right: 30px;
+    padding-top: 10px;
+	color: white;
+	
+    /* width: 20%; */
+}
+
+
+ .gridheadercenter{    
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    color: white; 
+    width: 120%;
+    text-align: center;
+    padding-top: 8px;
+    margin-right: -10px;
+} 
 
 .SubHeading
 {
-     font-size: 14px;
+     font-size: 16px;
     color:  #0033A0;
     font-weight:bold;
+    margin-left: 10px;
     
   
     

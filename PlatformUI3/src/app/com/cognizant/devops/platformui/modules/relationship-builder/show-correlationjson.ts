@@ -24,7 +24,7 @@ import { RelationshipBuilderService } from './relationship-builder.service';
 @Component({
     selector: 'show-correlationjson',
     templateUrl: './show-correlationjson.html',
-    styleUrls: ['./show-correlationjson.css']
+    styleUrls: ['./relationship-builder.component.css']
 })
 
 
