@@ -13,7 +13,134 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
+#search input[type=search].filled
+{
+  width: 200px;
+  padding-left: 32px;
+  color: black;
+  background-color: #fff;
+  cursor: auto;
 
+}
+
+.btnAlign{
+    /* margin-right: 1px;  */
+  position: absolute;
+  right: 50px;
+  top:120px;
+}
+mat-dialog-content::-webkit-scrollbar {
+    width: 6px;
+    height: 16px;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+mat-dialog-content::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+.scrollData{
+    height:70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+}
+
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: #676666;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.arrange-horizontally-Dialog {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    width: 100%;
+    background:  #0033a0 ;
+    height: 40px;
+}
+
+
+.closeIconCss{
+    padding-right: 30px;
+    padding-top: 10px;
+	color: white;
+	
+    /* width: 20%; */
+}
+
+
+ .gridheadercenter{    
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    color: white; 
+    width: 120%;
+    text-align: center;
+    padding-top: 8px;
+    margin-right: -10px;
+} 
+
+.SubHeading
+{
+     font-size: 16px;
+    color:  #0033A0;
+    font-weight:bold;
+    margin-left: 10px;
+    
+  
+    
+}
+
+.mat-raised-button
+{
+border-radius: 0px !important;
+ color: #FFFFFF;
+}
+.configureBut {
+    float: right;
+    background-color: #0033A0 !important;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 0px !important;
+}
+.input
+{
+    border-left-style: none !important;
+    border-right-style: none !important;
+    border-top-style: none !important;
+}
 
 .mainDivContainer{
     margin-left: 16px;

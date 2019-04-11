@@ -26,9 +26,9 @@ export class RelationshipBuilderService implements IRelationshipBuilderService {
 
 
     async loadUiServiceLocation(): Promise<any> {
-        /*  var restHandler = this.restCallHandlerService;
-         return restHandler.get("CO_RELATIONSHIP_JSON");
-  */
+        /* var restHandler = this.restCallHandlerService;
+        return restHandler.get("CO_RELATIONSHIP_JSON"); */
+
         var self = this;
         var uiConfigJsonUrl = "config/correlation.json"
         let UIConfigResponse = await this.getJSONUsingObservable(uiConfigJsonUrl).toPromise();

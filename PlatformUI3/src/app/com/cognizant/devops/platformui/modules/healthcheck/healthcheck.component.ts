@@ -171,6 +171,7 @@ export class HealthCheckComponent implements OnInit {
       width: '900px',
       disableClose: true,
       data: { toolName: toolName, categoryName: categoryName, pathName: filePath, detailType: detailType, agentId: agentId },
+      
     });
   }
 
