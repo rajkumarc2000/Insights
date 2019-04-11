@@ -130,19 +130,20 @@ export class RelationshipBuilderComponent implements OnInit {
           self.corelationResponseMaster = corelationResponse;
           this.corrprop = corelationResponse;
           console.log(corelationResponse);
-          if (this.corrprop != null) {
-            for (var key in this.corrprop) {
-              var element = this.corrprop[key];
-              var a = (element.relationName);
-              var b = (element.destination.toolName);
-              var c = (element.source.toolName);
-              this.relationDataSource.push(a)
-              this.servicesDataSource.push(element);
-            }
-          }
-          this.relData = this.relationDataSource;
-          console.log(this.relData);
-          this.dataComponentColumns = ['relationName']; 
+          console.log(self.corelationResponseMaster);
+            if (this.corrprop != null) {
+             for (var key in this.corrprop) {
+               var element = this.corrprop[key];
+               var a = (element.relationName);
+               var b = (element.destination.toolName);
+               var c = (element.source.toolName);
+               this.relationDataSource.push(a)
+               this.servicesDataSource.push(element);
+             }
+           }
+           this.relData = this.relationDataSource;
+           console.log(this.relData);
+           this.dataComponentColumns = ['relationName'];  
         });
     }
     catch (error) {
