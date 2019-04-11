@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +35,16 @@ public class InsightsCorrelationBuilder {
 		log.error(PlatformServiceUtil.buildSuccessResponseWithData(details));
 		return PlatformServiceUtil.buildSuccessResponseWithData(details);
 		//return PlatformServiceUtil.buildSuccessResponseWithData(details);
+	}
+	@RequestMapping(value = "/saveConfig", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody JsonObject saveConfig(@RequestParam String configDetails) {
+		String message = null;
+		log.error("input"+configDetails);
+		try {
+			message = correlationBuilderService.saveConfig(configDetails);
+		} catch (InsightsCustomException e) {
+			return PlatformServiceUtil.buildFailureResponse(e.toString());
+		}
+		return PlatformServiceUtil.buildSuccessResponseWithData(message);
 	}
 }

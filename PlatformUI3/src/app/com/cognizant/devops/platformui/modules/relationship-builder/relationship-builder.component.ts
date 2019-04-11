@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RelationshipBuilderService } from '@insights/app/modules/relationship-builder/relationship-builder.service';
-
+import { ShowJsonDialog } from '@insights/app/modules/relationship-builder/show-correlationjson';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-relationship-builder',
   templateUrl: './relationship-builder.component.html',
@@ -9,6 +10,7 @@ import { RelationshipBuilderService } from '@insights/app/modules/relationship-b
 export class RelationshipBuilderComponent implements OnInit {
   dictResponse: any;
   corelationResponse: any;
+  corelationResponseMaster: any;
   dataComponentColumns: string[];
   agentDataSource = [];
   corrprop = [];
@@ -16,6 +18,8 @@ export class RelationshipBuilderComponent implements OnInit {
   agentNodes = [];
   displayedAgentColumns: string[];
   selectedAgent1: any;
+  isListView = false;
+  isEditData = false;
   selectedAgent2: any;
   agent1TableData: any;
   agent2TableData: any;
@@ -37,10 +41,14 @@ export class RelationshipBuilderComponent implements OnInit {
   agent1Category: any;
   agent2Tool: any;
   agent2Category: any;
-
+  public data: any;
   corrData: any;
 
-  constructor(private relationshipBuilderService: RelationshipBuilderService) {
+
+  relData: any;
+  relationDataSource = [];
+
+  constructor(private relationshipBuilderService: RelationshipBuilderService, private dialog: MatDialog) {
     this.dataDictionaryInfo();
     this.getCorrelation();
   }
@@ -116,43 +124,127 @@ export class RelationshipBuilderComponent implements OnInit {
 
   getCorrelation() {
     try {
+      var self = this;
+      this.relationshipBuilderService.loadUiServiceLocation().then(
+        (corelationResponse) => {
+          self.corelationResponseMaster = corelationResponse;
+          this.corrprop = corelationResponse;
+          console.log(corelationResponse);
+          console.log(self.corelationResponseMaster);
+            if (this.corrprop != null) {
+             for (var key in this.corrprop) {
+               var element = this.corrprop[key];
+               var a = (element.relationName);
+               var b = (element.destination.toolName);
+               var c = (element.source.toolName);
+               this.relationDataSource.push(a)
+               this.servicesDataSource.push(element);
+             }
+           }
+           this.relData = this.relationDataSource;
+           console.log(this.relData);
+           this.dataComponentColumns = ['relationName'];  
+        });
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
+
+
+
+
+  /* getCorrelation() {
+    try {
 
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
-          console.log(corelationResponse);
+
+          var sample = JSON.stringify(this.corelationResponse);
+
+          //console.log(corelationResponse);
           //this.corrprop = corelationResponse.data;// corelationResponse.data ["relationName"]
           this.corrprop = corelationResponse;
-          console.log(this.corrprop);
+          // console.log(this.corrprop);
           if (this.corrprop != null) {
             // console.log(this.corrprop);
 
             for (var key in this.corrprop) {
               var element = this.corrprop[key];
+              // console.log(key);
+              // console.log(element);
               //element.relationName = key;
-              //console.log(element.relationName);
-
+              var a = (element.relationName);
+              var b = (element.destination.toolName);
+              console.log(a);
+              console.log(b);
+              // var d = (element.destination.fields);
+              var c = (element.source.toolName);
+              console.log(c);
+              //if (key == 'data') {
               this.servicesDataSource.push(element);
+              /*  this.servicesDataSource.push(a);
+               this.servicesDataSource.push(b);
+               // this.servicesDataSource.push(d);
+               this.servicesDataSource.push(c) */
 
-            }
-          }
+  //}
 
-          console.log(this.servicesDataSource);
-          this.dataComponentColumns = ['relationName'];
-          //console.log(this.dataComponentColumns);
+  //  }
+  // }
 
-        }
-      );
-
-
-
-
-
-    }
-    catch (error) {
-      console.log(error);
-    }
+  //this.data = this.servicesDataSource;
+  //          console.log(this.servicesDataSource);
 
 
+  /* var sample = JSON.stringify(this.servicesDataSource); */
+  /*for (var keys in this.servicesDataSource) {
+    var elements = this.servicesDataSource[keys];
+    console.log(keys);
+    console.log(elements);
+    
+  }
+
+ 
+
+  this.dataComponentColumns = ['relationName'];
+  console.log(this.dataComponentColumns);
+
+}
+);
+
+
+
+
+
+}
+catch (error) {
+console.log(error);
+}
+
+
+} */
+
+
+  showDetailsDialog() {
+
+    let showJsonDialog = this.dialog.open(ShowJsonDialog, {
+      panelClass: 'showjson-dialog-container',
+      height: '500px',
+      width: '900px',
+      disableClose: true,
+      data: this.corelationResponseMaster,
+
+    });
+  }
+
+  statusEdit(selectedElement) {
+    this.isListView = true;
+    this.isEditData = true;
   }
 
 

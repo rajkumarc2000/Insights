@@ -61,7 +61,8 @@ export class CustomReportConfigComponent implements OnInit {
       reportname: ['', [Validators.required]],
       frequency: ['', [Validators.required]],
       subscribers: ['', [Validators.required, this.commaSepEmail]],
-      queryPath : ['', Validators.required]
+      queryPath : ['', [Validators.required]],
+      querytype : ['',[Validators.required]]
     })
   }
 
@@ -85,7 +86,8 @@ export class CustomReportConfigComponent implements OnInit {
         reportname: [{value: data.reportName, disabled: true}, Validators.required],
         frequency: [data.frequency, Validators.required],
         subscribers: [data.subscribers, Validators.required],
-        queryPath : [queryPath, Validators.required]
+        queryPath : [queryPath, Validators.required],
+        querytype : [data.querytype, Validators.required]
       }
       console.log('update', datas);
       this.queryForm = this.formBuilder.group(datas);
@@ -125,11 +127,18 @@ export class CustomReportConfigComponent implements OnInit {
   async saveData(actionType) {
     let result;
     const fd = new FormData();
-    fd.append('json', this.selectedFile, this.selectedFile.name);
+    console.log('this.selectedFile-',this.selectedFile);
+    if (this.selectedFile) {
+      fd.append('json', this.selectedFile, this.selectedFile.name);
+    }
     if (actionType == 'add') {
-        console.log('add');
-        console.log('inside add', this.queryForm.value);
+      console.log('add');
+      console.log('inside add', this.queryForm.value);
+      console.log('this.selectedFile add-',this.selectedFile);
+      console.log('this.selectedFile add name-',this.selectedFile.name);
+        fd.append('json', this.selectedFile, this.selectedFile.name);
         let upload = await this.queryBuilderService.uploadFile(fd);
+        console.log('this.selectedFile upload-',upload);
         if (upload.status == "success") {
             result = await this.queryBuilderService.saveOrUpdateQuery(this.queryForm.value,this.selectedFile.name);
             console.log('result --', result);
@@ -140,16 +149,25 @@ export class CustomReportConfigComponent implements OnInit {
         }
     } else {
       console.log('update');
-      console.log('inside update', this.queryForm.value);
-      let upload = await this.queryBuilderService.uploadFile(fd);
-      if (upload.status == "success") {
-        result = await this.queryBuilderService.saveOrUpdateQuery(this.queryForm.value,this.selectedFile.name);
-        console.log('result --', result);
-        this.queryConfigstatus = "Query Updated Successfully"
-      } else {
-        console.log('some issue in upload, Please check the permission');
-        this.messageDialog.showApplicationsMessage("Error uploading File", "ERROR");
-      }
+      const updateParam = Object.assign({},this.queryForm.value, { reportname: this.receivedParam.data.reportName});
+      console.log('inside update', updateParam);
+      if (this.selectedFile) {
+          let upload = await this.queryBuilderService.uploadFile(fd);
+          if (upload.status == "success") {
+            const { queryPath, ...param} = updateParam;
+            result = await this.queryBuilderService.saveOrUpdateQuery(param, queryPath);
+            console.log('result --', result);
+            this.queryConfigstatus = "Query Updated Successfully"
+          } else {
+            console.log('some issue in upload, Please check the permission');
+            this.messageDialog.showApplicationsMessage("Error uploading File", "ERROR");
+          }
+        } else {
+          const { queryPath, ...param} = updateParam;
+          result = await this.queryBuilderService.saveOrUpdateQuery(param, queryPath);
+          console.log('result --', result);
+          this.queryConfigstatus = "Query Updated Successfully"
+        }
     }
 
     if (result.status == "success") {

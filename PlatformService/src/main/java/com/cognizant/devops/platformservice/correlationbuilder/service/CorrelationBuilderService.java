@@ -9,4 +9,5 @@ import com.google.gson.JsonObject;
 public interface CorrelationBuilderService {
 	
 	public String getCorrelationJson() throws IOException, InsightsCustomException;
+	public String saveConfig(String configDetails)throws InsightsCustomException;
 }
