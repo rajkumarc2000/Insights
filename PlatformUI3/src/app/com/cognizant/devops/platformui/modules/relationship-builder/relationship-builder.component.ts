@@ -131,19 +131,19 @@ export class RelationshipBuilderComponent implements OnInit {
           this.corrprop = corelationResponse;
           console.log(corelationResponse);
           console.log(self.corelationResponseMaster);
-            if (this.corrprop != null) {
-             for (var key in this.corrprop) {
-               var element = this.corrprop[key];
-               var a = (element.relationName);
-               var b = (element.destination.toolName);
-               var c = (element.source.toolName);
-               this.relationDataSource.push(a)
-               this.servicesDataSource.push(element);
-             }
-           }
-           this.relData = this.relationDataSource;
-           console.log(this.relData);
-           this.dataComponentColumns = ['relationName'];  
+          if (this.corrprop != null) {
+            for (var key in this.corrprop) {
+              var element = this.corrprop[key];
+              var a = (element.relationName);
+              var b = (element.destination.toolName);
+              var c = (element.source.toolName);
+              this.relationDataSource.push(a)
+              this.servicesDataSource.push(element);
+            }
+          }
+          this.relData = this.relationDataSource;
+          console.log(this.relData);
+          this.dataComponentColumns = ['relationName'];
         });
     }
     catch (error) {
@@ -235,18 +235,23 @@ console.log(error);
     let showJsonDialog = this.dialog.open(ShowJsonDialog, {
       panelClass: 'showjson-dialog-container',
       height: '500px',
-      width: '900px',
+      width: '700px',
+
       disableClose: true,
       data: this.corelationResponseMaster,
 
     });
+    //console.log(showJsonDialog);
   }
 
   statusEdit(selectedElement) {
     this.isListView = true;
     this.isEditData = true;
   }
+  saveData() {
 
+  }
+  deleteMapping() {
 
-
+  }
 }
