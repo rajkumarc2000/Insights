@@ -32,13 +32,13 @@ import com.google.gson.JsonObject;
 
 public abstract class ComponentHealthLogger {
 	public final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-	public final  SimpleDateFormat  dtf = new SimpleDateFormat(DATE_TIME_FORMAT);
 	private static final Logger log = LogManager.getLogger(ComponentHealthLogger.class);
 	
 	public boolean createComponentStatusNode(String label,String version,String message,String status,Map<String,String> parameter){
 		JsonObject response = null;
 		try {
-			dtf.setTimeZone(TimeZone.getTimeZone(ApplicationConfigProvider.getInstance().getInsightsTimeZone()));
+			SimpleDateFormat  dtf = new SimpleDateFormat(DATE_TIME_FORMAT);
+			dtf.setTimeZone(TimeZone.getTimeZone("GMT"));
 			List<JsonObject> dataList = new ArrayList<JsonObject>();
 			List<String> labels = new ArrayList<String>();
 			labels.addAll(Arrays.asList(label.split(":")));
