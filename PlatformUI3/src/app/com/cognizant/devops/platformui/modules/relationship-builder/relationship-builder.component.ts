@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class RelationshipBuilderComponent implements OnInit {
   selectedDummyAgent: any = undefined;
   updatedDatasource = [];
+  isbuttonenabled: boolean = false;
   dictResponse: any;
   corelationResponse: any;
   corelationResponseMaster: any;
@@ -126,8 +127,8 @@ export class RelationshipBuilderComponent implements OnInit {
 
   getCorrelation() {
     try {
-      this.relationDataSource=[];
-      this.servicesDataSource=[];
+      this.relationDataSource = [];
+      this.servicesDataSource = [];
       var self = this;
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
@@ -251,29 +252,35 @@ console.log(error);
   statusEdit() {
     this.isListView = true;
     this.isEditData = true;
+
     console.log(this.selectedDummyAgent)
     for (var key in this.servicesDataSource) {
-      if(this.servicesDataSource[key].relationName!=this.selectedDummyAgent){
+      if (this.servicesDataSource[key].relationName != this.selectedDummyAgent) {
         //console.log(this.selectedDummyAgent);
         this.updatedDatasource.push(this.servicesDataSource[key])
       }
     }
     console.log(this.updatedDatasource.length);
-    
+
     this.relationshipBuilderService.saveCorrelationConfig(JSON.stringify(this.updatedDatasource)).then(
       (corelationResponse2) => {
         console.log(corelationResponse2)
-        if (corelationResponse2.status=="success"){
-          this.updatedDatasource=[];
-          this.relationDataSource=[];
-          this.servicesDataSource=[];
+        if (corelationResponse2.status == "success") {
+          this.updatedDatasource = [];
+          this.relationDataSource = [];
+          this.servicesDataSource = [];
           this.getCorrelation();
         }
       });
-    
+
     //his.relData= "";
-    
+
   }
+  statusEdit2() {
+    this.isbuttonenabled = true;
+    console.log(this.isbuttonenabled);
+  }
+
   saveData() {
 
   }
