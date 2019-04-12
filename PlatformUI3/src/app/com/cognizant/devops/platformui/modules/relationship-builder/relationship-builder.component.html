@@ -18,29 +18,28 @@
 <div class="mainDivContainer">
   <div layout layout-align="left" class="titleStyle">
     <div>Configuration |
-      <a class="greenTitleTxt">Correlation Builder </a>
+      <a class="greenTitleTxt">Co-relationship Builder </a>
     </div>
   </div>
   <div class="orangeStripCss"></div>
 
   <div layout style="height: 60px;margin-left: 20px;">
 
+
     <div layout="row" style="width: 100%;margin-top: 6px; height: 80%;">
-      <div layout layout-align="end center">
+
+      <div layout layout-align="end center" style="margin-left: 410px;">
+
         <label class="mainText"> Select Tools </label>
-        <mat-select [(ngModel)]="selectedAgent1" [style.height.px]="20" [style.width.%]="20"
-          (ngModelChange)="loadAgent1Info(selectedAgent1)" name="selectedAgent1" required placeholder="Select Tool 1"
-          [ngClass]="{  'input-disabled' : readChange ,  'form-control': !readChange}">
-          <mat-option [disabled]="data1 === selectedAgent2" *ngFor="let data1 of agentDataSource" [value]="data1"
-            style="color:#0033A0">
+        <mat-select [(ngModel)]="selectedAgent1" [style.height.px]="20" [style.width.%]="20" (ngModelChange)="loadAgent1Info(selectedAgent1)"
+          name="selectedAgent1" required placeholder="Select Tool 1" [ngClass]="{  'input-disabled' : readChange ,  'form-control': !readChange}">
+          <mat-option [disabled]="data1 === selectedAgent2" *ngFor="let data1 of agentDataSource" [value]="data1" style="color:#0033A0">
             {{data1.toolName}}
           </mat-option>
         </mat-select>
-        <mat-select [(ngModel)]="selectedAgent2" [style.height.px]="20" [style.width.%]="20"
-          (ngModelChange)="loadAgent1Info2(selectedAgent2)" name="selectedAgent2" required placeholder="Select Tool 2"
-          [ngClass]="{  'input-disabled' : readChange2 ,  'form-control': !readChange2}">
-          <mat-option [disabled]="data2 === selectedAgent1" *ngFor="let data2 of agentDataSource" [value]="data2"
-            style="color:#0033A0">
+        <mat-select [(ngModel)]="selectedAgent2" [style.height.px]="20" [style.width.%]="20" (ngModelChange)="loadAgent1Info2(selectedAgent2)"
+          name="selectedAgent2" required placeholder="Select Tool 2" [ngClass]="{  'input-disabled' : readChange2 ,  'form-control': !readChange2}">
+          <mat-option [disabled]="data2 === selectedAgent1" *ngFor="let data2 of agentDataSource" [value]="data2" style="color:#0033A0">
             {{data2.toolName}}
           </mat-option>
         </mat-select>
@@ -63,19 +62,22 @@
     </button>
   </div>
 
-
-  <!-- <div><b>Please Note:</b></div> -->
+  <!-- 
+  <div class="NoteCss"><b>Please Note:Ensure that the properties selected to build a<br> Co-relatiosnhip are <b>indexed
+        in
+        Neo4j</b>for optimal
+      performance</b></div>
+ -->
 
 
   <div>
 
-    <div class="column2"
-      style="margin-bottom: 1%;margin-left:10px;margin-right: 7px;border :white;border-radius: 10px;background-color:white;height: 69vh;">
+    <div class="column2" style="margin-bottom: 1%;margin-left:10px;margin-right: 7px;border :white;border-radius: 10px;background-color:white;height: 69vh;">
       <div class="showTable" style="text-align: center; padding: 5px;">
-        <b>&nbsp; Relationship Name</b>
+        <b>&nbsp; Co-relationship Name</b>
       </div>
       <div class="arrange-horizontally">
-        <label class="SubHeading"> List Of Co-Relationships </label>
+        <label class="SubHeading"> List of Co-Relationship's </label>
         <button mat-raised-button (click)="showDetailsDialog()" class="configureBut">
           View Correlation.json
         </button>
@@ -100,8 +102,7 @@
 
     </div>
 
-    <div class="column1"
-      style="margin-bottom: 1%;margin-left: 7px;border :white;border-radius: 10px;background-color:white;height: 69vh;">
+    <div class="column1" style="margin-bottom: 1%;margin-left: 7px;border :white;border-radius: 10px;background-color:white;height: 69vh;">
       <div class="showTable" style="text-align: center; padding: 5px;">
         <b>&nbsp; Tool Properties(Select one property to BUILD Relationship)</b>
       </div>

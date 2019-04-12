@@ -136,8 +136,8 @@ export class RelationshipBuilderComponent implements OnInit {
         (corelationResponse) => {
           self.corelationResponseMaster = corelationResponse;
           this.corrprop = corelationResponse.data;
-          console.log(corelationResponse);
-          console.log(self.corelationResponseMaster);
+          // console.log(corelationResponse);
+          // console.log(self.corelationResponseMaster);
           if (this.corrprop != null) {
             for (var key in this.corrprop) {
               var element = this.corrprop[key];
@@ -181,11 +181,11 @@ export class RelationshipBuilderComponent implements OnInit {
         this.updatedDatasource.push(this.servicesDataSource[key])
       }
     }
-    console.log(this.selectedDummyAgent);
-    console.log(this.updatedDatasource);
+    //console.log(this.selectedDummyAgent);
+    //console.log(this.updatedDatasource);
 
-    var deleteMappingJson = JSON.stringify( this.updatedDatasource );
-    console.log(deleteMappingJson);
+    var deleteMappingJson = JSON.stringify(this.updatedDatasource);
+    //console.log(deleteMappingJson);
 
     this.relationshipBuilderService.saveCorrelationConfig(deleteMappingJson).then(
       (corelationResponse2) => {
@@ -200,7 +200,7 @@ export class RelationshipBuilderComponent implements OnInit {
   }
   statusEdit2() {
     this.isbuttonenabled = true;
-    console.log(this.isbuttonenabled);
+    //console.log(this.isbuttonenabled);
   }
 
   saveData() {

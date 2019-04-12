@@ -139,11 +139,18 @@ mat-dialog-content::-webkit-scrollbar-track {
     margin-top: 21px;
 }
 
-.mat-raised-button
+.NoteCss
+{
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.button .mat-raised-button
 {
 border-radius: 0px !important;
  color: #FFFFFF;
 }
+
 .configureBut {
     float: right;
     background-color: #0033A0 !important;
@@ -252,12 +259,13 @@ table tr:last-child td:last-child {
     border-bottom-right-radius: 0px;
 }
 .mainText{
-    font-size: 14px;
+    font-size: 16px;
     color:  #0033A0;
-    font-weight:bold;
+   /*  font-weight:bold; */
     vertical-align: sub;
     width: 10%;
     overflow: auto; 
+    font-family: inherit;
     /* margin-left: 500px; */
 }
 .button[disabled] .mat-icon[disabled][disabled]
