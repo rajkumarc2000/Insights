@@ -26,8 +26,8 @@ export class RelationshipBuilderService implements IRelationshipBuilderService {
 
 
     async loadUiServiceLocation(): Promise<any> {
-         var restHandler = this.restCallHandlerService;
-        return restHandler.get("CO_RELATIONSHIP_JSON"); 
+        var restHandler = this.restCallHandlerService;
+        return restHandler.get("CO_RELATIONSHIP_JSON");
 
         /*var self = this;
         var uiConfigJsonUrl = "config/correlation.json"
@@ -40,11 +40,17 @@ export class RelationshipBuilderService implements IRelationshipBuilderService {
         var restHandler = this.restCallHandlerService;
         return restHandler.get("DATA_DICTIONARY_TOOLS_AND_CATEGORY");
     }
-    saveCorrelationConfig(config:String):Promise<any>{
-        var restHandler = this.restCallHandlerService;
-        //console.log(restHandler.postWithParameter("SAVE_RELATIONSHIP_JSON",{'configDetails':config}).toPromise());
-        return restHandler.postWithParameter("SAVE_RELATIONSHIP_JSON",{'configDetails':config}).toPromise();
 
+    /*  saveCorrelationConfig(config: String): Promise<any> {
+         var restHandler = this.restCallHandlerService;
+         //console.log(restHandler.postWithParameter("SAVE_RELATIONSHIP_JSON",{'configDetails':config}).toPromise());
+         return restHandler.postWithParameter("SAVE_RELATIONSHIP_JSON", { 'configDetails': config }).toPromise();
+ 
+     } */
+
+    saveCorrelationConfig(config: String): Promise<any> {
+        var restHandler = this.restCallHandlerService;
+        return restHandler.postWithData("SAVE_RELATIONSHIP_JSON", config, "", { 'Content-Type': 'application/json' }).toPromise();
     }
 
     loadToolProperties(toolName: string, categoryName: string): Promise<any> {

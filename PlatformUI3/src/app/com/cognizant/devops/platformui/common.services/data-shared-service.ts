@@ -90,7 +90,10 @@ export class DataSharedService {
     //const timeZoneOffset = date.getTimezoneOffset(); " ==== " + timeZoneOffset +
     var zone = this.datePipe.transform(date, 'ZZZZ')
     var zoneOffset = zone.slice(3, zone.length);
-    this.storage.set("timeZone", zone);
+    var dateStr = new Date().toTimeString();
+    var parts = dateStr.match(/\(([^)]+)\)/i); //time
+    var timezone = parts[1];
+    this.storage.set("timeZone", timezone);
     this.storage.set("timeZoneOffSet", zone);
   }
 

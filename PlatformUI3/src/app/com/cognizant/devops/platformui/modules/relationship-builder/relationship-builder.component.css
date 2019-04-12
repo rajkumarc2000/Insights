@@ -51,10 +51,30 @@ mat-dialog-content::-webkit-scrollbar-thumb {
 mat-dialog-content::-webkit-scrollbar-track {
     border-radius: 10px;
 }
+
+.arrange-horizontally {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    margin-top: 10px;
+    height: 40px;
+}
+
+.mat-dialog-content-json {
+    display: block;
+    padding-left: 24px; 
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .scrollData{
-    height:70%;
+    height:90%;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: scroll;
     padding-bottom: 10px;
 }
 
@@ -97,8 +117,6 @@ mat-dialog-content::-webkit-scrollbar-track {
     padding-right: 30px;
     padding-top: 10px;
 	color: white;
-	
-    /* width: 20%; */
 }
 
 
@@ -113,22 +131,30 @@ mat-dialog-content::-webkit-scrollbar-track {
     margin-right: -10px;
 } 
 
-.SubHeading
-{
+.SubHeading{
      font-size: 16px;
     color:  #0033A0;
     font-weight:bold;
     margin-left: 10px;
-    
-  
-    
+    margin-top: 21px;
+}
+.ListFooter
+{
+    font-size: 10px;
 }
 
-.mat-raised-button
+.NoteCss
+{
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.button .mat-raised-button
 {
 border-radius: 0px !important;
  color: #FFFFFF;
 }
+
 .configureBut {
     float: right;
     background-color: #0033A0 !important;
@@ -137,6 +163,11 @@ border-radius: 0px !important;
     margin-top: 10px;
     margin-right: 10px;
     border-radius: 0px !important;
+    height: 100%;
+    width:150px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
 }
 .input
 {
@@ -232,12 +263,13 @@ table tr:last-child td:last-child {
     border-bottom-right-radius: 0px;
 }
 .mainText{
-    font-size: 14px;
+    font-size: 16px;
     color:  #0033A0;
-    font-weight:bold;
+   /*  font-weight:bold; */
     vertical-align: sub;
     width: 10%;
     overflow: auto; 
+    font-family: inherit;
     /* margin-left: 500px; */
 }
 .button[disabled] .mat-icon[disabled][disabled]

@@ -46,6 +46,8 @@ export class RelationshipBuilderComponent implements OnInit {
   agent2Category: any;
   public data: any;
   corrData: any;
+  selectedMappingAgent: any;
+  selectedMappingAgent2: any;
 
 
   relData: any;
@@ -134,8 +136,8 @@ export class RelationshipBuilderComponent implements OnInit {
         (corelationResponse) => {
           self.corelationResponseMaster = corelationResponse;
           this.corrprop = corelationResponse.data;
-          console.log(corelationResponse);
-          console.log(self.corelationResponseMaster);
+          // console.log(corelationResponse);
+          // console.log(self.corelationResponseMaster);
           if (this.corrprop != null) {
             for (var key in this.corrprop) {
               var element = this.corrprop[key];
@@ -156,92 +158,12 @@ export class RelationshipBuilderComponent implements OnInit {
     }
   }
 
-
-
-
-
-
-
-
-  /* getCorrelation() {
-    try {
-
-      this.relationshipBuilderService.loadUiServiceLocation().then(
-        (corelationResponse) => {
-
-          var sample = JSON.stringify(this.corelationResponse);
-
-          //console.log(corelationResponse);
-          //this.corrprop = corelationResponse.data;// corelationResponse.data ["relationName"]
-          this.corrprop = corelationResponse;
-          // console.log(this.corrprop);
-          if (this.corrprop != null) {
-            // console.log(this.corrprop);
-
-            for (var key in this.corrprop) {
-              var element = this.corrprop[key];
-              // console.log(key);
-              // console.log(element);
-              //element.relationName = key;
-              var a = (element.relationName);
-              var b = (element.destination.toolName);
-              console.log(a);
-              console.log(b);
-              // var d = (element.destination.fields);
-              var c = (element.source.toolName);
-              console.log(c);
-              //if (key == 'data') {
-              this.servicesDataSource.push(element);
-              /*  this.servicesDataSource.push(a);
-               this.servicesDataSource.push(b);
-               // this.servicesDataSource.push(d);
-               this.servicesDataSource.push(c) */
-
-  //}
-
-  //  }
-  // }
-
-  //this.data = this.servicesDataSource;
-  //          console.log(this.servicesDataSource);
-
-
-  /* var sample = JSON.stringify(this.servicesDataSource); */
-  /*for (var keys in this.servicesDataSource) {
-    var elements = this.servicesDataSource[keys];
-    console.log(keys);
-    console.log(elements);
-    
-  }
-
- 
-
-  this.dataComponentColumns = ['relationName'];
-  console.log(this.dataComponentColumns);
-
-}
-);
-
-
-
-
-
-}
-catch (error) {
-console.log(error);
-}
-
-
-} */
-
-
   showDetailsDialog() {
 
     let showJsonDialog = this.dialog.open(ShowJsonDialog, {
       panelClass: 'showjson-dialog-container',
       height: '500px',
       width: '700px',
-
       disableClose: true,
       data: this.corelationResponseMaster,
 
@@ -253,18 +175,22 @@ console.log(error);
     this.isListView = true;
     this.isEditData = true;
 
-    console.log(this.selectedDummyAgent)
+    //console.log(this.selectedDummyAgent)
     for (var key in this.servicesDataSource) {
       if (this.servicesDataSource[key].relationName != this.selectedDummyAgent) {
-        //console.log(this.selectedDummyAgent);
         this.updatedDatasource.push(this.servicesDataSource[key])
       }
     }
-    console.log(this.updatedDatasource.length);
+    //console.log(this.selectedDummyAgent);
+    //console.log(this.updatedDatasource);
 
-    this.relationshipBuilderService.saveCorrelationConfig(JSON.stringify(this.updatedDatasource)).then(
+    //var deleteMappingJson = JSON.stringify(this.updatedDatasource);
+    var deleteMappingJson = JSON.stringify({ 'data': this.updatedDatasource });
+    //console.log(deleteMappingJson);
+
+    this.relationshipBuilderService.saveCorrelationConfig(deleteMappingJson).then(
       (corelationResponse2) => {
-        console.log(corelationResponse2)
+        //  console.log(corelationResponse2)
         if (corelationResponse2.status == "success") {
           this.updatedDatasource = [];
           this.relationDataSource = [];
@@ -272,13 +198,10 @@ console.log(error);
           this.getCorrelation();
         }
       });
-
-    //his.relData= "";
-
   }
   statusEdit2() {
     this.isbuttonenabled = true;
-    console.log(this.isbuttonenabled);
+    //console.log(this.isbuttonenabled);
   }
 
   saveData() {
