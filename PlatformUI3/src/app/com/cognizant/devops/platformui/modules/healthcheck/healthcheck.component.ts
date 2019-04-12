@@ -49,7 +49,7 @@ export class HealthCheckComponent implements OnInit {
   agentResponse: any;
   agentNameList: any = [];
   selectAgentTool: any;
-  //timeZone: string = "+0000";
+  timeZone: string = "";
   constructor(private healthCheckService: HealthCheckService, private dialog: MatDialog,
     private dataShare: DataSharedService) {
     this.loadAgentCheckInfo();
@@ -57,7 +57,7 @@ export class HealthCheckComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.timeZone = this.dataShare.getStoragedProperty("timeZoneOffSet");
+    this.timeZone = this.dataShare.getStoragedProperty("timeZone");
     //console.log(this.timeZone);
   }
 
@@ -170,7 +170,8 @@ export class HealthCheckComponent implements OnInit {
       height: '500px',
       width: '900px',
       disableClose: true,
-      data: { toolName: toolName, categoryName: categoryName, pathName: filePath, detailType: detailType, agentId: agentId },
+      data: { toolName: toolName, categoryName: categoryName, pathName: filePath, 
+        detailType: detailType, agentId: agentId ,timeZone:this.timeZone},
       
     });
   }
