@@ -22,9 +22,13 @@
     </div>
   </div>
   <div class="orangeStripCss"></div>
+
   <div layout style="height: 60px;margin-left: 425px;">
+
     <div layout="row" style="width: 100%;margin-top: 6px; height: 80%;">
+
       <div layout layout-align="end center">
+        <!--   <a class="mainTextInfo">Please Note</a> -->
         <label class="mainText"> Select Tools </label>
         <mat-select [(ngModel)]="selectedAgent1" [style.height.px]="20" [style.width.%]="20" (ngModelChange)="loadAgent1Info(selectedAgent1)"
           name="selectedAgent1" required placeholder="Select Tool 1" [ngClass]="{  'input-disabled' : readChange ,  'form-control': !readChange}">
@@ -54,7 +58,7 @@
         save
       </mat-icon>
     </button>
-    <button mat-icon-button [disabled]="" (click)="deleteMapping()">
+    <button mat-icon-button [disabled]="!isbuttonenabled" (click)="statusEdit()">
       <mat-icon title="Delete " class="mat-icon material-icons">
         delete
       </mat-icon>
@@ -113,18 +117,18 @@
         </table> -->
 
 
-        <!-- <table style="margin-left: 3%;">
-          <tbody style="display:grid;max-height:50vh;overflow:auto;">
-            <tr class="dat-row" *ngFor="let dummy of relData">
+        <table>
+          <tbody style="display:grid;max-height:50vh;margin-top: 10px">
+            <tr class="dat-rowNew" style="margin-top:20px" *ngFor="let dummy of relationDataSource">
               <mat-radio-group [(ngModel)]="selectedDummyAgent">
                 <ng-container matColumnDef="radio">
-                  <mat-radio-button [value]="dummy" color="primary" (click)="statusEdit(dummy) "></mat-radio-button>
+                  <mat-radio-button [value]="dummy" color="primary" (click)="statusEdit2()"></mat-radio-button>
                 </ng-container>
                 <td style="text-align:left;padding-left: 15px;padding-top: 8px;align-items: center;">{{dummy}}</td>
               </mat-radio-group>
             </tr>
           </tbody>
-        </table> -->
+        </table>
 
 
       </div>

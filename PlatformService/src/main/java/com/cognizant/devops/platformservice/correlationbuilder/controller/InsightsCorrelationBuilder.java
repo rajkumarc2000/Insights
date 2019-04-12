@@ -26,7 +26,7 @@ public class InsightsCorrelationBuilder {
 	
 	@RequestMapping(value = "/getCorrelationJson", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody JsonObject getCorrelationJson() throws IOException, InsightsCustomException {
-		String details = null;
+		Object details = null;
 		try {
 			details = correlationBuilderService.getCorrelationJson();
 		}catch (InsightsCustomException e) {

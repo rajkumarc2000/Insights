@@ -22,7 +22,10 @@
   cursor: auto;
 
 }
-
+.mainTextInfo
+{
+    margin-left: -400px;
+}
 .btnAlign{
     /* margin-right: 1px;  */
   position: absolute;
@@ -235,6 +238,40 @@ table tr:last-child td:last-child {
     vertical-align: sub;
     width: 10%;
     overflow: auto; 
+    /* margin-left: 500px; */
+}
+.button[disabled] .mat-icon[disabled][disabled]
+{
+    border: blue !important;
+    background-color: blue !important;
+}
+
+.button[disabled] .mat-icon-button[disabled][disabled]
+{
+    border: blue !important;
+    background-color: blue !important;
+}
+
+.button[disabled]{
+    border: 1px solid #0033A0 !important;
+    background-color: #cccccc;
+    color: black;
+}
+.button[disabled]
+{
+    border: blue !important;
+    background-color: blue !important;
+}
+.mat-icon[disabled]
+{
+ border: blue !important;
+    background-color: blue !important;
+}
+
+.mat-icon[disabled][disabled]
+{
+    border: blue !important;
+    background-color: blue !important;
 }
 
 
@@ -298,4 +335,11 @@ button[disabled]{
     color:#0033A0;
     font-size: 18px;
     padding-top: 10px
+}
+
+.dat-rowNew
+{
+background-color: white !important;
+color: #0033A0 !important;
+font-weight: bold !important;
 }
