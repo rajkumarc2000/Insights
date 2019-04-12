@@ -35,9 +35,9 @@ class BambooAgent(BaseAgent):
         # ....... looping inside the json response
         for plan_Individual in build_plan:            
             plan_Individual_Key =  plan_Individual.get('key')  
-            alllBranches = []
+            allBranches = []
             jsonObj = {'branchKey': plan_Individual_Key, 'branchName':'master'}
-            alllBranches.append(jsonObj)
+            allBranches.append(jsonObj)
             if enableAllBranches:
                 listAllBranchesUrl = getCollectionUrl + "plan/" + plan_Individual_Key +"/branch.json?max-result=1000"
                 branch_list_data = self.getResponse(listAllBranchesUrl,'GET', UserID, Passwd, None,None)
@@ -46,8 +46,8 @@ class BambooAgent(BaseAgent):
                     branchName = branch.get('name')
                     branchKey = branch.get('key')
                     jsonObj = {'branchKey': branchKey, 'branchName':branchName}
-                    alllBranches.append(jsonObj)
-            for branch in alllBranches:
+                    allBranches.append(jsonObj)
+            for branch in allBranches:
                 branch_name = branch.get('branchName')
                 branch_key = branch.get('branchKey')
                 plan_Individual_Key = branch_key
