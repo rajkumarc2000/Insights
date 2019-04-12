@@ -175,7 +175,7 @@ export class RelationshipBuilderComponent implements OnInit {
     this.isListView = true;
     this.isEditData = true;
 
-    console.log(this.selectedDummyAgent)
+    //console.log(this.selectedDummyAgent)
     for (var key in this.servicesDataSource) {
       if (this.servicesDataSource[key].relationName != this.selectedDummyAgent) {
         this.updatedDatasource.push(this.servicesDataSource[key])
@@ -184,12 +184,13 @@ export class RelationshipBuilderComponent implements OnInit {
     //console.log(this.selectedDummyAgent);
     //console.log(this.updatedDatasource);
 
-    var deleteMappingJson = JSON.stringify(this.updatedDatasource);
+    //var deleteMappingJson = JSON.stringify(this.updatedDatasource);
+    var deleteMappingJson = JSON.stringify({ 'data': this.updatedDatasource });
     //console.log(deleteMappingJson);
 
     this.relationshipBuilderService.saveCorrelationConfig(deleteMappingJson).then(
       (corelationResponse2) => {
-        console.log(corelationResponse2)
+        //  console.log(corelationResponse2)
         if (corelationResponse2.status == "success") {
           this.updatedDatasource = [];
           this.relationDataSource = [];

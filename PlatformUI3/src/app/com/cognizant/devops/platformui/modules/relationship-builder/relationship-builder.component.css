@@ -138,6 +138,10 @@ mat-dialog-content::-webkit-scrollbar-track {
     margin-left: 10px;
     margin-top: 21px;
 }
+.ListFooter
+{
+    font-size: 10px;
+}
 
 .NoteCss
 {
