@@ -49,43 +49,10 @@ export class ShowJsonDialog implements OnInit {
 
     constructor(private relationshipBuilderService: RelationshipBuilderService, public dialogRef: MatDialogRef<ShowJsonDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        //this.getCorrelation();
-        console.log(data);
         this.sample = JSON.stringify((data), null, '\t')//data.data;// JSON.parse(data.data);  JSON.stringify(data.data, null, 4)
-        //this.sample= JSON.stringify(JSON.parse(data.data), null, '\t')
-        console.log(this.sample);
-
     }
 
     ngOnInit() {
-
-    }
-
-
-    getCorrelation() {
-        try {
-
-            this.relationshipBuilderService.loadUiServiceLocation().then(
-                (corelationResponse) => {
-                    console.log(corelationResponse);
-                    //this.sample = JSON.stringify(corelationResponse, null, 4);
-                    ///this.sample = JSON.parse(corelationResponse);
-                    //console.log(this.sample);
-
-
-
-
-
-                }
-            );
-
-
-
-        }
-
-        catch (error) {
-            console.log(error);
-        }
 
     }
 
