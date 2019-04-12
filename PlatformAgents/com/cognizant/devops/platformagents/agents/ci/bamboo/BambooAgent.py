@@ -21,6 +21,7 @@ Created on 12 April 2017
 from ....core.BaseAgent import BaseAgent
 from datetime import datetime
 class BambooAgent(BaseAgent):
+    # .....variables
     def process(self):        
         BaseUrl = self.config.get("baseUrl", None)
         UserID = self.config.get("userid", None)
@@ -31,6 +32,7 @@ class BambooAgent(BaseAgent):
         builds = self.getResponse(buildsURL,'GET', UserID, Passwd, None,None)        
         responseTemplate = self.getResponseTemplate()
         build_plan = builds["plans"]["plan"]
+        # ....... looping inside the json response
         for plan_Individual in build_plan:            
             plan_Individual_Key =  plan_Individual.get('key')  
             alllBranches = []
@@ -62,10 +64,7 @@ class BambooAgent(BaseAgent):
                     continue
                 self.tracking[plan_Individual_Key] = plan_Individual_collection["results"]["result"][0]["buildNumber"]
                 while Build_running_Complete:
-                    data = []
-                    for plan_Individual_result_length in range (plan_Individual_collection["results"]["size"]):
-                        plan_Individual_result = plan_Individual_collection["results"]["result"][plan_Individual_result_length]
-                        plan_Individual_result_key =  plan_Individual_result.get("key")            
+                    data = []            
                     if len(plan_Individual_collection["results"]["result"]) >0:
                         if lastBuildNo < plan_Individual_collection["results"]["result"][0]["buildNumber"]:
                             for plan_Individual_result_length in range(lastBuildNo,plan_Individual_collection["results"]["size"]):
@@ -74,12 +73,6 @@ class BambooAgent(BaseAgent):
                                 plan_Individual_result_key =  plan_Individual_result.get("key")
                                 plan_Individual_result_url = getCollectionUrl + "result/" + plan_Individual_result_key +".json"
                                 plan_Individual_result_details = self.getResponse(plan_Individual_result_url,'GET', UserID, Passwd, None,None)
-#                                 utc_time = datetime.strptime(plan_Individual_result_details["buildCompletedTime"].split(".")[0], "%Y-%m-%dT%H:%M:%S")
-#                                 epoch_time = (utc_time - datetime(1970, 1, 1)).total_seconds()
-#                                 injectData['buildCompletedTime'] = plan_Individual_result_details["buildCompletedTime"].split(".")[0]
-#                                 injectData['buildCompletedTimeEpoch'] = epoch_time
-#                                 injectData['inSightsTimeX'] = plan_Individual_result_details["buildCompletedTime"].split(".")[0]
-#                                 injectData['inSightsTime'] = epoch_time
                                 injectData['branchName'] = branch_name
                                 injectData['branchKey'] = branch_key
                                 data += self.parseResponse(responseTemplate, plan_Individual_result_details, injectData)
@@ -95,5 +88,3 @@ class BambooAgent(BaseAgent):
                 self.updateTrackingJson(self.tracking)     
 if __name__ == "__main__":
     BambooAgent()
-
-
