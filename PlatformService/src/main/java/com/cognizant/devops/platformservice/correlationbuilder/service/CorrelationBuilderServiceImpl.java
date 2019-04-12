@@ -7,19 +7,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Instant;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.cognizant.devops.platformcommons.config.ApplicationConfigProvider;
 import com.cognizant.devops.platformcommons.constants.ConfigOptions;
 import com.cognizant.devops.platformcommons.exception.InsightsCustomException;
 import com.cognizant.devops.platformservice.agentmanagement.service.AgentManagementServiceImpl;
-import com.cognizant.devops.platformservice.agentmanagement.util.AgentManagementUtil;
-import com.cognizant.devops.platformservice.businessmapping.service.BusinessMappingService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -56,8 +52,15 @@ public class CorrelationBuilderServiceImpl implements CorrelationBuilderService 
 	public String saveConfig(String config) throws InsightsCustomException {
 		String configFilePath = System.getenv().get("INSIGHTS_HOME") + File.separator + ConfigOptions.CONFIG_DIR;
 		File configFile = null;
+		JsonArray correlationJson = new JsonArray();
 		// Writing json to file
-		log.error("saveconfig"+config);
+		JsonParser parser = new JsonParser(); 
+		JsonObject json = (JsonObject) parser.parse(config);
+		if(json.has("data")) {
+			correlationJson = json.get("data").getAsJsonArray();
+		}
+		log.debug("saveconfig"+config);
+		log.debug("correlationJson "+correlationJson);
 		Path dir = Paths.get(configFilePath);
 		Path source = Paths.get(System.getenv().get("INSIGHTS_HOME") + File.separator + ConfigOptions.CONFIG_DIR+File.separator+ConfigOptions.CORRELATION_TEMPLATE);
 	    Path target = Paths.get(System.getenv().get("INSIGHTS_HOME") + File.separator + ConfigOptions.CONFIG_DIR+File.separator+ConfigOptions.CORRELATION);
@@ -74,9 +77,9 @@ public class CorrelationBuilderServiceImpl implements CorrelationBuilderService 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
+		log.debug("  arg0 " + configFile);
 		try (FileWriter file = new FileWriter(configFile)) {
-			file.write(config.toString());
+			file.write(correlationJson.toString());
 			file.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
