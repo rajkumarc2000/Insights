@@ -196,7 +196,11 @@ class AgentDaemonExecutor:
         
         print('Inside subscribe method')
         #self.channel.basic_consume(callback,queue=routingKey)
-        self.channel.basic_consume(routingKey, callback)
+        try:
+            self.channel.basic_consume(on_message_callback=callback,queue=routingKey)   
+        except Exception as exMQ:
+            self.channel.basic_consume(callback,queue=routingKey)
+        #self.channel.basic_consume(routingKey, callback)
         self.publishDaemonHealthData(self.generateHealthData(note="Agent Demon is in START mode"))
         self.channel.start_consuming()
         self.connection.close() 
