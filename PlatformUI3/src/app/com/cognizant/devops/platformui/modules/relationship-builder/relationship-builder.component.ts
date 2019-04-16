@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class RelationshipBuilderComponent implements OnInit {
   selectedDummyAgent: any = undefined;
+  element: any = undefined;
   updatedDatasource = [];
   isbuttonenabled: boolean = false;
   dictResponse: any;
@@ -16,22 +17,32 @@ export class RelationshipBuilderComponent implements OnInit {
   corelationResponseMaster: any;
   dataComponentColumns: string[];
   agentDataSource = [];
+  AddDestination = {};
+  newSource = [];
+  AddSource = {};
   corrprop = [];
+  fieldDestProp = [];
+  fieldSourceProp = [];
   servicesDataSource = [];
   agentNodes = [];
+  selectedProperty2: any;
+  selectedProperty1: any;
   displayedAgentColumns: string[];
   selectedAgent1: any;
+  newDest = [];
   isListView = false;
   isEditData = false;
   selectedAgent2: any;
   agent1TableData: any;
   agent2TableData: any;
+  finalArrayToSend = [];
   readChange: boolean = false;
   readChange2: boolean = false;
   showDetail: boolean = false;
   noShowDetail: boolean = false;
   noShowDetail2: boolean = false;
   showDetail2: boolean = false;
+  finalDataSource = {};
   showDetail3: boolean = false;
   noShowDetailCorr: boolean = false;
   relationPropertiesSize: boolean = false;
@@ -48,6 +59,7 @@ export class RelationshipBuilderComponent implements OnInit {
   corrData: any;
   selectedMappingAgent: any;
   selectedMappingAgent2: any;
+  NewDataSource = {};
 
 
   relData: any;
@@ -134,18 +146,30 @@ export class RelationshipBuilderComponent implements OnInit {
       var self = this;
       this.relationshipBuilderService.loadUiServiceLocation().then(
         (corelationResponse) => {
+
+          var ax = typeof (corelationResponse);
+          // console.log(ax);
           self.corelationResponseMaster = corelationResponse;
           this.corrprop = corelationResponse.data;
-          // console.log(corelationResponse);
+          //console.log(corelationResponse);
           // console.log(self.corelationResponseMaster);
+          console.log(this.corrprop);
           if (this.corrprop != null) {
             for (var key in this.corrprop) {
+              // console.log(key);
               var element = this.corrprop[key];
+              var ay = typeof (element);
+              // console.log(ay);
               var a = (element.relationName);
+              var t = (element.destination);
               var b = (element.destination.toolName);
+              var az = typeof (t);
+              //console.log(t);
+              // console.log(b);
               var c = (element.source.toolName);
               this.relationDataSource.push(a)
               this.servicesDataSource.push(element);
+
             }
           }
           //this.relData = this.relationDataSource;
@@ -171,18 +195,19 @@ export class RelationshipBuilderComponent implements OnInit {
     //console.log(showJsonDialog);
   }
 
-  statusEdit() {
+  Delete() {
     this.isListView = true;
     this.isEditData = true;
 
-    //console.log(this.selectedDummyAgent)
+    //console.log(this.selectedDummyAgent);
+    // console.log(this.servicesDataSource);
     for (var key in this.servicesDataSource) {
       if (this.servicesDataSource[key].relationName != this.selectedDummyAgent) {
         this.updatedDatasource.push(this.servicesDataSource[key])
       }
     }
     //console.log(this.selectedDummyAgent);
-    //console.log(this.updatedDatasource);
+    console.log(this.updatedDatasource);
 
     //var deleteMappingJson = JSON.stringify(this.updatedDatasource);
     var deleteMappingJson = JSON.stringify({ 'data': this.updatedDatasource });
@@ -190,7 +215,10 @@ export class RelationshipBuilderComponent implements OnInit {
 
     this.relationshipBuilderService.saveCorrelationConfig(deleteMappingJson).then(
       (corelationResponse2) => {
-        //  console.log(corelationResponse2)
+        //console.log(corelationResponse2)
+        // console.log(this.updatedDatasource);
+        // console.log(this.relationDataSource);
+        // console.log(this.servicesDataSource);
         if (corelationResponse2.status == "success") {
           this.updatedDatasource = [];
           this.relationDataSource = [];
@@ -199,14 +227,90 @@ export class RelationshipBuilderComponent implements OnInit {
         }
       });
   }
-  statusEdit2() {
+  enableDelete() {
     this.isbuttonenabled = true;
     //console.log(this.isbuttonenabled);
   }
 
-  saveData() {
+  PropertyAdd() {
 
   }
+
+
+  saveData(newName) {
+    this.isListView = true;
+    this.isEditData = true;
+
+    //this.updatedDatasource.push({});
+    //console.log(newName);
+    //this.updatedDatasource.push({ destination: this.selectedAgent2, source: this.selectedAgent1, relationName: newName.value });
+    //this.updatedDatasource.push({});
+    // console.log(this.updatedDatasource);
+    //console.log(this.selectedAgent2);
+    this.fieldDestProp.push(this.selectedProperty2);
+    //console.log(this.fieldDestProp);
+    // console.log(typeof (this.selectedAgent2));
+    var res = [];
+    for (var x in this.selectedAgent2) {
+      this.selectedAgent2.hasOwnProperty(x) && res.push(this.selectedAgent2[x])
+    }
+    //console.log(res);
+    var toolname = res[0];
+    var toolcatergory = res[1];
+    //console.log(toolname);
+    //console.log(toolcatergory);
+    this.AddDestination = { 'toolName': toolname, 'toolCategory': toolcatergory, 'fields': this.fieldDestProp };
+    //console.log(this.AddDestination);
+    //this.AddDestination.push({ fields: this.selectedProperty2 });
+    // this.AddSource.push({ fields: this.selectedProperty1 });
+    //this.AddDestination.push(this.selectedProperty2);
+    //console.log(this.AddDestination);
+    //this.newDest.push(this.selectedAgent2);
+
+    //this.newDest.push(this.AddDestination);
+    // this.newSource.push(this.selectedAgent1);
+    // this.newSource.push(this.AddSource);
+    // this.updatedDatasource.push({ destination: this.newDest, source: this.newSource, relationName: newName.value });
+    //console.log(typeof (this.updatedDatasource));
+    //console.log(this.selectedAgent1);
+    //console.log(this.selectedProperty1);
+
+
+    //FOR SOURCE 
+    this.fieldSourceProp.push(this.selectedProperty1);
+    //console.log(this.fieldDestProp);
+    // console.log(typeof (this.selectedAgent2));
+    var res1 = [];
+    for (var x in this.selectedAgent2) {
+      this.selectedAgent1.hasOwnProperty(x) && res1.push(this.selectedAgent1[x])
+    }
+    //console.log(res);
+    var toolname1 = res1[0];
+    var toolcatergory1 = res1[1];
+    //console.log(toolname);
+    //console.log(toolcatergory);
+    this.AddSource = { 'toolName': toolname1, 'toolCategory': toolcatergory1, 'fields': this.fieldSourceProp };
+    //this.AddSource.push({ toolName: toolname1, toolCategory: toolcatergory1, fields: this.fieldSourceProp });
+    // console.log(this.AddSource);
+
+    this.finalDataSource = { 'destination': this.AddDestination, 'source': this.AddSource, 'relationName': newName.value }
+    this.servicesDataSource.push(this.finalDataSource);
+    console.log(this.servicesDataSource);
+    var addMappingJson = JSON.stringify({ 'data': this.servicesDataSource });
+    this.relationshipBuilderService.saveCorrelationConfig(addMappingJson).then(
+      (corelationResponse2) => {
+        //console.log(corelationResponse2)
+        // console.log(this.updatedDatasource);
+        // console.log(this.relationDataSource);
+        // console.log(this.servicesDataSource);
+        if (corelationResponse2.status == "success") {
+
+          this.getCorrelation();
+        }
+      });
+   // console.log(this.finalDataSource);
+  //console.log(this.servicesDataSource);
+ }
   deleteMapping() {
 
   }
