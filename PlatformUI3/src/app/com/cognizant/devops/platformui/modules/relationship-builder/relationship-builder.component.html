@@ -28,6 +28,7 @@
 
     <div layout="row" style="width: 100%;margin-top: 6px; height: 80%;">
 
+
       <div layout layout-align="end center" style="margin-left: 410px;">
 
         <label class="mainText"> Select Tools </label>
@@ -46,16 +47,17 @@
         <div class="divider"></div>
       </div>
     </div>
+
   </div>
 
 
   <div class="btnAlign">
-    <button mat-icon-button (click)="saveData()" [disabled]="isListView">
+    <button mat-icon-button (click)="saveData(newName)" [disabled]="isListView">
       <mat-icon title="Save " class="mat-icon material-icons">
         save
       </mat-icon>
     </button>
-    <button mat-icon-button [disabled]="!isbuttonenabled" (click)="statusEdit()">
+    <button mat-icon-button [disabled]="!isbuttonenabled" (click)="Delete()">
       <mat-icon title="Delete " class="mat-icon material-icons">
         delete
       </mat-icon>
@@ -89,7 +91,7 @@
             <tr class="dat-rowNew" style="margin-top:20px" *ngFor="let dummy of relationDataSource">
               <mat-radio-group [(ngModel)]="selectedDummyAgent">
                 <ng-container matColumnDef="radio">
-                  <mat-radio-button [value]="dummy" color="primary" (click)="statusEdit2()"></mat-radio-button>
+                  <mat-radio-button [value]="dummy" color="primary" (click)="enableDelete()"></mat-radio-button>
                 </ng-container>
                 <td style="text-align:left;padding-left: 15px;padding-top: 8px;align-items: center;">{{dummy}}</td>
               </mat-radio-group>
@@ -103,10 +105,14 @@
 
     </div>
 
+
     <div class="column1" style="margin-bottom: 1%;margin-left: 7px;border :white;border-radius: 10px;background-color:white;height: 69vh;">
+
       <div class="showTable" style="text-align: center; padding: 5px;">
         <b>&nbsp; Tool Properties(Select one property to BUILD Relationship)</b>
       </div>
+      <input type="text" #newName style="margin-left: 325px; width: 300px ;margin-top: 10px" required placeholder="Please input a Co-Relation name">
+
       <div style="height:100%;width:100%;overflow:visible;">
         <div style="width:47%;display:inline-block;margin-left:8px ;vertical-align:top;">
           <table *ngIf="noShowDetail">
@@ -120,16 +126,18 @@
                 Label:<b>({{agent1Category}}:{{agent1Tool}})</b></td>
             </tr>
           </table>
+
           <div *ngIf="showDetail" class="divTablesHeading">
+
             <div><b style="color:#0033A0;font-size: 18px;">{{agent1Tool}} Properties</b></div>
             <div style="color:#00B140;padding-top: 10px"> Label:<b>({{agent1Category}}:{{agent1Tool}})</b></div>
           </div>
           <table *ngIf="showDetail" style="margin-left: 3%;">
             <tbody style="display:grid;max-height:50vh;overflow:auto;">
               <tr class="dat-row" *ngFor="let element of agent1TableData">
-                <mat-radio-group [(ngModel)]="selectedMappingAgent">
+                <mat-radio-group [(ngModel)]="selectedProperty1">
                   <ng-container matColumnDef="radio">
-                    <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element) ">
+                    <mat-radio-button [value]="element" color="primary" (click)="PropertyAdd(element) ">
                     </mat-radio-button>
                   </ng-container>
 
@@ -147,14 +155,14 @@
           </div>
           <table *ngIf="showDetail2" style="margin-left: 4%;">
             <tbody style="display:grid;max-height:50vh;overflow:auto;">
-              <tr class="dat-row" *ngFor="let element of agent2TableData">
+              <tr class="dat-row" *ngFor="let element1 of agent2TableData">
 
-                <mat-radio-group [(ngModel)]="selectedMappingAgent2">
+                <mat-radio-group [(ngModel)]="selectedProperty2">
                   <ng-container matColumnDef="radio">
-                    <mat-radio-button [value]="element" color="primary" (click)="statusEdit(element) ">
+                    <mat-radio-button [value]="element1" color="primary" (click)="PropertyAdd(element1) ">
                     </mat-radio-button>
                   </ng-container>
-                  <td style="text-align:left;padding-left: 15px;padding-top: 8px;">{{element}}</td>
+                  <td style="text-align:left;padding-left: 15px;padding-top: 8px;">{{element1}}</td>
                 </mat-radio-group>
               </tr>
             </tbody>
