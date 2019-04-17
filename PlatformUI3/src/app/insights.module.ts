@@ -53,7 +53,7 @@ export function initializeApp(initConfig: InsightsInitService) {
     HomeModules,
     MaterialModule,
     SharedServices.forRoot(),
-    HttpClientXsrfModule.withOptions({ cookieName: 'XSRF-TOKEN' }) //, headerName: 'X-XSRF-TOKEN'
+    HttpClientXsrfModule.withOptions({ cookieName: 'XSRF-TOKEN', headerName: 'XSRF-TOKEN' }) //
   ],
   providers: [
     {

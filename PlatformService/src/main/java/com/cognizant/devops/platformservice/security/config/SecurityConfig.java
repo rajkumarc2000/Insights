@@ -126,9 +126,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().headers().addHeaderWriter(springHeaderWriter)
 				.and().csrf()
 				.ignoringAntMatchers(CSRF_IGNORE) // URI where CSRF check will not be applied
-				.csrfTokenRepository(csrfTokenRepository()) // defines a repository where tokens are stored
-				.and()
-				.addFilterAfter(new CustomCsrfFilter(), CsrfFilter.class); // Csrf filter in which we will add 
+					.csrfTokenRepository(csrfTokenRepository()) // defines a repository where tokens are stored
+					.and()
+					.addFilterAfter(new CustomCsrfFilter(), CsrfFilter.class)
+		; // Csrf filter in which we will add
 				//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // disable()
 		//
 	}
@@ -170,10 +171,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.setAllowedOrigins(Arrays.asList("*"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"));
 		configuration.setAllowCredentials(true);
-		configuration.setAllowedHeaders(Arrays.asList("XSRF-TOKEN", "X-XSRF-TOKEN"));
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
+		configuration.setAllowedHeaders(Arrays.asList("*"));
+		UrlBasedCorsConfigurationSource sourceCors = new UrlBasedCorsConfigurationSource();
+		sourceCors.registerCorsConfiguration("/**", configuration);
+		return sourceCors;
 	}
 
 		private List<MediaType> getSupportedMediaTypes() {

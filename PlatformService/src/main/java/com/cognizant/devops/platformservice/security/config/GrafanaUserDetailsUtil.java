@@ -32,26 +32,34 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cognizant.devops.platformcommons.config.ApplicationConfigProvider;
+import com.cognizant.devops.platformcommons.core.util.ValidationUtils;
 import com.cognizant.devops.platformcommons.dal.rest.RestHandler;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sun.jersey.api.client.ClientResponse;
 
+
 public class GrafanaUserDetailsUtil {
 	private static final Logger log = LogManager.getLogger(GrafanaUserDetailsUtil.class);
+
 
 	public static UserDetails getUserDetails(HttpServletRequest httpRequest) {
 		log.debug("\n\nInside getUserDetails function call!");
 		ApplicationConfigProvider.performSystemCheck();
 		String authHeader = httpRequest.getHeader("Authorization");
+
 		Cookie[] requestCookies = httpRequest.getCookies();
 		Map<String, String> grafanaResponseCookies = new HashMap<String, String>();
 		Map<String, String> cookieMap = new HashMap<String, String>();
+
 		if (requestCookies != null) {
 			for (Cookie cookie : requestCookies) {
-				cookieMap.put(cookie.getName(), cookie.getValue());
+				cookieMap.put(ValidationUtils.checkHTTPResponseSplitting(cookie.getName(), Boolean.TRUE),
+						ValidationUtils.checkHTTPResponseSplitting(cookie.getValue(), Boolean.TRUE));
+				cookie.setHttpOnly(true);
 			}
 		}
 		String userName = null;
@@ -88,15 +96,19 @@ public class GrafanaUserDetailsUtil {
 				List<NewCookie> cookies = getValidGrafanaSession(authTokens[0], authTokens[1]);
 				StringBuffer grafanaCookie = new StringBuffer();
 				for (NewCookie cookie : cookies) {
-					grafanaResponseCookies.put(cookie.getName(), cookie.getValue());
+					grafanaResponseCookies.put(
+							ValidationUtils.checkHTTPResponseSplitting(cookie.getName(), Boolean.TRUE),
+							ValidationUtils.checkHTTPResponseSplitting(cookie.getValue(), Boolean.TRUE));
 					grafanaCookie.append(cookie.getName()).append("=").append(cookie.getValue()).append(";");
 				}
 				Map<String, String> headers = new HashMap<String, String>();
 				headers.put("Cookie", grafanaCookie.toString());
 				String grafanaCurrentOrg = getGrafanaCurrentOrg(headers);
-				grafanaResponseCookies.put("grafanaOrg", grafanaCurrentOrg);
+				grafanaResponseCookies.put("grafanaOrg",
+						ValidationUtils.checkHTTPResponseSplitting(grafanaCurrentOrg, Boolean.TRUE));
 				String grafanaCurrentOrgRole = getCurrentOrgRole(headers, grafanaCurrentOrg);
-				grafanaResponseCookies.put("grafanaRole", grafanaCurrentOrgRole);
+				grafanaResponseCookies.put("grafanaRole",
+						ValidationUtils.checkHTTPResponseSplitting(grafanaCurrentOrgRole, Boolean.TRUE));
 			}
 			List<GrantedAuthority> mappedAuthorities = new ArrayList<GrantedAuthority>();
 			String grafanaRole = grafanaResponseCookies.get("grafanaRole");

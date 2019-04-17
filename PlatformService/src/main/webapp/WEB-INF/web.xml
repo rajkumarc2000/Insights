@@ -10,6 +10,13 @@
 	        org.springframework.web.context.request.RequestContextListener
 	    </listener-class>
   	</listener>
+  	
+  	<!-- <session-config>
+    <cookie-config>
+        <http-only>true</http-only>
+        <secure>true</secure>
+    </cookie-config>
+	</session-config> -->
 	
 	
 	<!-- <servlet>

@@ -16,8 +16,6 @@
 package com.cognizant.devops.platformservice.rest.data;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.validation.constraints.Size;
 
@@ -31,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.devops.platformcommons.constants.ErrorMessage;
+import com.cognizant.devops.platformcommons.core.util.ValidationUtils;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphDBException;
 import com.cognizant.devops.platformcommons.dal.neo4j.GraphResponse;
 import com.cognizant.devops.platformcommons.dal.neo4j.Neo4jDBHandler;
@@ -55,10 +54,9 @@ public class PlatformMappingData {
 	public @ResponseBody JsonObject getToolsCatList(@RequestParam(required = true) @Size(max = 10) String toolName) {
 		try {
 			ToolsLayoutDAL toolLayoutDal = new ToolsLayoutDAL();
-			Pattern agentNamePattern = Pattern.compile("[^A-Za-z0-9]", Pattern.CASE_INSENSITIVE);
-			Matcher m = agentNamePattern.matcher(toolName);
+			boolean checkToolName = ValidationUtils.checkString(toolName);
 
-			if (m.find()) {
+			if (checkToolName) {
 				throw new InsightsCustomException("Agent name not valid");
 			}
 			List<String> allCatName = toolLayoutDal.getToolCategoryNames(toolName);

@@ -20,6 +20,7 @@
 	<Loggers>
 		<Logger name="com.cognizant" level="debug">
 				<AppenderRef ref="RollingFile" />
+				<AppenderRef ref="Console" />
 		</Logger>
 		<Logger name="org.apache.spark" level="error">
 				<AppenderRef ref="RollingFile" />

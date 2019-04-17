@@ -168,6 +168,7 @@ public class AccessGroupManagement {
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
 					cookieMap.put(cookie.getName(), cookie.getValue());
+					cookie.setHttpOnly(true);
 				}
 			}
 			if (!cookieMap.containsKey("grafana_sess")) {
