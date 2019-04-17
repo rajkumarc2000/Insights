@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RelationshipBuilderService } from '@insights/app/modules/relationship-builder/relationship-builder.service';
 import { ShowJsonDialog } from '@insights/app/modules/relationship-builder/show-correlationjson';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+//import { Control} from '@angular/common';
 @Component({
   selector: 'app-relationship-builder',
   templateUrl: './relationship-builder.component.html',
@@ -11,6 +12,9 @@ export class RelationshipBuilderComponent implements OnInit {
   selectedDummyAgent: any = undefined;
   element: any = undefined;
   updatedDatasource = [];
+  property1selected: boolean = false;
+  //neo4jResponse
+  property2selected: boolean = false;
   isbuttonenabled: boolean = false;
   dictResponse: any;
   corelationResponse: any;
@@ -32,10 +36,12 @@ export class RelationshipBuilderComponent implements OnInit {
   newDest = [];
   isListView = false;
   isEditData = false;
+  isSaveEnabled: boolean = false;
   selectedAgent2: any;
   agent1TableData: any;
   agent2TableData: any;
   finalArrayToSend = [];
+  listFilter: boolean;
   readChange: boolean = false;
   readChange2: boolean = false;
   showDetail: boolean = false;
@@ -67,6 +73,7 @@ export class RelationshipBuilderComponent implements OnInit {
 
   constructor(private relationshipBuilderService: RelationshipBuilderService, private dialog: MatDialog) {
     this.dataDictionaryInfo();
+    this.getCorrelationNeo4j();
     this.getCorrelation();
   }
 
@@ -139,6 +146,20 @@ export class RelationshipBuilderComponent implements OnInit {
     }
   }
 
+
+  getCorrelationNeo4j() {
+    this.relationshipBuilderService.loadUiServiceLocationNeo4j().then(
+      (neo4jResponse) => {
+        console.log(neo4jResponse);
+      });
+
+  }
+
+
+
+
+
+
   getCorrelation() {
     try {
       this.relationDataSource = [];
@@ -153,7 +174,7 @@ export class RelationshipBuilderComponent implements OnInit {
           this.corrprop = corelationResponse.data;
           //console.log(corelationResponse);
           // console.log(self.corelationResponseMaster);
-          console.log(this.corrprop);
+          // console.log(this.corrprop);
           if (this.corrprop != null) {
             for (var key in this.corrprop) {
               // console.log(key);
@@ -232,6 +253,25 @@ export class RelationshipBuilderComponent implements OnInit {
     //console.log(this.isbuttonenabled);
   }
 
+  enableSaveProperty1() {
+    this.property1selected = true;
+    if (this.property2selected == true) {
+      console.log("true");
+      this.isSaveEnabled = true;
+    }
+
+
+  }
+
+
+  enableSaveProperty2() {
+    this.property2selected = true;
+    if (this.property1selected == true) {
+      console.log("true");
+      this.isSaveEnabled = true;
+    }
+  }
+
   PropertyAdd() {
 
   }
@@ -308,9 +348,9 @@ export class RelationshipBuilderComponent implements OnInit {
           this.getCorrelation();
         }
       });
-   // console.log(this.finalDataSource);
-  //console.log(this.servicesDataSource);
- }
+    // console.log(this.finalDataSource);
+    //console.log(this.servicesDataSource);
+  }
   deleteMapping() {
 
   }

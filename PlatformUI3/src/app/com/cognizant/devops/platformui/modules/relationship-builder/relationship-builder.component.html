@@ -52,7 +52,7 @@
 
 
   <div class="btnAlign">
-    <button mat-icon-button (click)="saveData(newName)" [disabled]="isListView">
+    <button mat-icon-button (click)="saveData(newName)" [disabled]="!isSaveEnabled || !listFilter">
       <mat-icon title="Save " class="mat-icon material-icons">
         save
       </mat-icon>
@@ -111,7 +111,8 @@
       <div class="showTable" style="text-align: center; padding: 5px;">
         <b>&nbsp; Tool Properties(Select one property to BUILD Relationship)</b>
       </div>
-      <input type="text" #newName style="margin-left: 325px; width: 300px ;margin-top: 10px" required placeholder="Please input a Co-Relation name">
+      <input type="text" #newName style="margin-left: 325px; width: 300px ;margin-top: 10px" [(ngModel)]='listFilter'
+        required placeholder="Please input a Co-Relation name">
 
       <div style="height:100%;width:100%;overflow:visible;">
         <div style="width:47%;display:inline-block;margin-left:8px ;vertical-align:top;">
@@ -137,7 +138,7 @@
               <tr class="dat-row" *ngFor="let element of agent1TableData">
                 <mat-radio-group [(ngModel)]="selectedProperty1">
                   <ng-container matColumnDef="radio">
-                    <mat-radio-button [value]="element" color="primary" (click)="PropertyAdd(element) ">
+                    <mat-radio-button [value]="element" color="primary" (click)="enableSaveProperty1()">
                     </mat-radio-button>
                   </ng-container>
 
@@ -159,7 +160,7 @@
 
                 <mat-radio-group [(ngModel)]="selectedProperty2">
                   <ng-container matColumnDef="radio">
-                    <mat-radio-button [value]="element1" color="primary" (click)="PropertyAdd(element1) ">
+                    <mat-radio-button [value]="element1" color="primary" (click)="enableSaveProperty2()">
                     </mat-radio-button>
                   </ng-container>
                   <td style="text-align:left;padding-left: 15px;padding-top: 8px;">{{element1}}</td>
